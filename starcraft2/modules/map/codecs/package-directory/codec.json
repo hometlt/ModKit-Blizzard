@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-map-directory",
+  "displayName": "StarCraft II loose map",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/map/codecs/package-directory/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./modules/map/codecs/package-directory/runtime.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Opens an explicitly mounted loose SC2Map directory and uses the same map document, world projection, preview and revision-pinned edit operations as the packed map codec.",
+    "Dependency references are reported by the codec; installation-backed dependency resolution is owned by the StarCraft II workspace provider.",
+    "Nested edit plans target the authored loose files; Blizzard signing and native launch remain outside this contribution."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "sc2-map-directory",
+        "label": "StarCraft II loose map"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "namespace",
+    "artifactStages": [
+      "authored"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {},
+    "probe": {
+      "kind": "namespace",
+      "markers": [
+        "MapInfo",
+        "Objects",
+        "Regions",
+        "t3HeightMap",
+        "t3Terrain.xml"
+      ],
+      "maxEntries": 5,
+      "maxBytes": 65536,
+      "maxDepth": 1,
+      "maxPathBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "workspace-namespace",
+        "contract": "common.archive/entry-namespace",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      },
+      {
+        "id": "map-layers",
+        "contract": "common.map/layers",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "fidelityEvidence": [
+      {
+        "formatId": "sc2-map-directory",
+        "representationId": "map-layers",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": true,
+          "notes": [
+            "A layer write changes only the written samples of t3HeightMap, t3SyncCliffLevel or t3SyncPathingInfo; the header, every untouched cell, the other fields of a height cell (adjustment, mask) and trailing bytes keep their bytes, the host commits a folder map's plan, the map reopens with the written samples, and undo restores the original (modules/map/test/sc2-map-layer-window.test.ts).",
+            "Object, region and reference edits keep untouched XML bytes and unknown attributes (test/sc2-map-world-writer.test.ts); a region shape the writer normalizes reports preservesUnknownData false and is not covered.",
+            "t3SyncHeightMap is not recomputed after a height write; the plan says so with the warning blizzard/sc2-map-sync-height-not-updated."
+          ]
+        },
+        "evidenceId": "sc2-map-layer-window-v1",
+        "corpusId": "modkit-extensions-blizzard/starcraft2/modules/map/test/sc2-map-layer-window.test.ts",
+        "corpusDigest": "none:proof-suite",
+        "conformanceProfile": "modkit/codec-contribution-v1",
+        "optionsFingerprint": "options:none",
+        "inputClass": "sc2-map-grid-documents",
+        "provenAt": "2026-09-26T00:00:00Z"
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/namespace-entry-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/subject-facts-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/relation-graph-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "blizzard/sc2-map-directory.detect",
+        "handlerId": "detect-map",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map-directory.open",
+        "handlerId": "open-map",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map-directory.embedded",
+        "handlerId": "embedded-map",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map-directory.metadata",
+        "handlerId": "metadata-map",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "view.thumbnail",
+        "handlerId": "thumbnail",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "view.render",
+        "handlerId": "render-preview",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map-directory.world",
+        "handlerId": "world-map",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map-directory.edit-world",
+        "handlerId": "edit-world",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "map.layers",
+        "handlerId": "map-layers",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "map.layer-read",
+        "handlerId": "map-layer-read",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "map.layer-write",
+        "handlerId": "map-layer-write",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "container.extract",
+        "handlerId": "extract-entry",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map-directory.extract-modeled",
+        "handlerId": "extract-modeled",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 128,
+      "maxNodes": 100000,
+      "maxScalarBytes": 134217728,
+      "maxDiagnostics": 1000
+    }
+  }
+}

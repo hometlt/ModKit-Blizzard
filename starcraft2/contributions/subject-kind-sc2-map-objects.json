@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "contract": { "id": "modkit/subject-kind-definition", "major": 1 },
+  "id": "blizzard/sc2-map-objects-kind",
+  "displayName": "StarCraft II placed map objects",
+  "spec": { "kindId": "sc2-map-objects", "label": "StarCraft II placed map objects" }
+}

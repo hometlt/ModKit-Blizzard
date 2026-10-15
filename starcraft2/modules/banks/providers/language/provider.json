@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-bank-language",
+  "displayName": "StarCraft II bank language analysis",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/banks/providers/language/runtime.js",
+      "target": { "environments": ["node"] },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./modules/banks/providers/language/runtime.js",
+      "target": { "environments": ["browser-worker", "node-worker"] },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "sc2-bank-document-analysis-v1",
+        "contract": "common.language/document-analysis",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "languageIds": ["sc2-bank"],
+          "documentKinds": ["sc2-bank-source"],
+          "extensions": ["sc2bank"]
+        }
+      },
+      {
+        "offerId": "sc2-bank-list-document-analysis-v1",
+        "contract": "common.language/document-analysis",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "languageIds": ["sc2-bank-list"],
+          "documentKinds": ["sc2-bank-list-source"],
+          "fileNames": ["BankList.xml"]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  }
+}

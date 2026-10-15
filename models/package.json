@@ -1,0 +1,51 @@
+{
+  "name": "@modkit/blizzard-models",
+  "version": "1.0.0",
+  "license": "GPL-2.0-only",
+  "type": "module",
+  "files": [
+    "codecs",
+    "providers",
+    "dist",
+    "src",
+    "README.md",
+    "M3-BINDING-KERNEL-PROVENANCE.json",
+    "m3-binding-extraction.json"
+  ],
+  "scripts": {
+    "build": "node ./build.mjs",
+    "typecheck": "node ./build.mjs --typecheck",
+    "typecheck:tests": "tsc --noEmit -p ./tsconfig.tests-uvm.json"
+  },
+  "description": "Blizzard model codecs for MK3, including decoded StarCraft II M3 geometry.",
+  "modkit": {
+    "schemaVersion": 1,
+    "publisher": "blizzard",
+    "id": "models",
+    "presentation": {
+      "displayName": "Blizzard Models",
+      "description": "Blizzard model codecs for MK3, including decoded StarCraft II M3 geometry.",
+      "vendor": {
+        "id": "blizzard",
+        "displayName": "Blizzard"
+      },
+      "games": [
+        {
+          "id": "blizzard/starcraft-2",
+          "displayName": "StarCraft II"
+        }
+      ]
+    },
+    "contributionManifests": [
+      "./codecs/*/codec.json",
+      "./providers/*/provider.json"
+    ]
+  },
+  "dependencies": {
+    "@modkit/codec-kit": "file:../vendor/modkit-codec-kit-1.0.0.tgz",
+    "@modkit/scene": "file:../vendor/modkit-scene-1.0.0.tgz",
+    "@modkit/sdk": "file:../vendor/modkit-sdk-0.1.0.tgz",
+    "@modkit/uv": "file:../vendor/modkit-uv-1.0.0.tgz",
+    "@xmldom/xmldom": "^0.9.12"
+  }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Frame type="Frame" name="TestPanel">
+        <Frame type="Label" name="TitleLabel">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="10"/>
+            <Text val="@UI/TestPanel/Title"/>
+            <Style val="@@StandardLabel"/>
+        </Frame>
+        <Frame type="Button" name="CloseButton">
+            <Shortcut val="@Button/Hotkey/Cancel"/>
+            <Texture val="@@UI/CloseButtonNormal"/>
+        </Frame>
+    </Frame>
+</Desc>

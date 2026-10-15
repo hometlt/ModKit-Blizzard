@@ -1,0 +1,46 @@
+{
+  "name": "@modkit/blizzard-heroes",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "description": "Heroes of the Storm for Modkit.",
+  "files": [
+    "dist",
+    "providers",
+    "src",
+    "README.md"
+  ],
+  "modkit": {
+    "schemaVersion": 1,
+    "publisher": "blizzard",
+    "id": "heroes",
+    "presentation": {
+      "displayName": "Blizzard Heroes of the Storm",
+      "description": "Heroes of the Storm for Modkit.",
+      "vendor": {
+        "id": "blizzard",
+        "displayName": "Blizzard"
+      },
+      "games": [
+        {
+          "id": "blizzard/heroes-of-the-storm",
+          "displayName": "Heroes of the Storm"
+        }
+      ]
+    },
+    "contributionManifests": [
+      "./providers/*/provider.json"
+    ],
+    "contentSources": "./dist/game/content-sources.js"
+  },
+  "dependencies": {
+    "@modkit/blizzard-casc": "workspace:*",
+    "@modkit/sdk": "file:../vendor/modkit-sdk-0.1.0.tgz",
+    "@modkit/vfs": "file:../vendor/modkit-vfs-0.1.0.tgz"
+  },
+  "scripts": {
+    "build": "tsc -b ./tsconfig.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  }
+}

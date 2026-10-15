@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/war3-resolved-data",
+  "displayName": "Warcraft III resolved data",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./providers/war3-data/runtime.js",
+      "target": { "environments": ["node"] },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./providers/war3-data/runtime.js",
+      "target": { "environments": ["browser-worker", "node-worker"] },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "war3-resolved-data-v1",
+        "contract": "common.data/resolved-workspace",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": ["blizzard/warcraft-3"]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Units, items, abilities, buffs, upgrades, destructables and doodads: each kind's SLK sheets and its profiles, joined by object id (units join five sheets). AbilityBuffData.slk, typed w3h changes and native Bufftip/Buffubertip profile declarations identify buffs; shared ability-profile sections route to the buff namespace, including custom buffs. An ID declared as both ability and buff has its ambiguous profile diagnosed and left unassigned. Generic Art/Name and rawcode prefixes do not classify buffs; otherwise undeclared profile IDs retain the ability-profile namespace.",
+    "An imported Units/*.slk or profile replaces the game's file whole. Binary changes war3map.*, war3mapSkin.* and war3campaign.* apply in that same-root order over the tables; later workspace roots retain precedence. Fields use metadata IDs, custom objects inherit their base; w3h uses the buff namespace and AbilityBuffMetaData.slk. Missing metadata is diagnosed, not guessed. Version 3 has an opaque integer array before one change list; only empty/single-zero headers are admitted for resolved data, other headers are diagnosed without partial application.",
+    "String changes resolve whole TRIGSTR_<n> references through war3map.wts or war3campaign.wts of their root scope. Missing strings remain authored and are diagnosed. Values retain the binary change as their field source; navigation to the WTS declaration is not provided yet. AbilitySkin and UnitWeaponsSkin profiles are optional inputs.",
+    "List fields the metadata types as units, items, abilities, buffs or upgrades are relations (trains, builds, researches, abilities, sold items), scoped to their object kind. Conditional useSpecific/notSpecific rows and conflicting row types do not become universal links or scalar enums. Requirements and per-level ability columns are not linked yet; native numeric types, units and defaults are pending. Other values are the text the file writes.",
+    "Optional UI/UnitEditorData.txt supplies native unitRace/moveType scalar enum IDs through DataSchemaField.type, with whole-file overlay precedence. Other editor domains may be bitmasks or multi-value fields and are not inferred as scalar enums. Display-string keys and additional columns are not members or localized labels; version/mode-dependent filtering is not implemented. Indexed, repeated, conditional or conflicting metadata rows and values outside the native scalar domain remain untyped with their raw values preserved; malformed enum domains are diagnosed. This is schema publication, not typed editing or field-navigation acceptance."
+  ]
+}

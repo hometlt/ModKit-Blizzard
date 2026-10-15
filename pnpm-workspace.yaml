@@ -1,0 +1,21 @@
+packages:
+  - 'blizzard-common-formats'
+  - 'blizzard-diablo'
+  - 'blizzard-heroes'
+  - 'blizzard-starcraft-1'
+  - 'blizzard-warcraft-3'
+  - 'blizzard-world-of-warcraft'
+  - 'casc'
+  - 'models'
+  - 'mpq'
+  - 'starcraft2'
+
+overrides:
+  '@modkit/uv': file:./vendor/modkit-uv-1.0.0.tgz
+  '@modkit/scene': file:./vendor/modkit-scene-1.0.0.tgz
+  '@modkit/codec-kit': file:./vendor/modkit-codec-kit-1.0.0.tgz
+  '@modkit/core': file:./vendor/modkit-core-0.1.0.tgz
+  '@modkit/host': file:./vendor/modkit-host-0.1.0.tgz
+  '@modkit/sdk': file:./vendor/modkit-sdk-0.1.0.tgz
+  '@modkit/testkit': file:./vendor/modkit-testkit-0.1.0.tgz
+  '@modkit/vfs': file:./vendor/modkit-vfs-0.1.0.tgz

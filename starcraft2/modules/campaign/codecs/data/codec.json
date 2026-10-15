@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-campaign-data",
+  "displayName": "StarCraft II CampaignData",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/campaign/codecs/data/runtime.js",
+      "target": { "environments": ["node"] },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": ["read-source", "write-source"]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./modules/campaign/codecs/data/runtime.js",
+      "target": { "environments": ["browser-worker", "node-worker"] },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": ["read-source", "write-source"]
+    }
+  ],
+  "limitations": [
+    "Edits an existing CampaignData.xml as its own revision-bound subject and preserves XML outside the selected CCampaign declaration.",
+    "Scenario-defined mission order and creation of a missing CampaignData.xml remain workspace concerns."
+  ],
+  "spec": {
+    "formatRefs": [
+      { "formatId": "sc2-campaign-data", "label": "StarCraft II CampaignData" }
+    ],
+    "roles": ["semantic"],
+    "sourceTopology": "single",
+    "artifactStages": ["authored"],
+    "openIntents": ["probe", "inspect", "full", "export"],
+    "match": {
+      "extensions": ["xml"],
+      "pathGlobs": ["**/CampaignData.xml", "CampaignData.xml"]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [{ "from": "start", "length": 65536 }],
+      "maxBytes": 65536
+    },
+    "representations": [
+      {
+        "id": "source",
+        "contract": "common.document/flow-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      { "contract": "common.view/text-data-source", "major": 1 },
+      { "contract": "common.view/byte-range-source", "major": 1 },
+      { "contract": "common.view/tree-data-source", "major": 1 },
+      { "contract": "common.view/table-data-source", "major": 1 }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["none"]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["bytes"]
+      },
+      {
+        "id": "edit.content",
+        "handlerId": "edit-campaign-data",
+        "mutatesSource": true,
+        "requiredPermissions": ["read-source", "write-source"],
+        "outputKinds": ["edit-plan"]
+      },
+      {
+        "id": "edit.structure",
+        "handlerId": "declare-campaign-data",
+        "mutatesSource": true,
+        "requiredPermissions": ["read-source", "write-source"],
+        "outputKinds": ["edit-plan"]
+      }
+    ],
+    "implementationTier": { "claimed": 1 },
+    "budgets": {
+      "maxInputBytes": "16777216",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 16777216,
+      "maxDiagnostics": 1000
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "name": "@modkit/blizzard-mpq",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "description": "Blizzard MPQ namespace codec for MK3.",
+  "exports": {
+    "./codecs/container-mpq": "./codecs/container-mpq/runtime.js",
+    "./reader": {
+      "types": "./src/mpq/reader.d.ts",
+      "default": "./src/mpq/codec.js"
+    },
+    "./layer-node": {
+      "types": "./src/mpq/layer-node.ts",
+      "default": "./dist/mpq/layer-node.js"
+    },
+    "./fresh-writer": "./src/mpq/fresh-writer.js",
+    "./native-preserving": "./src/mpq/native-preserving.js",
+    "./obfuscation": "./src/mpq/obfuscation.js",
+    "./recovery": "./src/mpq/recovery.js",
+    "./header-protection": {
+      "types": "./src/mpq/header-protection.d.ts",
+      "default": "./src/mpq/header-protection.js"
+    }
+  },
+  "files": [
+    "codecs",
+    "contributions",
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "modkit": {
+    "schemaVersion": 1,
+    "publisher": "blizzard",
+    "id": "mpq",
+    "presentation": {
+      "displayName": "Blizzard MPQ",
+      "description": "Blizzard MPQ namespace codec for MK3.",
+      "vendor": {
+        "id": "blizzard",
+        "displayName": "Blizzard"
+      }
+    },
+    "contributionManifests": [
+      "./contributions/*.json",
+      "./codecs/*/codec.json"
+    ]
+  },
+  "dependencies": {
+    "@modkit/codec-kit": "file:../vendor/modkit-codec-kit-1.0.0.tgz",
+    "@modkit/core": "file:../vendor/modkit-core-0.1.0.tgz",
+    "@modkit/sdk": "file:../vendor/modkit-sdk-0.1.0.tgz"
+  }
+}

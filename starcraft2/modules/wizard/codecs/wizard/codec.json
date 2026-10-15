@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-wizard",
+  "displayName": "StarCraft II Data Wizard",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "entrypoint": "./modules/wizard/codecs/wizard/runtime.js",
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ],
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "variantId": "trusted-node"
+    },
+    {
+      "entrypoint": "./modules/wizard/codecs/wizard/runtime.js",
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ],
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "variantId": "portable"
+    }
+  ],
+  "limitations": [
+    "The format follows Blizzard’s shipped FileFormat specification; the game ships no wizard documents, so fixtures are spec-derived plus a nine-file author-written corpus read in place.",
+    "Catalog ref evaluation requires loaded SC2 data and fails closed when that dependency is absent.",
+    "Catalog, entry-type and field-path checks require a host-provided schema.",
+    "Unknown elements and attributes are preserved and reported as information.",
+    "edit.field returns a revision-pinned edit plan that replaces exactly one existing value (input default, item value or text, macro text, named condition value, entry field value); it never adds, removes or reorders elements, and source.save remains owned by the host."
+  ],
+  "spec": {
+    "artifactStages": [
+      "authored"
+    ],
+    "budgets": {
+      "maxDepth": 64,
+      "maxDiagnostics": 1000,
+      "maxInputBytes": "1073741824",
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600
+    },
+    "companions": [
+      {
+        "id": "embedded-wizards",
+        "patterns": [
+          "*.BlizWiz"
+        ],
+        "required": false,
+        "role": "wizard",
+        "searchScopes": [
+          "current-mount",
+          "workspace-dependency-layer"
+        ]
+      }
+    ],
+    "formatRefs": [
+      {
+        "formatId": "sc2-wizard",
+        "label": "StarCraft II Data Wizard"
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "match": {
+      "extensions": [
+        "blizwiz"
+      ],
+      "pathGlobs": [
+        "**/*.BlizWiz",
+        "**/EditorWizards/**"
+      ]
+    },
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "operations": [
+      {
+        "handlerId": "inspect",
+        "id": "view.inspect",
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "validate",
+        "id": "asset.validate",
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "export-raw",
+        "id": "export.raw",
+        "mutatesSource": false,
+        "outputKinds": [
+          "bytes"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "outline",
+        "id": "blizzard/sc2-wizard.outline",
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "evaluate",
+        "id": "blizzard/sc2-wizard.evaluate",
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "edit-field",
+        "id": "edit.field",
+        "mutatesSource": true,
+        "outputKinds": [
+          "edit-plan"
+        ],
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ]
+      }
+    ],
+    "probe": {
+      "kind": "bytes",
+      "maxBytes": 4096,
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ]
+    },
+    "publishesDataSources": [
+      {
+        "contract": "common.view/text-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/subject-facts-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/relation-graph-source",
+        "major": 1
+      }
+    ],
+    "representations": [
+      {
+        "contract": "common.document/flow-metadata",
+        "id": "wizard-file",
+        "lossy": false,
+        "major": 1,
+        "stage": "authored"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "traitDeclarations": [
+      {
+        "id": "content.text",
+        "presence": "will-expose",
+        "representation": "source"
+      },
+      {
+        "id": "structure.hierarchy",
+        "presence": "will-expose",
+        "representation": "source"
+      },
+      {
+        "id": "content.metadata",
+        "presence": "will-expose",
+        "representation": "source"
+      }
+    ]
+  }
+}

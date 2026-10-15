@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/galaxy",
+  "displayName": "StarCraft II Galaxy Script",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/modules/galaxy/codecs/galaxy/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./dist/modules/galaxy/codecs/galaxy/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "The native adapter executes the exact-pin Galaxy scanner, parser, binder, full type checker, language service and EngineProgram AST lowering.",
+    "The separate Galaxy language provider retains native API, hover, signature, definition, workspace-link and mixed-document services.",
+    "blizzard/galaxy.native-signatures pages exact native declarations with their preserved source fragments and explicit unmapped-native status; it does not execute them.",
+    "edit.structure returns a revision-pinned edit plan; applying it remains host-owned.",
+    "export.convert prints the parsed Galaxy AST and remains lossy for comments and source formatting; blizzard/galaxy.to-engine produces EngineProgram data only. Compilation and execution remain owned by the separately permissioned sc2-runtime codec.",
+    "blizzard/galaxy.to-triggers converts the current document to a Trigger library using supplied dependency libraries. It returns XML and a conversion report; unsupported syntax or unresolved references produce diagnostics. SC2 Editor compatibility is not yet verified."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "galaxy",
+        "label": "StarCraft II Galaxy Script"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "authored",
+      "compiled",
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "extensions": [
+        "galaxy"
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ],
+      "maxBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "flow-metadata",
+        "contract": "common.document/flow-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/text-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/subject-facts-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "script.symbols",
+        "handlerId": "symbols",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "blizzard/galaxy.native-signatures",
+        "handlerId": "native-signatures",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "script.references",
+        "handlerId": "references",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "script.completion",
+        "handlerId": "completion",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "script.format",
+        "handlerId": "format",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["bytes"]
+      },
+      {
+        "id": "edit.structure",
+        "handlerId": "rename",
+        "mutatesSource": true,
+        "requiredPermissions": ["read-source", "write-source"],
+        "outputKinds": ["edit-plan"]
+      },
+      {
+        "id": "export.convert",
+        "handlerId": "export-convert",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["bytes"]
+      },
+      {
+        "id": "blizzard/galaxy.to-engine",
+        "handlerId": "to-engine",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "blizzard/galaxy.to-triggers",
+        "handlerId": "to-triggers",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "traitDeclarations": [
+      { "presence": "will-expose", "representation": "source", "id": "content.text" },
+      { "presence": "will-expose", "representation": "source", "id": "code.source" },
+      { "presence": "will-expose", "representation": "source", "id": "structure.hierarchy" }
+    ]
+  }
+}

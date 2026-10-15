@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/war3-mdx",
+  "displayName": "Warcraft III MDX/MDL",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./src/war3-mdx/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./src/war3-mdx/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Ribbon KRCO color tracks are read and written by MDX/MDL and published as UV_game_effects sequenceAnimation.color, including interpolation, tangents and global clocks. Their independent static color fallback survives native/UVM reconstruction as well. The native reconstruction path preserves ribbon gravity; nonzero gravity not projected to the common frame is reported. Falling-ribbon and native visual fidelity remain unqualified.",
+    "Crystal shader ID 24 and Shader_HD_Crystal are refused at model projection: no faithful common material is available, and ordinary HD is not substituted. Native parsing/re-emission is not proof of Crystal rendering.",
+    "HD Fresnel RGB and gain/Fresnel track keys survive BlizzardMDX residual reconstruction, including interpolation, tangents and global-sequence ids. The independent static KMTE gain header survives MDX write and native residual reconstruction through an admitted finite exact float32 carrier (negative zero/nonfinite/unrepresentable carriers refuse). Missing legacy carriers keep compatibility default 1, not a recovered authored header. MDL output refuses a non-default static header alongside KMTE before publication; native scalar-plus-track grammar and adjacent Fresnel static-header preservation remain unqualified. Native preservation is separate from rendering: animated emissive gain and the native Fresnel equation do not yet have a qualified common projection.",
+    "Decodes MDX and MDL geometry, materials and texture layers, bones and pivots, sequences with their node translation/rotation/scaling channels, and bounds through the vendored war3-model parser. Up to four UV sets survive the common geometry and UVM/native round-trip; CoordId selects the authored set. HD baked AO reads UV1 only with the native 0x400 flag. More than four sets, malformed UV counts, or a layer referencing an absent UV set (including AO without UV1) are refused rather than rendered with guessed coordinates.",
+    "Attachments, collision shapes, particle and ribbon emitters, cameras and lights are published as model facets. Attachment names are carried verbatim because scripts reference them; no socket orientation is claimed because Warcraft III declares neither a forward nor an up axis for one. A camera is not a node of the hierarchy, so its position and target stay in its properties.",
+    "Hermite and Bezier animation tracks are published as cubic-spline with each key's derivative per second (a Hermite tangent over the key interval, a Bezier control point as 3·(control − value)), and reach UVM as glTF CUBICSPLINE; linear and step tracks state theirs.",
+    "Replaceable texture ids (team colour, team glow, tileset trees) resolve to their canonical Warcraft III paths; opening any texture stays the host resource route's job. Explicit ATCH/PRE1 model paths publish reference-only sidecar resources with authored spelling; this does not imply binding or nested-model playback.",
+    "Installed Warcraft III is found by discovery: Reforged by its CASC build record, a classic 1.x installation by war3.mpq beside its runtime. The shipped models of a classic installation open inside its MPQ archives through blizzard/mpq, with the textures they name; the real test tier reads them from the installation discovery finds.",
+    "model.export-uvm emits UVM without UV_source_blob: geometry, materials, skeleton bindings, animation clips and the logical texture closure use common glTF/UVM structures; emitters go to UV_game_effects in the common vocabulary with sequence-local tracks, and BlizzardMDX keeps only native reconstruction facts. A request may state metersPerSourceUnit; without one a Warcraft III world unit is 0.35 m (owner decision 2026-09-23).",
+    "model.write re-emits the decoded model as MDX or MDL and verifies the result by reopening it. The separate common.model/native-encoder provider writes a Warcraft III model back from UVM, including emitter tracks placed in their sequences.",
+    "Vertex skinning exports through the portable four-weight skin. Warcraft III matrix groups larger than four influences were already capped at four by the decode, and that cap is carried rather than corrected here.",
+    "Emitter parameters are published in Warcraft III's own words and emitter simulation is not performed. PRE2 ReplaceableId, priority plane and Unshaded select its UVM sprite material. Source-free native reconstruction preserves static one-pass surface priority/Unshaded and qualified WC3 particle metadata ReplaceableId/SortPrimsFarZ/Unfogged; animated, multi-pass, non-surface or unrepresentable values refuse. Common lineEmitter/modelSpace/xyQuad restore their native bits while head/tail/squirt remain intact. SortPrimsFarZ is stored, not implemented as a sorting policy; common lighting/fog and visual fidelity remain unqualified. An emitter track on a global sequence crosses model.export-uvm as a concurrent track of every sequence that wraps at the global sequence's length, and the writer turns it back into one global sequence; an emitter rides its own node, with its pivot and tracks."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "war3-mdx",
+        "label": "Warcraft III MDX/MDL"
+      }
+    ],
+    "roles": [
+      "media"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "authored",
+      "compiled",
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "extensions": [
+        "mdx",
+        "mdl"
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ],
+      "maxBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "container-metadata",
+        "contract": "common.model/container-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      },
+      {
+        "id": "decoded-model",
+        "contract": "common.model/geometry-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": true
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/model-scene-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-material-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-resource-refs-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-skeleton-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-animation-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-socket-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-lod-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-collision-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-effect-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-camera-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-light-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "none"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "model.export-uvm",
+        "handlerId": "model-export-uvm",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "model.write",
+        "handlerId": "model-write",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 1000000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    }
+  }
+}

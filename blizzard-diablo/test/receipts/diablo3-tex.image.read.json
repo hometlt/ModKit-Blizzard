@@ -1,0 +1,757 @@
+{
+  "schemaVersion": 1,
+  "codec": "diablo3-tex",
+  "corpusKind": "real",
+  "verdict": "pass",
+  "tests": {
+    "passed": 64,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "raster-image-source.readRegion",
+    "oracle": "mip 0 has the header width and height (0x24, 0x28) and exactly width x height RGBA pixels; an uncompressed A8R8G8B8 texture (pixel format 0) equals its entry bytes at the mip-0 offset pixel for pixel; block-compressed textures are checked for size only",
+    "suite": "modkit-extensions-blizzard/blizzard-diablo/test/diablo3-receipts-corpus.test.ts",
+    "corpus": {
+      "game": "blizzard/diablo-3",
+      "version": "2.8.0.99920",
+      "discovery": "common.game/installation-discovery (blizzard/diablo3-installation)",
+      "container": "blizzard/casc",
+      "listed": {
+        "appearances": 11347,
+        "textures": 33431
+      }
+    },
+    "samples": [
+      {
+        "name": "textures/01sun.tex",
+        "sha256": "24485d1111ad11d8adadfdc1dc02115fc694dfc06e15274c386e7e91d67576f3"
+      },
+      {
+        "name": "textures/2duihitcounter.tex",
+        "sha256": "20c99a5f8f3a8526a3ec6a3fd6cada89c4ceae249aec131f4382a350ae648ecf"
+      },
+      {
+        "name": "textures/a2dun_aqd_skirts_a_01.tex",
+        "sha256": "32d44e675e4e605a1bdf837d39fd6ab52ade7653c23c10473f778ec54f37e7d2"
+      },
+      {
+        "name": "textures/a2dun_swr_column_b_01_spec.tex",
+        "sha256": "121aee7be18d5842d24f28847e777d203ffcd9cf4aba8df975f8f3455d58f1f6"
+      },
+      {
+        "name": "textures/a2dun_zolt_teslatower_symbol_floor_blend.tex",
+        "sha256": "0c2b052c2043bd624bc7023af264cbe1e9fc25c4643218f48071d4cf5fb764c0"
+      },
+      {
+        "name": "textures/a3dun_crater_ew_03_e01_s01_cluttermask.tex",
+        "sha256": "c42cae78b850792e082a5e06b5a917497f9d01e7ae81c6048ed8dc0f924da4fd"
+      },
+      {
+        "name": "textures/a3dun_crater_st_circ_02_e01_s01_worldmask.tex",
+        "sha256": "e0f53a381cfa69d75dd7b2a153c72b7c9f6a18b33a1329ed212e8b45373f907a"
+      },
+      {
+        "name": "textures/a3dunicecaves_ice_columns_c_scn_autolm.tex",
+        "sha256": "51d240feb54a8eaef0352f458cb2ffbeff85a2101d0fe75311749ac6a71f6db9"
+      },
+      {
+        "name": "textures/a4dun_spire_gardensparks.tex",
+        "sha256": "ffdee0115de4e133a433dd5a5933c204fb6b8580a1a535539378941ea881e818"
+      },
+      {
+        "name": "textures/banner_basic_sigilaccent_daggerheart_01.tex",
+        "sha256": "216307fc6ccc6c301232cbf40bcbb06bc4ccf4d9971f2659537aadc5b451beab"
+      },
+      {
+        "name": "textures/barb_m_hvy_hell_base_b_diff.tex",
+        "sha256": "e2c07e1ac7143329ee7994a0c043b5b1d1fa336a6d1adbbcaa50e9f70178f44b"
+      },
+      {
+        "name": "textures/bedchamber_platform_leoricestate.tex",
+        "sha256": "19215cef954414844f87030682fc5451d93e362285f6cde7796121783be08fe1"
+      },
+      {
+        "name": "textures/caout_boneyard_edge_s_01_worldmask.tex",
+        "sha256": "27680037659a4a00228d8b209f04bb4271e9a9cd1d92acfd8413091172a7c9da"
+      },
+      {
+        "name": "textures/caout_oasis_sub240_lunaticpools_pmamask.tex",
+        "sha256": "ceaad71ed2ba3dd341e7e518fe445d5057c6849dc457230111f1c060172113da"
+      },
+      {
+        "name": "textures/cavefloor_b_trdun_cave_diff.tex",
+        "sha256": "2c1973c1cdcfa81daf27d026279073b88bb62f00b90c77df2a1080ce1f990b60"
+      },
+      {
+        "name": "textures/crusadermace_diff_lightning.tex",
+        "sha256": "fd18560cfd94a2c16163bcc43d68a72fa5e73a3786cb4ab6197460cf06a7c8f1"
+      },
+      {
+        "name": "textures/dh_f_nkd_ghost_diff.tex",
+        "sha256": "e46aaf29a01fef97f6dba79f49543604271cb91f75cff62bdad1c47350ab7a94"
+      },
+      {
+        "name": "textures/fallengrunt_a01_diff.tex",
+        "sha256": "d6f05a3fecf2b39c93c7c34c74b39d5a0f4f54988a47e3d0511be7f387885f4e"
+      },
+      {
+        "name": "textures/floor_stone01_spec_crypt_trdun.tex",
+        "sha256": "29c96f9945598151ae8d99f3f2a6f3cab82e69d5903ea1096057a137b70d0fe4"
+      },
+      {
+        "name": "textures/ground_leoric_stonetile_a_cracked_highlands_spec_trout_diff_con.tex",
+        "sha256": "cd3bbc25df29cead9554ac84fa837407dae4ebf8b5e2efe988ebdbf0ccf7f03d"
+      },
+      {
+        "name": "textures/helm_dhm_norm_base_02a_diff.tex",
+        "sha256": "6959dfeb6a0eda2a839b5ccdefbd31d781124a96f325658cdc8b02ca57bbcb5a"
+      },
+      {
+        "name": "textures/indicator_questmob_ring.tex",
+        "sha256": "28e55b136bf2d9375c6a5d9d4ffef91ba6317cf285f2c5eda0847a9797d68c85"
+      },
+      {
+        "name": "textures/mapiconmarkerwaypoint.tex",
+        "sha256": "8c9d8a613eeac2b91385a97d38ed2fa004a941235e20f2efc4c3f1321e39483e"
+      },
+      {
+        "name": "textures/mmap_a2dun_zolt_n_portal.tex",
+        "sha256": "d69c50a36018cd7ba001a741c5c1e5886ac3e9317c06c5cbb17e49c1fb59374d"
+      },
+      {
+        "name": "textures/mmap_a4dun_garden_level_01_e05_s05.tex",
+        "sha256": "6efe916910b167f5abe8be4466619405bd26a2b4d0ce89cac632cd53a910699b"
+      },
+      {
+        "name": "textures/mmap_p1_tgoblin_realm_prototype3_e02_s02.tex",
+        "sha256": "8b9d35e51db8473745d5ccdae90edc1f25c9efc94537515caac2ee21e1f3af81"
+      },
+      {
+        "name": "textures/mmap_p6_moor_ne_120_entrance_01.tex",
+        "sha256": "0d835f5f24fb8742b5888781bd0d38304f07f49168bb577224e446674b177ed3"
+      },
+      {
+        "name": "textures/mmap_trdun_cath_s_entrance_01.tex",
+        "sha256": "c7059c62162fb308ff96e26160f8cf0791f61a0d94930cd3c49441da5e0d5e7f"
+      },
+      {
+        "name": "textures/mmap_x1_bog_120_border_sew_02.tex",
+        "sha256": "bad5a5c731db60dad05ae40d2a43b8edc064b29ec1b103231dc6c00cfd339f6a"
+      },
+      {
+        "name": "textures/mmap_x1_westm_graveyard_border_nsw_01_gg.tex",
+        "sha256": "570adb62c8386d57079dab87da8c2c929e711b9b9bd390b970cef32666c442ac"
+      },
+      {
+        "name": "textures/monk_lethaldecoy2_firealpha.tex",
+        "sha256": "a36f6f95aaa29d3a3b95207890218bfb6a2bcfda4da221219bbc2fb3e9d6d950"
+      },
+      {
+        "name": "textures/necro_aotd_d_runleft.tex",
+        "sha256": "512258078922bc75a6886e9ea5e6177dcc0b7f7939372e29901dba3a02da29b8"
+      },
+      {
+        "name": "textures/p1_tgoblin_realm_prototype3_w01_s03_scn_autolm.tex",
+        "sha256": "5fbd734b255f889b86295ddffddf471ae6bbb5d9640a9c6f42ddf06942726750"
+      },
+      {
+        "name": "textures/p4_forest_coast_border_elbow_nw_02_cluttermask.tex",
+        "sha256": "bc22d363bed2b22de13eef67ed91cfcbf0ab7bf017bdff4d35e9163da9473692"
+      },
+      {
+        "name": "textures/p4_ratswarm_a_diff.tex",
+        "sha256": "5023ae7b62f3511ed62d69de2ec1a87369b9d77572c0e13fec9691306d4cded7"
+      },
+      {
+        "name": "textures/p6_church_chest_rare_spec.tex",
+        "sha256": "9aae97d931e99bf61fff66138ae4bb98cc9061910a4bbebeb41255aef71c1346"
+      },
+      {
+        "name": "textures/p6_necro_bloodmovement_motes_blend.tex",
+        "sha256": "d03855342269c1644066f59a0cf8ec2f152dbe8b485fb8e0da2f8653e19be7c3"
+      },
+      {
+        "name": "textures/p6_necro_landofthedead_a_buff_disease.tex",
+        "sha256": "a71b49a9e8850006371256b8ccce8199fdb7dd35ee5aeba8d16b9ef5a37ef134"
+      },
+      {
+        "name": "textures/p6_nm_m_med_norm_unique_glv_02_diff.tex",
+        "sha256": "eba1ca38c1706902658af120c5a088d54a0e208cc15625c07dc11b6f598f40f8"
+      },
+      {
+        "name": "textures/polearm_norm_base_07_spec.tex",
+        "sha256": "6182e5e96a19127087376c9b7742e7dd6f72247af184b81f76fa687c55f0cdd2"
+      },
+      {
+        "name": "textures/px_tristramfields_border_elbow_se_01_objectmask_ao_skirt_river_ns_2.tex",
+        "sha256": "1216d88fced26cf04b405c99e9fc2ec6526c559af8612c2c54da9a38af57441a"
+      },
+      {
+        "name": "textures/shoulderpads_barbm_norm_base_02a_diff.tex",
+        "sha256": "b2edc4e551f97fb48c008ba42c8ea21c5587b0d5720f70c1d5472928956a31df"
+      },
+      {
+        "name": "textures/shoulderpads_wizm_norm_base_02a_diff.tex",
+        "sha256": "a1b6840085ff60b8f06c146ba220bcea9176c4a2ebac9d8d5c63f240b40f283e"
+      },
+      {
+        "name": "textures/stranger_lightwisp_alpha2.tex",
+        "sha256": "8ee311b2a710467424a8786a37e9efc92c5df6700fb365237408662672149bc0"
+      },
+      {
+        "name": "textures/trdun_cave_goat_nsw_01_worldmask.tex",
+        "sha256": "6b206784008330596ef6dc8fb91ee0e2b9263ecaca2f0247de0368c33e81a8a2"
+      },
+      {
+        "name": "textures/trout_fields_nephalem_floortile_a.tex",
+        "sha256": "facd67dc0d6f4c56b1372cc33b736edb0c5ab076f72bdb711afcd5cf0759d020"
+      },
+      {
+        "name": "textures/trout_highlands_sub80_caveentrance_a_pmamask.tex",
+        "sha256": "b3265caa34fc48a4363907785282228ab961e8971bc126838882b90e67aadce6"
+      },
+      {
+        "name": "textures/trout_tristramfields_exita_e01_s01_scn_autolm.tex",
+        "sha256": "208b74becbf3da34c02be4229f85882218695d492949a849f73c88692b699b3c"
+      },
+      {
+        "name": "textures/waterfall_waves.tex",
+        "sha256": "2f13ce488c61a56a2814394c88dc736aa896282a4a5fc16e09551068cd3c60c1"
+      },
+      {
+        "name": "textures/witchdoctor_soulharvest_groundrune_crimsonrune.tex",
+        "sha256": "c5295022503788328e02c28ba7d5cac0f13e26e27c3edfcaa33a4ef1d0d17c65"
+      },
+      {
+        "name": "textures/ws_gargantuan_melee_trailsweep.tex",
+        "sha256": "e9853e4abb49046dfd553b48897b8c283639aeb068ba1ed821331c989760fabc"
+      },
+      {
+        "name": "textures/x1_bog_120_border_elbow_se_02_cluttermask.tex",
+        "sha256": "4578453b21d8c437205b52949c439eac9194a9eaf0dd0f2faff0d0a6693cda03"
+      },
+      {
+        "name": "textures/x1_bog_ground_dirtmud_crab_a_autonm.tex",
+        "sha256": "1833c42dc0d1c1abb3ea258c82c0789ec7ab3f8e7e769bd4929aefcf9ec6b343"
+      },
+      {
+        "name": "textures/x1_cdr_f_hvy_norm_unique_bts_02_tintmask.tex",
+        "sha256": "8050fdb810aa16ade56f8faf51152c41211238307535b7599d77b7e56649466a"
+      },
+      {
+        "name": "textures/x1_crusader_diehard_flow.tex",
+        "sha256": "92f68c4e0b2226de28b5a9a6e78e42b6d55380fe6cf1c5485bda17d3ac4e237a"
+      },
+      {
+        "name": "textures/x1_crushield_norm_unique_07_spec.tex",
+        "sha256": "49beaa0b5e8b4912fc117edc5169fc69238fa3ab3fbd11615b2351d49b531bec"
+      },
+      {
+        "name": "textures/x1_fortress_nsw_01_scn_autolm.tex",
+        "sha256": "b97c42320a6934309b6c804da619e0109be73c3f8f58ef1eccb88af778f99711"
+      },
+      {
+        "name": "textures/x1_malthael_deathhead_flash.tex",
+        "sha256": "9a3b4bbccb93dae4f1c195a941af54f8fc89f6593060f71e3eb84c2f18106836"
+      },
+      {
+        "name": "textures/x1_pand_ext_120_edge_nw_exit_01_cluttermask.tex",
+        "sha256": "fa754b8bab33488d0e72a08975edfd27cde11e1343f55eb73169ca8714c66707"
+      },
+      {
+        "name": "textures/x1_pand_hexmaze_blisters_a.tex",
+        "sha256": "aca1857e88ac96b8b5396303ca932b8fd2fdd467d556fc5a5836e5e0be680fe9"
+      },
+      {
+        "name": "textures/x1_tiered_rifts_gem_ui_bg_alpha.tex",
+        "sha256": "fc01aca30ac1dc5baf0af9dca3a24328221d96806ce1144707cddf786865a104"
+      },
+      {
+        "name": "textures/x1_westm_deathorb_b_e01_n01_cluttermask.tex",
+        "sha256": "128bf4cbd518e97ec9c1dc7a2ff30fc023f30c098eb369b931d019ca871aaaa3"
+      },
+      {
+        "name": "textures/x1_westm_int_templar_01_worldmask.tex",
+        "sha256": "438cb661af33590419624cc55f739ac279350d5c92dc14bc00e1ad63c6a2421f"
+      },
+      {
+        "name": "textures/x1_westmarch_king_justinian_spec.tex",
+        "sha256": "3023be8c3995d7af0b069061e481c657d7332838a32584403f6dd84bbc41000c"
+      }
+    ]
+  },
+  "oracleVerification": {
+    "verified": true,
+    "modules": [
+      "blizzard-diablo/test/diablo3-receipts-corpus.test.ts (fixed-offset header and raw-pixel read, no codec)"
+    ],
+    "operation": "raster-image-source.readRegion"
+  },
+  "cases": [
+    {
+      "id": "real:textures/01sun.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "4472759fff1a91c49bb0853319c832bd41d73ded2d03ebdfe4bab2403b6c288a",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/2duihitcounter.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "cd7d23185ad1708fdb895fb53395491ef2ee461c520746c5dca610823bb56e24",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/a2dun_aqd_skirts_a_01.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "e34fdce636d75c9da1efd494beeda481002a84fb67336e6ed020429b78b2d64b",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/a2dun_swr_column_b_01_spec.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "bd2da6443d1b284386572bac84373e0be1e0f2ddfd2ae31e5a361fc9a6caf576",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/a2dun_zolt_teslatower_symbol_floor_blend.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "591a9aa6e3299f75c4b73d4c793fe122ce9921dd8e1a280afc9f613241490a27",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/a3dun_crater_ew_03_e01_s01_cluttermask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "4a99ffd10472a5a94159ac84bce3b926c45c89ce9ac3a35b995f7cf014cd5c75",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/a3dun_crater_st_circ_02_e01_s01_worldmask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "8a39d2abd3999ab73c34db2476849cddf303ce389b35826850f9a700589b4a90",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/a3dunicecaves_ice_columns_c_scn_autolm.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "6cf1615dcdf3561fbeee3aacbfb70d35354c9e869968fb78722510fa15a8c2bc",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/a4dun_spire_gardensparks.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "1ac52492bab337f991bd4fbb774f73ebf0fda1431f195ef9810d006eced6ceda",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/banner_basic_sigilaccent_daggerheart_01.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "5920948bf00dd16dd847b718fbd61377f78003fc75be6d4eb5574bb1dcdff963",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/barb_m_hvy_hell_base_b_diff.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "6c8fcd3549d96762c5fba82a74216657e84a8b915e583ea7fbba2576122ab450",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/bedchamber_platform_leoricestate.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "70bfd5a0b4b374971f0c9ff97fa9648d474a55f71118e421991614d3559440bf",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/caout_boneyard_edge_s_01_worldmask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "391cbd600089c57e44aae955731080b18a4565685871d3907e646499bcf0d734",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/caout_oasis_sub240_lunaticpools_pmamask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "8a80d0d75bf03e25b10c21f167f0260ac6093a501def74cc653932d3f34c44ce",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/cavefloor_b_trdun_cave_diff.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "ec3de08ac400d571137f75ac6d313f1a386a91ab6bd8080e9025ed0e61d01546",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/crusadermace_diff_lightning.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "7bcc304208dde43c15bb626c50cfac95cf9834346b749ebeb6d34d0eaffd031b",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/dh_f_nkd_ghost_diff.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "f0cda216277511ea8432af8b309d93fee22527acef429afba1cbce575f05d320",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/fallengrunt_a01_diff.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "8e9601d2fd0310cf346e481701c2e4bcae375dad07df44fd3fe09cf591a601ad",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/floor_stone01_spec_crypt_trdun.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "788f383570a0bf367f14f1052dd323318adc0b50585cc9cf603d1170823fc38f",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/ground_leoric_stonetile_a_cracked_highlands_spec_trout_diff_con.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "4ccec2506f9f757f104c90eb7a0abec342580f1ca12ffbcc9f026cd60cfd4af2",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/helm_dhm_norm_base_02a_diff.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "8d80b260e23a44a870449d656fa42d5da96a2ec82c25b3b3cf450b33de9b704b",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/indicator_questmob_ring.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "d01d115b750c69759fb04b1e2890b0be972594ab95ebebd1e842a52a2e897e74",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/mapiconmarkerwaypoint.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "9a31f8240fd7be3efc54b1f580a4b91acab43cc5da36ac36a1f8cbe91b5a8f95",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/mmap_a2dun_zolt_n_portal.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "4c4609c09b16e4bc845f12e6dd48956cb907d42fb505f90612dc8d9db29bb5fc",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/mmap_a4dun_garden_level_01_e05_s05.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "707b6d8d783bf0652736bd5128d709bb05c45873407f1203cd7d37675bfd24fc",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/mmap_p1_tgoblin_realm_prototype3_e02_s02.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "d2feca6d637757fbcabce561d5c76f553252db8ffe22ac5d1bc2f608b490c470",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/mmap_p6_moor_ne_120_entrance_01.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "842a4ce3d1d1e86c34c0520c4b3f57ee09f04f66a3fee58f68583186a1a1a74e",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/mmap_trdun_cath_s_entrance_01.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "f65431443361bc11ed185e98a1143323992bb9524130fd68eda097cd43ff5390",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/mmap_x1_bog_120_border_sew_02.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "2a5b8a27118ec6fb67ef5063b1aaab22c7f32cb7a2a4a23071b084d9adcc1188",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/mmap_x1_westm_graveyard_border_nsw_01_gg.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "ed854b2a4a46fbe041fc712af352bdc033fb9483a15c8bffba54a52ad19481b6",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/monk_lethaldecoy2_firealpha.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "e38775a68693804d0772c231f6b72d504151b1528b9551fa84ad656eefea5e15",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/necro_aotd_d_runleft.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "14be45324ef754d94a0e9e945b200659295df5416c355feccf7af0ac91a558a1",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/p1_tgoblin_realm_prototype3_w01_s03_scn_autolm.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "94646b8f30084904542e3eba83a3c740d4de1e16ce1cbd3ba1e0c6e85459df63",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/p4_forest_coast_border_elbow_nw_02_cluttermask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "c1092c474f1bfae8f7c96c2d44318d08b82bcd55b369959441df925b2646fa20",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/p4_ratswarm_a_diff.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "a083aa67db474f62e664bd7fad42966a739afe70581e5f59fecc579caa911271",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/p6_church_chest_rare_spec.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "77f83447cca65330bcb022076ee937b0d0b8ee78409ae5d9cf361a52c7bbb85a",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/p6_necro_bloodmovement_motes_blend.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "5ff5d72817f70f515b17ac7dfa85f3ac4183c71024bbf68cfb2dcc9dfb082517",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/p6_necro_landofthedead_a_buff_disease.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "0f5644e115df206cbf807a07625ef8f0485fa067e2bc2bcdeb64aeff3d5e7cf2",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/p6_nm_m_med_norm_unique_glv_02_diff.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "93ac2cf0a40f790e32aa2e1cd5ce3a8335ee06eaa94e2d27bdda329ff33bc909",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/polearm_norm_base_07_spec.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "c4b68256d3ca5b5c450f8380f58b4c7c35280f46bfbbaa748b59baf647d3e854",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/px_tristramfields_border_elbow_se_01_objectmask_ao_skirt_river_ns_2.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "c8d7b29e19b97800a56fc576b7a065791b2b6a42d93e6c92191491773801c975",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/shoulderpads_barbm_norm_base_02a_diff.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "89826bb877c891ebea2a2bd8bde2f3e2d65b57527450cf66d4586e7f4afd7dc3",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/shoulderpads_wizm_norm_base_02a_diff.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "ff7f7cb188b1ff2609da77d7a848f32d776b9a756f60fc40aa5fd031cf6408f4",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/stranger_lightwisp_alpha2.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "f0a714b030a3a95a8e5263f0a5f7bf5d6c179d262923458ce8b9a8c6e3b1f045",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/trdun_cave_goat_nsw_01_worldmask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "cda731ff7f1fd3d2aaae95e71e774ba9ba29882619917825f199d0b7d6d80581",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/trout_fields_nephalem_floortile_a.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "64babf2a76f915e87fc4290d658c04164e90bde0e577aebd74b801c889ff8cd1",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/trout_highlands_sub80_caveentrance_a_pmamask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "80fb555566db51ff15a14a2c9f1db8e90b2d1818b083453cc0c122dc3edda864",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/trout_tristramfields_exita_e01_s01_scn_autolm.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "b74ab8e552031e432a3ca6196fb1262a6babb46bfcfa72bfaf5398d0c88be8d1",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/waterfall_waves.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "f9210a084988b6a9bb32145d2284d3b55e854abea03c59622780ca444de81acb",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/witchdoctor_soulharvest_groundrune_crimsonrune.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "bac01b7b12513f022dc305f1027e446502183a0a1d819fd0a734fb21b3c5b35a",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/ws_gargantuan_melee_trailsweep.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "ae30088c87c7590957b6fc0c842808b847d2415e0ea4756d17693d78cefdf356",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_bog_120_border_elbow_se_02_cluttermask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "546695aa01c10790172d932fc640f7976ac8d60438e693cddcb59e81917a6a34",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_bog_ground_dirtmud_crab_a_autonm.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "80dc482d132a4b4f798a8287e84017ff063c2187580656bd3dd774e79c3bed5e",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_cdr_f_hvy_norm_unique_bts_02_tintmask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "65940f7937b13de1b6095b74a5e3cccc44013cb10cb066d8729bdc60a3e1dad1",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_crusader_diehard_flow.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "b10a9076f8a64478a2bd3614719a45bfbd086f6672da47cd7eb0c80964900b56",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_crushield_norm_unique_07_spec.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "d067f75235feb797416db32d082a9d80166773bd1e503a86ad0f1613bf096f3e",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_fortress_nsw_01_scn_autolm.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "fa0a6c85106da182b8a5769750f930c3a3c5b0d239df8419d66f3d8ed2797129",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_malthael_deathhead_flash.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "66095d0f2ffadc53c9f12783c43d5c5e413624f6b8020f9ac390247280d6000e",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_pand_ext_120_edge_nw_exit_01_cluttermask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "62fb561c59d0cea247fc588f3311ee665375f35d8675b186e2792cb7dfcff88c",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_pand_hexmaze_blisters_a.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "e81f0648a6635aba8fcb332f04e09383043cbb4e2f23180f35c45a394085f907",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_tiered_rifts_gem_ui_bg_alpha.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "fb051210301265a189d0ae2428be10bac77ffa94114c1e0751a450916d18dcc7",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_westm_deathorb_b_e01_n01_cluttermask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "0fbba07a833d4dcfc7024eaf313661a0ba8f80a05c6d29b8801c612e10e60dee",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_westm_int_templar_01_worldmask.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "82fb689b59d17b1248c7f5da664d5a472df3189b27565effeb5253af8ad9e848",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/x1_westmarch_king_justinian_spec.tex:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "81ed40a55baa0fc525e4fd55c01b72ed7d8583bc1d13621d0c8342a68ec7a096",
+      "mk3Operation": "raster-image-source.readRegion"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/diablo3-tex/operation/image.read",
+      "kind": "operation",
+      "legacyOperation": "image.read",
+      "adapterOperation": "raster-image-source.readRegion",
+      "targetDataSource": {
+        "contract": "common.view/raster-image-source",
+        "major": 1
+      },
+      "contribution": "modkit-extensions-blizzard/blizzard-diablo/contributions/codec-diablo3-tex.json",
+      "executed": true,
+      "caseIds": [
+        "real:textures/01sun.tex:raster-image-source.readRegion",
+        "real:textures/2duihitcounter.tex:raster-image-source.readRegion",
+        "real:textures/a2dun_aqd_skirts_a_01.tex:raster-image-source.readRegion",
+        "real:textures/a2dun_swr_column_b_01_spec.tex:raster-image-source.readRegion",
+        "real:textures/a2dun_zolt_teslatower_symbol_floor_blend.tex:raster-image-source.readRegion",
+        "real:textures/a3dun_crater_ew_03_e01_s01_cluttermask.tex:raster-image-source.readRegion",
+        "real:textures/a3dun_crater_st_circ_02_e01_s01_worldmask.tex:raster-image-source.readRegion",
+        "real:textures/a3dunicecaves_ice_columns_c_scn_autolm.tex:raster-image-source.readRegion",
+        "real:textures/a4dun_spire_gardensparks.tex:raster-image-source.readRegion",
+        "real:textures/banner_basic_sigilaccent_daggerheart_01.tex:raster-image-source.readRegion",
+        "real:textures/barb_m_hvy_hell_base_b_diff.tex:raster-image-source.readRegion",
+        "real:textures/bedchamber_platform_leoricestate.tex:raster-image-source.readRegion",
+        "real:textures/caout_boneyard_edge_s_01_worldmask.tex:raster-image-source.readRegion",
+        "real:textures/caout_oasis_sub240_lunaticpools_pmamask.tex:raster-image-source.readRegion",
+        "real:textures/cavefloor_b_trdun_cave_diff.tex:raster-image-source.readRegion",
+        "real:textures/crusadermace_diff_lightning.tex:raster-image-source.readRegion",
+        "real:textures/dh_f_nkd_ghost_diff.tex:raster-image-source.readRegion",
+        "real:textures/fallengrunt_a01_diff.tex:raster-image-source.readRegion",
+        "real:textures/floor_stone01_spec_crypt_trdun.tex:raster-image-source.readRegion",
+        "real:textures/ground_leoric_stonetile_a_cracked_highlands_spec_trout_diff_con.tex:raster-image-source.readRegion",
+        "real:textures/helm_dhm_norm_base_02a_diff.tex:raster-image-source.readRegion",
+        "real:textures/indicator_questmob_ring.tex:raster-image-source.readRegion",
+        "real:textures/mapiconmarkerwaypoint.tex:raster-image-source.readRegion",
+        "real:textures/mmap_a2dun_zolt_n_portal.tex:raster-image-source.readRegion",
+        "real:textures/mmap_a4dun_garden_level_01_e05_s05.tex:raster-image-source.readRegion",
+        "real:textures/mmap_p1_tgoblin_realm_prototype3_e02_s02.tex:raster-image-source.readRegion",
+        "real:textures/mmap_p6_moor_ne_120_entrance_01.tex:raster-image-source.readRegion",
+        "real:textures/mmap_trdun_cath_s_entrance_01.tex:raster-image-source.readRegion",
+        "real:textures/mmap_x1_bog_120_border_sew_02.tex:raster-image-source.readRegion",
+        "real:textures/mmap_x1_westm_graveyard_border_nsw_01_gg.tex:raster-image-source.readRegion",
+        "real:textures/monk_lethaldecoy2_firealpha.tex:raster-image-source.readRegion",
+        "real:textures/necro_aotd_d_runleft.tex:raster-image-source.readRegion",
+        "real:textures/p1_tgoblin_realm_prototype3_w01_s03_scn_autolm.tex:raster-image-source.readRegion",
+        "real:textures/p4_forest_coast_border_elbow_nw_02_cluttermask.tex:raster-image-source.readRegion",
+        "real:textures/p4_ratswarm_a_diff.tex:raster-image-source.readRegion",
+        "real:textures/p6_church_chest_rare_spec.tex:raster-image-source.readRegion",
+        "real:textures/p6_necro_bloodmovement_motes_blend.tex:raster-image-source.readRegion",
+        "real:textures/p6_necro_landofthedead_a_buff_disease.tex:raster-image-source.readRegion",
+        "real:textures/p6_nm_m_med_norm_unique_glv_02_diff.tex:raster-image-source.readRegion",
+        "real:textures/polearm_norm_base_07_spec.tex:raster-image-source.readRegion",
+        "real:textures/px_tristramfields_border_elbow_se_01_objectmask_ao_skirt_river_ns_2.tex:raster-image-source.readRegion",
+        "real:textures/shoulderpads_barbm_norm_base_02a_diff.tex:raster-image-source.readRegion",
+        "real:textures/shoulderpads_wizm_norm_base_02a_diff.tex:raster-image-source.readRegion",
+        "real:textures/stranger_lightwisp_alpha2.tex:raster-image-source.readRegion",
+        "real:textures/trdun_cave_goat_nsw_01_worldmask.tex:raster-image-source.readRegion",
+        "real:textures/trout_fields_nephalem_floortile_a.tex:raster-image-source.readRegion",
+        "real:textures/trout_highlands_sub80_caveentrance_a_pmamask.tex:raster-image-source.readRegion",
+        "real:textures/trout_tristramfields_exita_e01_s01_scn_autolm.tex:raster-image-source.readRegion",
+        "real:textures/waterfall_waves.tex:raster-image-source.readRegion",
+        "real:textures/witchdoctor_soulharvest_groundrune_crimsonrune.tex:raster-image-source.readRegion",
+        "real:textures/ws_gargantuan_melee_trailsweep.tex:raster-image-source.readRegion",
+        "real:textures/x1_bog_120_border_elbow_se_02_cluttermask.tex:raster-image-source.readRegion",
+        "real:textures/x1_bog_ground_dirtmud_crab_a_autonm.tex:raster-image-source.readRegion",
+        "real:textures/x1_cdr_f_hvy_norm_unique_bts_02_tintmask.tex:raster-image-source.readRegion",
+        "real:textures/x1_crusader_diehard_flow.tex:raster-image-source.readRegion",
+        "real:textures/x1_crushield_norm_unique_07_spec.tex:raster-image-source.readRegion",
+        "real:textures/x1_fortress_nsw_01_scn_autolm.tex:raster-image-source.readRegion",
+        "real:textures/x1_malthael_deathhead_flash.tex:raster-image-source.readRegion",
+        "real:textures/x1_pand_ext_120_edge_nw_exit_01_cluttermask.tex:raster-image-source.readRegion",
+        "real:textures/x1_pand_hexmaze_blisters_a.tex:raster-image-source.readRegion",
+        "real:textures/x1_tiered_rifts_gem_ui_bg_alpha.tex:raster-image-source.readRegion",
+        "real:textures/x1_westm_deathorb_b_e01_n01_cluttermask.tex:raster-image-source.readRegion",
+        "real:textures/x1_westm_int_templar_01_worldmask.tex:raster-image-source.readRegion",
+        "real:textures/x1_westmarch_king_justinian_spec.tex:raster-image-source.readRegion"
+      ]
+    }
+  ]
+}

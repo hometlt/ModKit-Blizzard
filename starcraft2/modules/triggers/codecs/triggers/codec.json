@@ -1,0 +1,361 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-triggers",
+  "displayName": "StarCraft II Trigger XML",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/modules/triggers/codecs/triggers/src/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./dist/modules/triggers/codecs/triggers/src/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "The native M5 adapter executes the exact-pin TriggerData SAX reader, position-preserving source index, structure validator, G2T/T2G conversion, gamelink rename, and EngineProgram lowering.",
+    "Callers supply dependency TriggerData and TriggerStrings explicitly; installed-game discovery remains host-owned and is proven separately against the installed NativeLib corpus.",
+    "edit.content returns a revision-pinned whole-source edit plan. The registered authored-text writer owns commit and preserves byte identity for no-op edits.",
+    "EngineProgram output is data only. Runtime execution remains owned by the separately permissioned sc2-runtime codec. Structural edits preserve complete Element source slices but do not automatically repair Root ordering metadata or references owned by other elements."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "sc2-triggers",
+        "label": "StarCraft II Trigger XML"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "authored",
+      "compiled",
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "pathGlobs": [
+        "**/Triggers",
+        "**/*.Triggers"
+      ],
+      "signatures": [
+        {
+          "from": "start",
+          "offset": 0,
+          "bytesHex": "3c5472696767657244617461"
+        }
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ],
+      "maxBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "flow-metadata",
+        "contract": "common.document/flow-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/text-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/subject-facts-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "script.symbols",
+        "handlerId": "symbols",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "script.references",
+        "handlerId": "references",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.search",
+        "handlerId": "search",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.compare",
+        "handlerId": "compare",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-triggers.tree-page",
+        "handlerId": "tree-page",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-triggers.element-get",
+        "handlerId": "element-get",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-triggers.parameter-update",
+        "handlerId": "parameter-update",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-triggers.element-insert",
+        "handlerId": "element-insert",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-triggers.element-move",
+        "handlerId": "element-move",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-triggers.element-delete",
+        "handlerId": "element-delete",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "edit.content",
+        "handlerId": "rename-gamelinks",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "export.convert",
+        "handlerId": "export-convert",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-triggers.to-engine",
+        "handlerId": "to-engine",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-triggers.trigger-to-galaxy",
+        "handlerId": "trigger-to-galaxy",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-triggers.galaxy-to-triggers",
+        "handlerId": "galaxy-to-triggers",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "536870912",
+      "maxDepth": 64,
+      "maxNodes": 1000000,
+      "maxScalarBytes": 536870912,
+      "maxDiagnostics": 1000
+    },
+    "traitDeclarations": [
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "content.text"
+      },
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "code.source"
+      },
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "structure.hierarchy"
+      },
+      {
+        "presence": "may-expose",
+        "representation": "source",
+        "id": "content.scripts"
+      }
+    ]
+  }
+}

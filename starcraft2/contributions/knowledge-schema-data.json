@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/knowledge-pack",
+    "major": 1
+  },
+  "id": "blizzard/sc2-data-schema-knowledge",
+  "displayName": "StarCraft II generated schema knowledge",
+  "spec": {
+    "schemaVersion": 1,
+    "sourceLocale": "en",
+    "priority": 10,
+    "gameIds": [
+      "blizzard/starcraft-2"
+    ],
+    "entriesPath": "contributions/knowledge/schema-data.entries.json"
+  }
+}

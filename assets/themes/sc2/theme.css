@@ -1,0 +1,648 @@
+/* SPDX-License-Identifier: MIT */
+/**
+ * StarCraft II theme — an installable theme, not a fork of the UI.
+ *
+ * A theme is exactly this: one stylesheet that redefines tier-1 and tier-2 tokens under its own
+ * `[data-mk-theme]` selector, plus optional decoration on the public `data-mk-part` vocabulary.
+ * It touches no component, imports nothing, and can be shipped by an extension — which is the whole
+ * point of the token architecture (ADR-UI-002).
+ *
+ * Palette follows the Terran console: near-black steel grounds, a cyan-teal signal colour, amber
+ * for warnings and a dim blue grid. Nothing here is a literal from a component; every value lands
+ * on a registered token, so viewers written later inherit the look for free.
+ *
+ * Motion is deliberate and cheap — a scanline drift, a hover sweep, a focus pulse. All of it is
+ * disabled under `prefers-reduced-motion`, which the base stylesheet already enforces, and none of
+ * it animates layout properties, so a 50 000-row table stays as fast as it is under any theme.
+ */
+
+@layer mk.theme {
+  :root[data-mk-theme='sc2'] {
+    color-scheme: dark;
+
+    /* ---- grounds: brushed steel under a blue console light */
+    --mk-color-bg: #061529;
+    --mk-color-surface: #0b1e39;
+    --mk-color-raised: #123055;
+    --mk-color-sunken: #071a30;
+    --mk-color-overlay: #12294a;
+    --mk-color-scrim: rgba(0, 8, 16, 0.72);
+
+    /* ---- text: cold white with a cyan cast, the way SC2 renders console type */
+    --mk-color-fg: #cfe6f7;
+    --mk-color-fg-muted: #8fb6d6;
+    --mk-color-fg-subtle: #5f86a8;
+    --mk-color-fg-inverse: #04141f;
+    --mk-color-fg-disabled: #35505f;
+    --mk-color-fg-link: #4fd8ff;
+    --mk-color-fg-destructive: #ff5f5f;
+
+    /* ---- lines: thin, bright, slightly blue — panel edges rather than borders */
+    --mk-color-border: #1e4a78;
+    --mk-color-border-strong: #3d8fd0;
+    --mk-color-separator: #17395e;
+
+    /* ---- interaction: the signal cyan everything reacts with */
+    --mk-color-accent: #17b8e0;
+    --mk-color-accent-fg: #03151d;
+    --mk-color-accent-muted: #0b3e51;
+    --mk-color-accent-muted-fg: #bff0ff;
+    --mk-color-focus: #4fd8ff;
+    --mk-color-hover: #17406e;
+    --mk-color-active: #1d5288;
+    --mk-color-selection: #1a6194;
+    --mk-color-selection-inactive: #14293a;
+    --mk-color-selection-fg: #eaf9ff;
+    --mk-color-match-highlight: #6a5310;
+    --mk-color-drop-target: #4fd8ff;
+    --mk-color-readonly: #0a141d;
+
+    /* ---- status: the alert colours from the in-game HUD */
+    --mk-status-ok: #46e08a;
+    --mk-status-ok-fg: #04180d;
+    --mk-status-ok-bg: #0a2b1c;
+    --mk-status-ok-border: #1f7d4d;
+    --mk-status-warn: #ffb738;
+    --mk-status-warn-fg: #1c1200;
+    --mk-status-warn-bg: #2e2206;
+    --mk-status-warn-border: #a97614;
+    --mk-status-error: #ff5f5f;
+    --mk-status-error-fg: #200404;
+    --mk-status-error-bg: #2e0d0d;
+    --mk-status-error-border: #a52c2c;
+    --mk-status-info: #4fd8ff;
+    --mk-status-info-fg: #041720;
+    --mk-status-info-bg: #08303f;
+    --mk-status-info-border: #1d7fa1;
+
+    /* ---- scrollbars: thin cyan rails */
+    --mk-color-scrollbar-track: rgba(8, 20, 30, 0.6);
+    --mk-color-scrollbar-thumb: rgba(35, 120, 155, 0.55);
+    --mk-color-scrollbar-thumb-hover: rgba(79, 216, 255, 0.75);
+    --mk-color-scrollbar-thumb-active: rgba(79, 216, 255, 0.95);
+    --mk-color-scrollbar-shadow: rgba(0, 0, 0, 0.6);
+
+    /* ---- canvas and graph */
+    --mk-color-canvas-bg: #051222;
+    --mk-color-canvas-grid: #12293c;
+    --mk-color-canvas-gizmo: #7fa3bb;
+    --mk-color-axis-x: #ff5f5f;
+    --mk-color-axis-y: #46e08a;
+    --mk-color-axis-z: #4fd8ff;
+    --mk-color-canvas-selection: #ffb738;
+    --mk-color-graph-node: #17384f;
+    --mk-color-graph-edge: #2f5a7d;
+    --mk-color-graph-edge-dead: #ff5f5f;
+
+    /* Faction-flavoured categorical ramp: terran blue, protoss gold, zerg violet. */
+    --mk-chart-categorical-1: #4fd8ff;
+    --mk-chart-categorical-2: #ffb738;
+    --mk-chart-categorical-3: #b48cff;
+    --mk-chart-categorical-4: #46e08a;
+    --mk-chart-categorical-5: #ff8a5f;
+    --mk-chart-categorical-6: #5fa8ff;
+
+    --mk-color-diff-added: #0a2b1c;
+    --mk-color-diff-removed: #2e0d0d;
+    --mk-color-diff-changed: #2e2206;
+
+    /* ---- elevation: console panels glow rather than cast a soft shadow */
+    --mk-elevation-1: 0 0 0 1px rgba(47, 90, 125, 0.5);
+    --mk-elevation-2: 0 0 12px rgba(23, 184, 224, 0.18);
+    --mk-elevation-3: 0 0 28px rgba(23, 184, 224, 0.28);
+    --mk-shadow-focus-ring: 0 0 0 1px #4fd8ff, 0 0 10px rgba(79, 216, 255, 0.55);
+
+    /* Squared-off corners read as a HUD; rounded ones read as a web app. */
+    --mk-radius-sm: 0;
+    --mk-radius-md: 2px;
+    --mk-radius-lg: 3px;
+  }
+
+  /* ------------------------------------------------------------------ background */
+  /*
+   * A drifting scanline field behind the workbench. Painted on a pseudo-element and animated with
+   * `background-position` only — no layout, no paint of the content above it.
+   */
+  :root[data-mk-theme='sc2'] body::before {
+    position: fixed;
+    z-index: 0;
+    background-image:
+      repeating-linear-gradient(180deg, rgba(79, 216, 255, 0.045) 0 1px, transparent 1px 3px),
+      radial-gradient(ellipse at 50% -10%, rgba(23, 184, 224, 0.16), transparent 60%),
+      radial-gradient(ellipse at 10% 110%, rgba(23, 184, 224, 0.09), transparent 55%);
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    animation: mk-sc2-scan 9s linear infinite;
+  }
+
+  @keyframes mk-sc2-scan {
+    from {
+      background-position:
+        0 0,
+        0 0,
+        0 0;
+    }
+    to {
+      background-position:
+        0 3px,
+        0 0,
+        0 0;
+    }
+  }
+
+  /* ------------------------------------------------------------------ panels */
+  :root[data-mk-theme='sc2'] [data-mk-part='workbench.titlebar'],
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.toolbar'],
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.tabstrip'] {
+    background-image: linear-gradient(180deg, rgba(47, 90, 125, 0.28), transparent 70%);
+    border-bottom-color: var(--mk-color-border-strong);
+  }
+
+  /* ------------------------------------------------------------------ controls */
+  /*
+   * A light sweeps across a control on hover — the SC2 button tell. `transform` on a pseudo-element
+   * keeps it on the compositor, so it never triggers layout on the control itself.
+   */
+  :root[data-mk-theme='sc2'] [data-mk-part='operations.button'],
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.action'],
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.add'],
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.remove'],
+  :root[data-mk-theme='sc2'] [data-mk-part='transport.button'] {
+    position: relative;
+    border-color: var(--mk-color-border-strong);
+    background-image: linear-gradient(180deg, rgba(47, 90, 125, 0.35), rgba(6, 14, 22, 0.6));
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: var(--mk-font-size-xs);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='operations.button']::after,
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.action']::after,
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.add']::after,
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.remove']::after,
+  :root[data-mk-theme='sc2'] [data-mk-part='transport.button']::after {
+    position: absolute;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, rgba(79, 216, 255, 0.35), transparent);
+    content: '';
+    inset-block: 0;
+    inset-inline-start: -50%;
+    pointer-events: none;
+    transform: translateX(0);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='operations.button']:hover::after,
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.action']:hover::after,
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.add']:hover::after,
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.remove']:hover::after,
+  :root[data-mk-theme='sc2'] [data-mk-part='transport.button']:hover::after {
+    animation: mk-sc2-sweep 620ms var(--mk-motion-ease);
+  }
+
+  @keyframes mk-sc2-sweep {
+    to {
+      transform: translateX(360%);
+    }
+  }
+
+  /* The focused editor group pulses, so the target for the next opened file is unmistakable. */
+  :root[data-mk-theme='sc2']
+    [data-mk-part='explorer.group'][data-mk-state~='active']
+    [data-mk-part='explorer.tabstrip'] {
+    animation: mk-sc2-pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes mk-sc2-pulse {
+    0%,
+    100% {
+      border-bottom-color: var(--mk-color-accent);
+      box-shadow: 0 1px 0 rgba(23, 184, 224, 0.15);
+    }
+    50% {
+      border-bottom-color: #4fd8ff;
+      box-shadow: 0 1px 10px rgba(79, 216, 255, 0.45);
+    }
+  }
+
+  /* Selected rows get the HUD's leading marker rather than a flat wash. */
+  :root[data-mk-theme='sc2']
+    [data-mk-part='filetree.node'][data-mk-state~='selected']
+    > [data-mk-part='filetree.row'] {
+    box-shadow: inset 2px 0 0 var(--mk-color-accent);
+    background-image: linear-gradient(90deg, rgba(23, 184, 224, 0.22), transparent 70%);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.filetab'][data-mk-state~='selected'] {
+    box-shadow: inset 0 -2px 0 var(--mk-color-accent);
+  }
+}
+
+@layer mk.theme {
+  /* ------------------------------------------------------------------ shimmer */
+  /*
+   * A second, slower layer over the scanlines: a wide diagonal sheen that drifts across the whole
+   * surface. Two layers rather than one because a single animation reads as a repeating loop, while
+   * two at different periods never quite line up and the ground looks alive instead of ticking.
+   *
+   * `background-position` only — no filters, no opacity animation on a full-screen element, both of
+   * which force a repaint of everything beneath.
+   */
+  :root[data-mk-theme='sc2'] body::after {
+    position: fixed;
+    z-index: 0;
+    background-image:
+      linear-gradient(
+        115deg,
+        transparent 30%,
+        rgba(79, 216, 255, 0.05) 45%,
+        rgba(140, 220, 255, 0.08) 50%,
+        rgba(79, 216, 255, 0.05) 55%,
+        transparent 70%
+      ),
+      linear-gradient(200deg, transparent 40%, rgba(23, 184, 224, 0.04) 50%, transparent 60%);
+    background-size:
+      280% 280%,
+      340% 340%;
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    animation:
+      mk-sc2-sheen 17s ease-in-out infinite alternate,
+      mk-sc2-drift 26s linear infinite;
+  }
+
+  @keyframes mk-sc2-sheen {
+    from {
+      background-position:
+        0% 0%,
+        100% 0%;
+    }
+    to {
+      background-position:
+        100% 100%,
+        0% 100%;
+    }
+  }
+
+  @keyframes mk-sc2-drift {
+    from {
+      opacity: 0.75;
+    }
+    50% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0.75;
+    }
+  }
+
+  /* ------------------------------------------------------------------ button press */
+  /*
+   * Hover sweeps (defined above); pressing adds a short inward flash and a 1px sink. The sink is a
+   * `translateY`, not a margin or a border change, so pressing never reflows the row of buttons.
+   */
+  :root[data-mk-theme='sc2'] [data-mk-part='operations.button']:active,
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.action']:active,
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.add']:active,
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.remove']:active,
+  :root[data-mk-theme='sc2'] [data-mk-part='transport.button']:active {
+    color: var(--mk-color-selection-fg);
+    border-color: var(--mk-color-focus);
+    background-image: linear-gradient(180deg, rgba(79, 216, 255, 0.45), rgba(13, 79, 107, 0.75));
+    box-shadow:
+      inset 0 0 12px rgba(79, 216, 255, 0.5),
+      0 0 10px rgba(79, 216, 255, 0.35);
+    transform: translateY(1px);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='operations.button'],
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.action'],
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.add'],
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.remove'],
+  :root[data-mk-theme='sc2'] [data-mk-part='transport.button'] {
+    transition:
+      box-shadow var(--mk-motion-fast) var(--mk-motion-ease),
+      transform var(--mk-motion-fast) var(--mk-motion-ease),
+      border-color var(--mk-motion-fast) var(--mk-motion-ease);
+  }
+
+  /* ------------------------------------------------------------------ window bar */
+  :root[data-mk-theme='sc2'] [data-mk-part='titlebar'] {
+    position: relative;
+    border-bottom-color: var(--mk-color-border-strong);
+    background-image:
+      linear-gradient(180deg, rgba(47, 90, 125, 0.5), rgba(5, 9, 15, 0.9)),
+      repeating-linear-gradient(90deg, rgba(79, 216, 255, 0.05) 0 2px, transparent 2px 6px);
+  }
+
+  /* A charged rail under the bar, the way an SC2 panel edge reads. */
+  :root[data-mk-theme='sc2'] [data-mk-part='titlebar']::after {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(79, 216, 255, 0.85),
+      rgba(23, 184, 224, 0.35),
+      transparent
+    );
+    background-size: 220% 100%;
+    content: '';
+    inset-block-end: -1px;
+    inset-inline: 0;
+    animation: mk-sc2-rail 6s linear infinite;
+  }
+
+  @keyframes mk-sc2-rail {
+    from {
+      background-position: -60% 0;
+    }
+    to {
+      background-position: 160% 0;
+    }
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='titlebar.title'] {
+    color: var(--mk-color-fg);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    text-shadow: 0 0 8px rgba(79, 216, 255, 0.55);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='titlebar.button'] {
+    position: relative;
+    color: var(--mk-color-fg-muted);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='titlebar.button']:hover {
+    color: #eaf9ff;
+    background: linear-gradient(180deg, rgba(23, 184, 224, 0.35), transparent);
+    text-shadow: 0 0 10px rgba(79, 216, 255, 0.9);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='titlebar.button']:active {
+    background: linear-gradient(180deg, rgba(79, 216, 255, 0.55), rgba(13, 79, 107, 0.8));
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='titlebar.button'][data-command='close']:hover {
+    background: linear-gradient(180deg, #ff5f5f, #8f1f1f);
+    text-shadow: 0 0 10px rgba(255, 120, 120, 0.9);
+  }
+}
+
+@layer mk.theme {
+  /*
+   * Panel frames.
+   *
+   * The SC2 console draws a panel as a dark inset field inside a bright rule, with a second faint
+   * rule just inside it — that doubled edge is what makes the surface read as a screen set into a
+   * console rather than as a flat div. Both rules are `box-shadow` insets, so no extra element and
+   * no effect on layout.
+   */
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.sidebar'],
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.group'],
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.pane'],
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.groups'] {
+    box-shadow:
+      inset 0 0 0 1px rgba(61, 143, 208, 0.55),
+      inset 0 0 0 2px rgba(6, 21, 41, 0.9),
+      inset 0 0 26px rgba(8, 30, 58, 0.85);
+    background-image: linear-gradient(180deg, rgba(29, 82, 136, 0.22), transparent 45%);
+  }
+
+  /*
+   * Headings and navigation labels are uppercase and widely tracked — the single strongest cue of
+   * the SC2 interface, and cheaper than any amount of decoration.
+   */
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.group'],
+  :root[data-mk-theme='sc2'] [data-mk-part='titlebar.menu-item'],
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.tab'],
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.filetab'] {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: var(--mk-font-size-xs);
+  }
+
+  /* Left-hand navigation reads as a stack of consoles, each in its own lit frame. */
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.group'] {
+    border: 1px solid rgba(61, 143, 208, 0.45);
+    background-image: linear-gradient(180deg, rgba(29, 82, 136, 0.5), rgba(7, 26, 48, 0.65));
+    box-shadow: inset 0 1px 0 rgba(140, 205, 255, 0.18);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.group'][data-mk-state~='selected'] {
+    border-color: #6fd3ff;
+    background-image: linear-gradient(180deg, rgba(58, 148, 214, 0.85), rgba(16, 62, 104, 0.9));
+    box-shadow:
+      inset 0 1px 0 rgba(190, 235, 255, 0.35),
+      0 0 14px rgba(79, 216, 255, 0.35);
+  }
+
+  /*
+   * The primary action is amber, not cyan.
+   *
+   * SC2 reserves the warm colour for the one button that commits — Activate, Play, Rejoin — and
+   * keeps everything else blue. Copying that split is what makes the palette read as the game's
+   * rather than as a generic dark theme, so the commit affordances are singled out by part.
+   */
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.add'],
+  :root[data-mk-theme='sc2'] [data-mk-part='operations.button'] {
+    color: #ffe6b8;
+    border-color: #c07a17;
+    background-image: linear-gradient(180deg, rgba(240, 160, 32, 0.9), rgba(120, 66, 6, 0.95));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 226, 170, 0.45),
+      0 0 12px rgba(240, 160, 32, 0.35);
+    text-shadow: 0 1px 2px rgba(60, 28, 0, 0.8);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.add']:hover,
+  :root[data-mk-theme='sc2'] [data-mk-part='operations.button']:hover {
+    border-color: #ffc55c;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 240, 205, 0.6),
+      0 0 20px rgba(255, 190, 80, 0.55);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.add']:active,
+  :root[data-mk-theme='sc2'] [data-mk-part='operations.button']:active {
+    background-image: linear-gradient(180deg, rgba(255, 200, 100, 1), rgba(150, 84, 8, 1));
+    box-shadow: inset 0 0 14px rgba(90, 45, 0, 0.8);
+  }
+
+  /* Selected rows and tiles get the bright cyan rim the game uses for the current choice. */
+  :root[data-mk-theme='sc2']
+    [data-mk-part='filetree.node'][data-mk-state~='selected']
+    > [data-mk-part='filetree.row'] {
+    box-shadow:
+      inset 2px 0 0 #6fd3ff,
+      inset 0 0 0 1px rgba(111, 211, 255, 0.35),
+      0 0 12px rgba(79, 216, 255, 0.25);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.filetab'][data-mk-state~='selected'] {
+    background-image: linear-gradient(180deg, rgba(29, 82, 136, 0.9), rgba(11, 30, 57, 0.9));
+    box-shadow:
+      inset 0 -2px 0 #6fd3ff,
+      inset 0 1px 0 rgba(150, 215, 255, 0.3);
+  }
+
+  /* The window bar carries the same doubled rule so the app frames itself like a console. */
+  :root[data-mk-theme='sc2'] [data-mk-part='titlebar'] {
+    box-shadow: inset 0 -1px 0 rgba(61, 143, 208, 0.5);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='titlebar.menu-panel'] {
+    border-color: #3d8fd0;
+    background-image: linear-gradient(180deg, rgba(18, 41, 74, 0.98), rgba(7, 22, 40, 0.98));
+    box-shadow:
+      inset 0 0 0 1px rgba(111, 211, 255, 0.25),
+      0 0 24px rgba(8, 40, 70, 0.9);
+  }
+}
+
+@layer mk.theme {
+  /*
+   * Chamfered corners — the signature SC2 silhouette.
+   *
+   * Applied only to chrome that does not scroll: a `clip-path` cuts children, so putting it on a
+   * scrolling pane would slice the scrollbar and the last row. Buttons, tabs, menus and the title
+   * bar get the angle; the tree and the editor keep square corners and take their shape from the
+   * frame drawn around them instead.
+   */
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.add'],
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.remove'],
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.action'],
+  :root[data-mk-theme='sc2'] [data-mk-part='operations.button'],
+  :root[data-mk-theme='sc2'] [data-mk-part='transport.button'] {
+    clip-path: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='titlebar.menu-panel'],
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.tabmenu'] {
+    clip-path: polygon(
+      12px 0,
+      100% 0,
+      100% calc(100% - 12px),
+      calc(100% - 12px) 100%,
+      0 100%,
+      0 12px
+    );
+    /* Glass, so the console reads as layered depth rather than stacked opaque cards. */
+    backdrop-filter: blur(14px) saturate(140%);
+    background-color: rgba(10, 28, 52, 0.82);
+  }
+
+  /*
+   * Corner brackets.
+   *
+   * Two small L-marks per panel, drawn as gradients on one pseudo-element instead of four boxes.
+   * They sit above the surface but below content and never take pointer events.
+   */
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.sidebar'],
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.group'],
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.pane'] {
+    position: relative;
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.sidebar']::before,
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.group']::before,
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.pane']::before {
+    position: absolute;
+    z-index: 1;
+    background-image:
+      linear-gradient(90deg, #6fd3ff 0 14px, transparent 14px),
+      linear-gradient(180deg, #6fd3ff 0 14px, transparent 14px),
+      linear-gradient(270deg, #6fd3ff 0 14px, transparent 14px),
+      linear-gradient(0deg, #6fd3ff 0 14px, transparent 14px);
+    background-repeat: no-repeat;
+    background-size:
+      100% 2px,
+      2px 100%,
+      100% 2px,
+      2px 100%;
+    background-position:
+      left top,
+      left top,
+      right bottom,
+      right bottom;
+    content: '';
+    inset: 0;
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
+  /*
+   * Depth. A single flat fill reads as a web panel; the console has a lit top edge, a darker belly
+   * and a faint horizon line. All three come from one gradient, so there is no extra paint layer.
+   */
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.group'],
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.pane'] {
+    background-image:
+      linear-gradient(180deg, rgba(64, 142, 214, 0.24), transparent 22%),
+      radial-gradient(120% 60% at 50% 0%, rgba(37, 108, 176, 0.28), transparent 65%),
+      linear-gradient(180deg, transparent 60%, rgba(3, 12, 26, 0.55));
+  }
+
+  /* Tabs take the angled leading edge the game uses for its section headers. */
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.filetab'] {
+    clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
+    transition:
+      background var(--mk-motion-fast) var(--mk-motion-ease),
+      box-shadow var(--mk-motion-fast) var(--mk-motion-ease);
+  }
+
+  /* Rows lift on hover: a leading rule plus a wash, no movement that could reflow the list. */
+  :root[data-mk-theme='sc2'] [data-mk-part='filetree.row']:hover {
+    background-image: linear-gradient(90deg, rgba(111, 211, 255, 0.16), transparent 60%);
+    box-shadow: inset 2px 0 0 rgba(111, 211, 255, 0.55);
+  }
+
+  /* Inputs read as recessed instrument fields rather than as web controls. */
+  :root[data-mk-theme='sc2'] [data-mk-part='search'],
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.input'],
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.select'],
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.viewpicker'] {
+    border-color: rgba(61, 143, 208, 0.7);
+    background-image: linear-gradient(180deg, rgba(3, 12, 26, 0.9), rgba(14, 40, 70, 0.6));
+    box-shadow:
+      inset 0 2px 6px rgba(0, 0, 0, 0.55),
+      inset 0 0 0 1px rgba(111, 211, 255, 0.12);
+  }
+
+  :root[data-mk-theme='sc2'] [data-mk-part='search']:focus-within,
+  :root[data-mk-theme='sc2'] [data-mk-part='settings.input']:focus-visible,
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.viewpicker']:focus-visible {
+    border-color: #6fd3ff;
+    box-shadow:
+      inset 0 2px 6px rgba(0, 0, 0, 0.5),
+      0 0 14px rgba(111, 211, 255, 0.45);
+  }
+
+  /*
+   * Reduced motion: base.css neutralises animation under `.modkit-viewer`, but the console decor
+   * above is painted on `body` — outside that scope — so the theme carries its own guard
+   * (themes:check requires one from every animating theme).
+   */
+  @media (prefers-reduced-motion: reduce) {
+    :root[data-mk-theme='sc2'] body::before,
+    :root[data-mk-theme='sc2'] body::after,
+    :root[data-mk-theme='sc2'] [data-mk-part]::before,
+    :root[data-mk-theme='sc2'] [data-mk-part]::after,
+    :root[data-mk-theme='sc2'] [data-mk-part] {
+      animation-duration: 1ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+    }
+  }
+
+  /* The footer closes the console with the same charged rail the title bar opens it with. */
+  :root[data-mk-theme='sc2'] [data-mk-part='explorer.status'] {
+    border-top: 1px solid rgba(61, 143, 208, 0.55);
+    background-image: linear-gradient(180deg, rgba(29, 82, 136, 0.35), transparent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}

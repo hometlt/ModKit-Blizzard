@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-replay",
+  "displayName": "StarCraft II replay",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/replay/codecs/replay/runtime.js",
+      "target": {
+        "environments": ["node"]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": ["read-source"]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./modules/replay/codecs/replay/runtime.js",
+      "target": {
+        "environments": ["browser-worker", "node-worker"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": ["read-source"]
+    }
+  ],
+  "limitations": [
+    "Opens MPQ-backed replays through the host-owned container alias and reads the known replay.* streams as bounded namespace entries.",
+    "The MPQ carrier exposes its bounded user-data preamble through the generic namespace contract. Replay inspection decodes the header, attributes, tracker and load-info streams and selects the exact bundled protocol automatically for init/game/message streams.",
+    "blizzard/sc2-replay.decode-stream accepts an explicit build override and only permits nearest-lower fallback when requested. Tracker events publish a standard seekable transport (with a timeline of participants, unit and army-value series and born/died/upgrade markers), a synchronized sampled world scene and high-level replay analysis. Unit positions are interpolated tracker samples, not a game simulation. The mod loader opens a replay inside the cache archives its initData names. Analysis can resolve a supplied dependency-set request through common.data/resolved-workspace@1. Command intents remain numeric unless the caller supplies the matching stable IDs and resolved Abil catalog request for exact semantics. Editing and writing remain unavailable."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "sc2-replay",
+        "label": "StarCraft II replay"
+      }
+    ],
+    "roles": ["semantic"],
+    "sourceTopology": "namespace",
+    "artifactStages": ["runtime"],
+    "openIntents": ["probe", "inspect", "full", "export"],
+    "match": {
+      "extensions": ["sc2replay"]
+    },
+    "probe": {
+      "kind": "namespace",
+      "markers": [
+        "replay.details",
+        "replay.initData",
+        "replay.attributes.events",
+        "replay.game.events",
+        "replay.message.events",
+        "replay.tracker.events",
+        "replay.load.info"
+      ],
+      "maxEntries": 7,
+      "maxBytes": 65536,
+      "maxDepth": 4,
+      "maxPathBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "flow-metadata",
+        "contract": "common.document/flow-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/namespace-entry-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/transport-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/world-scene-source",
+        "major": 1
+      }
+    ],
+    "requires": [
+      {
+        "contract": "common.blizzard/s2protocol",
+        "major": 1,
+        "range": "^1.0.0"
+      }
+    ],
+    "operations": [
+      {
+        "id": "export.convert",
+        "handlerId": "export-convert",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "blizzard/sc2-replay.analyze",
+        "handlerId": "analyze",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "media.play-pause",
+        "handlerId": "transport-play-pause",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["none"]
+      },
+      {
+        "id": "media.seek",
+        "handlerId": "transport-seek",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["none"]
+      },
+      {
+        "id": "media.set-rate",
+        "handlerId": "transport-set-rate",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["none"]
+      },
+      {
+        "id": "media.select-track",
+        "handlerId": "transport-select-track",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["none"]
+      },
+      {
+        "id": "blizzard/sc2-replay.decode-stream",
+        "handlerId": "decode-stream",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "blizzard/sc2-replay.timeline",
+        "handlerId": "timeline",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "blizzard/sc2-replay.sample-scene",
+        "handlerId": "sample-scene",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "blizzard/sc2-replay.player-state",
+        "handlerId": "player-state",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "blizzard/sc2-replay.command-intents",
+        "handlerId": "command-intents",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["none"]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["bytes"]
+      },
+      {
+        "id": "container.extract",
+        "handlerId": "extract-entry",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["bytes"]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 1000000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "container": {
+      "formatId": "mpq"
+    }
+  }
+}

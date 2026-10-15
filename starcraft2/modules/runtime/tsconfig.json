@@ -1,0 +1,24 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "../..",
+    "outDir": "../../dist",
+    "composite": false,
+    "incremental": true,
+    "tsBuildInfoFile": "../../../node_modules/.cache/tsbuildinfo/starcraft2-runtime.tsbuildinfo",
+    "allowJs": true,
+    "checkJs": false,
+    "baseUrl": "../..",
+    "paths": {
+      "@modkit/blizzard-starcraft2/data/runtime-unit-slice": ["dist/modules/data/services/uvd/unit-slice.d.ts"],
+      "@modkit/blizzard-starcraft2/galaxy/analysis/*": ["dist/modules/galaxy/services/analysis/*"]
+    },
+    "lib": ["ES2023", "DOM"]
+  },
+  "files": [
+    "services/subject-composition.ts",
+    "services/galaxy-runtime-closure.ts",
+    "services/galaxy-spawn-lowering.ts",
+    "services/world-points.ts"
+  ]
+}

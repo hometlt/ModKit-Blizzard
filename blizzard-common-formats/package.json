@@ -1,0 +1,46 @@
+{
+  "name": "@modkit/blizzard-common-formats",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "description": "Blizzard common-format codecs for Modkit.",
+  "files": [
+    "codecs",
+    "contributions",
+    "modules",
+    "src",
+    "README.md"
+  ],
+  "modkit": {
+    "schemaVersion": 1,
+    "publisher": "blizzard",
+    "id": "common-formats",
+    "presentation": {
+      "displayName": "Blizzard Common Formats",
+      "description": "Blizzard common-format codecs for Modkit.",
+      "vendor": {
+        "id": "blizzard",
+        "displayName": "Blizzard"
+      }
+    },
+    "contributionManifests": [
+      "./contributions/*.json",
+      "./codecs/*/codec.json",
+      "./modules/s2protocol/provider.json"
+    ]
+  },
+  "exports": {
+    "./codecs/blp": "./codecs/blp/runtime.js",
+    "./content-address/cache-handle": {
+      "types": "./modules/content-address/cache-handle.d.ts",
+      "default": "./modules/content-address/cache-handle.js"
+    },
+    "./s2protocol": "./modules/s2protocol/index.js"
+  },
+  "dependencies": {
+    "@modkit/codec-kit": "file:../vendor/modkit-codec-kit-1.0.0.tgz",
+    "@modkit/core": "file:../vendor/modkit-core-0.1.0.tgz",
+    "@modkit/sdk": "file:../vendor/modkit-sdk-0.1.0.tgz"
+  }
+}

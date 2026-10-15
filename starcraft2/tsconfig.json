@@ -1,0 +1,52 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@modkit/blizzard-starcraft2/galaxy/language-core": [
+        "modules/galaxy/language-core/index.ts"
+      ],
+      "@modkit/blizzard-starcraft2/galaxy/analysis/*": [
+        "modules/galaxy/services/analysis/*"
+      ],
+      "@modkit/blizzard-starcraft2/triggers/editing/*": [
+        "modules/triggers/services/editing/*"
+      ],
+      "@modkit/blizzard-starcraft2/triggers/document/*": [
+        "modules/triggers/shared/trigger-document/*"
+      ],
+      "@modkit/blizzard-starcraft2/triggers/galaxy-conversion/internal/*": [
+        "modules/triggers/services/galaxy-conversion/internal/*"
+      ]
+    },
+    "verbatimModuleSyntax": false,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
+    "noFallthroughCasesInSwitch": false,
+    "isolatedModules": false
+  },
+  "files": [
+    "modules/data/services/schema/catalog-registry.ts",
+    "modules/data/services/schema/full-data-schema.js",
+    "modules/data/services/schema/generated/sc2-data-schema.json",
+    "modules/data/shared/catalog-engine/gamedata-order.ts",
+    "modules/data/shared/catalog-engine/xml/parser.ts",
+    "modules/data/shared/catalog-engine/xml/types.ts",
+    "src/types/sax.d.ts"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "modules/data/shared/catalog-engine/sc2-schema/**/*.ts"
+  ],
+  "exclude": [
+    "modules/map/**",
+    "modules/mod/**",
+    "modules/layout/shared/format/relations.ts",
+    "modules/data/shared/catalog-engine/index.ts",
+    "modules/data/shared/catalog-engine/registry.ts",
+    "modules/layout/shared/layout-engine/sc2-layout-core/bin/**"
+  ]
+}

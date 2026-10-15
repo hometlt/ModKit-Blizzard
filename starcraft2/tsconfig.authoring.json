@@ -1,0 +1,26 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true,
+    "composite": false,
+    "allowJs": true,
+    "checkJs": false,
+    "verbatimModuleSyntax": false,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false
+  },
+  "include": [
+    "codecs/**/*.ts",
+    "modules/style/codecs/style/**/*.ts",
+    "modules/style/providers/language/**/*.ts",
+    "modules/wizard/codecs/wizard/**/*.ts",
+    "modules/cutscene/codecs/cutscene/**/*.ts",
+    "modules/banks/codecs/bank/**/*.ts",
+    "modules/banks/providers/language/**/*.ts",
+    "modules/strings/codecs/strings/**/*.ts",
+    "modules/strings/providers/language/**/*.ts",
+    "shared/language/style-refs.ts",
+    "shared/language/string-workspace.ts"
+  ]
+}

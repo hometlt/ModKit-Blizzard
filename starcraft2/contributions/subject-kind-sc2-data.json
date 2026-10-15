@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "contract": { "id": "modkit/subject-kind-definition", "major": 1 },
+  "id": "blizzard/sc2-data-kind",
+  "displayName": "StarCraft II GameData",
+  "spec": {
+    "kindId": "sc2-data",
+    "label": "StarCraft II GameData"
+  }
+}

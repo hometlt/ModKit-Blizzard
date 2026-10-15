@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/subject-kind-definition",
+    "major": 1
+  },
+  "id": "blizzard/sc2-map-kind",
+  "displayName": "StarCraft II map",
+  "spec": {
+    "kindId": "sc2-map",
+    "label": "StarCraft II map"
+  }
+}

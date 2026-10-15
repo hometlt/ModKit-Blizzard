@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/heroes-installation",
+  "displayName": "Heroes of the Storm installation discovery",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node-windows",
+      "entrypoint": "./providers/heroes-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ],
+        "operatingSystems": [
+          "windows"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "trusted-node-portable",
+      "entrypoint": "./providers/heroes-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ],
+        "operatingSystems": [
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "node-worker-windows",
+      "entrypoint": "./providers/heroes-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker"
+        ],
+        "operatingSystems": [
+          "windows"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "node-worker-portable",
+      "entrypoint": "./providers/heroes-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker"
+        ],
+        "operatingSystems": [
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "heroes-installation-v1",
+        "contract": "common.game/installation-discovery",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": [
+            "blizzard/heroes-of-the-storm"
+          ],
+          "markers": [
+            {
+              "gameId": "blizzard/heroes-of-the-storm",
+              "files": [
+                ".build.info",
+                "Heroes of the Storm.exe"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Candidates are configured paths, the MODKIT_HOTS_ROOT environment root, the Windows uninstall entry 'Heroes of the Storm' (InstallLocation) read through the host installation probes, platform defaults, and the folders the host's folder search found by this offer's markers (.build.info beside Heroes of the Storm.exe), confirmed last. The uninstall entry may name a folder the user has since moved; it is only a candidate. A host without probes or folder search (a browser) uses configured paths and the environment root only.",
+    "An installation is confirmed by the active record in .build.info naming the Heroes CASC product (hero, or a hero-* CDN path such as tpr/Hero-Live-a when the product column is empty). The HeroesData payload folder is reported but not required.",
+    "Launching, provisioning and content mounting are outside this provider."
+  ]
+}

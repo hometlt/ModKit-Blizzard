@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/starcraft2-data",
+  "displayName": "StarCraft II semantic catalog analysis",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/data/providers/catalog-analysis/runtime.js",
+      "target": {
+        "environments": ["node"]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "worker-portable",
+      "entrypoint": "./modules/data/providers/catalog-analysis/runtime.js",
+      "target": {
+        "environments": ["node-worker", "browser-worker"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "starcraft2-data-v1",
+        "contract": "common.data/catalog-analysis",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": ["blizzard/starcraft-2"]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "The embedded generated schema covers the 644 types, 108 namespaces and 7,174 direct/structured fields of the pinned clean legacy schema; newer installed additions are preserved with explicit unverified diagnostics instead of inferred typed-link claims.",
+    "This service performs bounded ordered XML patch merge and entity inheritance queries; token substitution, localization lookup, rename/export, persistent caches and edit transactions remain outside its frozen catalog-analysis v1 result."
+  ]
+}

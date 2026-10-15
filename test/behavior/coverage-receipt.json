@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "sourceRepository": "historical modkit-core",
+  "sourceCommit": "f69acd4d87fc1876b21357fd5453bd0175c50e22",
+  "sourceSnapshotRoot": "test/history/core-f69acd4",
+  "sourcePackages": [
+    "packages/testkit"
+  ],
+  "excludedFamilies": [
+    "starcraft2",
+    "m3"
+  ],
+  "suites": [
+    {
+      "id": "blp",
+      "formats": [
+        "BLP1",
+        "BLP2"
+      ],
+      "extensionRoot": "blizzard-common-formats",
+      "sourceTest": "packages/testkit/test/mk2-blizzard-common-formats-codec.test.ts",
+      "sourceSha256": "2e0ba86aaeaf1813b5b494e6c050c9aa0464cbef88506d283bb751f0089547ae",
+      "targetTest": "test/behavior/mk2-blizzard-common-formats-codec.test.ts",
+      "targetSha256": "3fda02cee1b8776dfcf07a24974fa49480166f87db30b51803f3e016eb17f95d",
+      "testCases": 3,
+      "contractCases": [
+        "raster decoded access",
+        "metadata-only raster"
+      ],
+      "negativeCases": [
+        "mip bounds",
+        "truncated top mip",
+        "decoded byte budget"
+      ]
+    },
+    {
+      "id": "diablo",
+      "formats": [
+        "APP",
+        "TEX"
+      ],
+      "extensionRoot": "blizzard-diablo",
+      "sourceTest": "packages/testkit/test/mk2-diablo-codecs.test.ts",
+      "sourceSha256": "ffdaf6f889b0c22c42955d81dace137846818ea2315119a7d5bef7719bdf96eb",
+      "targetTest": "test/behavior/mk2-diablo-codecs.test.ts",
+      "targetSha256": "693816534f7fdb53a516a1f8088f90dfa9a0a91eb9aaf0fa49336bcac33ecbd0",
+      "testCases": 3,
+      "contractCases": [
+        "decoded model scene",
+        "raw raster",
+        "BC1 raster"
+      ],
+      "negativeCases": [
+        "geometry bounds",
+        "mip bounds",
+        "node budget",
+        "decoded byte budget"
+      ],
+      "localDivergence": "The Diablo III codec now decodes through the ported MK2 implementation, which also reads .ani/.ans/.acr. The assertions here are unchanged; the summary gained an `animations` count and the primitive gained skin buffers."
+    },
+    {
+      "id": "warcraft-3",
+      "formats": [
+        "MDX",
+        "MDL"
+      ],
+      "extensionRoot": "blizzard-warcraft-3",
+      "sourceTest": "packages/testkit/test/mk2-warcraft3-codec.test.ts",
+      "sourceSha256": "fafe134f2e180d7c4017f5eec06c72ea40effe95861b0611904ade0e63600c1a",
+      "targetTest": "test/behavior/mk2-warcraft3-codec.test.ts",
+      "targetSha256": "f75d4814fb1629b3d6ef186c9c99f5fdc5893cb9b1d0f2492f76c2dca0e8527f",
+      "testCases": 10,
+      "contractCases": [
+        "decoded model facets",
+        "authored geometry, material, bone and sequence facets",
+        "MDL serialisation of the same model",
+        "UVM export agreeing with the published facets",
+        "model.write verified by reopening",
+        "UVM -> Warcraft III through the native encoder",
+        "a UVM document from another game converts without a Warcraft III residual"
+      ],
+      "negativeCases": [
+        "missing VERS",
+        "chunk out of bounds",
+        "node budget",
+        "undecodable model",
+        "export without a stated unit scale",
+        "unreadable UVM"
+      ],
+      "localDivergence": "Rewritten in MK3 when the codec stopped being a chunk inventory and started publishing model facets. The Core snapshot asserts the inventory-only summary and is kept as the record of what this suite used to prove.",
+      "supersededBy": "blizzard-warcraft-3/test/mdx-codec.test.ts",
+      "reason": "Its case 'refuses an export that does not state its unit scale' asserts the refusal the owner decision of 2026-09-23 replaced (blizzard 7b0227c0: a Warcraft III world unit is 0.35 m unless the caller states one). The nine other cases carry over unchanged into mdx-codec.test.ts, which asserts the default and keeps the four refusals that still hold. The pinned file stays as migration history and leaves the run."
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "minimal.blp",
+      "sha256": "01a9bd546382c8131dd33a3c53f0d9e28d8cde3b4626af63294428e6fe5e1313"
+    },
+    {
+      "name": "minimal.diablo3.app",
+      "sha256": "23b6be9059365b41066d1d7fadade0224136e238de711e32fff9fb6a08e3d118"
+    },
+    {
+      "name": "minimal.diablo3.tex",
+      "sha256": "d769616b4bcda0769683910a7a53e1949f65055559b9b83c79df40a0ff75d709"
+    },
+    {
+      "name": "minimal.mdx",
+      "sha256": "30c47af860743ebbcef1d2293329edb32aa3e3bb508e536fe1f02e662facda9e"
+    }
+  ]
+}

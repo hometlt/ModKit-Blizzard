@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/war3-map-encoder",
+  "displayName": "Warcraft III map encoder from UVW",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/war3-map/encoder-provider.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "worker-portable",
+      "entrypoint": "./dist/war3-map/encoder-provider.js",
+      "target": {
+        "environments": [
+          "node-worker",
+          "browser-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "war3-map-from-uvw",
+        "contract": "common.map/native-encoder",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "formatIds": [
+            "war3-map"
+          ]
+        }
+      }
+    ],
+    "lifecycleScope": "operation"
+  },
+  "limitations": [
+    "Accepts UVW bytes and returns one .w3x: the HM3W header and an MPQ with war3map.w3e, war3map.w3i, war3map.doo and war3mapUnits.doo. The first space's heightfield and cliff levels become the W3E corners (ADR-WORLD-003 read backwards); a world in warcraft3-world-unit writes back its own heights, another world is written one grid cell to one 128-unit cell.",
+    "Ground tiles come from terrain materials named tile-<tileset> (16 at most), the heaviest weight of a corner wins; a tile-blight corner is blighted over the default tile; objects with a four-character game type become doodads or units, start points sloc start locations with one player slot each.",
+    "Water, regions, cameras, objects without a game type and other spaces are not written, each loss reported; no map script, pathing or shadow map is written, so the World Editor must save the map before the game runs it."
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-document-metadata",
+  "displayName": "StarCraft II Document Metadata",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/modules/mod/codecs/document-metadata/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./dist/modules/mod/codecs/document-metadata/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Portable structural inspection distinguishes H2CS DocumentHeader, cdes .version sidecars, DocInfo XML and Components XML (ComponentList.SC2Components, read-only) without relying on the filename; an empty .version sidecar requires an enclosing SC2Map, SC2Mod, or SC2Campaign path.",
+    "DocumentInfo serialization normalizes XML formatting and entity spelling.",
+    "DocumentHeader checksums are preserved as opaque fields but cannot be recomputed after semantic edits.",
+    "source.save remains disabled; edit.content returns a revision-pinned edit plan for host persistence."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "sc2-document-metadata",
+        "label": "StarCraft II Document Metadata"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "authored"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "extensions": [
+        "version"
+      ],
+      "pathGlobs": [
+        "**/DocumentHeader",
+        "**/DocumentInfo",
+        "**/*.version",
+        "**/ComponentList.SC2Components"
+      ],
+      "signatures": [
+        {
+          "from": "start",
+          "offset": 0,
+          "bytesHex": "48324353"
+        },
+        {
+          "from": "start",
+          "offset": 0,
+          "bytesHex": "63646573"
+        },
+        {
+          "from": "start",
+          "offset": 0,
+          "bytesHex": "3c446f63496e666f"
+        }
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ],
+      "maxBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "flow-metadata",
+        "contract": "common.document/flow-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/subject-facts-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "export.convert",
+        "handlerId": "export-convert",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "edit.content",
+        "handlerId": "replace-dependencies",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "traitDeclarations": [
+      { "presence": "will-expose", "representation": "source", "id": "content.metadata" },
+      { "presence": "will-expose", "representation": "source", "id": "source.dependencies" },
+      { "presence": "may-expose", "representation": "source", "id": "content.text" },
+      { "presence": "may-expose", "representation": "source", "id": "structure.hierarchy" }
+    ],
+    "fidelityEvidence": [
+      {
+        "formatId": "sc2-document-metadata",
+        "representationId": "flow-metadata",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": false,
+          "notes": [
+            "DocumentInfo dependency replacement preserves parsed non-dependency nodes and dependency order; XML formatting and entity spelling normalize. No DocumentHeader checksum proof is claimed."
+          ]
+        },
+        "evidenceId": "sc2-document-info-dependencies-v1",
+        "corpusId": "modkit-extensions-blizzard/starcraft2/modules/mod/test/sc2-document-info-dependencies.test.ts",
+        "corpusDigest": "none:proof-suite",
+        "conformanceProfile": "modkit/codec-contribution-v1",
+        "optionsFingerprint": "options:none",
+        "inputClass": "sc2-document-info-xml",
+        "provenAt": "2026-10-14T00:00:00Z"
+      }
+    ]
+  }
+}

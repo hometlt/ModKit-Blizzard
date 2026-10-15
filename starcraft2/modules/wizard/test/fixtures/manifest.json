@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "$comment": [
+    "The wizard corpus, and an honest account of what it is not.",
+    "",
+    "StarCraft II ships the format specification and zero wizard files: a scan of the installed",
+    "game found 666,588 CASC paths across 70 extensions and no .BlizWiz among them. Wizards are",
+    "written by map and mod authors, so there is no vendor corpus to check a parser against.",
+    "Author-written wizards do exist locally; they are listed in corpus.json and read in place by",
+    "wizard-corpus.test.ts rather than copied here, because their licence is not established.",
+    "",
+    "Everything listed below is spec-derived: assembled by hand from the examples in",
+    "mods/core.sc2mod/base.sc2data/editordata/wizardhelp/fileformat.rtf. That document is",
+    "authoritative about the format, so these files exercise the real grammar — but they were",
+    "written by the same reasoning that wrote the parser, and a parser checked only against its",
+    "author's idea of the format is exactly how MK2 ended up with a parser for four elements that",
+    "do not exist.",
+    "",
+    "editorSaved is therefore empty and is the open item. Filling it means opening the SC2 Editor,",
+    "building wizards that cover the specification, and using Manage Wizards > Export: files saved",
+    "by the program itself are an oracle that comes from Blizzard rather than from us. Until then",
+    "the round-trip and coverage tests prove the model is complete against these files only."
+  ],
+  "editorSaved": [
+    {
+      "file": "editor-saved-export.BlizWiz",
+      "sha256": "17825fddd7d77a2da7b2734dc334e19c29eb664a4ee7b2b360a5da271bd6dd64",
+      "source": "SC2Editor 5.0.16 Manage Wizards > Export of every wizard in artifacts/editor-acceptance-2026-09-15/wizards (2026-09-15); byte-exact, marked -text in .gitattributes",
+      "observed": "UTF-8 without BOM, lowercase encoding=\"utf-8\", CRLF, 4-space indent, no final newline; comments dropped; T5a/T5b roots rewritten into one <wizardfile>; imported names get an \" Import\" suffix; children reordered (input: item, name, default, loadvalue, layout, reloadfrom, condition); an empty <layout/> always written and an empty <objecttypes/> when none is known; <count> inside <input>, value=\"\" and <default value=\"\"/> dropped; unknown object type Ability dropped (Abil kept); untyped validate, entry without type and id, and input=\"Sub;Flag\" kept; text escapes &gt; &quot; &apos;"
+    }
+  ],
+  "specDerived": [
+    {
+      "file": "prototype-wizard.BlizWiz",
+      "sha256": "af98cfde3425bd1aedf5e4c967d015fc4cec1a5297074e954ee42859623bea9d",
+      "covers": "the prototype wizard the specification's examples describe: inputs of every documented kind, named and inline conditions, all three validation types, the eight documented macros, and the WireframeVariations_Number entry example verbatim",
+      "source": "mods/core.sc2mod/base.sc2data/editordata/wizardhelp/fileformat.rtf"
+    },
+    {
+      "file": "spec-coverage.BlizWiz",
+      "sha256": "b14e554abc57affa4278c42580ac76879a72a94feecab96aa633e8decb087e2f",
+      "covers": "the remainder of the specification: hidden wizards, an embedded wizard reached through type=\"Wizard:<id>\" and the SubWizard:Input token spelling, every match and operator value, nested condition logic, layout minheight/minwidth, item count with ITEMINDEX, entry count with ENTRYINDEX, field count/index/cache/loadinput, useloaded and parentid, tokens, a literal ^^, and catalog references in both the value and the trailing-# count form",
+      "source": "mods/core.sc2mod/base.sc2data/editordata/wizardhelp/fileformat.rtf"
+    }
+  ]
+}

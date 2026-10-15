@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/starcraft2-image-operations",
+  "displayName": "StarCraft II texture operations",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/modules/textures/providers/image-operations/provider.js",
+      "target": {
+        "environments": ["node"]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "worker-portable",
+      "entrypoint": "./dist/modules/textures/providers/image-operations/provider.js",
+      "target": {
+        "environments": ["node-worker", "browser-worker"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "starcraft2-image-operations-v1",
+        "contract": "common.runtime/operation-provider",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "operationIds": ["sc2-image.button-icon", "sc2-image.normal-map", "sc2-image.terrain-diffuse"]
+        }
+      }
+    ],
+    "protocolOperations": ["sc2-image.button-icon", "sc2-image.normal-map", "sc2-image.terrain-diffuse"],
+    "lifecycleScope": "operation"
+  },
+  "limitations": [
+    "Operations work on decoded RGBA and return decoded RGBA; encoding stays with the image codec. Terrain diffuse replaces opacity alpha with explicit specular intensity (matte when absent).",
+    "A button icon must be square and no larger than 256 x 256, the rule the StarCraft II UI imposes on command-card icons."
+  ]
+}

@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-cutscene",
+  "displayName": "StarCraft II Cutscene",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "entrypoint": "./modules/cutscene/codecs/cutscene/runtime.js",
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ],
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "variantId": "trusted-node"
+    },
+    {
+      "entrypoint": "./modules/cutscene/codecs/cutscene/runtime.js",
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ],
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "variantId": "portable"
+    }
+  ],
+  "limitations": [
+    "Reading and byte-identical rewriting are complete for the shipped SC2 and Heroes of the Storm corpus.",
+    "Structural editing stays dependency-required until edited files are verified in SC2 Editor through the single writer path.",
+    "Resolved times mark anchors with an unmeasured attach point as approximate and the time unit as probable milliseconds.",
+    "External names are published as relations; workspace mounts own reference resolution.",
+    "scene-at returns partial native state without side effects; the world source adds CModel/RequiredAnims resources, sparse animation layers and provisional TargetCamera/model camera. facial-at publishes exact conversation/controller/Sound references and line clocks; FaceFX graph and bone binding, attachments, lighting, effects and playback UI remain incomplete."
+  ],
+  "spec": {
+    "artifactStages": [
+      "authored"
+    ],
+    "budgets": {
+      "maxDepth": 64,
+      "maxDiagnostics": 1000,
+      "maxInputBytes": "1073741824",
+      "maxNodes": 1000000,
+      "maxScalarBytes": 104857600
+    },
+    "formatRefs": [
+      {
+        "formatId": "sc2-cutscene",
+        "label": "StarCraft II Cutscene"
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "match": {
+      "extensions": [
+        "sc2cutscene",
+        "stormcutscene",
+        "sc2scene"
+      ],
+      "pathGlobs": [
+        "**/*.SC2Cutscene",
+        "**/*.StormCutscene",
+        "**/*.SC2Scene"
+      ]
+    },
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "operations": [
+      {
+        "handlerId": "inspect",
+        "id": "view.inspect",
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "validate",
+        "id": "asset.validate",
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "export-raw",
+        "id": "export.raw",
+        "mutatesSource": false,
+        "outputKinds": [
+          "bytes"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "timeline",
+        "id": "blizzard/sc2-cutscene.timeline",
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "references",
+        "id": "blizzard/sc2-cutscene.references",
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "scene-at",
+        "id": "blizzard/sc2-cutscene.scene-at",
+        "inputSchema": {
+          "$ref": "modkit://blizzard/sc2-cutscene/scene-at.v1",
+          "document": {
+            "additionalProperties": false,
+            "properties": {
+              "timeMs": {
+                "description": "Explicit scene position; milliseconds provisionally. Does not execute playback markers.",
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "number"
+              }
+            },
+            "required": [
+              "timeMs"
+            ],
+            "type": "object"
+          }
+        },
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "facial-at",
+        "id": "blizzard/sc2-cutscene.facial-at",
+        "inputSchema": {
+          "$ref": "modkit://blizzard/sc2-cutscene/facial-at.v1",
+          "document": {
+            "additionalProperties": false,
+            "properties": {
+              "timeMs": {
+                "description": "Explicit scene position, provisional milliseconds; publishes active conversation clocks and exact catalog FaceFX references without playing the graph.",
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "number"
+              }
+            },
+            "required": [
+              "timeMs"
+            ],
+            "type": "object"
+          }
+        },
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "edit-structure",
+        "id": "edit.structure",
+        "mutatesSource": true,
+        "outputKinds": [
+          "edit-plan"
+        ],
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ]
+      }
+    ],
+    "probe": {
+      "kind": "bytes",
+      "maxBytes": 4096,
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ]
+    },
+    "publishesDataSources": [
+      {
+        "contract": "common.view/world-scene-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/text-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/subject-facts-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/relation-graph-source",
+        "major": 1
+      }
+    ],
+    "representations": [
+      {
+        "contract": "common.document/flow-metadata",
+        "id": "cutscene-scene",
+        "lossy": false,
+        "major": 1,
+        "stage": "authored"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "traitDeclarations": [
+      {
+        "id": "content.text",
+        "presence": "will-expose",
+        "representation": "source"
+      },
+      {
+        "id": "structure.hierarchy",
+        "presence": "will-expose",
+        "representation": "source"
+      },
+      {
+        "id": "structure.nodes",
+        "presence": "will-expose",
+        "representation": "source"
+      },
+      {
+        "id": "source.dependencies",
+        "presence": "will-expose",
+        "representation": "source"
+      }
+    ]
+  }
+}

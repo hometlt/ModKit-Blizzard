@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "schema": {
+    "contract": "blizzard/sc2-data-schema",
+    "major": 1,
+    "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+  },
+  "fieldTargets": 5066,
+  "shortDescriptions": 5066,
+  "detailedInterpretations": 352,
+  "schemaOnlyDescriptions": 4714,
+  "sourceBacked": 5066,
+  "missing": 0
+}

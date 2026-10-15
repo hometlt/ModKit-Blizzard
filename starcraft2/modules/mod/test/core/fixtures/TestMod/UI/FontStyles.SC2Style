@@ -1,0 +1,4 @@
+<StyleFile>
+  <Constant name="ColorAttackInfo" val="00ff00"/>
+  <Style name="TooltipStyle" template="StandardTemplate" height="20"/>
+</StyleFile>

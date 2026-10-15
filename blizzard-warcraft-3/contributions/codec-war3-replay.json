@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/war3-replay",
+  "displayName": "Warcraft III replay",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./src/war3-replay/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./src/war3-replay/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Reads classic replays (.w3g, Reign of Chaos and The Frozen Throne, header version 1) with their blocks inflated through codec-kit; Reforged replays and the pre-1.07 header are refused by name.",
+    "Decodes player actions from patch 1.15 (APM, action kinds, build order); older replays have their command blocks counted only. There is no timeline, transport or map scene yet."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "war3-replay",
+        "label": "Warcraft III replay"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "extensions": [
+        "w3g"
+      ],
+      "signatures": [
+        {
+          "bytesHex": "576172637261667420494949207265636f726465642067616d651a",
+          "from": "start",
+          "offset": 0
+        }
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 68
+        }
+      ],
+      "maxBytes": 68
+    },
+    "representations": [
+      {
+        "id": "flow-metadata",
+        "contract": "common.document/flow-metadata",
+        "major": 1,
+        "stage": "runtime",
+        "lossy": true
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "none"
+        ]
+      },
+      {
+        "id": "export.convert",
+        "handlerId": "export-convert",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    }
+  }
+}

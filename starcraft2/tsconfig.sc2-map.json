@@ -1,0 +1,30 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "allowJs": true,
+    "checkJs": false,
+    "composite": false, "incremental": true, "tsBuildInfoFile": "../node_modules/.cache/tsbuildinfo/starcraft2-sc2-map.tsbuildinfo",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "verbatimModuleSyntax": false,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
+    "noFallthroughCasesInSwitch": false,
+    "isolatedModules": false
+  },
+  "include": [
+    "modules/map/codecs/**/*.ts",
+    "modules/map/codecs/**/*.js",
+    "modules/map/shared/**/*.ts",
+    "modules/map/providers/language/src/**/*.ts",
+    "modules/mod/codecs/document-metadata/core/**/*.ts",
+    "shared/package-namespace/runtime.js",
+    "modules/banks/shared/workspace.js",
+    "modules/banks/shared/model.js",
+    "modules/banks/shared/sources.js"
+  ]
+}

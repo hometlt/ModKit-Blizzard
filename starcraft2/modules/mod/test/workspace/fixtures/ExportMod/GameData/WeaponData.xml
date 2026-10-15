@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CWeapon id="" parent="">
+        <Range value="5"/>
+        <Period value="1"/>
+    </CWeapon>
+    <CWeapon id="TrooperRifle">
+        <Range value="6"/>
+        <Period value="0.8608"/>
+        <TargetFilters value="Ground;Air"/>
+    </CWeapon>
+    <CWeapon id="HeroRifle" parent="TrooperRifle">
+        <Range value="8"/>
+    </CWeapon>
+</Catalog>

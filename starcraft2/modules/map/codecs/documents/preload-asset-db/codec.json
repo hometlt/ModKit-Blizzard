@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-preload-asset-db",
+  "displayName": "StarCraft II preload asset database",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/modules/map/codecs/documents/preload-asset-db/src/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./dist/modules/map/codecs/documents/preload-asset-db/src/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Sections, entries, fields and resolved asset paths are modeled.",
+    "Structured edits preserve known data but normalize comments, blank lines and line endings."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "sc2-preload-asset-db",
+        "label": "StarCraft II preload asset database"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "authored"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "pathGlobs": [
+        "**/PreloadAssetDB.txt"
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ],
+      "maxBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "preload-asset-db",
+        "contract": "common.document/structured-text",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/relation-graph-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "edit.content",
+        "handlerId": "set-field",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "traitDeclarations": [
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "content.text"
+      }
+    ]
+  }
+}

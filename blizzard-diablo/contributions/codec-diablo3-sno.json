@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/diablo3-sno",
+  "displayName": "Diablo III SNO data",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./src/diablo3-sno/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./src/diablo3-sno/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Decodes every SNO group without a dedicated codec (actors, monsters, GameBalance tables, scenes, worlds, powers, quests, sounds, …) with the type registry of the installed game (blizzard/diablo3-sno-registry@1), which reads the installation's executable through the host's installation files; a host that offers none (a browser) refuses the file and says why.",
+    "The group is the folder the storage files the entry under (monster/, gamebalance/, …); a file opened outside the game storage has none and is refused.",
+    "Members read as their type and offset: the executable carries no field names. Data server-only arrays point to is not in client files and is reported as such.",
+    "A scene's navigation mesh is published as read-only map layers (map.layers, map.layer-read): the height of each square to 1/100 of a world unit above the scene's lowest, and its flags as stored; row 0 is the scene's largest y. Other groups report the operations disabled.",
+    "A scene is published as a world (common.view/world-scene-source): its navigation mesh as the navigation facet (one sample per square centre with its height and flags; the terrain facet is unavailable, the ground being the scene's own mesh), its own mesh at the origin and every marker of its marker sets with the marker's full quaternion, in UVW's y-up frame and Diablo III world units. A marker placing an actor draws the actor's appearance, read by SNO id beside the scene; other markers are points. Each model is converted by the host's model port and the shared world helper, as a map's are; terrain materials, lighting and the server-only layout of worlds (.wrl) are not published.",
+    "Every SNO file publishes what it names as a relation graph (common.view/relation-graph-source): an edge to each SNO it references (DT_SNO, arrays of them, SNOName), its role the member path, and for an effect's TriggerEvent the hardpoints it spawns at. Animated values read as keys: a path (FloatPath, ColorPath, VectorPath, …) previews its nodes as time in the particle's life (0..1) to value, a node as its low…high value at its time.",
+    "Writing SNO data is unsupported."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "diablo3-sno",
+        "label": "Diablo III SNO data"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "authored",
+      "compiled",
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "extensions": [
+        "acr",
+        "adv",
+        "aib",
+        "ais",
+        "ams",
+        "ani",
+        "an2",
+        "ans",
+        "hro",
+        "clt",
+        "cnv",
+        "cnl",
+        "efg",
+        "enc",
+        "xpl",
+        "flg",
+        "fnt",
+        "gam",
+        "glo",
+        "lvl",
+        "lit",
+        "mrk",
+        "mon",
+        "obs",
+        "prt",
+        "phy",
+        "pow",
+        "qst",
+        "rop",
+        "scn",
+        "scg",
+        "scr",
+        "shm",
+        "shd",
+        "shk",
+        "skl",
+        "snd",
+        "sbk",
+        "srf",
+        "trl",
+        "ui",
+        "wth",
+        "wrl",
+        "rcp",
+        "cnd",
+        "trs",
+        "acc",
+        "con",
+        "tme",
+        "act",
+        "mat",
+        "qsr",
+        "lor",
+        "rev",
+        "phm",
+        "mus",
+        "tut",
+        "bos",
+        "ctr",
+        "aco",
+        "ant",
+        "vib",
+        "dfn"
+      ],
+      "signatures": [
+        {
+          "from": "start",
+          "offset": 0,
+          "bytesHex": "efbeadde"
+        }
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ],
+      "maxBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "flow-metadata",
+        "contract": "common.document/flow-metadata",
+        "major": 1,
+        "stage": "compiled",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/world-scene-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/relation-graph-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "none"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "map.layers",
+        "handlerId": "map-layers",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "map.layer-read",
+        "handlerId": "map-layer-read",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 4000000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    }
+  }
+}

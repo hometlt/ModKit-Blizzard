@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "composite": false, "incremental": true, "tsBuildInfoFile": "../node_modules/.cache/tsbuildinfo/starcraft2-sc2-textures.tsbuildinfo",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "verbatimModuleSyntax": false,
+    "exactOptionalPropertyTypes": false,
+    "isolatedModules": false
+  },
+  "files": [
+    "modules/textures/shared/operations.ts",
+    "modules/textures/providers/image-operations/provider.ts"
+  ]
+}

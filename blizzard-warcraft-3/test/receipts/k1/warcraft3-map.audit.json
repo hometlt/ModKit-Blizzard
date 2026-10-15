@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "codec": "warcraft3-map",
+  "corpusKind": "synthetic",
+  "verdict": "pass",
+  "tests": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "source-feature-audit",
+    "oracle": "the MK2 codec (references/modkitmk2/extensions/blizzard/warcraft-3/codecs/warcraft3-map at 1a14ba4eddd0ae88de273348ebd44cfb98a0581d) is its manifest alone, planned and unsupported; every extension it names against the MK3 carrier that matches it, and the carrier run on a file written for the test",
+    "suite": "modkit-extensions-blizzard/blizzard-warcraft-3/test/k1-war3-manifest-audits.test.ts",
+    "samples": [
+      {
+        "name": "authored.w3x",
+        "builder": "modkit-extensions-blizzard/blizzard-warcraft-3/test/war3-fixtures.ts#authoredMap",
+        "sha256": "d3faee934d6ba89649d143822b9fbd194dc1f5039a2fe37426c69dd435c2dfed"
+      },
+      {
+        "name": "mk2 codec.manifest.json",
+        "fixture": "references/modkitmk2/extensions/blizzard/warcraft-3/codecs/warcraft3-map/codec.manifest.json",
+        "sha256LF": "4c0211f7a5f177d4362d2e9a333aac7793bab53b73c9c12c209292dcfaa64b03"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "mk2-source:files",
+      "verdict": "identical",
+      "resultDigest": "a714a2d5317692b8e1d331c1b2bcaac50083de7fa340e6a32bea06a9e51e8bf0",
+      "mk3Operation": "no MK2 source to carry"
+    },
+    {
+      "id": "mk2-manifest:runtimeVariants",
+      "verdict": "identical",
+      "resultDigest": "0910687d65dd0269c754ca4dd17eb69794565ee5a641e27dbcff13303f0f5cd7",
+      "mk3Operation": "no MK2 runtime to carry"
+    },
+    {
+      "id": "mk2-manifest:match.extensions",
+      "verdict": "identical",
+      "resultDigest": "e79be15d747932481232070f26ecd89511c18aa912216b8d57f93f923527d4f9",
+      "mk3Operation": "modkit-extensions-blizzard/blizzard-warcraft-3/contributions/codec-war3-map.json"
+    },
+    {
+      "id": "mk3-carrier:map.layers",
+      "verdict": "identical",
+      "resultDigest": "de7192e0b01152e15951e512f465b5b0c8022afd81c68e405682e5b8876704e7",
+      "mk3Operation": "blizzard/war3-map over blizzard/mpq: tree, map.layers, map.layer-read"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/warcraft3-map/audit",
+      "kind": "audit",
+      "adapterOperation": "source-feature-audit",
+      "targetOperation": "source-feature-audit",
+      "handlerId": "source-feature-audit",
+      "contribution": "modkit-extensions-blizzard/blizzard-warcraft-3/contributions/codec-war3-map.json",
+      "executed": true,
+      "caseIds": [
+        "mk2-source:files",
+        "mk2-manifest:runtimeVariants",
+        "mk2-manifest:match.extensions",
+        "mk3-carrier:map.layers"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "rootDir": "../..",
+    "isolatedModules": false,
+    "strict": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "preserveConstEnums": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@modkit/codec-kit/legacy/assets": [
+        "../../modkit-core/packages/codec-kit/src/legacy/assets/index.ts"
+      ],
+      "@modkit/codec-kit/legacy/core": [
+        "typecheck/sc2-layout-legacy-core.d.ts"
+      ],
+      "@modkit/codec-kit/legacy/sc2-support": [
+        "../../modkit-core/packages/codec-kit/src/legacy-sc2-support.ts"
+      ],
+      "@modkit/codec-kit/legacy/semantic/*": [
+        "../../modkit-core/packages/codec-kit/src/legacy/semantic/*.ts"
+      ]
+    },
+    "baseUrl": ".",
+    "lib": [
+      "ES2023",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "verbatimModuleSyntax": true,
+    "noFallthroughCasesInSwitch": false,
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false
+  },
+  "include": [
+    "modules/layout/shared/layout-engine/**/*.ts",
+    "modules/layout/shared/format/*.ts",
+    "modules/layout/shared/format/rendering/**/*.ts",
+    "modules/layout/codecs/**/*.ts",
+    "modules/layout/shared/**/*.ts",
+    "modules/layout/test/layout-engine/bundled-schema.d.ts",
+    "typecheck/sc2-layout-legacy-core.d.ts"
+  ],
+  "exclude": [
+    "modules/layout/shared/layout-engine/sc2-layout-core/bin/**",
+    "modules/layout/shared/format/relations.ts"
+  ]
+}

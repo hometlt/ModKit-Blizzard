@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "contract": { "id": "modkit/subject-kind-definition", "major": 1 },
+  "id": "blizzard/sc2-bank-kind",
+  "displayName": "StarCraft II bank",
+  "spec": {
+    "kindId": "sc2-bank",
+    "label": "StarCraft II bank"
+  }
+}

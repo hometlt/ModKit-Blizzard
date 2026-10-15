@@ -1,0 +1,9 @@
+<TriggerData>
+  <Library Id="DEMO">
+    <Root><Item Type="Trigger" Id="00000001"/></Root>
+    <Element Type="Trigger" Id="00000001"><Event Type="FunctionCall" Id="00000002"/></Element>
+    <Element Type="FunctionCall" Id="00000002"><FunctionDef Type="FunctionDef" Library="Ntve" Id="00000011"/></Element>
+    <Element Type="FunctionCall" Id="00000003"><FunctionDef Type="FunctionDef" Library="DEMO" Id="00000012"/></Element>
+    <Element Type="FunctionCall" Id="00000004"><FunctionDef Type="FunctionDef" Library="Ntve" Id="00000013"/></Element>
+  </Library>
+</TriggerData>

@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/diablo3-installation",
+  "displayName": "Diablo III installation discovery",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./providers/diablo3-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ],
+        "operatingSystems": [
+          "windows",
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "node-worker",
+      "entrypoint": "./providers/diablo3-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker"
+        ],
+        "operatingSystems": [
+          "windows",
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "diablo3-installation-v1",
+        "contract": "common.game/installation-discovery",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": [
+            "blizzard/diablo-3"
+          ],
+          "markers": [
+            {
+              "gameId": "blizzard/diablo-3",
+              "files": [
+                ".build.info",
+                "Diablo III.exe"
+              ]
+            },
+            {
+              "gameId": "blizzard/diablo-3",
+              "files": [
+                ".build.info",
+                "Diablo III Launcher.exe"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Candidates are configured paths, the MODKIT_DIABLO3_ROOT environment root, Windows uninstall-registry entries read through the host installation probes, verified platform defaults, and the folders the host's folder search found by this offer's markers (.build.info beside Diablo III.exe or the launcher), confirmed last. A host without probes or folder search (a browser) uses configured paths and the environment root only.",
+    "An installation is confirmed by the active record in .build.info naming the Diablo III CASC product. The payload directory is reported as evidence but not required.",
+    "Diablo II is not discovered here: it has no MK3 game subject, and the MK2 copy this replaces carried no product identity to port.",
+    "Launching, provisioning and content mounting are outside this provider."
+  ]
+}

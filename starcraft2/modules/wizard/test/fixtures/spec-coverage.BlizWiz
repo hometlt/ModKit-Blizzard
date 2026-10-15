@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Every element and attribute the format specification documents, in one file, so the parser can
+    be measured against the whole of it rather than against the parts an example happened to use.
+
+    Provenance: spec-derived, not saved by the StarCraft II Editor. See fixtures/sc2-wizard/
+    manifest.json for what that costs and what would replace it.
+-->
+<wizardfile>
+    <wizard id="EmbeddedWizard">
+        <name>Embedded Wizard</name>
+        <description>Runs only inside another wizard, so it is kept out of the menu</description>
+        <hidden/>
+        <objecttypes create="Unit"/>
+        <input id="Suffix" type="CStringLink">
+            <name>Suffix</name>
+            <default value="Alpha"/>
+        </input>
+        <macro id="SuffixUpper" replaceSrc="a" replaceDst="A">^Suffix^</macro>
+    </wizard>
+
+    <wizard id="CoverageWizard">
+        <name>Coverage Wizard</name>
+        <category>Test/Coverage/Deep</category>
+        <objecttypes create="Unit;Actor" load="Unit" view="Unit"/>
+        <instructions page="1">
+            Page one covers inputs.
+            A literal caret is written ^^ and stays one character.
+        </instructions>
+        <instructions page="2">
+            Page two covers generated entries.
+        </instructions>
+
+        <condition id="WantsArmour" input="Armour" value="1"/>
+        <condition id="NamedAndNested" logic="or">
+            <condition input="BaseName" value="scout" match="begin" nocase="1"/>
+            <condition input="BaseName" value="_alt" match="end"/>
+            <condition input="BaseName" value="test" match="contain"/>
+            <condition input="Level" value="3" operator="greaterequal"/>
+            <condition input="Notes" empty="1"/>
+            <condition input="Armour" visible="0"/>
+            <condition logic="not">
+                <condition input="Level" value="9" operator="equal"/>
+            </condition>
+        </condition>
+
+        <input id="BaseName" type="CStringLink">
+            <name>Base Name</name>
+            <tooltip>Identifier stem for everything this wizard generates</tooltip>
+            <simpletext/>
+            <default value="Scout Unit"/>
+            <layout page="1" column="1" minheight="24" minwidth="180"/>
+        </input>
+        <input id="Level" type="int32">
+            <name>Level</name>
+            <default value="3"/>
+            <minimum value="1"/>
+            <maximum value="9"/>
+            <increment value="1"/>
+            <layout page="1" column="2"/>
+        </input>
+        <input id="Armour" type="WizardCheckbox">
+            <name>Armoured</name>
+            <default value="1"/>
+        </input>
+        <input id="Notes" type="CStringLink">
+            <name>Notes</name>
+            <nosave/>
+            <condition id="WantsArmour"/>
+        </input>
+        <input id="Variant" type="WizardMenu">
+            <name>Variant</name>
+            <item value="v^ITEMINDEX^" text="Variant ^ITEMINDEX^" count="4"/>
+            <sorted/>
+            <default value="v0"/>
+            <loadvalue>v^Level^</loadvalue>
+            <reloadfrom>BaseName;Level</reloadfrom>
+        </input>
+        <input id="Sub" type="Wizard:EmbeddedWizard">
+            <name>Embedded</name>
+        </input>
+        <input id="Summary" type="WizardText">
+            <name>Summary</name>
+            <color value="255,0,128,0"/>
+            <loadvalue>^Id^ from ^LOADID^</loadvalue>
+            <nopreview/>
+            <layout page="2" column="1"/>
+        </input>
+
+        <validate type="error">
+            <condition input="BaseName" empty="0"/>
+            <text>A base name is required</text>
+        </validate>
+        <validate type="confirm">
+            <condition id="NamedAndNested"/>
+            <text>^Id^ matches an unusual naming pattern. Continue?</text>
+        </validate>
+        <validate type="warning">
+            <condition input="Sub:Suffix" empty="0"/>
+            <text>The embedded suffix is empty</text>
+        </validate>
+
+        <macro id="Stem" replaceSrc=" " replaceDst="_">^BaseName^</macro>
+        <macro id="Id">^Stem^_^Sub:Suffix^</macro>
+        <macro id="ShortId" truncate="8">^Stem^</macro>
+        <macro id="Doubled">(^Level^ + 1) * 2</macro>
+        <macro id="Fractional">^Level^ / 2.0</macro>
+        <macro id="ExistingKills">ref=Unit,^LOADID^,ScoreKill</macro>
+        <macro id="WeaponCount">ref=Unit,^LOADID^,WeaponArray#</macro>
+
+        <entry catalog="Unit" type="CUnit" >
+            <id>^Id^</id>
+            <parentid>^ShortId^</parentid>
+            <count>2</count>
+            <allowmodify/>
+            <condition id="WantsArmour"/>
+            <field id="Name">
+                <value>^BaseName^ ^ENTRYINDEX^</value>
+                <stringid>Unit/Name/^Id^</stringid>
+                <loadinput>BaseName</loadinput>
+                <cache/>
+            </field>
+            <field id="LifeMax">
+                <value>^Doubled^ + ^ENTRYINDEX^</value>
+                <condition input="Armour" value="1"/>
+            </field>
+            <field id="ScoreKill">
+                <count>3</count>
+                <index>^VALUEINDEX^</index>
+                <value>^Level^ * ^VALUEINDEX^</value>
+            </field>
+            <token id="race">
+                <value>Terr</value>
+                <loadinput>Notes</loadinput>
+            </token>
+        </entry>
+        <entry catalog="Actor" type="CActorUnit">
+            <id>^LOADID^</id>
+            <useloaded/>
+            <field id="WireframeVariations_Number">
+                <count>5</count>
+                <index>^VALUEINDEX^ + 1</index>
+                <value>^Level^ + ^VALUEINDEX^</value>
+            </field>
+        </entry>
+    </wizard>
+</wizardfile>

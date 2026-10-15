@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "contract": { "id": "modkit/subject-kind-definition", "major": 1 },
+  "id": "blizzard/sc2-preload-entry-kind",
+  "displayName": "StarCraft II preload entry",
+  "spec": { "kindId": "sc2-preload-entry", "label": "StarCraft II preload entry" }
+}

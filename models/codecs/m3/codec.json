@@ -1,0 +1,436 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/m3",
+  "displayName": "StarCraft II M3 model",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./codecs/m3/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./codecs/m3/runtime.browser.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "model.export-uvm emits schema 1 UVM without UV_source_blob. Geometry, skin, pose, animations, materials, UV channels, sockets, collisions, cameras, lights and supported effects use common glTF/UVM structures; BlizzardM3 retains only native reconstruction fields that common data cannot reproduce.",
+    "model.write reconstructs the admitted schema 1 profile without the original M3 or parse cache and verifies the result by reopening it. Unknown sections, unclassified record versions and unsupported channel families refuse rather than being hidden in the residual.",
+    "AnimationReference native ids, interpolation and flags remain compact reconstruction bindings. Curve times and values live in common animation channels. Static rest poses do not create artificial fallback tracks.",
+    "Discovered M3A companions remain separate UVM assets. The base M3 export does not embed companion bytes or a second animation copy; standalone M3A owns its animation-only export and native write.",
+    "The preserving writer and model.edit return revision-bound replacement plans; host permissions, atomic commit, history and target ownership remain host responsibilities.",
+    "Particle systems, ribbons, forces, warps and projectors are published as model effects, with their parameters in the model own words; emitter simulation is not performed.",
+    "Lights, cameras, simulation bodies with their shapes and joints, cloths, turrets, inverse-kinematics chains and billboards are published as facets; none of them is simulated or evaluated, and their parameters stay in the model own words."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "m3",
+        "label": "StarCraft II M3/M3A"
+      }
+    ],
+    "roles": [
+      "media"
+    ],
+    "sourceTopology": "bundle",
+    "artifactStages": [
+      "authored",
+      "compiled",
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "extensions": [
+        "m3"
+      ],
+      "signatures": [
+        {
+          "from": "start",
+          "offset": 0,
+          "bytesHex": "3333444d"
+        },
+        {
+          "from": "start",
+          "offset": 0,
+          "bytesHex": "3433444d"
+        }
+      ]
+    },
+    "companions": [
+      {
+        "id": "textures",
+        "role": "texture",
+        "required": false,
+        "patterns": [
+          "*.dds"
+        ],
+        "searchScopes": [
+          "sibling-directory",
+          "workspace-dependency-layer",
+          "current-mount",
+          "enclosing-container"
+        ]
+      },
+      {
+        "id": "animations",
+        "role": "animation",
+        "required": false,
+        "patterns": [
+          "*.m3a"
+        ],
+        "searchScopes": [
+          "sibling-directory",
+          "workspace-dependency-layer",
+          "current-mount",
+          "enclosing-container"
+        ]
+      }
+    ],
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ],
+      "maxBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "geometry-metadata",
+        "contract": "common.model/geometry-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/model-scene-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-resource-refs-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-skeleton-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-animation-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-material-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-socket-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-collision-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-effect-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-light-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-camera-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-physics-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-node-behaviour-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "model.render",
+        "handlerId": "render-m3-scene",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "model.edit",
+        "handlerId": "edit-m3-scene",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "edit.field",
+        "handlerId": "edit-m3-native-field",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "model.export-uvm",
+        "handlerId": "model-export-uvm",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ],
+        "inputSchema": {
+          "$ref": "modkit://blizzard/m3/export-uvm.v1",
+          "document": {
+            "type": "object",
+            "required": [
+              "schemaVersion"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "schemaVersion": {
+                "const": 1
+              },
+              "metersPerSourceUnit": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "parameters": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "animationResources": {
+                "type": "array",
+                "maxItems": 64,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "logicalId",
+                    "role",
+                    "scopes"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "logicalId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "role": {
+                      "const": "sidecar"
+                    },
+                    "scopes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "parentResourceId": {
+                      "type": "string"
+                    },
+                    "alternatives": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "animationNames": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 128,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 512
+                },
+                "description": "Presentation subset of M3A animation-property requests; names containing all requested properties with the fewest extra properties are selected across attachments, retaining tied variants. Omit for full attachment."
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "none"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "model.write",
+        "handlerId": "model-write",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      }
+    ],
+    "traitDeclarations": [
+      {
+        "id": "model.animations",
+        "representation": "runtime",
+        "presence": "may-expose"
+      },
+      {
+        "id": "model.geometry",
+        "representation": "runtime",
+        "presence": "may-expose"
+      },
+      {
+        "id": "model.materials",
+        "representation": "runtime",
+        "presence": "may-expose"
+      },
+      {
+        "id": "model.skeleton",
+        "representation": "runtime",
+        "presence": "may-expose"
+      },
+      {
+        "id": "model.textures",
+        "representation": "runtime",
+        "presence": "may-expose"
+      },
+      {
+        "id": "scene.cameras",
+        "representation": "runtime",
+        "presence": "may-expose"
+      },
+      {
+        "id": "scene.effects",
+        "representation": "runtime",
+        "presence": "may-expose"
+      },
+      {
+        "id": "structure.hierarchy",
+        "representation": "runtime",
+        "presence": "will-expose"
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 1000000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "fidelityEvidence": [
+      {
+        "formatId": "m3",
+        "representationId": "geometry-metadata",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": false
+        },
+        "evidenceId": "m3-uvm-atvl-edits-v1",
+        "corpusId": "modkit/models/test/m3-uvm-edit-host.test.ts",
+        "corpusDigest": "none:proof-suite",
+        "conformanceProfile": "modkit/codec-contribution-v1",
+        "optionsFingerprint": "options:uvm-atvl-size-matrix-v1",
+        "inputClass": "md34-atvl-v0-mapped-uvm-edits",
+        "provenAt": "2026-09-08T00:00:00Z"
+      }
+    ]
+  }
+}

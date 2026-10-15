@@ -1,0 +1,5 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": { "rootDir": ".", "outDir": "dist", "allowJs": true, "checkJs": false, "composite": false, "incremental": true, "tsBuildInfoFile": "../node_modules/.cache/tsbuildinfo/starcraft2-sc2-strings.tsbuildinfo", "declaration": true, "declarationMap": true, "sourceMap": true, "baseUrl": ".", "verbatimModuleSyntax": false, "exactOptionalPropertyTypes": false, "noUncheckedIndexedAccess": false, "noFallthroughCasesInSwitch": false, "isolatedModules": false },
+  "files": ["modules/strings/codecs/strings/src/codec.ts", "modules/strings/providers/language/src/language.ts", "modules/strings/providers/language/src/workspace.ts", "modules/strings/providers/language/src/served-keys.ts", "modules/strings/providers/language/src/served-diagnostics.ts", "modules/strings/shared/core/node.ts"]
+}

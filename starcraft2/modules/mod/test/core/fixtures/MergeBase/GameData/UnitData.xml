@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+  <!-- Unit with indexed array (WeaponArray) and named array (Attributes) -->
+  <CUnit id="Soldier">
+    <LifeMax value="100"/>
+    <WeaponArray index="0" Link="Rifle"/>
+    <WeaponArray index="1" Link="Grenade"/>
+    <Attributes index="Light" value="1"/>
+    <Attributes index="Biological" value="1"/>
+    <GlossaryStrongArray value="Medic"/>
+    <GlossaryStrongArray value="Engineer"/>
+  </CUnit>
+
+  <!-- Token definition -->
+  <CUnit id="$SoldierLife" value="100"/>
+
+  <!-- Parent entity for cross-mod inheritance test -->
+  <CUnit id="BaseHero">
+    <LifeMax value="500"/>
+    <Race value="Terr"/>
+    <Armor value="5"/>
+  </CUnit>
+</Catalog>

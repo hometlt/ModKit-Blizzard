@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/subject-kind-definition",
+    "major": 1
+  },
+  "id": "blizzard/sc2-layout-kind",
+  "displayName": "StarCraft II Layout",
+  "spec": {
+    "kindId": "sc2-layout",
+    "label": "StarCraft II Layout"
+  }
+}

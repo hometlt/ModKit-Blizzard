@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/world-of-warcraft-installation",
+  "displayName": "World of Warcraft installation discovery",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node-windows",
+      "entrypoint": "./providers/wow-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ],
+        "operatingSystems": [
+          "windows"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "trusted-node-portable",
+      "entrypoint": "./providers/wow-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ],
+        "operatingSystems": [
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "node-worker-windows",
+      "entrypoint": "./providers/wow-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker"
+        ],
+        "operatingSystems": [
+          "windows"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "node-worker-portable",
+      "entrypoint": "./providers/wow-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker"
+        ],
+        "operatingSystems": [
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "world-of-warcraft-installation-v1",
+        "contract": "common.game/installation-discovery",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": [
+            "blizzard/world-of-warcraft"
+          ],
+          "markers": [
+            {
+              "gameId": "blizzard/world-of-warcraft",
+              "files": [
+                ".build.info",
+                "World of Warcraft Launcher.exe"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Candidates are configured paths, the MODKIT_WOW_ROOT environment root, the Windows uninstall entry 'World of Warcraft' (InstallLocation; a flavor folder such as _retail_ is taken as its installation) read through the host installation probes, platform defaults, and the folders the host's folder search found by this offer's markers (.build.info beside World of Warcraft Launcher.exe), confirmed last. The uninstall entry may name a folder the user has since moved; it is only a candidate. A host without probes or folder search (a browser) uses configured paths and the environment root only.",
+    "An installation is confirmed by an active .build.info record of a World of Warcraft CASC product (wow, wow_classic, wow_classic_era, wowt, wow_beta…); one folder may hold several, and the installation's version is retail's when it is installed. The Data payload folder is reported but not required.",
+    "Launching, provisioning and content mounting are outside this provider."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+  },
+  "include": [
+    "src/m3/particle-material-lighting.ts",
+    "src/m3/material-parameters.ts",
+    "src/m3/material-batches.ts",
+    "src/m3/section-resolver.ts",
+    "src/m3/animation-projection.ts",
+    "src/m3/skeleton-projection.ts",
+    "src/m3/uvm/**/*.ts"
+  ]
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+  <CUnit id="Marine">
+    <LifeMax value="45"/>
+    <ShieldsMax value="0"/>
+    <Armor value="0"/>
+  </CUnit>
+  <CUnit id="Marauder" parent="Marine">
+    <LifeMax value="125"/>
+    <Armor value="1"/>
+  </CUnit>
+</Catalog>

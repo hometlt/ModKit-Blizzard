@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-style",
+  "displayName": "StarCraft II Style Sheet",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "entrypoint": "./modules/style/codecs/style/runtime.js",
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ],
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "variantId": "trusted-node"
+    },
+    {
+      "entrypoint": "./modules/style/codecs/style/runtime.js",
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ],
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "variantId": "portable"
+    }
+  ],
+  "limitations": [
+    "Attribute writes replace exactly the bytes of one value, so comments, ordering and formatting survive; there is no whole-document serializer.",
+    "References are resolved against the documents in the request workspace snapshot; a name declared further up the dependency chain is reported as inherited rather than broken.",
+    "The element and attribute table is evidence from installed style sheets, not a published schema, so an unrecognized attribute is a warning.",
+    "source.save remains disabled; edit.field returns a revision-pinned edit plan for host persistence."
+  ],
+  "spec": {
+    "artifactStages": [
+      "authored"
+    ],
+    "budgets": {
+      "maxDepth": 64,
+      "maxDiagnostics": 1000,
+      "maxInputBytes": "1073741824",
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600
+    },
+    "formatRefs": [
+      {
+        "formatId": "sc2-style",
+        "label": "StarCraft II Style Sheet"
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "match": {
+      "extensions": [
+        "sc2style"
+      ],
+      "pathGlobs": [
+        "**/*.SC2Style"
+      ],
+      "signatures": [
+        {
+          "bytesHex": "3c5374796c6546696c65",
+          "from": "start",
+          "offset": 0
+        }
+      ]
+    },
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "operations": [
+      {
+        "handlerId": "inspect",
+        "id": "view.inspect",
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "validate",
+        "id": "asset.validate",
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "export-raw",
+        "id": "export.raw",
+        "mutatesSource": false,
+        "outputKinds": [
+          "bytes"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "edit-field",
+        "id": "edit.field",
+        "mutatesSource": true,
+        "outputKinds": [
+          "edit-plan"
+        ],
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ]
+      }
+    ],
+    "probe": {
+      "kind": "bytes",
+      "maxBytes": 4096,
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ]
+    },
+    "publishesDataSources": [
+      {
+        "contract": "common.view/text-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/subject-facts-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/relation-graph-source",
+        "major": 1
+      }
+    ],
+    "representations": [
+      {
+        "contract": "common.document/flow-metadata",
+        "id": "style-sheet",
+        "lossy": false,
+        "major": 1,
+        "stage": "authored"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "traitDeclarations": [
+      {
+        "id": "content.text",
+        "presence": "will-expose",
+        "representation": "source"
+      },
+      {
+        "id": "code.source",
+        "presence": "will-expose",
+        "representation": "source"
+      },
+      {
+        "id": "structure.hierarchy",
+        "presence": "will-expose",
+        "representation": "source"
+      }
+    ]
+  }
+}

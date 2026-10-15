@@ -1,0 +1,26 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "lib": [
+      "ES2023",
+      "DOM"
+    ],
+    "composite": false, "incremental": true, "tsBuildInfoFile": "../node_modules/.cache/tsbuildinfo/starcraft2-battlenet.tsbuildinfo",
+    "allowJs": true,
+    "checkJs": false,
+    "paths": {
+      "@modkit/blizzard-starcraft2/style/language": ["./modules/mod/shared/workspace/diagnostic-providers.d.ts"],
+      "@modkit/blizzard-starcraft2/wizard/language": ["./modules/mod/shared/workspace/diagnostic-providers.d.ts"],
+      "@modkit/blizzard-starcraft2/galaxy/language-core": ["./dist/modules/galaxy/language-core/index.d.ts"],
+      "@modkit/blizzard-starcraft2/strings/served-diagnostics": [
+        "./modules/mod/shared/workspace/strings-served-diagnostics.d.ts"
+      ]
+    }
+  },
+  "include": [
+    "modules/game/battlenet/**/*.ts",
+    "modules/game/providers/launch/src/**/*.ts"
+  ]
+}

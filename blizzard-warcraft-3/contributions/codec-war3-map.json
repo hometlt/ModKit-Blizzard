@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/war3-map",
+  "displayName": "Warcraft III map",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./src/war3-map/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./src/war3-map/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Opens .w3m and .w3x maps through the host-owned blizzard/mpq container alias and reads war3map.w3i, w3e, wpm, doo, war3mapUnits.doo, w3r, w3c, w3s, imp and wts with the vendored mdx-m3-viewer parsers (MIT).",
+    "Publishes ground height, cliff level, water level, ground tileset, corner flags and pathing as map layers; a layer write replaces only the written samples of war3map.w3e or war3map.wpm and the host packs the entry back through blizzard/mpq. Folder maps are not written; the object editor's changes (war3map.w3u …) open as entries through blizzard/war3-object-mods, the world through blizzard/war3-map-world; GUI triggers (wtg/wct) are a later stage. The map's namespace and container.extract are the MPQ carrier's, which the host lends to the map; an unlisted entry of a protected map is found by its path."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "war3-map",
+        "label": "Warcraft III map"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "namespace",
+    "artifactStages": [
+      "authored"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full"
+    ],
+    "match": {
+      "extensions": [
+        "w3m",
+        "w3x"
+      ]
+    },
+    "anchorDocuments": [
+      "war3map.w3i"
+    ],
+    "probe": {
+      "kind": "namespace",
+      "markers": [
+        "war3map.w3i",
+        "war3map.w3e"
+      ],
+      "maxEntries": 2,
+      "maxBytes": 65536,
+      "maxDepth": 1,
+      "maxPathBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "archive-namespace",
+        "contract": "common.archive/entry-namespace",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      },
+      {
+        "id": "map-layers",
+        "contract": "common.map/layers",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "fidelityEvidence": [
+      {
+        "formatId": "war3-map",
+        "representationId": "map-layers",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": true,
+          "notes": [
+            "A layer write changes only the written samples of war3map.w3e (the corner field it names) or war3map.wpm; the other fields of every corner, the header, the tilesets and every other entry keep their bytes, the host packs the entry back through blizzard/mpq and commits the map, the map reopens with the written samples, and undo restores the original bytes (blizzard-warcraft-3/test/war3-map.test.ts)."
+          ]
+        },
+        "evidenceId": "war3-map-layer-write-v1",
+        "corpusId": "modkit-extensions-blizzard/blizzard-warcraft-3/test/war3-map.test.ts",
+        "corpusDigest": "none:proof-suite",
+        "conformanceProfile": "modkit/codec-contribution-v1",
+        "optionsFingerprint": "options:none",
+        "inputClass": "war3-map-grid-documents",
+        "provenAt": "2026-09-28T00:00:00Z"
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "none"
+        ]
+      },
+      {
+        "id": "map.layers",
+        "handlerId": "map-layers",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "map.layer-read",
+        "handlerId": "map-layer-read",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "map.layer-write",
+        "handlerId": "map-layer-write",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "container": {
+      "formatId": "mpq",
+      "assetRoots": [
+        ""
+      ]
+    }
+  }
+}

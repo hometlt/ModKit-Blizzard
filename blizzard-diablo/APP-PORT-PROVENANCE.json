@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "summary": "Diablo III appearance decoding is a port, not a rewrite. The MK2 implementation compiled under this package’s strict MK3 profile with no type errors, so the port is the file itself with its imports retargeted and the deliberate deviations recorded below.",
+  "mk2Removed": {
+    "note": "This package carries no MK2 tree any more. The appearance decoder moved into src/diablo3-app/appearance.ts, and the MK2 game-discovery copies were replaced by an MK3 common.game/installation-discovery provider in src/game/installation.ts.",
+    "paths": [
+      "codecs/diablo3-app/src/index.ts -> src/diablo3-app/appearance.ts",
+      "src/lib/mk2/games/diablo-3/** -> src/game/installation.ts (rewritten for MK3)",
+      "src/lib/mk2/games/diablo-2/** -> not carried; see diabloTwo below",
+      "test/mk2/** -> deleted; the oracle copies could not resolve their MK2-only imports"
+    ],
+    "diabloTwo": "Diablo II has no MK3 game subject in modkit.repository.json, and the MK2 copy carried no product identity to port: it only looked for a .build.info marker that every Blizzard CASC product has. Nothing was lost by not carrying it.",
+    "manifestOnlyMk2Codecs": {
+      "note": "These MK2 codec directories hold a manifest and no source at all, in MK2 as well. There is nothing to port and no capability gap they represent.",
+      "ids": [
+        "diablo2-character-model",
+        "diablo2-dc6",
+        "diablo2-dt1",
+        "diablo3-sno-data"
+      ]
+    }
+  },
+  "upstream": {
+    "modkit-mk2": {
+      "readFrom": "references/modkitmk2/extensions/blizzard/diablo/codecs/diablo3-app",
+      "manifestStatus": "supported",
+      "note": "MK2 reached the render-model vocabulary through @modkitx/models-processing; MK3 reads the same vocabulary from @modkit/codec-kit/legacy/models."
+    }
+  },
+  "edits": [
+    {
+      "file": "src/diablo3-app/appearance.ts",
+      "change": "imports retargeted: '@modkitx/models-processing' -> '@modkit/codec-kit/legacy/models', '@modkitx/models-processing/core/codec' -> '@modkit/codec-kit/legacy/models/codec'"
+    },
+    {
+      "file": "src/diablo3-app/appearance.ts",
+      "change": "Decoded zeros are normalised. Negating a decoded zero produced -0 in positions, normals, tangents and UVs: the same number, a different serialized value. The MK3 codec this replaces normalised it, and so does the port."
+    },
+    {
+      "file": "src/diablo3-app/appearance.ts",
+      "change": "An index outside its submesh vertex range is refused. Upstream recorded an issue and dropped the submesh, which turns a corrupt file into a silently smaller model."
+    },
+    {
+      "file": "src/diablo3-app/appearance.ts",
+      "change": "parseDiablo3ActorLinks reads the appearance SNO at 0x24. MK2 read 0x28, four bytes late: on the installed game (2.8.0.99920) 0x24 of an actor holds the SNO id its appearance declares for itself (barbarian_male 12742, a2dun_cave_worms_rocks_a 199599), while 0x28 names no appearance. Nothing called the function in MK2 or MK3; the source feature audit does now."
+    },
+    {
+      "file": "src/diablo3-app/appearance.ts",
+      "change": "attachDiablo3Animations reports a bone the appearance lacks once, not once per clip. The barbarian's own animation set names four cosmetic bones (ponyTail2, frontCloth1, frontCloth2, fannyPack) its skeleton does not carry, which MK2 repeated as 229 warnings over 90 clips."
+    },
+    {
+      "file": "src/diablo3-app/codec.ts",
+      "change": "New MK3 surface over the port: budgets charged from the header before the parser allocates and again from the decoded record counts, cancellation, the published facets, the game's actor → AnimSet → Anim link read through the host's logical resources, the clips' bone tracks as TRS channels, and model.companions for the MK2 .ani name-prefix patterns."
+    },
+    {
+      "file": "src/diablo3-app/codec.js",
+      "change": "Reduced to a runtime entry that re-exports dist/. The second, narrower APP parser that used to live here is gone; one format now has one parser."
+    }
+  ],
+  "files": [
+    {
+      "path": "src/diablo3-app/appearance.ts",
+      "source": "references/modkitmk2/extensions/blizzard/diablo/codecs/diablo3-app/src/index.ts",
+      "edit": "imports-and-five-deviations",
+      "lines": 1136,
+      "sha256": "55a0154855e3e0e70a4b8f70c41eeb3efbca6de3704d35e55c0440c829560010",
+      "sourceSha256": "3b104b8fb3696ebf57d671960014aa52d51755235bc9b1210f0bec06f15a4871"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "themes": [
+    {
+      "id": "sc2",
+      "label": "StarCraft II",
+      "stylesheet": "sc2/theme.css"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/subject-kind-definition",
+    "major": 1
+  },
+  "id": "blizzard/sc2-preload-asset-db-kind",
+  "displayName": "StarCraft II preload asset entry",
+  "spec": {
+    "kindId": "sc2-preload-asset-entry",
+    "label": "StarCraft II preload asset entry"
+  }
+}

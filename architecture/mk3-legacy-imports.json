@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-09-22",
+  "purpose": "Temporary exact debt baseline, not MK3 completion. New records or count growth fail; removed records/count reductions require baseline shrink. No automatic baseline update command is provided.",
+  "scope": "Registered extensions: modules/** and shared/** production JS/TS including declarations and JSDoc. Test/tool/build directories excluded. Direct syntax only; tsconfig aliases, package exports, arbitrary loader aliases and transitive dependency closure are not proved.",
+  "imports": [
+    {
+      "file": "starcraft2/modules/banks/codecs/bank/src/artifact-codec.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/banks",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/banks/codecs/bank/src/artifact-codec.ts",
+      "specifier": "@modkit/codec-kit/legacy/core",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/banks",
+      "replacement": "Use public Core error/result contracts after preserving error codes and caller handling."
+    },
+    {
+      "file": "starcraft2/modules/banks/codecs/bank/src/artifact-codec.ts",
+      "specifier": "@modkit/codec-kit/legacy/semantic",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/banks",
+      "replacement": "Expose canonical owner schema and semantic services through public SDK contracts; remove the compatibility registry facade."
+    },
+    {
+      "file": "starcraft2/modules/banks/codecs/bank/src/describe.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/banks",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/banks/codecs/bank/src/describe.ts",
+      "specifier": "@modkit/codec-kit/legacy/semantic",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/banks",
+      "replacement": "Expose canonical owner schema and semantic services through public SDK contracts; remove the compatibility registry facade."
+    },
+    {
+      "file": "starcraft2/modules/banks/codecs/bank/src/detect.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "import-type",
+      "count": 1,
+      "owner": "starcraft2/banks",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/banks/codecs/bank/src/detect.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/banks",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/banks/codecs/bank/src/document.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "import-type",
+      "count": 1,
+      "owner": "starcraft2/banks",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/data/shared/catalog-engine/index.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "export-type",
+      "count": 1,
+      "owner": "starcraft2/data",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/data/shared/catalog-engine/registry.ts",
+      "specifier": "@modkit/codec-kit/legacy/semantic/data",
+      "kind": "export",
+      "count": 1,
+      "owner": "starcraft2/data",
+      "replacement": "Expose canonical owner schema and semantic services through public SDK contracts; remove the compatibility registry facade."
+    },
+    {
+      "file": "starcraft2/modules/data/shared/format/codec.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/data",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/data/shared/format/codec.ts",
+      "specifier": "@modkit/codec-kit/legacy/core",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/data",
+      "replacement": "Use public Core error/result contracts after preserving error codes and caller handling."
+    },
+    {
+      "file": "starcraft2/modules/data/shared/format/describe.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "import-type",
+      "count": 1,
+      "owner": "starcraft2/data",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/data/shared/format/describe.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/data",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/data/shared/format/relation-provider.ts",
+      "specifier": "@modkit/codec-kit/legacy/entity-cards",
+      "kind": "import-type",
+      "count": 1,
+      "owner": "starcraft2/data",
+      "replacement": "Project the existing owner data through public SDK subject facts and relation graph contracts plus shared UI."
+    },
+    {
+      "file": "starcraft2/modules/layout/shared/format/codec.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/layout",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/layout/shared/format/codec.ts",
+      "specifier": "@modkit/codec-kit/legacy/core",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/layout",
+      "replacement": "Use public Core error/result contracts after preserving error codes and caller handling."
+    },
+    {
+      "file": "starcraft2/modules/layout/shared/format/describe.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/layout",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/layout/shared/layout-engine/index.ts",
+      "specifier": "@modkit/codec-kit/legacy/assets",
+      "kind": "export-type",
+      "count": 1,
+      "owner": "starcraft2/layout",
+      "replacement": "Replace the compatibility asset/descriptor/edit facade with public SDK subjects, edit plans and host VFS ports; preserve operation and edit parity."
+    },
+    {
+      "file": "starcraft2/modules/layout/shared/layout-engine/index.ts",
+      "specifier": "@modkit/codec-kit/legacy/semantic/layouts",
+      "kind": "export",
+      "count": 1,
+      "owner": "starcraft2/layout",
+      "replacement": "Expose canonical owner schema and semantic services through public SDK contracts; remove the compatibility registry facade."
+    },
+    {
+      "file": "starcraft2/modules/layout/shared/layout-engine/sc2-layout-core/index.ts",
+      "specifier": "@modkit/codec-kit/legacy/sc2-support",
+      "kind": "export",
+      "count": 1,
+      "owner": "starcraft2/layout",
+      "replacement": "Replace compatibility event/logging helpers with public platform primitives without changing Layout semantics."
+    },
+    {
+      "file": "starcraft2/modules/layout/shared/layout-engine/sc2-layout-core/index/store.ts",
+      "specifier": "@modkit/codec-kit/legacy/sc2-support",
+      "kind": "import",
+      "count": 1,
+      "owner": "starcraft2/layout",
+      "replacement": "Replace compatibility event/logging helpers with public platform primitives without changing Layout semantics."
+    }
+  ],
+  "reviewedDynamicImports": [
+    {
+      "file": "blizzard-common-formats/modules/s2protocol/index.js",
+      "kind": "dynamic-import",
+      "expression": "`./protocols/data/protocol${resolution.selectedBuild}.js`",
+      "sha256": "5632e8047185be89b560d56c17a3b9a44e977fb2647608e6ac995ae68a5f33a1",
+      "owner": "blizzard-common-formats/s2protocol",
+      "reason": "loadProtocol resolves a positive safe integer from the bundled AVAILABLE_BUILDS list before loading ./protocols/data/protocol<build>.js. Entire source hash pins this review; any source change requires renewed review."
+    }
+  ]
+}

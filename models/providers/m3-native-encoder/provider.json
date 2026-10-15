@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "contract": { "id": "modkit/service-provider-contribution", "major": 1 },
+  "id": "blizzard/m3-native-encoder",
+  "displayName": "M3/M3A encoder from UVM",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./providers/m3-native-encoder/runtime.js",
+      "target": { "environments": ["node"] },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./providers/m3-native-encoder/runtime.browser.js",
+      "target": { "environments": ["browser-worker", "node-worker"] },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "m3-from-uvm",
+        "contract": "common.model/native-encoder",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": { "formatIds": ["m3"] }
+      },
+      {
+        "offerId": "m3a-from-uvm",
+        "contract": "common.model/native-encoder",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": { "formatIds": ["m3a"] }
+      }
+    ],
+    "lifecycleScope": "operation"
+  },
+  "limitations": [
+    "Accepts only UVM bytes and returns one M3 or M3A artifact. It has no dependency on PIE or other native codecs.",
+    "Mixed rigid draws owned by existing skin joints preserve animation via inverse-bind geometry and existing joint slots. Uniform vertex-layout padding admits only unused UV/tangent inputs; sampled missing inputs refuse.",
+    "Target-only BlizzardM3 schema 1 residual fields are consumed when required; reconstructible scene data comes from common glTF/UVM structures.",
+    "Material policy is strict by default. Explicit base-color-coverage approximates foreign shaders and common programs with unsupported scene-environment bindings using glTF base color and OPAQUE/MASK/BLEND coverage, reporting omitted shader/PBR/reflection behavior. Texture alpha factors are independent of RGB factors. Non-grey textured RGB factors are lowered to owned vertex colors with RGBA8 loss notes while preserving alpha. Mirrored/transformed UVs and embedded/remote images are refused."
+  ]
+}

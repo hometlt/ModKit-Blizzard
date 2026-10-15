@@ -1,0 +1,28 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,
+    "baseUrl": ".",
+    "lib": [
+      "ES2023",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "strict": false,
+    "verbatimModuleSyntax": false,
+    "noImplicitOverride": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false,
+    "tsBuildInfoFile": "../node_modules/.cache/blizzard-warcraft-3/tsconfig.vendored.tsbuildinfo"
+  },
+  "include": [
+    "src/lib/war3-model/**/*.ts",
+    "src/lib/mdx-m3-viewer/**/*.ts"
+  ]
+}

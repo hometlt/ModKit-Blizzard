@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "codec": "war3-mdx",
+  "corpusKind": "synthetic",
+  "verdict": "pass",
+  "tests": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "model.export-uvm",
+    "oracle": "the authored triangle drawn by the common scene renderer from the codec UVM",
+    "suite": "modkit-extensions-blizzard/blizzard-warcraft-3/test/k1-war3-mdx-receipts.test.ts",
+    "samples": [
+      {
+        "name": "authored.mdx / authored.mdl",
+        "builder": "modkit-extensions-blizzard/blizzard-warcraft-3/test/war3-harness.ts#authoredModelBytes",
+        "fixture": "modkit-extensions-blizzard/test/behavior/fixtures/minimal.mdx",
+        "sha256": "30c47af860743ebbcef1d2293329edb32aa3e3bb508e536fe1f02e662facda9e"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "authored.mdx:model-export-uvm:scene-render",
+      "verdict": "identical",
+      "resultDigest": "019b3f9996bd7bad0efca4f63a6f04ead574164c0abfa01d2d726ca673bf7a52",
+      "mk3Operation": "model.export-uvm + scene render"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/war3-mdx/operation/model.render",
+      "kind": "operation",
+      "legacyOperation": "model.render",
+      "adapterOperation": "model.export-uvm",
+      "targetOperation": "model.export-uvm",
+      "handlerId": "model-export-uvm",
+      "contribution": "modkit-extensions-blizzard/blizzard-warcraft-3/contributions/codec-war3-mdx.json",
+      "executed": true,
+      "caseIds": [
+        "authored.mdx:model-export-uvm:scene-render"
+      ]
+    }
+  ]
+}

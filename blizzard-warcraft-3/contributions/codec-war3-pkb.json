@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/war3-pkb",
+  "displayName": "PopcornFX bake (Warcraft III Reforged)",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/war3-pkb/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./dist/war3-pkb/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Reads Warcraft III Reforged's PopcornFX 2 bakes (.pkb): records, layers with their renderers, samplers, compiled scripts and particle fields, and the event graph; a field outside the measured schema is skipped by the encoding under which its record still parses.",
+    "The effect is not simulated: the scripts are decoded, not run, and nothing is drawn."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "war3-pkb",
+        "label": "PopcornFX bake"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "extensions": [
+        "pkb"
+      ],
+      "signatures": [
+        {
+          "bytesHex": "110b00ca",
+          "from": "start",
+          "offset": 0
+        }
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 32
+        }
+      ],
+      "maxBytes": 32
+    },
+    "representations": [
+      {
+        "id": "flow-metadata",
+        "contract": "common.document/flow-metadata",
+        "major": 1,
+        "stage": "runtime",
+        "lossy": true
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "export.convert",
+        "handlerId": "export-convert",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 4000000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "contract": { "id": "modkit/subject-kind-definition", "major": 1 },
+  "id": "blizzard/sc2-mod-mount-kind",
+  "displayName": "StarCraft II mod mount",
+  "spec": { "kindId": "sc2-mod-mount", "label": "StarCraft II mod mount" }
+}

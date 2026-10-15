@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-texture-masks",
+  "displayName": "StarCraft II texture masks",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/modules/map/codecs/documents/texture-masks/src/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./dist/modules/map/codecs/documents/texture-masks/src/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Packed four-bit weights are exposed per layer through bounded inspection and native edits.",
+    "Texture names are resolved from t3Terrain.xml by the map coordinator; this document stores weights only."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "sc2-texture-masks",
+        "label": "StarCraft II texture masks"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "authored"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "pathGlobs": [
+        "**/t3TextureMasks",
+        "**/mapTextureMasks"
+      ],
+      "signatures": [
+        {
+          "from": "start",
+          "offset": 0,
+          "bytesHex": "4d41534b"
+        }
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 64
+        }
+      ],
+      "maxBytes": 64
+    },
+    "representations": [
+      {
+        "id": "texture-mask-layers",
+        "contract": "common.document/grid",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-texture-masks.inspect-weight",
+        "handlerId": "inspect-weight",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "edit.content",
+        "handlerId": "set-weight",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "traitDeclarations": [
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "content.binary"
+      },
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "structure.layers"
+      }
+    ]
+  }
+}

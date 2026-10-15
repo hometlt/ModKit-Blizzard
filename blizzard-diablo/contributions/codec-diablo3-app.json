@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/diablo3-app",
+  "displayName": "Diablo III appearance",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./src/diablo3-app/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./src/diablo3-app/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Decodes APP v260 submeshes, positions, normals, tangents, primary UVs, indices, skin weights, bounds, material names and the authored bone hierarchy with its bind and parent-local transforms.",
+    "Animation (.ani), animation set (.ans) and actor (.acr) records are decoded by the same module; an appearance's clips come from the game's own link, read by exact name through the host's logical resources: the actor named like the appearance, its AnimSet and parent sets, then each Anim by SNO, keeping clips authored for this appearance (at most 240 per appearance). An appearance with no same-named actor gets no clips; model.companions publishes the MK2 name-prefix patterns, which need a namespace listing the host does not yet serve at that size.",
+    "Physics meshes, invisible materials, equipment tiers and exact duplicate submeshes are marked in mesh metadata rather than dropped.",
+    "Hardpoints are published as sockets (model-socket-source, UV_game_socket), each a node of its own under its bone with the transform relative to the bone's pose A (PRS0); the native name is kept. Skinning uses the inverse of pose B (PRS4), the engine's palette; poses A and B differ on about 5 % of bones (capes, hair, carried props). Collision capsules are declared volumes on their bones (model-collision-source, UV_game_collision): radius, length between the hemisphere centres as height, local z axis, a capsule of length 0 as a sphere. The bones' own collision shapes are declared volumes on their bone nodes: spheres, capsules between their two points and convex hulls of the cooked polytope's vertices, typed by LOD (lod-0 the full collider set, lod-1 the ragdoll proxy), dynamic and anchor. Ragdoll constraints, cloth and static lights are not published.",
+    "A clip's timed events (KeyframedAttachment) are its UV_game_animation_events: the frame index divided by the clip's frame rate, at the socket of the first hardpoint the event names; what it spawns is an SNO id and group in the payload (sound, spawn_effect, spawn_object, explosion, camera_shake, vibration), a look switch is swap_variant with the look's name, an event naming neither keeps its native kind and flags as trigger. Nothing is spawned or switched by the codec.",
+    "Material texture references (Textures/<sno>.tex) are published for the host, which resolves them in the same storage and decodes them with blizzard/diablo3-tex. The render-material program states each material's render pass (blend, alpha test) and, for the ActorIrrad.fx programs (actors, cloth), their normal map (full RGB, rgb8, in the vertex's explicit tangent frame), environment map and gloss map as their compiled ps_3_0 reads them: environment(reflection) x gloss x (0.5 + 0.5 x light highlight), added. The game indexes the environment by the reflection's world-horizontal axes, the vocabulary's sphere is in view space. Scene.fx and Prop.fx gloss, the irradiance cube and model writing are not stated.",
+    "An index outside its submesh vertex range is refused; this profile does not silently drop corrupt geometry.",
+    "Geometry is charged to maxNodes per vertex and index. The largest installed appearance, x1_pand_ext_240_cellar_05 (37 MB), charges 1 318 477 records; 4 000 000 is about what the 100 MiB maxScalarBytes input admits at that density, so a larger appearance is refused rather than decoded in pieces."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "diablo3-app",
+        "label": "Diablo III appearance"
+      }
+    ],
+    "roles": [
+      "media"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "authored",
+      "compiled",
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "extensions": [
+        "app"
+      ],
+      "signatures": [
+        {
+          "from": "start",
+          "offset": 0,
+          "bytesHex": "efbeadde04010000"
+        }
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ],
+      "maxBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "geometry-metadata",
+        "contract": "common.model/geometry-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": true
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/model-scene-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-material-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-resource-refs-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-skeleton-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-animation-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-socket-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-collision-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "none"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "model.companions",
+        "handlerId": "diablo3-companion-patterns",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "model.export-uvm",
+        "handlerId": "model-export-uvm",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 4000000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "installation": {
+    "environmentVariable": "MODKITX_SC2_ROOT",
+    "defaultRoot": "C:/Apps/StarCraft II",
+    "entry": "campaigns/liberty.sc2campaign/base.sc2data/gamedata/unitdata.xml",
+    "missingPath": "campaigns/liberty.sc2campaign/base.sc2data/gamedata/__modkit_m4_missing__.xml"
+  },
+  "operation": {
+    "publicId": "container.extract",
+    "handlerId": "extract-entry"
+  },
+  "bounds": {
+    "listPrefix": "campaigns/liberty.sc2campaign/base.sc2data/gamedata/",
+    "listLimit": 1,
+    "oversizedListLimit": 512
+  }
+}

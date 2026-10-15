@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/mpq-fresh-writer",
+  "displayName": "Blizzard MPQ Save As writers",
+  "runtimeVariants": [
+    {
+      "variantId": "portable",
+      "entrypoint": "./src/mpq/fresh-writer.js",
+      "target": {
+        "environments": ["browser-worker", "node-worker"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "mpq-fresh-archive-v1",
+        "contract": "common.edit/writer",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "providerId": "blizzard/mpq-fresh-writer",
+          "fidelityEvidenceId": "mpq-fresh-archive-writer-v1",
+          "formatId": "mpq",
+          "representationId": "source",
+          "mutationMode": "export-only",
+          "minimumRoundTrip": "semantic"
+        }
+      },
+      {
+        "offerId": "mpq-native-preserving-v1",
+        "contract": "common.edit/writer",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "providerId": "blizzard/mpq-fresh-writer",
+          "fidelityEvidenceId": "mpq-native-preserving-writer-v1",
+          "formatId": "mpq",
+          "representationId": "native-source",
+          "mutationMode": "export-only",
+          "minimumRoundTrip": "semantic"
+        }
+      }
+    ],
+    "fidelityEvidence": [
+      {
+        "offerId": "mpq-fresh-archive-v1",
+        "evidenceId": "mpq-fresh-archive-writer-v1",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": true,
+          "notes": [
+            "Every enumerated loose-namespace payload is stored byte-for-byte in the fresh archive.",
+            "The frozen proof executes pinned MK2-to-MK3 and MK3-to-MK2 open/list/read projections for nonempty and empty named payload sets while excluding the generated listfile from user-entry equality.",
+            "Native MPQ layout, compression, encryption, unnamed blocks and signing are outside this offer."
+          ]
+        },
+        "corpusId": "m4-packed-oracle:mpq-writer-cross-direction",
+        "corpusDigest": "sha256:7350cf9dfdbc6bb01eb2b01a144a43126f22117fc441b0de59d89c6761a61f27",
+        "conformanceProfile": "common.edit/writer-v1",
+        "optionsFingerprint": "m4-named-payloads-exclude-generated-listfile-v1",
+        "inputClass": "nonempty-and-empty-complete-explicit-named-payload-sets",
+        "provenAt": "2026-09-05T00:00:00Z"
+      },
+      {
+        "offerId": "mpq-native-preserving-v1",
+        "evidenceId": "mpq-native-preserving-writer-v1",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": true,
+          "notes": [
+            "The installed WTE70_Madlibrarian.SC2Map is rewritten into a separate fixed-slot archive, reopened, and compared without mutating the installed source.",
+            "Untouched block payloads, flags, methods, hash order, block order, offsets, prefix, suffix, and unnamed data remain byte-identical; changed-entry slack is zero-filled.",
+            "Opaque attributes and signatures are preserved byte-identically but reported invalidated after modification.",
+            "Modkit never creates or recomputes a Blizzard signature; only an official Blizzard tool may produce one that can be described as valid."
+          ]
+        },
+        "corpusId": "installed-starcraft-2:Maps/ex/WTE70_Madlibrarian.SC2Map",
+        "corpusDigest": "sha256:f654e212dcff3ffe3e1090e383b7b25fac4def2a723b4eda408c1b5cdfb2a305",
+        "conformanceProfile": "common.edit/writer-v1",
+        "optionsFingerprint": "fixed-slot-native-save-as-v1",
+        "inputClass": "mpq-v0-v1-fixed-slot-complete-source-stored-or-single-unit-zlib",
+        "provenAt": "2026-08-28T00:00:00Z"
+      }
+    ],
+    "lifecycleScope": "session"
+  }
+}

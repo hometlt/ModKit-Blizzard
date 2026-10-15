@@ -1,0 +1,51 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "allowJs": true,
+    "checkJs": false,
+    "composite": false, "incremental": true, "tsBuildInfoFile": "../node_modules/.cache/tsbuildinfo/starcraft2-sc2-galaxy.tsbuildinfo",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "verbatimModuleSyntax": false,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
+    "noFallthroughCasesInSwitch": false,
+    "isolatedModules": false,
+    "baseUrl": ".",
+    "paths": {
+      "@modkit/blizzard-starcraft2/galaxy/language-core": [
+        "modules/galaxy/language-core/index.ts"
+      ],
+      "@modkit/blizzard-starcraft2/galaxy/analysis/*": [
+        "modules/galaxy/services/analysis/*"
+      ],
+      "@modkit/blizzard-starcraft2/triggers/document/*": [
+        "modules/triggers/shared/trigger-document/*"
+      ],
+      "@modkit/blizzard-starcraft2/triggers/document": [
+        "modules/triggers/shared/trigger-document/index.ts"
+      ],
+      "@modkit/blizzard-starcraft2/triggers/galaxy-conversion/internal/*": [
+        "modules/triggers/services/galaxy-conversion/internal/*"
+      ]
+    }
+  },
+  "files": [
+    "modules/galaxy/codecs/galaxy/codec.ts",
+    "modules/galaxy/language/lsp-cli.ts",
+    "modules/galaxy/language/lsp-feature-adapter.ts",
+    "modules/galaxy/language/workspace/document-source.ts",
+    "modules/galaxy/language/workspace/file-system-index.ts",
+    "modules/galaxy/services/analysis/index.ts",
+    "modules/galaxy/services/analysis/runtime-summary.ts",
+    "modules/galaxy/services/analysis/native-signatures.ts",
+    "modules/galaxy/services/runtime/boolean-projection.ts",
+    "modules/galaxy/services/auditing/fallback-audit.ts",
+    "modules/galaxy/services/auditing/file-audit.ts",
+    "modules/galaxy/services/source-detection.ts",
+    "src/types/sax.d.ts"
+  ]
+}

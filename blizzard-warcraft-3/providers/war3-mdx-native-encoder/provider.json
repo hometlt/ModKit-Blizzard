@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/war3-mdx-native-encoder",
+  "displayName": "Warcraft III MDX encoder from UVM",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./providers/war3-mdx-native-encoder/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "worker-portable",
+      "entrypoint": "./providers/war3-mdx-native-encoder/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker",
+          "browser-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "war3-mdx-from-uvm",
+        "contract": "common.model/native-encoder",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "formatIds": [
+            "war3-mdx"
+          ]
+        }
+      }
+    ],
+    "lifecycleScope": "operation"
+  },
+  "limitations": [
+    "Accepts UVM bytes and returns one Warcraft III model. It has no dependency on the StarCraft II extension or any other game.",
+    "With a BlizzardMDX residual, native declarations are restored alongside common geometry, skin and scene data. Without one, a fresh native model is built from representable common structures; this is a conversion, not recovery of missing native declarations.",
+    "Source-free PRE2 preserves static one-pass surface-material priority and Unshaded, and ReplaceableId/SortPrimsFarZ/Unfogged from qualified WC3 particle metadata. Animated, multi-pass and non-surface programs are refused; native integer bounds and metadata types are checked without coercion. Common lineEmitter/modelSpace/xyQuad restore their native bits while head/tail/squirt remain intact. Native flag storage is not proof of runtime sorting, fog or lighting fidelity.",
+    "Animated native EmissiveGain retains its independent static MDX header in a finite exact float32 carrier, excluding negative zero; invalid carriers refuse before byte publication. A missing legacy carrier keeps compatibility default1, not an inferred authored value. MDL refuses a non-default static header alongside KMTE until its native grammar is qualified. This does not activate common KMTE playback or qualify adjacent Fresnel headers.",
+    "The residual preserves native facts not represented by common structures. Source-free conversion does not promise complete material, effect or bind-pose fidelity; native Editor and visual acceptance remain separate checks."
+  ]
+}

@@ -1,0 +1,644 @@
+{
+  "schemaVersion": 1,
+  "summary": "Warcraft III MDX/MDL decoding is a port, not a rewrite. The format layer is the MIT war3-model 4.0.1 parser/generator, vendored under a compatibility profile; the adapter above it came from the MK2 war3-mdx implementation and is now ordinary MK3 code that compiles under this package strict profile.",
+  "mk2Removed": {
+    "note": "This package carries no MK2 tree any more. The adapter moved into src/war3-mdx, and the MK2 game-discovery copy was replaced by an MK3 common.game/installation-discovery provider in src/game/installation.ts rather than being kept as an unresolvable copy.",
+    "paths": [
+      "src/lib/mk2/war3-mdx/** -> src/war3-mdx/{detect,render-model}.ts",
+      "src/lib/mk2/games/warcraft-3/** -> src/game/installation.ts (rewritten for MK3)",
+      "test/mk2/** -> deleted; the oracle copies could not resolve their MK2-only imports"
+    ]
+  },
+  "upstream": {
+    "war3-model": {
+      "version": "4.0.1",
+      "license": "MIT",
+      "licenseFile": "licenses/war3-model-MIT.txt",
+      "readFrom": "references/war3-model",
+      "omitted": [
+        "blp/** — Modkit reads BLP through the blizzard/blp codec",
+        "renderer/** — Modkit renders through @modkit/scene; only the two layer-texture maps were taken, into src/lib/war3-model/layer-textures.ts"
+      ]
+    },
+    "modkit-mk2": {
+      "readFrom": "references/modkitmk2/extensions/blizzard/warcraft-3/codecs/war3-mdx",
+      "manifestStatus": "supported",
+      "note": "MK2 consumed war3-model as an npm dependency; MK3 vendors the sources instead so the extension keeps no external runtime dependency."
+    },
+    "mdx-m3-viewer": {
+      "commit": "2ff0bc00c6363f425016e23d88c0fb2929d3b3cc",
+      "license": "MIT",
+      "licenseFile": "licenses/mdx-m3-viewer-MIT.txt",
+      "readFrom": "references/mdx-m3-viewer/src",
+      "decision": "Owner 2026-09-28 (Q1 of docs/MK3/PLAN_WARCRAFT3_FORMATS_2026-09-28.md): vendor the map-document parsers with provenance.",
+      "omitted": [
+        "parsers/w3x/map.ts — the map archive is read through the blizzard/mpq container",
+        "parsers/w3x/wts — trigger strings have their own parser in src/wts",
+        "parsers/w3x/{wtg,wct} — GUI triggers need TriggerData.txt and the JASS token stream; a later stage",
+        "parsers/w3x/w3f — campaign info (.w3n), not read yet",
+        "common/* other than binarystream, bytesof, searches, typecast, utf8"
+      ]
+    }
+  },
+  "edits": [
+    {
+      "file": "src/lib/war3-model/{model.ts,mdx/parse.ts,mdx/generate.ts,mdl/parse.ts}",
+      "change": "Retain an authored static EmissiveGainFallback separately before KMTE overwrites the animated property; MDX regenerates that header instead of hardcoded 1. Existing MDL parser acceptance retains static/track records in either order, but no new MDL syntax is emitted.",
+      "why": "A bounded native 1100 fixture with static header 0 and unchanged KMTE keys wrote header 1 through model.write and UVM reconstruction. Public game writer wrappers validate the finite exact float32 fallback profile (negative zero excluded), reject conflicting/invalid carriers and refuse non-default static headers beside KMTE in MDL until native grammar is qualified. Missing legacy carriers retain compatibility default 1, not a recovered source value. No reference implementation copied; native Editor, playback/default semantics and adjacent Fresnel header preservation remain unqualified."
+    },
+    {
+      "file": "src/lib/war3-model/{model.ts,mdx/parse.ts,mdx/generate.ts,mdl/parse.ts,mdl/generate.ts}",
+      "change": "KRCO is a ribbon FLOAT3 animation track, represented by the same AnimVector as other native tracks; MDX size/read/write and MDL RGB/BGR channel conversion include its keys and tangents. ColorFallback preserves the independent static header value beside an animated track.",
+      "why": "The previous reader refused KRCO and its writer could not re-emit animated ribbon colors. Format facts checked against the existing mdx-m3-viewer ribbon parser/viewer; no reference implementation copied."
+    },
+    {
+      "file": "src/lib/war3-model/**",
+      "change": "extensionless relative specifiers rewritten to explicit '.js' for NodeNext, and '../renderer/util' redirected to the copied layer-textures module"
+    },
+    {
+      "file": "src/war3-mdx/render-model.ts",
+      "change": "imports rewritten for MK3: 'war3-model' -> '../lib/war3-model/index.js', '@modkitx/models-processing' -> '@modkit/codec-kit/legacy/models'; a header records the provenance"
+    },
+    {
+      "file": "src/war3-mdx/render-model.ts",
+      "change": "buildBounds now accepts undefined extents and returns null. An MDL that declares no extents previously threw a null dereference out of the codec."
+    },
+    {
+      "file": "src/lib/war3-model/mdl/generate.ts",
+      "change": "generateBoneChunk and the animation-vector writer guarded only against null, so an absent GeosetId, GeosetAnimId or GlobalSeqId was written as the literal text `undefined` and the emitted MDL no longer parsed. Both now treat absent as null."
+    },
+    {
+      "file": "src/lib/war3-model/mdx/generate.ts",
+      "change": "The same null-only guard as the MDL writer, in binary: an absent GlobalSeqId, TVertexAnimId, GeosetId, GeosetAnimId, ObjectId, Parent or emitter TextureID was written as 0 instead of -1. Every track of a converted model then ran on a global sequence 0 the model does not declare, and each clip read back carried the keys of the whole timeline. All eight sites now write -1 for absent (`?? NONE`)."
+    },
+    {
+      "file": "src/lib/war3-model/mdx/parse.ts",
+      "change": "The fixed-length string reader trimmed trailing NULs only, so a padded field followed by any non-NUL byte returned the padding and the stray bytes. It now ends the string at the first NUL, as a C string does."
+    },
+    {
+      "file": "src/lib/war3-model/mdx/parse.ts, src/lib/war3-model/mdx/generate.ts, src/lib/war3-model/model.ts",
+      "change": "An event object's KEVT global sequence id was read and dropped as 'unused' and written as -1. It is kept as EventObject.GlobalSeqId and written back (2026-10-09), as mdx-m3-viewer reads it: a global-sequence event fires every cycle."
+    },
+    {
+      "file": "src/war3-mdx/render-model.ts",
+      "change": "buildWar3AttachmentMetadata and buildWar3CollisionMetadata also record `ownNodeIndex`, the node each attachment or collision shape IS rather than the bone it hangs on.",
+      "why": "A writer rebuilding an ATCH or CLID record from the common scene needs to know which node carries it; without this the MK3 UVM export had nowhere to mark them and both were dropped on any document without our own residual."
+    },
+    {
+      "file": "src/lib/mdx-m3-viewer/**",
+      "change": "extensionless relative specifiers rewritten to explicit '.js' (or '/index.js') for NodeNext; CRLF line endings of upstream files stored as LF"
+    },
+    {
+      "file": "src/lib/mdx-m3-viewer/{common/binarystream.ts,parsers/w3x/w3i/randomunittable.ts,parsers/w3x/wpm/file.ts}",
+      "change": "typed-array fields annotated (ArrayBuffer | Uint8Array, Int32Array, Uint8Array) so the TypeScript 5.7 generic typed-array lib accepts them; no behaviour changed"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/lib/war3-model/model.ts",
+      "source": "references/war3-model/model.ts",
+      "edit": "specifiers-and-krco-color-track-type-and-kmte-static-header",
+      "lines": 409,
+      "sha256": "82484806805c0e185ab7a6f7c00a26e14d0b70e41b720c6bddbf260f3d4f1020",
+      "sourceSha256": "78447d91ba3becb7c65ff6fe6a9c4877e857ae7283e7ffe3bde1f94957ce4469"
+    },
+    {
+      "path": "src/lib/war3-model/mdx/parse.ts",
+      "source": "references/war3-model/mdx/parse.ts",
+      "edit": "specifiers-nul-termination-and-krco-and-kmte-static-header",
+      "lines": 1217,
+      "sha256": "b8e9fc4f0562d1cf65183ec4780a498a03dc7865fc8e4136fc06ea56e2f6fe9b",
+      "sourceSha256": "11160a5d6e3e19d5a938b2f3c472d7e2e0d88a9cd53bf74368a423475b9ef82b"
+    },
+    {
+      "path": "src/lib/war3-model/mdx/generate.ts",
+      "source": "references/war3-model/mdx/generate.ts",
+      "edit": "specifiers-undefined-guards-and-krco-and-kmte-static-header",
+      "lines": 1758,
+      "sha256": "0636d165edbc9c56bfe924ce9f1dfd00f9b772d64dfdc5d5c45f761677d13e98",
+      "sourceSha256": "c22a8e67a301eb58672646c4de52b75b3aa1623e72bb0c9c96259dcfb3fa778d"
+    },
+    {
+      "path": "src/lib/war3-model/mdl/parse.ts",
+      "source": "references/war3-model/mdl/parse.ts",
+      "edit": "specifiers-and-animated-ribbon-color-and-kmte-static-header",
+      "lines": 1678,
+      "sha256": "f4817b86e26f858b203024acb4f7a3b4dedad3f447cf35d3b4aeff1f6284a2c5",
+      "sourceSha256": "adb9c5d3aab1e126aaeba4eb52bbf9b8ef797dda5fef1cf978bd28c5fedc7ef8"
+    },
+    {
+      "path": "src/lib/war3-model/mdl/generate.ts",
+      "source": "references/war3-model/mdl/generate.ts",
+      "edit": "specifiers-undefined-guards-and-ribbon-color-fallback",
+      "lines": 942,
+      "sha256": "794759ef76b1bc8a9892437c12d74c33b7df6e3d21fb34bcbd67d08b5ca27450",
+      "sourceSha256": "34730d4a1c682f9a04648d8f53c28c2920d217e46fb2d2098795ea23dcdecf72"
+    },
+    {
+      "path": "src/war3-mdx/detect.ts",
+      "source": "references/modkitmk2/extensions/blizzard/warcraft-3/codecs/war3-mdx/src/detect.ts",
+      "edit": "verbatim",
+      "lines": 37,
+      "sha256": "b8a680ed46e4e8b8fa19397f64c19805063adbb939f12094acf2c1a7f1f412ff",
+      "sourceSha256": "c4e881019cdda2ee2fd0d8998cdb75c14137186f217f122be3553dfce3b4f583"
+    },
+    {
+      "path": "src/war3-mdx/render-model.ts",
+      "source": "references/modkitmk2/extensions/blizzard/warcraft-3/codecs/war3-mdx/src/implementation.ts",
+      "edit": "authored-mk3-adapter-four-uv-pre2-crystal-refusal-krco-kmte-header-admission",
+      "lines": 1436,
+      "sha256": "66d7efc76394096b5454336f6da6a5b79bfe4a96556581e50de4d59de1608bd1",
+      "sourceSha256": "61ddd75d021c1f15ffce75b1ecee6dcfcc72ae9b66ac6709301e74be522570fe"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/common/binarystream.ts",
+      "source": "references/mdx-m3-viewer/src/common/binarystream.ts",
+      "edit": "specifiers-and-typed-array-annotation",
+      "lines": 811,
+      "sha256": "19188eebd57ad7685c50828aca679d8552cb220ad65fde08c68221767613e9b6",
+      "sourceSha256": "8fdfd85c60f3d04d0aa6f890d528b54fef3c22b25930c9544349195c5acf8a59"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/common/bytesof.ts",
+      "source": "references/mdx-m3-viewer/src/common/bytesof.ts",
+      "edit": "specifiers-only",
+      "lines": 17,
+      "sha256": "c6c4173e2011040fe5528c29ea79040ceccc4aacbe4ece1e0833e514339c0b92",
+      "sourceSha256": "5b0cdfd428b1b535638f51378e6673e845ab0d9afc2a6455e2c65d520af110c8"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/common/searches.ts",
+      "source": "references/mdx-m3-viewer/src/common/searches.ts",
+      "edit": "line-endings-only",
+      "lines": 65,
+      "sha256": "dd90794cb5f3c37d899bc32d70661ffb3f9cd20f7b4da0c023c026bd1fc8d137",
+      "sourceSha256": "feab60f1be4ce990907809a54ceffe432f4e68f7d6840624e2a976a931fe851f"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/common/typecast.ts",
+      "source": "references/mdx-m3-viewer/src/common/typecast.ts",
+      "edit": "line-endings-only",
+      "lines": 286,
+      "sha256": "6cc08527065b37e0a1f957934c82c8278edcf1c0fcb6cc6cb3b947086019eac9",
+      "sourceSha256": "a2c9ef2a8c6cd0bfe7cffa59c8cf85832cc6cdf35a7c6e5f0dd91bd28747c0a7"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/common/utf8.ts",
+      "source": "references/mdx-m3-viewer/src/common/utf8.ts",
+      "edit": "line-endings-only",
+      "lines": 75,
+      "sha256": "5816db604d8cb65d186bab9e7f022d7e2dc7d6ea8995518aeb88fbb6a1b1eb4d",
+      "sourceSha256": "e3b7acf95bea2e53a3643ebfaa3a95bae6744e73ef059f636bac591e125e787a"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/doo/doodad.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/doo/doodad.ts",
+      "edit": "specifiers-only",
+      "lines": 97,
+      "sha256": "0304bb697796d27aae9337387ef15c58d7fd158b16122c7ad8e111c046280560",
+      "sourceSha256": "466d124ec6731214ab00149ef38a1a6d2f534bb1b05e627b4d5e3affbeb6ce8c"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/doo/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/doo/file.ts",
+      "edit": "specifiers-only",
+      "lines": 76,
+      "sha256": "bac1c3906250776b9856ab99430ced9e882fcf100123928b88520ec078f81bdb",
+      "sourceSha256": "eeea927313559b3c87161dbe1c0723911ce5bc3dbd6e47b8a02d4d469fa6856f"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/doo/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/doo/index.ts",
+      "edit": "specifiers-only",
+      "lines": 14,
+      "sha256": "9da82f74b5b4cae3c12b56f6551345e01ad4712e65ce635d69bd9849e3bcb4da",
+      "sourceSha256": "4743926da1ea7ccce144147917f7a82800208040caeb9b21565960f502ad1b03"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/doo/randomitem.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/doo/randomitem.ts",
+      "edit": "specifiers-only",
+      "lines": 20,
+      "sha256": "9733700eeb0de2aa0b8aa900a0cb750845a05be2fb08b9cba5acbbc3fb7aab28",
+      "sourceSha256": "2e19cbe0d7b7252a7ee272d402231461d52227a820e160b65b099481d6f0c426"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/doo/randomitemset.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/doo/randomitemset.ts",
+      "edit": "specifiers-only",
+      "lines": 32,
+      "sha256": "693eaef88da1fe352abbca9b008d19e40138d251c27d2b514b8afdcaa6fb21db",
+      "sourceSha256": "5aac035c5040ec825970db5be21817c0678e71954431ecbccd7f69f27b5278ef"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/doo/terraindoodad.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/doo/terraindoodad.ts",
+      "edit": "specifiers-only",
+      "lines": 28,
+      "sha256": "7a513692ff16cbb72b493a8c73e5367f3a36c709cd4ab134e7c88f612f8cbece",
+      "sourceSha256": "902ce2b07ecfc24390c9cd8f8b08f8c43ec3515cec256096f0ca3991f47deb05"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/imp/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/imp/file.ts",
+      "edit": "specifiers-only",
+      "lines": 88,
+      "sha256": "6a5e97a586b4ab046eb38a0209d4dfb83cc0d663b95bea769b995d57f0eb587e",
+      "sourceSha256": "2787e855c4554dd8f7ad3be3b1a1accd5dc6893f94fe55e9fe98276e0d1be84d"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/imp/import.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/imp/import.ts",
+      "edit": "specifiers-only",
+      "lines": 25,
+      "sha256": "7eee84598907892ec1700b266a67cf4fd42fc2cb73f6f30f6089db054e81c114",
+      "sourceSha256": "c384adba12d1379bf96400891443430ebe1992073f3c155f699ec31700a47130"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/imp/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/imp/index.ts",
+      "edit": "specifiers-only",
+      "lines": 8,
+      "sha256": "913a54cada639a8ad7c8227429a071c34c4c8797907cfd71ea10d0ca9435365a",
+      "sourceSha256": "3a534157d237894ee1bf9a285dae13692e01e658213cfd0fe4e4af26ad1bcac9"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/mmp/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/mmp/file.ts",
+      "edit": "specifiers-only",
+      "lines": 42,
+      "sha256": "fb4b7612518f655f2fe3152e619fddbb4c2786f4f33c25c98ae35a1dcc6dbd94",
+      "sourceSha256": "0928dc733f0fda04b73a7a59869897ceff39716829465b40a0a59ce5f7b2cc67"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/mmp/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/mmp/index.ts",
+      "edit": "specifiers-only",
+      "lines": 8,
+      "sha256": "33b3f300eaad6e15884cfe8c06cfec00301b5978d57d7ad20b17b51ce6fa259d",
+      "sourceSha256": "87d9d6285e2ca9a2c181c78d37f9a0bd2054219082cf2bb4a2bbd676fd60d259"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/mmp/minimapicon.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/mmp/minimapicon.ts",
+      "edit": "specifiers-only",
+      "lines": 26,
+      "sha256": "47a70c7d915dab5481683c87834b8069cadc92bbe79f7394dc80269105211102",
+      "sourceSha256": "3f096916b17af037c9d15a0f6a813ad2e6f25528e68ddb4ce68df2b938e06b81"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/shd/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/shd/file.ts",
+      "edit": "line-endings-only",
+      "lines": 19,
+      "sha256": "02ce1a993864a5f7a21eb250f84afd4ef2e13bb790c41009cddc7b2a37e1d60a",
+      "sourceSha256": "57e72d9143df47e961e7b1cfa4209cb97e1f8daec79be51f0127ffaadeb80ead"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/shd/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/shd/index.ts",
+      "edit": "specifiers-only",
+      "lines": 6,
+      "sha256": "f9202651fd5089d4d304713d7627e309ba3a92cda74f3a99e0d602e28401a0e8",
+      "sourceSha256": "f5ac360f81a3630f2a1243eb3ede331fc8af8c05ef84832f009bd6458194e92b"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/unitsdoo/droppeditem.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/unitsdoo/droppeditem.ts",
+      "edit": "specifiers-only",
+      "lines": 20,
+      "sha256": "3331847837e4746ed575285054409a724dfa5cf1f5612287aa95c4852adae248",
+      "sourceSha256": "2d5428b8ae630807233bd92cae1d018a157ff65947e9ce73c8377201951110f3"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/unitsdoo/droppeditemset.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/unitsdoo/droppeditemset.ts",
+      "edit": "specifiers-only",
+      "lines": 32,
+      "sha256": "ebb26f486e86c4cec4554aae4906ab89c8a61e3cc3156e0eaf7658fbd714f0fb",
+      "sourceSha256": "cbf503aaf284cd70ed9a92c508cef06ffb8e10f0972c37628c95f4795ef01f87"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/unitsdoo/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/unitsdoo/file.ts",
+      "edit": "specifiers-only",
+      "lines": 56,
+      "sha256": "4a8d34eda45866ae2b0eff6b5be059e2bd739e1743077966be473ea24dce030d",
+      "sourceSha256": "3c7c69fea99e9853b9c9ec6f8d83a2b7c940d68202dd9cd1cef90bc10e7770ca"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/unitsdoo/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/unitsdoo/index.ts",
+      "edit": "specifiers-only",
+      "lines": 18,
+      "sha256": "6e6bb07216f193da5121bbe2cfcc2048b4125da488925ebdaa9db1ef44c9eca5",
+      "sourceSha256": "a425711c6370f6e1f95466f88313cc424fb6a10810fb042c75b29ad130b4d76c"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/unitsdoo/inventoryitem.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/unitsdoo/inventoryitem.ts",
+      "edit": "specifiers-only",
+      "lines": 20,
+      "sha256": "d4d5609e4709cd42153be60b1de1645c18f50728646260689d2a40bd2e8e9d79",
+      "sourceSha256": "98d7c8017f0b62610bb198c8672c6983a2ce5235bcd97a647b940e287fa9e2c3"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/unitsdoo/modifiedability.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/unitsdoo/modifiedability.ts",
+      "edit": "specifiers-only",
+      "lines": 23,
+      "sha256": "c55b901064128dfaa0c27e72a418ebfe931a5b216d49cd4801d67d8b9ad06285",
+      "sourceSha256": "63b482bbc474007efd377602a8925219a657123b6ef5a023dcf7ee31f6f85a43"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/unitsdoo/randomunit.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/unitsdoo/randomunit.ts",
+      "edit": "specifiers-only",
+      "lines": 20,
+      "sha256": "c031f77d89547c3dd3eef96a88185125ab45856a08c8b844feb8250ef3978242",
+      "sourceSha256": "9dc666f23727560941afb1445b166bd8f171a2daa2d2afcc06fb710b096a0958"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/unitsdoo/unit.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/unitsdoo/unit.ts",
+      "edit": "specifiers-only",
+      "lines": 235,
+      "sha256": "72ca14e5452dc07ad43fb5efa9a05688430700abe8cbc4cb9a8e0ef856e03f31",
+      "sourceSha256": "537b347be2c2ce1cd8d0273c41939b26cc515c36dd6ee43b7be1b9057d744811"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3c/camera.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3c/camera.ts",
+      "edit": "specifiers-only",
+      "lines": 76,
+      "sha256": "283d03cfe63258aa76aa16a772d2141620e857dd482ee9cc4b5506179c3260e6",
+      "sourceSha256": "17926e2fd51d63bd44972bc6e293be37885a35773204e8050eecfb1864a5435f"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3c/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3c/file.ts",
+      "edit": "specifiers-only",
+      "lines": 48,
+      "sha256": "97de62fa804c08362bb69bd0321b91e89dabf26e951efbc41c1d9dd974cb17c2",
+      "sourceSha256": "ba08cb27179ae38ed6eb8287b8f9b6fc4091ae19cfaedacac70407c9e5e851a7"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3c/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3c/index.ts",
+      "edit": "specifiers-only",
+      "lines": 8,
+      "sha256": "1ed14baa8007bb7a34256ae04860d2f04e7e1c74dab3570f622f3d28ed5ce149",
+      "sourceSha256": "6baeab71631c6b2180d7cc0032821ca8bb31dcfbea52fe110d69657214a53769"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3d/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3d/file.ts",
+      "edit": "specifiers-only",
+      "lines": 46,
+      "sha256": "53951066722bc437dce55f4ad8179662aba964de81267b803ab1c4e4a7b6f74f",
+      "sourceSha256": "e0725f4677829d52d25dc9910baf395920b229d168a9a597e07896eb93d61f47"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3d/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3d/index.ts",
+      "edit": "specifiers-only",
+      "lines": 6,
+      "sha256": "f9202651fd5089d4d304713d7627e309ba3a92cda74f3a99e0d602e28401a0e8",
+      "sourceSha256": "f5ac360f81a3630f2a1243eb3ede331fc8af8c05ef84832f009bd6458194e92b"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3e/corner.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3e/corner.ts",
+      "edit": "specifiers-only",
+      "lines": 56,
+      "sha256": "977901ac05666c362dc806743482a493c17cefc945eed2836ab68c8a82f159dc",
+      "sourceSha256": "740fa8cd80674e890d6db0fb6b41eae017eb410254f8e53b352803f6507eb98e"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3e/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3e/file.ts",
+      "edit": "specifiers-only",
+      "lines": 88,
+      "sha256": "81e28b4b25f80dd6c0d0e39072637483699b2ffab72020e46b0e93af219b33c5",
+      "sourceSha256": "9a57d9a65bd3c9014a5196c3915232d7bfff61821aa2ac0a2104e72fe0aaea51"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3e/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3e/index.ts",
+      "edit": "specifiers-only",
+      "lines": 8,
+      "sha256": "bfaa8fa15fb924b4e60a1596c61b5703cfbcae5834419317bb4e64633e819b20",
+      "sourceSha256": "a62b1f209f9287a7fcc11639ad5b6569b43cd75e7fbc812ced0b91dd76c1b207"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3i/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3i/file.ts",
+      "edit": "specifiers-only",
+      "lines": 329,
+      "sha256": "38e735b0b8802381f8086bf8aca7d69f4332f9e55c1ec64b6dfc75bf8fd231f5",
+      "sourceSha256": "97caf2ba0a8d3faf131e4f448e178baec69c990b25376e99fd3b06883b5c4b17"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3i/force.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3i/force.ts",
+      "edit": "specifiers-only",
+      "lines": 28,
+      "sha256": "407ebb11c8a4ab5dc5b05172eed81374d311f3e80430f10bea4f81086e6ee5df",
+      "sourceSha256": "e19cdbb291bf9808bb998dda063b04be088628bdcc5ea7e6fc23f552745ce562"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3i/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3i/index.ts",
+      "edit": "specifiers-only",
+      "lines": 24,
+      "sha256": "4dcc823976d6e6a2dd965745aeb145fdec758b074e93aff720d3ec9f379716df",
+      "sourceSha256": "dfe9a952b17c165ce6df9c148cc82cd501e6f440ec9a86ecea320f7637c2ef46"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3i/player.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3i/player.ts",
+      "edit": "specifiers-only",
+      "lines": 56,
+      "sha256": "98e554f362ca150446b30926c3a929a3f7b63e1b72a3b967ab3067047d13d447",
+      "sourceSha256": "1e7e16471cfad81b36b77a23a7cb49dfef6bb5718b221b2380c34f448219a569"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3i/randomitem.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3i/randomitem.ts",
+      "edit": "specifiers-only",
+      "lines": 20,
+      "sha256": "3fcfeb83173da89cc41c163b255c52ef2fe87b005723450216a1a94705acab61",
+      "sourceSha256": "401a3fad34c2b4c9da19e442f6431bc884e134ea3a6c90d259fd1742a2022ba4"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3i/randomitemset.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3i/randomitemset.ts",
+      "edit": "specifiers-only",
+      "lines": 32,
+      "sha256": "84f242dd5c34063e812d84a4347b82074cd2b28ad3d9761c25e87652141e87d0",
+      "sourceSha256": "3a2e93b926fb2a07b792af1996230da6e7fb4ae35340f64ae273aceba77a725e"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3i/randomitemtable.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3i/randomitemtable.ts",
+      "edit": "specifiers-only",
+      "lines": 46,
+      "sha256": "8a0556b3a93b268ab93b0b5480c441a8ca46aa2eb35dbae57498c0acf6877f3b",
+      "sourceSha256": "71ab130c7dabbbb7e5d63ca7aabbf542dc56cde1b3bca2dd2f7c708ccedb86f9"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3i/randomunit.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3i/randomunit.ts",
+      "edit": "specifiers-only",
+      "lines": 26,
+      "sha256": "2497aa525f6740884262604fdec048518989a66b54cd0edb4d08dec62e16b1e6",
+      "sourceSha256": "e1501c06c3e24b631d69303904e9f7c9e7a84e9835d501f665cca4dec9f5e082"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3i/randomunittable.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3i/randomunittable.ts",
+      "edit": "specifiers-and-typed-array-annotation",
+      "lines": 46,
+      "sha256": "fd50356586983bedb4dcb2e982a292999523f7e1f2447cd956700e89937ecbd0",
+      "sourceSha256": "2b4379004d3d813c54e9e6657f19ffe4dfd42d32eabf3557f0c79041ef2d4f73"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3i/techavailabilitychange.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3i/techavailabilitychange.ts",
+      "edit": "specifiers-only",
+      "lines": 20,
+      "sha256": "d480273f3ad00386d1660b7ae0eb8533aba7d5d8f505ba9dd10285c365510413",
+      "sourceSha256": "864adffa003383296056359944069982a1db320ae5a6f1b14ae8c0ba9b437862"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3i/upgradeavailabilitychange.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3i/upgradeavailabilitychange.ts",
+      "edit": "specifiers-only",
+      "lines": 26,
+      "sha256": "e650d1cbb88e31c2f797387050017e41a90a89589f292bc949f3530f18cc663d",
+      "sourceSha256": "2d75f8fb77ab037b755f56f54d8965e12cbfc48af7b56c148ec10ff338f92698"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3o/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3o/file.ts",
+      "edit": "specifiers-only",
+      "lines": 153,
+      "sha256": "fe695dfe225ad6b7dfb954e313cb3eb02e620cba9ebbfaeb3bccfb574418e8fc",
+      "sourceSha256": "8e0c73a8d4f9f18f173dc1bd2a0a3fb3a3419cfbc7fab6fb4adec866b86e99ed"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3o/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3o/index.ts",
+      "edit": "specifiers-only",
+      "lines": 6,
+      "sha256": "f9202651fd5089d4d304713d7627e309ba3a92cda74f3a99e0d602e28401a0e8",
+      "sourceSha256": "f5ac360f81a3630f2a1243eb3ede331fc8af8c05ef84832f009bd6458194e92b"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3r/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3r/file.ts",
+      "edit": "specifiers-only",
+      "lines": 48,
+      "sha256": "803eceda7ed4e44b2fe557ee885ca7bf6673fa9b6dd64cdb547b022ff737dd15",
+      "sourceSha256": "4cc1e08ba36e7006c5a72251aa2b98614cb5a25b2ddd13c16fb1255552500f88"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3r/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3r/index.ts",
+      "edit": "specifiers-only",
+      "lines": 8,
+      "sha256": "45631272fe96dd480b6611b97f137c3e628094af33500255f605e570c7c4ca2b",
+      "sourceSha256": "815cf130ac1bc4752bb6ad03704a3459abe5c6a3084ff6bb9f636fab324c6f8b"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3r/region.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3r/region.ts",
+      "edit": "specifiers-only",
+      "lines": 52,
+      "sha256": "52d61994a14881033d7782f04f8f4376fe874b181a787e9ea713a2e44fc4e86a",
+      "sourceSha256": "3aa59cd3774226aa3170399fba41c5353a0f8e7d048d2182aba283f59f4fc145"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3s/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3s/file.ts",
+      "edit": "specifiers-only",
+      "lines": 48,
+      "sha256": "495b2d402b93dec5059d8ec43d08d1092a3a295e51f1dc441c018e69c2eed205",
+      "sourceSha256": "dd4473f4df4e81c8d1dd1ac019c7d157f0ee97b4ba1234d7037437504fd03c78"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3s/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3s/index.ts",
+      "edit": "specifiers-only",
+      "lines": 8,
+      "sha256": "1cf1983b442ce64ec64afb240d2431e0d9118c247d337cb5474990ade3352805",
+      "sourceSha256": "271c03fc34f3e0d4a2866edf8b004abe4890bc82416fdbcd06950005aefc4805"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3s/sound.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3s/sound.ts",
+      "edit": "specifiers-only",
+      "lines": 102,
+      "sha256": "39ac3dd1f27098ff4a136d826036084bbce534a4e85b69ec228100e93b35494f",
+      "sourceSha256": "9d6fa5ae6103d685e62da8ade50cb7f7ecef4a8f42539c2f1bde89407dde2b79"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3u/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3u/file.ts",
+      "edit": "specifiers-only",
+      "lines": 46,
+      "sha256": "12b136a8a88bcf94a67c927492d71b50a066fbb5b65b6b8efe36e8bc581aace1",
+      "sourceSha256": "34f93418bfa3efcd273bb1913f2f9e89c09053e5c354240feece99c4496e8144"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3u/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3u/index.ts",
+      "edit": "specifiers-only",
+      "lines": 12,
+      "sha256": "2f75bb2009602d2b8708faff61521f7d149fd7f5a111af9b96e1e6bb37218c3f",
+      "sourceSha256": "98922a54061f0d97d55d0edc559e398022e559e8d89d48b76fff2cb2f932f540"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3u/modification.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3u/modification.ts",
+      "edit": "specifiers-only",
+      "lines": 75,
+      "sha256": "ac59bceba318c18b51823f8566a3e9832cc27ebd3cc57726e91620c0802dbe7d",
+      "sourceSha256": "a58455a1aa46a22fceabc48ee5b0a908c4f7a3fc4fd6c5af13a565ebab35486f"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3u/modificationtable.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3u/modificationtable.ts",
+      "edit": "specifiers-only",
+      "lines": 46,
+      "sha256": "8bede559fee3a871bc81d7bdbb9b57b0d6cb88def4cd79aff19e18b984178bca",
+      "sourceSha256": "a5cc38163028da23d9069d5c6de962d57249794f2160d113bc5054f0fed94c2b"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/w3u/modifiedobject.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/w3u/modifiedobject.ts",
+      "edit": "specifiers-and-v3-opaque-header-layout",
+      "change": "Correct v3 layout to opaque uint32 count/array followed by one modification list; preserve unknown bits on read/write, bound counts, reset reused state and refuse header loss on downgrade. The old repeated-set model was not native proof. Independently corroborated by Warsmash War3ObjectDataChangeset.java and pinned War3Net b748bcc33590f37c0673bfbe36ee27f4be2001b6 SimpleObjectModification.cs and LevelObjectModification.cs readers/writers; no reference implementation code copied. Native Editor acceptance remains unverified.",
+      "referenceUrls": ["https://github.com/Drake53/War3Net/blob/b748bcc33590f37c0673bfbe36ee27f4be2001b6/src/War3Net.Build.Core/Serialization/Binary/Object/SimpleObjectModification.cs", "https://github.com/Drake53/War3Net/blob/b748bcc33590f37c0673bfbe36ee27f4be2001b6/src/War3Net.Build.Core/Serialization/Binary/Object/LevelObjectModification.cs"],
+      "lines": 87,
+      "sha256": "1ea5e38b3ea7af6572cdbdb3d651249696899f8f5667b039919b46d07b2e00d1",
+      "sourceSha256": "899839350814cac3777a9a2cc659618246953a260d201a867657687eee6f1ea5"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/wpm/file.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/wpm/file.ts",
+      "edit": "specifiers-and-typed-array-annotation",
+      "lines": 38,
+      "sha256": "32d18ea2a22301917f4819dff4f1e860c009bbcc6f3084ad265e81138208bd39",
+      "sourceSha256": "fb5d0321685cbbf41dc12557e93213cd52786bfbbfadbcd9de54c2ac8c1610cd"
+    },
+    {
+      "path": "src/lib/mdx-m3-viewer/parsers/w3x/wpm/index.ts",
+      "source": "references/mdx-m3-viewer/src/parsers/w3x/wpm/index.ts",
+      "edit": "specifiers-only",
+      "lines": 6,
+      "sha256": "f9202651fd5089d4d304713d7627e309ba3a92cda74f3a99e0d602e28401a0e8",
+      "sourceSha256": "f5ac360f81a3630f2a1243eb3ede331fc8af8c05ef84832f009bd6458194e92b"
+    }
+  ]
+}

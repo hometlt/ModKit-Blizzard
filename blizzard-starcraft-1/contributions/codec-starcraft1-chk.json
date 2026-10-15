@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/starcraft1-chk",
+  "displayName": "StarCraft scenario",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./src/chk/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./src/chk/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Reads a scenario (.chk) on its own — extracted from a map, opened as the staredit\\scenario.chk entry of one, or a campaign scenario of the Remastered storage — with the same section rules, tree, players, layers and terrain as blizzard/starcraft1-map; its tileset is found in the storage it lies in (enclosing container), beside it (sibling directory) or behind it (workspace dependency layer). A layer write is a plan replacing the scenario's bytes.",
+    "Strings are read as UTF-8 when valid, as Remastered does; other strings are decoded with the textEncoding setting (a WHATWG label, default windows-1252) — the map does not record its code page, so it is not guessed."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "starcraft1-chk",
+        "label": "StarCraft scenario"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "authored"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full"
+    ],
+    "match": {
+      "extensions": [
+        "chk"
+      ]
+    },
+    "representations": [
+      {
+        "id": "map-layers",
+        "contract": "common.map/layers",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "fidelityEvidence": [
+      {
+        "formatId": "starcraft1-chk",
+        "representationId": "map-layers",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": true,
+          "notes": [
+            "A layer write replaces the scenario with the written tiles of MTXM and TILE; every other section keeps its bytes and order (blizzard-starcraft-1/test/starcraft1-map.test.ts)."
+          ]
+        },
+        "evidenceId": "starcraft1-chk-layer-write-v1",
+        "corpusId": "modkit-extensions-blizzard/blizzard-starcraft-1/test/starcraft1-map.test.ts",
+        "corpusDigest": "none:proof-suite",
+        "conformanceProfile": "modkit/codec-contribution-v1",
+        "optionsFingerprint": "options:none",
+        "inputClass": "starcraft1-scenario-tiles",
+        "provenAt": "2026-09-28T00:00:00Z"
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/raster-image-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "none"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "map.layers",
+        "handlerId": "map-layers",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "map.layer-read",
+        "handlerId": "map-layer-read",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "map.layer-write",
+        "handlerId": "map-layer-write",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 8
+        }
+      ],
+      "maxBytes": 8
+    }
+  }
+}

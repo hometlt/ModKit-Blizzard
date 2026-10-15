@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/contract-definition",
+    "major": 1
+  },
+  "id": "blizzard/diablo3-sno-registry-contract",
+  "displayName": "Diablo III SNO type registry service contract",
+  "spec": {
+    "schemaVersion": 1,
+    "kind": "service",
+    "contract": "blizzard/diablo3-sno-registry",
+    "major": 1,
+    "offerFacet": {
+      "presence": "forbidden"
+    },
+    "requestFacet": {
+      "presence": "forbidden"
+    },
+    "matching": {
+      "profile": "modkit/facetless-matcher",
+      "major": 1
+    },
+    "conformanceProfile": "blizzard/diablo3-sno-registry-v1",
+    "surface": {
+      "fields": [
+        "contract"
+      ],
+      "methods": {
+        "registry": {
+          "kind": "value",
+          "signal": {
+            "arg": 0,
+            "key": "signal"
+          }
+        }
+      }
+    }
+  }
+}

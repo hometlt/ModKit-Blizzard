@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": true,
+    "rootDir": "."
+  },
+  "files": [
+    "modules/galaxy/codecs/galaxy/codec.ts",
+    "modules/triggers/codecs/triggers/src/codec.ts",
+    "modules/triggers/services/galaxy-conversion/service.js",
+    "src/types/sax.d.ts",
+    "modules/triggers/services/galaxy-conversion/index.js"
+  ],
+  "include": []
+}

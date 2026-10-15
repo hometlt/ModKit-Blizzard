@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "coreRepository": "../modkit-core",
+  "sourceRevision": "working-tree-audit-2026-08-30",
+  "entries": [
+    {
+      "source": "packages/host/test/data.test.ts",
+      "sha256": "ded9135961283cd2a8a25b7439f8d2a9742f54ccf40d6cdd11a302961755ec4c",
+      "disposition": "generic-core-owned",
+      "reason": "The resolved-data host contract is game-neutral; SC2 is one linked fixture and product semantics stay covered by starcraft2/test/resolved-data-subject-services.test.ts."
+    },
+    {
+      "source": "packages/host/test/game-launch.test.ts",
+      "sha256": "a71d3cfbd558ac45b35fa673c163bc01143b93479a23b94ddf71fa7d12f01529",
+      "disposition": "generic-core-owned",
+      "reason": "Launch planning and process policy are Host responsibilities; the SC2 extension owns only its launch provider."
+    },
+    {
+      "source": "packages/host/test/games.test.ts",
+      "sha256": "76437fd2794ce6183f4be522bdae28b63b08c86c6f430146b884197bcdf789a8",
+      "disposition": "generic-core-owned",
+      "reason": "Cross-platform installation discovery routing is a generic Host contract and SC2 candidate generation is covered by starcraft2/test/installation-candidates.test.ts."
+    },
+    {
+      "source": "packages/host/test/language.test.ts",
+      "sha256": "2db020d7a344fca846c4d2b34b4ff7eefbb02ffafaca822eae8befbfd2c2a518",
+      "disposition": "generic-core-owned",
+      "reason": "Language workspace lifecycle and cancellation are generic Host behavior; Galaxy semantics are covered by the StarCraft II Galaxy module language suites."
+    },
+    {
+      "source": "packages/host/test/maps.test.ts",
+      "sha256": "0369d58d6628d6e60dbcbd9b58dfe40849c0906885674d1b7cd1d6d41dd1ab3c",
+      "disposition": "generic-core-owned",
+      "reason": "Map orchestration is deliberately cross-game Host behavior; SC2 map preparation and writing are covered in the product repository."
+    },
+    {
+      "source": "packages/host/test/mods.test.ts",
+      "sha256": "ab82859db49244578e9097474b0608a8cb3d00b4167049c855288b39d9b3ec19",
+      "disposition": "generic-core-owned",
+      "reason": "Dependency composition is a generic Host contract; SC2 workspace resolution remains covered by starcraft2/test/sc2-workspace-codec.test.ts."
+    },
+    {
+      "source": "packages/host/test/nested-subject-blizzard.test.ts",
+      "sha256": "ce4c9cd947334f8af6e3269d0511a0faee1ac8567e08ec4ab44e61869c5cb24b",
+      "disposition": "generic-core-owned",
+      "reason": "The suite proves the format-neutral nested-subject resolver using MPQ/CASC as acceptance fixtures."
+    },
+    {
+      "source": "packages/host/test/nested-subject-companion.test.ts",
+      "sha256": "399020cc1a07c9c0527b53a5313acd9170a8b15ea38fa5d03d92711ec43fc50b",
+      "disposition": "generic-core-owned",
+      "reason": "Companion enumeration, budgets and lease release are generic Host contracts shared by all product extensions."
+    },
+    {
+      "source": "packages/host/test/sc2-writers.test.ts",
+      "sha256": "4c2a2604df7b31dba77e421401092d97cd40eaa1a60565532d85dfcc856fc45d",
+      "disposition": "migrated",
+      "reason": "SC2 and MPQ writer behavior is owned by starcraft2/test/sc2-map-world-writer.test.ts and mpq/test/native-preserving-{writer,workflow}.test.ts."
+    },
+    {
+      "source": "packages/testkit/test/blizzard-m3-companion.test.ts",
+      "sha256": "2f58f559e630097398609098e42712b6aca7431650988d2f6b180677305fea1d",
+      "disposition": "migrated",
+      "reason": "M3 attachments, resource references, sidecar discovery and installed M3A behavior are covered by models/test/m3-attachments-sidecar.test.ts and models/test/m3a-corpus-audit.test.ts."
+    },
+    {
+      "source": "packages/testkit/test/detection-collisions.test.ts",
+      "sha256": "e639e57faa504fad03eb0e58dc5a358ec1f8bfcabb4e614dac4d8c434bff2ba0",
+      "disposition": "generic-core-owned",
+      "reason": "Cross-extension codec scoring and collision arbitration are generic inventory conformance behavior."
+    },
+    {
+      "source": "packages/testkit/test/mixed-visual-composition.test.ts",
+      "sha256": "e1614d77ac14deb6047148017d5086f0518c3855fc2faf14dcbb06b2a5d59e22",
+      "disposition": "generic-core-owned",
+      "reason": "The suite composes Blizzard models with Warzone maps and therefore belongs to the cross-product UI contract."
+    },
+    {
+      "source": "packages/testkit/test/mk2-model-codecs.test.ts",
+      "sha256": "310a605d850b4e6a6de6dc6881b13d11dc2c6cb7e8e5172a92cdb9f4e4a870e7",
+      "disposition": "generic-core-owned",
+      "reason": "The matrix compares common, EA, Spring and Blizzard model facets; Blizzard M3 behavior has dedicated local suites."
+    },
+    {
+      "source": "packages/testkit/test/mk2-starcraft2-authored-codecs.test.ts",
+      "sha256": "8bfb8f4752e197866ea99ae9482ac6de1579afd339b69e9e8ff69323fb043e0b",
+      "disposition": "migrated",
+      "reason": "Authored SC2 layouts, banks, triggers, data and workspaces are covered by the dedicated starcraft2/test suites run by test:full."
+    },
+    {
+      "source": "packages/testkit/test/model-facet-contracts.test.ts",
+      "sha256": "5f39f7fceee364becbf932343c912fd28f2cea36019f4e11e70ba3b176ee4c81",
+      "disposition": "generic-core-owned",
+      "reason": "Facet contract uniformity is a cross-extension SDK/testkit responsibility; local M3 tests exercise the Blizzard implementation."
+    },
+    {
+      "source": "packages/testkit/test/model-rendering.test.ts",
+      "sha256": "4e5ccd49d7d298107d81dc28669e0743225f5b02d30f0736532df4560e424933",
+      "disposition": "generic-core-owned",
+      "reason": "Headless rendering compares common, EA, Spring and Blizzard codecs and remains a generic visual pipeline suite."
+    },
+    {
+      "source": "packages/testkit/test/negative-corpus.test.ts",
+      "sha256": "de3ceb5a5183963f4ed5ae544718328f527500f6ce4f680810d087eb127ac174",
+      "disposition": "generic-core-owned",
+      "reason": "The malformed-input matrix is cross-extension testkit governance; local Blizzard suites retain their format-specific refusals."
+    },
+    {
+      "source": "packages/testkit/test/sc2-casc-real.test.ts",
+      "sha256": "ffbdef5f1dd83586a914b4b8dd669087d34de004e23f84ad7814637b527ac24e",
+      "disposition": "migrated",
+      "reason": "CASC primitives plus installed SC2 maps, data and M3A are covered by casc/test/casc.test.ts and the conditional product corpus suites."
+    },
+    {
+      "source": "packages/testkit/test/sc2-real-corpus.test.ts",
+      "sha256": "6cf62e3291a599e5e0d91f8cb3bbfe62cc07889398657161677d939090e121ec",
+      "disposition": "migrated",
+      "reason": "The Blizzard full config owns all installed-corpus suites and their conditional behavior is verified by the ownership gate."
+    },
+    {
+      "source": "packages/testkit/test/sc2-runtime-bounded.test.ts",
+      "sha256": "49c87d6250e2868b74e47830f28322c9a740cf79e56bb3f5f85d505945579637",
+      "disposition": "migrated",
+      "local": "test/integration/sc2-runtime-bounded.test.ts",
+      "localSha256": "f1934eb7e6e572fe9073b0b4bdcc93d8c67fd9de694b81bbab6d2902de591cd0",
+      "reason": "Copied and retargeted to the standalone StarCraft II extension and packaged Host/Testkit dependencies."
+    },
+    {
+      "source": "packages/testkit/test/sc2-runtime-catalog-real.test.ts",
+      "sha256": "d16b2fed55bd5c1bbc670b800631712cd144c0f651776db413e77abb669b71b5",
+      "disposition": "migrated",
+      "local": "test/integration/sc2-runtime-catalog-real.test.ts",
+      "localSha256": "906ca38c8107b401380efd4f74afd88b2a96d7cf7e53353f8b5a0f69ac35dfd7",
+      "localRevisionReview": {
+        "commit": "a4db753b552826bcbd02c57658005e130130928a",
+        "previousLocalSha256": "258041581b888049f827c81e2f5206ac84136d6c257bfb2b4d1ab46311ed871e",
+        "reviewedOn": "2026-09-29",
+        "reason": "Audited the ModContext migration: removed the test-only CASC/dependency loader; retained playable runtime movement, deterministic replay and source-field checks; added the UVD Unit slice proof. Historical Core source identity is unchanged.",
+        "validation": "MODKIT_TEST_TIER=real MODKITX_SC2_ROOT=<installed SC2> vitest run --config test/vitest.config.mjs test/integration/sc2-runtime-catalog-real.test.ts: 1 passed, 0 skipped (2026-09-29)."
+      },
+      "reason": "Copied, retargeted and made explicitly conditional on an installed SC2 corpus."
+    },
+    {
+      "source": "packages/testkit/test/sc2-runtime-playable.test.ts",
+      "sha256": "90f8da81341916cedd5e77c5bb40df298cefa130562b1ca5a8cc9a122bc73160",
+      "disposition": "migrated",
+      "local": "test/integration/sc2-runtime-playable.test.ts",
+      "localSha256": "e4f0172bd9590a3b4ffa752abf3cec6a1bb0b98ea34ee1c64bce758e5d3ff271",
+      "reason": "Copied and retargeted; its MK2 differential was removed on 2026-09-24 once parity with the sealed oracle held."
+    },
+    {
+      "source": "packages/testkit/test/sc2-scenario-workflows.test.ts",
+      "sha256": "6410a96731c1e1a7943758b712d63fac04cdc98cc68a35477b09eb5a1d725a0d",
+      "disposition": "migrated",
+      "local": "test/integration/sc2-scenario-workflows.test.ts",
+      "localSha256": "c480e2e2c1cfd66d03e4b0aeac81b764d1398c4a36d648602a5a2c29cf4e66e8",
+      "reason": "Copied with its TriggerData fixture and retargeted to this repository's single SC2 extension root."
+    },
+    {
+      "source": "packages/testkit/test/sc2-writers-real.test.ts",
+      "sha256": "76bf5ee078b6b9b32310c56b93cef09bb252979bc95bac1ad67defb812929062",
+      "disposition": "migrated",
+      "reason": "Installed writer evidence is covered by the conditional MPQ native workflow and SC2 semantic map/world writer suites."
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "test/integration/fixtures/bounded.galaxy",
+      "sha256": "1ec5f63bcd554b416f8503e6bc43815625d20a3eba97762c8143af8d11fabf18"
+    },
+    {
+      "path": "test/integration/fixtures/Triggers.external-library",
+      "sha256": "583aaaf3c58259fa29f92a8f74f3685fae6ac21a56871f44d6d7364fc813fc61"
+    },
+    {
+      "path": "test/integration/support/input-resolution.ts",
+      "sha256": "f5fd71e4c5843fd58b08b332b4433bc46b8b553bf96ae9afb2d19fb6988b6ece"
+    },
+    {
+      "path": "test/integration/support/resource-session.ts",
+      "sha256": "adf22b231662374cb0d183fdb587f1152e165c5a954b5704e657177fb36e6ed4"
+    },
+    {
+      "path": "test/integration/support/namespace-origin.ts",
+      "sha256": "f905231032c4c9828ab66cedf5fdc322f01bbcc42c10ae1c42c1bdd2b9c582c8"
+    }
+  ]
+}

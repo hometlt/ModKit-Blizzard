@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "codec": "diablo3-tex",
+  "corpusKind": "real",
+  "verdict": "pass",
+  "tests": {
+    "passed": 21,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "raster-image-source.readRegion",
+    "oracle": "each atlasRegions rectangle equals the frame-table (or mip-0) rectangle of four floats rounded and clamped as MK2 cropFrame did, and readRegion of it equals the same rectangle cut from the full mip-0 image",
+    "suite": "modkit-extensions-blizzard/blizzard-diablo/test/diablo3-receipts-corpus.test.ts",
+    "corpus": {
+      "game": "blizzard/diablo-3",
+      "version": "2.8.0.99920",
+      "discovery": "common.game/installation-discovery (blizzard/diablo3-installation)",
+      "container": "blizzard/casc",
+      "listed": {
+        "appearances": 11347,
+        "textures": 33431
+      }
+    },
+    "samples": [
+      {
+        "name": "textures/bluelightning_strokes.tex",
+        "sha256": "a1dac3bdf48a70e46766a6991c575aa19704ad66cb76687a5e58b819b3fe1e2e"
+      },
+      {
+        "name": "textures/raidenbolt.tex",
+        "sha256": "08c4c224f2eb57541d8d6458f776300c529dae138419836448f51736246c7471"
+      },
+      {
+        "name": "textures/raidenstream.tex",
+        "sha256": "a8081431cf5b765d638f244822d6672649e80bf2baf3c19449194df89d06d5b6"
+      }
+    ]
+  },
+  "oracleVerification": {
+    "verified": true,
+    "modules": [
+      "blizzard-diablo/test/diablo3-receipts-corpus.test.ts (frame-table read and crop of the full image, no codec)"
+    ],
+    "operation": "raster-image-source.readRegion"
+  },
+  "cases": [
+    {
+      "id": "real:textures/bluelightning_strokes.tex:frame 1:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "a2be850c64a07dbfa331b4c54f6f9d5a0e91693991e2e0512ea2e712e5cf9dc2",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/bluelightning_strokes.tex:frame 2:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "80a50d3a76bcd7298372a590f8c8c1d65529625667571fe9eb29efb742461e56",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/bluelightning_strokes.tex:frame 3:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "1a8f6b29849a4d1cc0800b77ab64ba7f5fedac1c3ed1db8f133d94538a551587",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/bluelightning_strokes.tex:frame 4:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "85a53852792625f2eda0500521e375c77a8114f72a605be36c74014a6e9946bf",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/bluelightning_strokes.tex:frame 5:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "7d9792b2cd6492a0506424af7c3ac0499f7ee44a83fdbc0c1706da5f12d89966",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/bluelightning_strokes.tex:frame 6:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "a0d299754b388c164dd8c7744a99d6b42e2cfd3ed0d2c3c0567c78ffcb027f47",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/bluelightning_strokes.tex:frame 7:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "b5f1534b3b7e19ecc2db6c18833b78efaeab89f588f164df2b4237e8f0ac691d",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/bluelightning_strokes.tex:mip-0 rectangle:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "e588e782d7ff76a8a332588bd028cb5af32fa6f228528d41b424b9a7dbdbdc66",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenbolt.tex:frame 1:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "8f4401714e9446f4ed269303a453ff953d58b4c9ee254e0d89b8e2704696e1bc",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenbolt.tex:frame 2:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "04d39413425904c5fd2097236875594c55cc0af1af80bb3989677442270d271e",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenbolt.tex:frame 3:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "787f78abb8d9d701a52900b241b99f8c44a2c3ef8e4c8105a66cb098ae0f9a18",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenbolt.tex:frame 4:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "9b6999f4692766e8024922558457e144819014766f21ef31a0301bd2c28e37d2",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenbolt.tex:mip-0 rectangle:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "d430614c31197acc611cb7957bd045caf8385670c08e591598c58b23e099d529",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenstream.tex:frame 1:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "0ad5d9963fddafa7d1bb32d86d8ecc6565880441ec5187958bb13d9066b8ea11",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenstream.tex:frame 2:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "613d4ec7fcd8f955c06d3478c6906b479a6d85155c7d60f3725ef340a0789c9f",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenstream.tex:frame 3:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "e0be2b5147061ba10800f7121a6354d6f67fab2568a2ea521cc0d9907eedabe7",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenstream.tex:frame 4:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "1fea710d894f89c3fbcc102bb5bcb4e013c29f380722cb475981bf5ee1fcc9ea",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenstream.tex:frame 5:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "d4d9cd987e0e7bdeca8ec41ab8275ebdcf861cb19212d3f8f04454fc679bf5f5",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenstream.tex:frame 6:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "48802e5cdaa287db09ccd0693fdd277d62c5347f3e7666b721fba32032584a94",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenstream.tex:frame 7:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "40a715314ed783b6a5aa507e84a154504776a22ccec8477618ed519798063c8f",
+      "mk3Operation": "raster-image-source.readRegion"
+    },
+    {
+      "id": "real:textures/raidenstream.tex:mip-0 rectangle:raster-image-source.readRegion",
+      "verdict": "identical",
+      "resultDigest": "363440b89349b1f96886dad18ef6f82eba96bf739527efa3682bfb8ca98fa57f",
+      "mk3Operation": "raster-image-source.readRegion"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/diablo3-tex/operation/image.read",
+      "kind": "operation",
+      "legacyOperation": "image.read",
+      "adapterOperation": "raster-image-source.readRegion",
+      "targetDataSource": {
+        "contract": "common.view/raster-image-source",
+        "major": 1
+      },
+      "contribution": "modkit-extensions-blizzard/blizzard-diablo/contributions/codec-diablo3-tex.json",
+      "executed": true,
+      "caseIds": [
+        "real:textures/bluelightning_strokes.tex:frame 1:raster-image-source.readRegion",
+        "real:textures/bluelightning_strokes.tex:frame 2:raster-image-source.readRegion",
+        "real:textures/bluelightning_strokes.tex:frame 3:raster-image-source.readRegion",
+        "real:textures/bluelightning_strokes.tex:frame 4:raster-image-source.readRegion",
+        "real:textures/bluelightning_strokes.tex:frame 5:raster-image-source.readRegion",
+        "real:textures/bluelightning_strokes.tex:frame 6:raster-image-source.readRegion",
+        "real:textures/bluelightning_strokes.tex:frame 7:raster-image-source.readRegion",
+        "real:textures/bluelightning_strokes.tex:mip-0 rectangle:raster-image-source.readRegion",
+        "real:textures/raidenbolt.tex:frame 1:raster-image-source.readRegion",
+        "real:textures/raidenbolt.tex:frame 2:raster-image-source.readRegion",
+        "real:textures/raidenbolt.tex:frame 3:raster-image-source.readRegion",
+        "real:textures/raidenbolt.tex:frame 4:raster-image-source.readRegion",
+        "real:textures/raidenbolt.tex:mip-0 rectangle:raster-image-source.readRegion",
+        "real:textures/raidenstream.tex:frame 1:raster-image-source.readRegion",
+        "real:textures/raidenstream.tex:frame 2:raster-image-source.readRegion",
+        "real:textures/raidenstream.tex:frame 3:raster-image-source.readRegion",
+        "real:textures/raidenstream.tex:frame 4:raster-image-source.readRegion",
+        "real:textures/raidenstream.tex:frame 5:raster-image-source.readRegion",
+        "real:textures/raidenstream.tex:frame 6:raster-image-source.readRegion",
+        "real:textures/raidenstream.tex:frame 7:raster-image-source.readRegion",
+        "real:textures/raidenstream.tex:mip-0 rectangle:raster-image-source.readRegion"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "kind": "vendor",
+  "id": "blizzard",
+  "displayName": "Blizzard",
+  "description": "Blizzard Entertainment formats and game data supported by the independently distributed Modkit extensions.",
+  "officialSite": "https://www.blizzard.com/",
+  "resources": [
+    {
+      "id": "blizzard-developer",
+      "label": "Blizzard Developer Portal",
+      "url": "https://develop.battle.net/",
+      "kind": "official"
+    },
+    {
+      "id": "starcraft2-api",
+      "label": "StarCraft II Client API",
+      "url": "https://github.com/Blizzard/s2client-api",
+      "kind": "source"
+    },
+    {
+      "id": "starcraft2-mapster",
+      "label": "SC2Mapster modding wiki",
+      "url": "https://sc2mapster.wiki.gg/wiki/Main_Page",
+      "kind": "modding"
+    }
+  ]
+}

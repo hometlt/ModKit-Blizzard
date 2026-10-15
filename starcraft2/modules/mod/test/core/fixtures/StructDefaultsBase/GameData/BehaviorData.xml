@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <SCost>
+        <Charge Link="Behavior/##id##" Location="Behavior"/>
+    </SCost>
+    <CBehaviorBuff id="Stim"/>
+</Catalog>

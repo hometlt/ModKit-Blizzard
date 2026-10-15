@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-22",
+  "owner": "starcraft2/modules/map",
+  "description": "Map binary/XML primitives, raster/overview and navigation retain their checked algorithms under the MK3 owner. Old paths only re-export the canonical implementation. Runtime imports use local MK3 paths.",
+  "changes": [
+    "Import paths and module documentation only for relocated implementations.",
+    "The canonical format index excludes the invalid legacy DataWizard API. Its compatibility index retains it for old consumers.",
+    "Embedded map wizards use the real Wizard-owned wizardfile grammar and model."
+  ],
+  "excluded": [
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/data-wizard.ts",
+      "reason": "Known invalid grammar; only old compatibility consumers may use it. Canonical Wizard semantics belong to modules/wizard."
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/image/pako.d.ts",
+      "reason": "Obsolete ambient typings; PNG uses fflate."
+    }
+  ],
+  "files": [
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/binary.ts",
+      "destination": "starcraft2/modules/map/shared/format/binary.ts",
+      "sourceSha256": "98b58be96cb9eb8850ceb32343217091f2fccf563a39f4ff003368f19c7552c8",
+      "destinationSha256": "98b58be96cb9eb8850ceb32343217091f2fccf563a39f4ff003368f19c7552c8",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/cliff-tiles.ts",
+      "destination": "starcraft2/modules/map/shared/format/cliff-tiles.ts",
+      "sourceSha256": "4fb45d00b47ee9d05e37d3f87442105b165f0348c6a5c4b65e52cdeba4d014e7",
+      "destinationSha256": "4fb45d00b47ee9d05e37d3f87442105b165f0348c6a5c4b65e52cdeba4d014e7",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/document-routes.ts",
+      "destination": "starcraft2/modules/map/shared/format/document-routes.ts",
+      "sourceSha256": "e4e2e95fc366964f109ad9a54332f63d45ff9670803cb0a2d8bb88fede3c475f",
+      "destinationSha256": "e4e2e95fc366964f109ad9a54332f63d45ff9670803cb0a2d8bb88fede3c475f",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/ai-data.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/ai-data.ts",
+      "sourceSha256": "b985c4743f726d6a599af4f16f2319b7501b3a2cfc6c55d7b1dd5f29e29c0c0b",
+      "destinationSha256": "b985c4743f726d6a599af4f16f2319b7501b3a2cfc6c55d7b1dd5f29e29c0c0b",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/bank-list.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/bank-list.ts",
+      "sourceSha256": "94081f2d4ed59d4be996f880a23a04d3523b4842edefec831c199930b14b77d3",
+      "destinationSha256": "94081f2d4ed59d4be996f880a23a04d3523b4842edefec831c199930b14b77d3",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/cell-attribute.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/cell-attribute.ts",
+      "sourceSha256": "9021ff2360e3427eb8906cac70480768f70cac6e58396eefa3c94ead1072e260",
+      "destinationSha256": "9021ff2360e3427eb8906cac70480768f70cac6e58396eefa3c94ead1072e260",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/cell-flags.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/cell-flags.ts",
+      "sourceSha256": "48cbfe319417d3d104e727af3dea7f422746e716b2b6539c9dff0da799c06288",
+      "destinationSha256": "48cbfe319417d3d104e727af3dea7f422746e716b2b6539c9dff0da799c06288",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/editor-categories.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/editor-categories.ts",
+      "sourceSha256": "ce68693641cdbb4da363a8eef629d3bc300f656db04bda8da736b28d5d0de021",
+      "destinationSha256": "ce68693641cdbb4da363a8eef629d3bc300f656db04bda8da736b28d5d0de021",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/file-hash.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/file-hash.ts",
+      "sourceSha256": "7d0052aeae3908c6aff08d012faaf74b14789e9d078049ceeedcc008718931cc",
+      "destinationSha256": "7d0052aeae3908c6aff08d012faaf74b14789e9d078049ceeedcc008718931cc",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/fluff-doodad.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/fluff-doodad.ts",
+      "sourceSha256": "f613323795947d08c47c6667098a9b6a6cb618a124be25b3d6ba3b706d69d0bc",
+      "destinationSha256": "f613323795947d08c47c6667098a9b6a6cb618a124be25b3d6ba3b706d69d0bc",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/hard-tile.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/hard-tile.ts",
+      "sourceSha256": "c4a7b5e56511fdc8fb70d20543bbbc2e7764cb3370b5069c57be97a17a04a952",
+      "destinationSha256": "c4a7b5e56511fdc8fb70d20543bbbc2e7764cb3370b5069c57be97a17a04a952",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/height-map.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/height-map.ts",
+      "sourceSha256": "6fc61c437299265cc42d749224553aebab8711c131eb1d9bf7fe43e6325165fc",
+      "destinationSha256": "6fc61c437299265cc42d749224553aebab8711c131eb1d9bf7fe43e6325165fc",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/includes.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/includes.ts",
+      "sourceSha256": "818ce0b1545bf5c5d6c14ee28e73e70a1b5309b17d47456b09d5c99ad0fb60b4",
+      "destinationSha256": "818ce0b1545bf5c5d6c14ee28e73e70a1b5309b17d47456b09d5c99ad0fb60b4",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/locales.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/locales.ts",
+      "sourceSha256": "dd7e04db6db7dc7b3dc00189fd355206fe9f114c6db922b6292dd968c11082b7",
+      "destinationSha256": "dd7e04db6db7dc7b3dc00189fd355206fe9f114c6db922b6292dd968c11082b7",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/map-info.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/map-info.ts",
+      "sourceSha256": "6509bab1543b16ba0982eef4f59146cad7257e31b2cc0439eec8b12e5d703af8",
+      "destinationSha256": "6509bab1543b16ba0982eef4f59146cad7257e31b2cc0439eec8b12e5d703af8",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/objects.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/objects.ts",
+      "sourceSha256": "8fae2e020b48fd7911fce9aaa6e8d349a0f28eed7249fc312f12d22e9fb88938",
+      "destinationSha256": "8fae2e020b48fd7911fce9aaa6e8d349a0f28eed7249fc312f12d22e9fb88938",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/painted-pathing.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/painted-pathing.ts",
+      "sourceSha256": "c3acbd9eea6c6c93b9b1230262e353d668712524618977530f1ee72de40502c7",
+      "destinationSha256": "c3acbd9eea6c6c93b9b1230262e353d668712524618977530f1ee72de40502c7",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/pathing-info.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/pathing-info.ts",
+      "sourceSha256": "3ef37b2637ef4b98ef5724f508095e62ac4a81c94b523d051dfda8d82918cbc6",
+      "destinationSha256": "3ef37b2637ef4b98ef5724f508095e62ac4a81c94b523d051dfda8d82918cbc6",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/preload-asset-db.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/preload-asset-db.ts",
+      "sourceSha256": "9043c027fa3948e3852ce7c3aad82acbbc78d1b97f68c854b0edcae5af06619e",
+      "destinationSha256": "9043c027fa3948e3852ce7c3aad82acbbc78d1b97f68c854b0edcae5af06619e",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/preload.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/preload.ts",
+      "sourceSha256": "7cf40203bb7e643e9338f0c955aac73b5e40f29b6fa555e2dd7ed877bbb1f3e7",
+      "destinationSha256": "7cf40203bb7e643e9338f0c955aac73b5e40f29b6fa555e2dd7ed877bbb1f3e7",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/regions.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/regions.ts",
+      "sourceSha256": "bd8a4b3d449a9511ea3b7d3c0e393fadb609c390af588f835021a34e581e5b5f",
+      "destinationSha256": "bd8a4b3d449a9511ea3b7d3c0e393fadb609c390af588f835021a34e581e5b5f",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/scenario-properties.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/scenario-properties.ts",
+      "sourceSha256": "c5f632168c9bf08215d9d3b0668e00fc971a39665c9d28d1fecbbf3dd935de30",
+      "destinationSha256": "c5f632168c9bf08215d9d3b0668e00fc971a39665c9d28d1fecbbf3dd935de30",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/sync-cliff-level.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/sync-cliff-level.ts",
+      "sourceSha256": "c99a2952879a97980c556e9e8da0165aa918176b06ec01c98680759238c236ee",
+      "destinationSha256": "c99a2952879a97980c556e9e8da0165aa918176b06ec01c98680759238c236ee",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/sync-height-map.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/sync-height-map.ts",
+      "sourceSha256": "8e20cd56908ad48574f260b1b1fd7d94b51c56a88873ace4e16d473048702740",
+      "destinationSha256": "8e20cd56908ad48574f260b1b1fd7d94b51c56a88873ace4e16d473048702740",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/sync-texture-info.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/sync-texture-info.ts",
+      "sourceSha256": "f34f46a31599c392fe7aba618750dc37e120c65bbbbfd6e0a71d6fb617cc0997",
+      "destinationSha256": "f34f46a31599c392fe7aba618750dc37e120c65bbbbfd6e0a71d6fb617cc0997",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/terrain-binary.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/terrain-binary.ts",
+      "sourceSha256": "725ab5fe904edc099a4d7b88198706ca07d26fd26e6e85a4b82f7d10431ee2bb",
+      "destinationSha256": "725ab5fe904edc099a4d7b88198706ca07d26fd26e6e85a4b82f7d10431ee2bb",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/texture-masks.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/texture-masks.ts",
+      "sourceSha256": "820d0fbaa24854296d8bfe53c3ff366a115d6e6fe96c3b723bee7756914121b8",
+      "destinationSha256": "820d0fbaa24854296d8bfe53c3ff366a115d6e6fe96c3b723bee7756914121b8",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/vertex-color.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/vertex-color.ts",
+      "sourceSha256": "95ece0ff82d5fda2317276ec822a17828655f6dbf90ace0a5c795975daa0fbcb",
+      "destinationSha256": "95ece0ff82d5fda2317276ec822a17828655f6dbf90ace0a5c795975daa0fbcb",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/formats/water.ts",
+      "destination": "starcraft2/modules/map/shared/format/formats/water.ts",
+      "sourceSha256": "972e9ea8ab52561f69d9f5866480084a04239a22a6492c641d1b3f4e1965a7b8",
+      "destinationSha256": "972e9ea8ab52561f69d9f5866480084a04239a22a6492c641d1b3f4e1965a7b8",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/index.ts",
+      "destination": "starcraft2/modules/map/shared/format/index.ts",
+      "sourceSha256": "20e38b5085a04844bfff39dbc202dd0faa671aacebebcb88dc0e8a639ee05774",
+      "destinationSha256": "1c21f3c867874f5c87b0f1f2729e10c56f15760abfb50e7b15f2d86d7b28fa68",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/model.ts",
+      "destination": "starcraft2/modules/map/shared/format/model.ts",
+      "sourceSha256": "2ad777e4d5cc0910252d608dc708f292ec192f9fa525ec6839afbc0fd28a00a5",
+      "destinationSha256": "2ad777e4d5cc0910252d608dc708f292ec192f9fa525ec6839afbc0fd28a00a5",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/parse-map.ts",
+      "destination": "starcraft2/modules/map/shared/format/parse-map.ts",
+      "sourceSha256": "b223cb4893228f6f15377c5015b6e163bbce86c8b2b58380e54dc011d8e35d3a",
+      "destinationSha256": "b223cb4893228f6f15377c5015b6e163bbce86c8b2b58380e54dc011d8e35d3a",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/serialize-map.ts",
+      "destination": "starcraft2/modules/map/shared/format/serialize-map.ts",
+      "sourceSha256": "3bcdc6710e27fa6a9e3449c051a8c8dff5fbfb3495f6dfd9767c82f4c09e2610",
+      "destinationSha256": "3bcdc6710e27fa6a9e3449c051a8c8dff5fbfb3495f6dfd9767c82f4c09e2610",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/packages/maps-processing/src/sc2-map-core/terrain-params.ts",
+      "destination": "starcraft2/modules/map/shared/format/terrain-params.ts",
+      "sourceSha256": "ed45e06965fd609b1199ceceaaddcd48e48b94aa411f9cb05af46fa2ff180bd8",
+      "destinationSha256": "ed45e06965fd609b1199ceceaaddcd48e48b94aa411f9cb05af46fa2ff180bd8",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/image/index.ts",
+      "destination": "starcraft2/modules/map/shared/image/index.ts",
+      "sourceSha256": "f066910fcbc126bc90504e227c4a6eb10251956d86e846303950869f3c95e5d2",
+      "destinationSha256": "ad0583f671da69fa1cf32811053d42de84c2cf8a36eae7a9cb49b72285c38bc2",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/image/map-image.ts",
+      "destination": "starcraft2/modules/map/shared/image/map-image.ts",
+      "sourceSha256": "3e3da84b9c910483e6a28f7dd2e597785c9888caa296ec5cf6dbf15bb67b3f53",
+      "destinationSha256": "e48f73e23df3f0839cb4bb1a95f5c43e8e08d61b74a5cc6fe520bdf66269f271",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/image/overview.ts",
+      "destination": "starcraft2/modules/map/shared/image/overview.ts",
+      "sourceSha256": "62b659245b400b2920fddfec46d6795b75e5f9e6522e39ad08788749bc8f5b10",
+      "destinationSha256": "71d916f591daae00d38f25e6d8e10069cd772004d18cc9035d5950bbe29b7625",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/image/png.ts",
+      "destination": "starcraft2/modules/map/shared/image/png.ts",
+      "sourceSha256": "d7cd50e2c2035b7091d070071a3abbff30a3eecf25f049160c8f1bc5a9b90737",
+      "destinationSha256": "d7cd50e2c2035b7091d070071a3abbff30a3eecf25f049160c8f1bc5a9b90737",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/image/render.ts",
+      "destination": "starcraft2/modules/map/shared/image/render.ts",
+      "sourceSha256": "a426f374a4658cebcb377ccebf0421b43bd0a4b5961c74d9594dc9a1443b6875",
+      "destinationSha256": "f98cc6275ba669989a796be4755ab669f10030983e96fd49711d538f0fa10325",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/navigation/analyze.ts",
+      "destination": "starcraft2/modules/map/shared/navigation/analyze.ts",
+      "sourceSha256": "5b3eb6682e1b9a6c0f951d80379257376aeffe97ffca0d82cfaefa428f584ea7",
+      "destinationSha256": "5b3eb6682e1b9a6c0f951d80379257376aeffe97ffca0d82cfaefa428f584ea7",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/navigation/areas.ts",
+      "destination": "starcraft2/modules/map/shared/navigation/areas.ts",
+      "sourceSha256": "c3f98e2b9f98b8521d606d70d2362a55f9ee9abb3f054c054c7b8092d77819f4",
+      "destinationSha256": "c3f98e2b9f98b8521d606d70d2362a55f9ee9abb3f054c054c7b8092d77819f4",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/navigation/grid.ts",
+      "destination": "starcraft2/modules/map/shared/navigation/grid.ts",
+      "sourceSha256": "85f735ff8e8913ccb75952940b8a3693f0d06d39e8d9546dc9df7a9afe58701f",
+      "destinationSha256": "85f735ff8e8913ccb75952940b8a3693f0d06d39e8d9546dc9df7a9afe58701f",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/navigation/index.ts",
+      "destination": "starcraft2/modules/map/shared/navigation/index.ts",
+      "sourceSha256": "88b80ba28791dc1e65bc85e1716144e13e6034f86485c1da273c4e355dfd62fc",
+      "destinationSha256": "88b80ba28791dc1e65bc85e1716144e13e6034f86485c1da273c4e355dfd62fc",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/navigation/refine.ts",
+      "destination": "starcraft2/modules/map/shared/navigation/refine.ts",
+      "sourceSha256": "a8058bef7f1ac2e5b16fe4f2127d80b4c5fe27db622dd2feeefdcd0b0788c63e",
+      "destinationSha256": "a8058bef7f1ac2e5b16fe4f2127d80b4c5fe27db622dd2feeefdcd0b0788c63e",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/navigation/render.ts",
+      "destination": "starcraft2/modules/map/shared/navigation/render.ts",
+      "sourceSha256": "2b9848567d3221ffc2db1f623e75311f68d8b059d07d29ed6fcf729137c5c076",
+      "destinationSha256": "38300688b1ffa0c19392011d4f25a4155ac56fa5fbaedc39479d6d12e496c73a",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/navigation/routes.ts",
+      "destination": "starcraft2/modules/map/shared/navigation/routes.ts",
+      "sourceSha256": "5db952d0cd1f9cc35e1336d6f60353a54106c4d82e863546a0e71ee0fc07d46e",
+      "destinationSha256": "5db952d0cd1f9cc35e1336d6f60353a54106c4d82e863546a0e71ee0fc07d46e",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/navigation/sc2-spatial.ts",
+      "destination": "starcraft2/modules/map/shared/navigation/sc2-spatial.ts",
+      "sourceSha256": "96cc172cfa1cd5b8551ceac6c5fa9ded74e6dbf637b00a2376b668242faecbfa",
+      "destinationSha256": "f14960b453d9fda23424326ce65a092621385f274ed703ab0bd4abaa836ea1ca",
+      "compatibility": "deprecated-reexport"
+    },
+    {
+      "source": "starcraft2/src/lib/mk2/codecs/sc2-map/src/navigation/spatial.ts",
+      "destination": "starcraft2/modules/map/shared/navigation/spatial.ts",
+      "sourceSha256": "4c89652b55996ad2fc96234697f50f7a099be32dc51df2bdfac247ccb2dceca2",
+      "destinationSha256": "4c89652b55996ad2fc96234697f50f7a099be32dc51df2bdfac247ccb2dceca2",
+      "compatibility": "deprecated-reexport"
+    }
+  ]
+}

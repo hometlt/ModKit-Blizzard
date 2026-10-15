@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "codec": "diablo3-tex",
+  "corpusKind": "mixed",
+  "verdict": "pass",
+  "tests": {
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "source-feature-audit",
+    "oracle": "every export of the MK2 source (references/modkitmk2/extensions/blizzard/diablo/codecs/diablo3-tex at 1a14ba4eddd0ae88de273348ebd44cfb98a0581d) and its manifest, run on the installed game (and synthetic blocks where the game has no oracle) against the MK3 module that carries it",
+    "suite": "modkit-extensions-blizzard/blizzard-diablo/test/diablo3-receipts-corpus.test.ts",
+    "corpus": {
+      "game": "blizzard/diablo-3",
+      "version": "2.8.0.99920",
+      "discovery": "common.game/installation-discovery (blizzard/diablo3-installation)",
+      "container": "blizzard/casc",
+      "listed": {
+        "appearances": 11347,
+        "textures": 33431
+      }
+    },
+    "samples": [
+      {
+        "name": "mk2 codec.manifest.json",
+        "fixture": "references/modkitmk2/extensions/blizzard/diablo/codecs/diablo3-tex/codec.manifest.json",
+        "sha256LF": "6f5ba02a43735d3415ae049333ccda0953a17a4962d0bd0941897d4bdb4d7d05"
+      },
+      {
+        "name": "mk2 src/index.ts",
+        "fixture": "references/modkitmk2/extensions/blizzard/diablo/codecs/diablo3-tex/src/index.ts",
+        "sha256LF": "374f1460badd89bc4019921e986703b4ea609b1af4d7c48462d5399d343e2bf7"
+      },
+      {
+        "name": "textures/bronze_irradiance.tex",
+        "sha256": "f276fefefcc4ad3dcd154e485360233e653e67a18bf59f76c7f5352ff558cca4"
+      },
+      {
+        "name": "textures/woodfence.tex",
+        "sha256": "1c8488a00236c1a918bea68776a1a2b72fb1eb2eec3fc3314a33c5b12126fb5e"
+      },
+      {
+        "name": "textures/raidenbolt.tex",
+        "sha256": "08c4c224f2eb57541d8d6458f776300c529dae138419836448f51736246c7471"
+      },
+      {
+        "name": "appearance/breakable_painting_c.app",
+        "sha256": "42b8cb18291382be5f5df6ca69295d8cbd1711fe9ead55e169b353fb4d1a8c98"
+      }
+    ]
+  },
+  "oracleVerification": {
+    "verified": true,
+    "modules": [
+      "TEX header and raw pixels of the installed game",
+      "@modkit/codec-kit/texture/bc decodeBcSurface",
+      "MK2 codec.manifest.json"
+    ],
+    "operation": "source-feature-audit"
+  },
+  "cases": [
+    {
+      "id": "mk2-source:src/index.ts#isDiablo3Tex",
+      "verdict": "identical",
+      "resultDigest": "c57c8a3b3f80a22492ec209eac9efe348648cb3635725dbf9e357fbf32815f20",
+      "mk3Operation": "src/diablo3-tex/codec.ts detect (host routing)"
+    },
+    {
+      "id": "mk2-source:src/index.ts#unshuffleDiablo3Blocks",
+      "verdict": "identical",
+      "resultDigest": "5799e9697bab158066592906cc23e71862b0073ef5aaef0524980916cd266102",
+      "mk3Operation": "src/diablo3-tex/codec.ts unshuffle + @modkit/codec-kit/texture/bc"
+    },
+    {
+      "id": "mk2-source:src/index.ts#decodeDiablo3Tex",
+      "verdict": "identical",
+      "resultDigest": "e7b839d35b8f368c9d97ac37176b2817b1228f311bad75f0f9f83029fe57b776",
+      "mk3Operation": "common.view/raster-image-source readRegion (mip, face)"
+    },
+    {
+      "id": "mk2-source:src/index.ts#decodeDiablo3Tex frameIndex (cropFrame)",
+      "verdict": "identical",
+      "resultDigest": "4141eaceef2668a08819f1e663cc025e1e3e74e51961c419368cada4c831f88a",
+      "mk3Operation": "not carried (atlas frame cropping)"
+    },
+    {
+      "id": "mk2-source:src/index.ts#describeDiablo3Tex",
+      "verdict": "identical",
+      "resultDigest": "67badd2a2242b6f09583cd41e2a70f71f4da365e53fd834eeb969ba7aa5fb214",
+      "mk3Operation": "view.inspect summary"
+    },
+    {
+      "id": "mk2-source:src/index.ts#describeFrames",
+      "verdict": "identical",
+      "resultDigest": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+      "mk3Operation": "view.inspect summary frames"
+    },
+    {
+      "id": "mk2-manifest:match.extensions",
+      "verdict": "identical",
+      "resultDigest": "0739f4a6474d869c107e712b855768994f91d4905274f6f0c2a0a4f5283033ed",
+      "mk3Operation": "spec.match.extensions"
+    },
+    {
+      "id": "mk2-manifest:operations",
+      "verdict": "identical",
+      "resultDigest": "6c89ad9cbf6bfb925efd7be7262303c1da982fad960b0893cea0ae97aa5de874",
+      "mk3Operation": "view.inspect (image.inspect); common.view/raster-image-source (image.read)"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/diablo3-tex/audit",
+      "kind": "audit",
+      "adapterOperation": "source-feature-audit",
+      "targetOperation": "source-feature-audit",
+      "handlerId": "source-feature-audit",
+      "contribution": "modkit-extensions-blizzard/blizzard-diablo/contributions/codec-diablo3-tex.json",
+      "executed": true,
+      "caseIds": [
+        "mk2-source:src/index.ts#isDiablo3Tex",
+        "mk2-source:src/index.ts#unshuffleDiablo3Blocks",
+        "mk2-source:src/index.ts#decodeDiablo3Tex",
+        "mk2-source:src/index.ts#decodeDiablo3Tex frameIndex (cropFrame)",
+        "mk2-source:src/index.ts#describeDiablo3Tex",
+        "mk2-source:src/index.ts#describeFrames",
+        "mk2-manifest:match.extensions",
+        "mk2-manifest:operations"
+      ]
+    }
+  ]
+}

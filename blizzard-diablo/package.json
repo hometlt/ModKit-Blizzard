@@ -1,0 +1,58 @@
+{
+  "name": "@modkit/blizzard-diablo",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "description": "Diablo format codecs for Modkit.",
+  "files": [
+    "contributions",
+    "dist",
+    "providers",
+    "src",
+    "README.md",
+    "THIRD-PARTY-NOTICES.md"
+  ],
+  "modkit": {
+    "schemaVersion": 1,
+    "publisher": "blizzard",
+    "id": "diablo",
+    "presentation": {
+      "displayName": "Blizzard Diablo",
+      "description": "Diablo format codecs for Modkit.",
+      "vendor": {
+        "id": "blizzard",
+        "displayName": "Blizzard"
+      },
+      "games": [
+        {
+          "id": "blizzard/diablo-3",
+          "displayName": "Diablo III"
+        }
+      ]
+    },
+    "contributionManifests": [
+      "./contributions/*.json",
+      "./providers/*/provider.json"
+    ]
+  },
+  "dependencies": {
+    "@modkit/codec-kit": "file:../vendor/modkit-codec-kit-1.0.0.tgz",
+    "@modkit/scene": "file:../vendor/modkit-scene-1.0.0.tgz",
+    "@modkit/sdk": "file:../vendor/modkit-sdk-0.1.0.tgz",
+    "@modkit/uv": "file:../vendor/modkit-uv-1.0.0.tgz",
+    "modkit-extension-archives": "file:../vendor/modkit-extension-archives-1.0.0.tgz"
+  },
+  "peerDependencies": {
+    "@modkit/host": ">=0.1.0 <1"
+  },
+  "peerDependenciesMeta": {
+    "@modkit/host": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "build": "tsc -b ./tsconfig.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  }
+}

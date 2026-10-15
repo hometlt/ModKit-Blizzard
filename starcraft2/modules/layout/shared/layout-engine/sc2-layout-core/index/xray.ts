@@ -1,0 +1,141 @@
+import * as sch from '../schema/base.js';
+import { ExpressionParser } from '../parser/expressions.js';
+import { UINavigator, UIBuilder, UINode, FrameNode, StateGroupNode } from './hierarchy.js';
+import { DescIndex } from './desc.js';
+import { XMLElement } from '../types.js';
+import { Store } from './store.js';
+
+export class XRay {
+    protected exParser = new ExpressionParser();
+    public readonly uNavigator: UINavigator;
+    public readonly uBuilder: UIBuilder;
+    public readonly dIndex: DescIndex;
+
+    constructor(protected store: Store) {
+        this.uNavigator = new UINavigator(this.store.schema, this.store.index);
+        this.uBuilder = new UIBuilder(this.store.schema, this.store.index);
+        this.dIndex = this.store.index;
+    }
+
+    matchIndeterminateAttr(xEl: XMLElement, attrName: string) {
+        if (!xEl.lang.stype || !xEl.lang.stype.indeterminateAttributes.size) return;
+
+        for (const [sname, sattr] of xEl.lang.stype.attributes) {
+            if (!sattr.required) continue;
+            if (!xEl.attributes[sname]) return;
+        }
+
+        for (const atKey in xEl.attributes) {
+            if (xEl.lang.stype.attributes.has(atKey)) continue;
+            if (xEl.attributes[atKey]!.name !== attrName) {
+                return;
+            }
+            break;
+        }
+
+        return Array.from(xEl.lang.stype.indeterminateAttributes.values())[0];
+    }
+
+    determineCurrentFrameNode(xEl: XMLElement) {
+        const currentDesc = this.store.index.resolveElementDesc(xEl);
+        if (!currentDesc) return;
+        let uNode = this.uBuilder.buildNodeFromDesc(currentDesc);
+        if (!uNode) return;
+        uNode = this.uNavigator.getContextFrameNode(uNode);
+        if (!uNode) return;
+        return uNode;
+    }
+
+    determineActionFrameNode(xEl: XMLElement) {
+        const uNode = this.determineCurrentFrameNode(xEl);
+        if (!uNode) return;
+
+        let uTargetNode: UINode | undefined = uNode;
+        switch (xEl.lang.sdef?.nodeKind) {
+            case sch.ElementDefKind.StateGroupStateAction:
+            {
+                const av = xEl.getAttributeValue('frame', void 0);
+                if (!av) break;
+
+                const pathSel = this.exParser.parsePathSelector(av);
+                uTargetNode = this.uNavigator.resolveSelection(uNode, pathSel.path).target;
+                if (!uTargetNode) return;
+            }
+        }
+
+        this.uBuilder.expandNode(uTargetNode);
+        return <FrameNode>uTargetNode;
+    }
+
+    determineTargetFrameNode(xEl: XMLElement) {
+        switch (xEl.lang.sdef?.nodeKind) {
+            case sch.ElementDefKind.AnimationControllerKey:
+            {
+                xEl = <XMLElement>xEl.parent;
+                break;
+            }
+        }
+
+        const uNode = this.determineCurrentFrameNode(xEl);
+        if (!uNode) return;
+
+        let uTargetNode: UINode | undefined = uNode;
+        switch (xEl.lang.sdef?.nodeKind) {
+            case sch.ElementDefKind.AnimationController:
+            case sch.ElementDefKind.StateGroupStateCondition:
+            case sch.ElementDefKind.StateGroupStateAction:
+            {
+                const av = xEl.getAttributeValue('frame', void 0);
+                if (!av) break;
+
+                const pathSel = this.exParser.parsePathSelector(av);
+                uTargetNode = this.uNavigator.resolveSelection(uNode, pathSel.path).target;
+                if (!uTargetNode) return;
+            }
+        }
+
+        this.uBuilder.expandNode(uTargetNode);
+        return <FrameNode>uTargetNode;
+    }
+
+    determineTargetStateGroup(xEl: XMLElement, sgname?: string) {
+        const uFrame = this.determineTargetFrameNode(xEl);
+        if (!uFrame) return;
+        // let sgname: string;
+
+        switch (xEl.lang.sdef?.nodeKind) {
+            case sch.ElementDefKind.AnimationControllerKey:
+            {
+                sgname = (<XMLElement>xEl.parent).getAttributeValue('stategroup', void 0);
+                break;
+            }
+
+            case sch.ElementDefKind.StateGroupStateCondition:
+            {
+                if (sgname !== void 0) break;
+                // TODO: fix it
+                const attrVal = Object.values(xEl.attributes).pop();
+                if (attrVal) sgname = attrVal.name;
+                break;
+            }
+
+            case sch.ElementDefKind.StateGroupStateAction:
+            {
+                sgname = xEl.getAttributeValue('group', void 0);
+                break;
+            }
+
+            case sch.ElementDefKind.StateGroupDefaultState:
+            {
+                sgname = (<XMLElement>xEl.parent).getAttributeValue('name', void 0);
+                break;
+            }
+        }
+
+        if (!sgname) return;
+        const sgNode = <StateGroupNode>uFrame.getChild(sgname);
+        if (!(sgNode instanceof StateGroupNode)) return;
+
+        return sgNode;
+    }
+}

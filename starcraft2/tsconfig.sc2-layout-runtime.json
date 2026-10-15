@@ -1,0 +1,32 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "composite": false, "incremental": true, "tsBuildInfoFile": "../node_modules/.cache/tsbuildinfo/starcraft2-sc2-layout-runtime.tsbuildinfo",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "checkJs": false,
+    "baseUrl": ".",
+    "verbatimModuleSyntax": true,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
+    "noFallthroughCasesInSwitch": false,
+    "isolatedModules": false
+  },
+  "files": [
+    "shared/inspection/byte-source.js",
+    "modules/layout/codecs/layout/src/codec.ts",
+    "modules/layout/shared/preview.ts",
+    "modules/layout/shared/semantic.js",
+    "modules/layout/shared/runtime.ts",
+    "modules/layout/shared/schema-index.ts",
+    "modules/layout/shared/layout-engine/sc2-layout-core/index.ts",
+    "modules/layout/shared/format/index.ts",
+    "modules/layout/shared/format/rendering/index.ts",
+    "modules/layout/shared/xml.js",
+    "shared/language/symbol-match.ts"
+  ]
+}

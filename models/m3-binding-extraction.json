@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "commit": "1a14ba4eddd0ae88de273348ebd44cfb98a0581d",
+  "sources": [
+    {
+      "path": "extensions/blizzard/starcraft-2/codecs/m3/src/model-codec.ts",
+      "symbols": [
+        "M3MaterialTrackMerge",
+        "mergeM3MaterialAnimationTracks",
+        "countRenderMaterialTracks",
+        "countStandardMaterialTracks",
+        "countLayerTracks",
+        "countAnimatedTracks",
+        "validBundleSequence",
+        "materialLayoutsCompatible",
+        "standardMaterialLayoutsCompatible",
+        "layerLayoutsCompatible",
+        "flipbookLayoutsCompatible",
+        "normalizeMaterialPath",
+        "mergeRenderMaterialTracks",
+        "mergeStandardMaterialTracks",
+        "mergeNormalBlendFactorTracks",
+        "mergeLayerTracks",
+        "mergeAnimatedTracks",
+        "normalizePath",
+        "normalizedPathStem",
+        "hasSiblingStemAssociation",
+        "m3AnimationBundlePattern"
+      ]
+    }
+  ],
+  "imports": [
+    "import type { AnimatedScalar, AnimatedValueTracks, RenderMaterial, SequenceIndexedAnimationTrack, StandardLayerSlot, StandardMaterialLayer, StandardMaterialModel } from '@modkitx/models-processing'"
+  ],
+  "exports": [
+    "mergeM3MaterialAnimationTracks",
+    "countRenderMaterialTracks",
+    "hasSiblingStemAssociation",
+    "m3AnimationBundlePattern"
+  ],
+  "output": "models/src/m3/legacy-binding/binding-kernel.ts",
+  "provenance": "models/M3-BINDING-KERNEL-PROVENANCE.json"
+}

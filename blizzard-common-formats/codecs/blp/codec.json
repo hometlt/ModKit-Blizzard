@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/blp",
+  "displayName": "Blizzard BLP texture",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "entrypoint": "./codecs/blp/runtime.js",
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source"
+      ],
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "variantId": "trusted-node"
+    },
+    {
+      "entrypoint": "./codecs/blp/runtime.js",
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source"
+      ],
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "variantId": "portable"
+    }
+  ],
+  "limitations": [
+    "Validates BLP1 and BLP2 headers and mip ranges and decodes top mips: BLP1 and BLP2 palettised at alpha depths 0, 1, 4 and 8, BLP2 DXT1/DXT3/DXT5 and uncompressed BGRA, and baseline sequential JPEG BLP1 through the shared codec-kit decoder.",
+    "JPEG BLP1 reconstructs the shared header plus mip payload and maps B/G/R/alpha planes to RGBA; alpha depth zero produces opaque pixels. Malformed, progressive or dimension-mismatched JPEG streams refuse at decoded read. BLP2 JPEG stays metadata-only. Installed WoW JPEG BLP1 profiles are not yet verified.",
+    "Only mip level zero is exposed as decoded pixels; layer, face and slice selection stay at zero.",
+    "The codec is read-only; texture writing and mip generation require the pending writer/service contract."
+  ],
+  "spec": {
+    "artifactStages": [
+      "authored",
+      "compiled",
+      "runtime"
+    ],
+    "budgets": {
+      "maxDepth": 64,
+      "maxDiagnostics": 1000,
+      "maxInputBytes": "1073741824",
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600
+    },
+    "formatRefs": [
+      {
+        "formatId": "blp",
+        "label": "Blizzard BLP texture"
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "match": {
+      "extensions": [
+        "blp"
+      ],
+      "signatures": [
+        {
+          "bytesHex": "424c5031",
+          "from": "start",
+          "offset": 0
+        },
+        {
+          "bytesHex": "424c5032",
+          "from": "start",
+          "offset": 0
+        }
+      ]
+    },
+    "openIntents": [
+      "probe",
+      "inspect",
+      "thumbnail",
+      "full",
+      "export"
+    ],
+    "operations": [
+      {
+        "handlerId": "inspect",
+        "id": "view.inspect",
+        "mutatesSource": false,
+        "outputKinds": [
+          "json"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "validate",
+        "id": "asset.validate",
+        "mutatesSource": false,
+        "outputKinds": [
+          "none"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      },
+      {
+        "handlerId": "export-raw",
+        "id": "export.raw",
+        "mutatesSource": false,
+        "outputKinds": [
+          "bytes"
+        ],
+        "requiredPermissions": [
+          "read-source"
+        ]
+      }
+    ],
+    "probe": {
+      "kind": "bytes",
+      "maxBytes": 4096,
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ]
+    },
+    "publishesDataSources": [
+      {
+        "contract": "common.view/raster-image-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      }
+    ],
+    "representations": [
+      {
+        "contract": "common.image/raster-metadata",
+        "id": "raster-metadata",
+        "lossy": false,
+        "major": 1,
+        "stage": "authored"
+      }
+    ],
+    "roles": [
+      "media"
+    ],
+    "sourceTopology": "single"
+  }
+}

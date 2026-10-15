@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/wow-m2",
+  "displayName": "World of Warcraft M2",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/m2/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./dist/m2/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Reads chunked (MD21) and flat (MD20) models of versions 264–274 (Wrath of the Lich King to The War Within); earlier versions are refused with their version.",
+    "Companions are named by FileDataID and read as filedataid/<id> of the same content source: the first skin profile (SFID) and the .anim file of every sequence whose keyframes are external (AFID). A flat model reads <name>00.skin beside itself. A companion that does not read is a warning: without its skin the model is metadata only, without an .anim that sequence has no motion.",
+    "Publishes geometry of the first skin profile (one primitive per batch, both UV sets, four-bone skinning), one material per batch (blend mode, depth and side flags, the static colour, alpha and texture weight), texture references, bones with pivots, attachments as socket nodes, and one animation clip per sequence with bone translation/rotation/scale channels and events. Global-sequence tracks run in every clip on their own clock; an alias sequence plays its target.",
+    "Textures of type 0 are referenced by FileDataID (TXID) or by their in-file path. Textures the game chooses from its tables (types other than 0: skin, hair, cape, monster skins) are left unreferenced and listed in the material's shader parameters.",
+    "Reads SKID/SKPD skeleton chains with chunk-local SKS1/SKB1/SKA1 records and separate AFM2/AFSB/AFSA animation domains. Parent/child motion is composed by animation id and variation; cyclic or incompatible skeletons refuse. Reachable ANIM identities are deduplicated in bounded batches without a 200-file truncation.",
+    "Qualified unlit/no-fog single-texture colour profiles retain separate animated RGB/alpha/weight clocks, wrapping and translation-only UV tracks through the existing material program. Other shader/matrix profiles are explicitly partial; GPU/depth equivalence is not claimed. Attachment enable tracks are read but visibility is not projected. Bone rotation uses spherical-linear approximation of native no-sign-flip NLERP; untransformed/kinematic joints are not sampled as ordinary animation. Parent-component suppression remains a limitation. Not read yet: .bone, .phys, lights, cameras, ribbon and particle emitters, LOD skins. Game-selected appearance textures and axis-locked billboards remain unsupported.",
+    "model.export-uvm materializes the same projection with @modkit/uv: the z-up scene is turned upright by the materializer and one WoW unit (a yard) is 0.9144 m unless the request states metersPerSourceUnit."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "wow-m2",
+        "label": "World of Warcraft M2"
+      }
+    ],
+    "roles": [
+      "media"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "compiled",
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "extensions": [
+        "m2"
+      ],
+      "signatures": [
+        {
+          "bytesHex": "4d443230",
+          "from": "start",
+          "offset": 0
+        },
+        {
+          "bytesHex": "4d443231",
+          "from": "start",
+          "offset": 0
+        }
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 64
+        }
+      ],
+      "maxBytes": 64
+    },
+    "representations": [
+      {
+        "id": "container-metadata",
+        "contract": "common.model/container-metadata",
+        "major": 1,
+        "stage": "compiled",
+        "lossy": false
+      },
+      {
+        "id": "decoded-model",
+        "contract": "common.model/geometry-metadata",
+        "major": 1,
+        "stage": "compiled",
+        "lossy": true
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/model-scene-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-material-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-resource-refs-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-skeleton-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-socket-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-animation-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "none"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "model.export-uvm",
+        "handlerId": "model-export-uvm",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "268435456",
+      "maxDepth": 64,
+      "maxNodes": 1000000,
+      "maxScalarBytes": 268435456,
+      "maxDiagnostics": 1000
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/casc",
+  "displayName": "Blizzard CASC installed storage",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./src/casc/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./src/casc/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "CASC is selected as an installation-root codec rather than by a file extension or byte signature.",
+    "Installed storage is selected by `.build.info` beside a data directory (`SC2Data`, `HeroesData` or `Data`) holding `config`, `data` and `indices`. The package reader parses MNDX, TVFS, Diablo III and StarCraft: Remastered roots and can use a host-injected CDN fetcher for encoding keys missing locally.",
+    "Each read is bounded on its own: 64 MiB per metadata file or container range, 128 MiB per decoded or extracted entry. A session keeps no cumulative read limit.",
+    "Encrypted BLTE chunks and TVFS files composed from multiple encoding spans fail closed with stable diagnostics.",
+    "The codec remains read-only. The package exports a separate portable CASC patch-bundle writer and overlay without advertising mutation of Blizzard installations."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "casc",
+        "label": "Blizzard CASC installed storage"
+      }
+    ],
+    "roles": [
+      "container"
+    ],
+    "sourceTopology": "namespace",
+    "artifactStages": [
+      "authored",
+      "compiled"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {},
+    "probe": {
+      "kind": "namespace",
+      "markers": [
+        ".build.info",
+        "SC2Data/config",
+        "SC2Data/data",
+        "SC2Data/indices",
+        "HeroesData/config",
+        "HeroesData/data",
+        "HeroesData/indices",
+        "Data/config",
+        "Data/data",
+        "Data/indices"
+      ],
+      "maxEntries": 10,
+      "maxBytes": 65536,
+      "maxDepth": 2,
+      "maxPathBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "archive-namespace",
+        "contract": "common.archive/entry-namespace",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/namespace-entry-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "none"
+        ]
+      },
+      {
+        "id": "container.extract",
+        "handlerId": "extract-entry",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "268435456",
+      "maxDepth": 64,
+      "maxNodes": 750000,
+      "maxScalarBytes": 134217728,
+      "maxDiagnostics": 1000
+    }
+  }
+}

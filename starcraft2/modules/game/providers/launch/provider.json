@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/starcraft2-native-map-launch",
+  "displayName": "StarCraft II native map launch plan",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node-windows",
+      "entrypoint": "./modules/game/providers/launch/runtime.js",
+      "target": {
+        "environments": ["node"],
+        "operatingSystems": ["windows"]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "node-worker-windows",
+      "entrypoint": "./modules/game/providers/launch/runtime.js",
+      "target": {
+        "environments": ["node-worker"],
+        "operatingSystems": ["windows"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "starcraft2-native-map-launch-v1",
+        "contract": "common.game/launch-plan",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": ["blizzard/starcraft-2"],
+          "launchOptions": {
+            "map": { "type": "string", "path": true, "description": "The map to run: the map to test a mod on, or another map than the one being launched (-run)." },
+            "triggerDebug": { "type": "boolean", "default": false, "description": "Open the in-game trigger debugger window on launch (-TrigDebug)." },
+            "preload": { "type": "boolean", "default": true, "description": "Preload map assets before launching (-preload 1)." },
+            "noUserCheats": { "type": "boolean", "default": true, "description": "Disable in-game cheat commands (-NoUserCheats)." },
+            "reloadCheck": { "type": "boolean", "default": false, "description": "Enable reload checking (-reloadcheck)." },
+            "meleeMod": { "type": "string", "default": "Void", "description": "The mod melee games use, for example Void for Legacy of the Void (-meleeMod)." },
+            "difficulty": { "type": "integer", "default": 2, "minimum": 0, "maximum": 3, "description": "AI difficulty: 0 Very Easy, 1 Easy, 2 Medium, 3 Hard (-difficulty)." },
+            "speed": { "type": "integer", "default": 2, "minimum": 0, "maximum": 4, "description": "Game speed: 0 Slower, 1 Slow, 2 Normal, 3 Fast, 4 Faster (-speed)." },
+            "testMod": { "type": "string", "path": true, "description": "A mod to load over the map (-testmod); launching a mod sets it to the mod itself." },
+            "testConfig": { "type": "string", "path": true, "description": "A .SC2TestConfig file (-testconfig)." }
+          }
+        }
+      }
+    ],
+    "lifecycleScope": "operation"
+  },
+  "limitations": [
+    "This contribution only builds an immutable launch plan; process creation and permission checks remain host-owned.",
+    "The native SC2Switcher route is available on Windows only."
+  ]
+}

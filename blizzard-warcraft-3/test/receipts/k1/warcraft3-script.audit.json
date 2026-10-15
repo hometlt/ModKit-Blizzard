@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "codec": "warcraft3-script",
+  "corpusKind": "synthetic",
+  "verdict": "pass",
+  "tests": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "source-feature-audit",
+    "oracle": "the MK2 codec (references/modkitmk2/extensions/blizzard/warcraft-3/codecs/warcraft3-script at 1a14ba4eddd0ae88de273348ebd44cfb98a0581d) is its manifest alone, planned and unsupported; every extension it names against the MK3 carrier that matches it, and the carrier run on a file written for the test",
+    "suite": "modkit-extensions-blizzard/blizzard-warcraft-3/test/k1-war3-manifest-audits.test.ts",
+    "samples": [
+      {
+        "name": "authored.j",
+        "builder": "modkit-extensions-blizzard/blizzard-warcraft-3/test/k1-war3-manifest-audits.test.ts",
+        "sha256": "1c5e60645838987b80b23117138976d8712310c041c9842554eb07c11680d25b"
+      },
+      {
+        "name": "mk2 codec.manifest.json",
+        "fixture": "references/modkitmk2/extensions/blizzard/warcraft-3/codecs/warcraft3-script/codec.manifest.json",
+        "sha256LF": "84a449cd48cddd79790d61e57563c3f30edca730d9821bae32059b4fc6a95b86"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "mk2-source:files",
+      "verdict": "identical",
+      "resultDigest": "a714a2d5317692b8e1d331c1b2bcaac50083de7fa340e6a32bea06a9e51e8bf0",
+      "mk3Operation": "no MK2 source to carry"
+    },
+    {
+      "id": "mk2-manifest:runtimeVariants",
+      "verdict": "identical",
+      "resultDigest": "0910687d65dd0269c754ca4dd17eb69794565ee5a641e27dbcff13303f0f5cd7",
+      "mk3Operation": "no MK2 runtime to carry"
+    },
+    {
+      "id": "mk2-manifest:match.extensions",
+      "verdict": "identical",
+      "resultDigest": "dc9957f87517ce7383a0a74f8f1175268663a87f1e352b516c109c88580dc920",
+      "mk3Operation": "modkit-extensions-blizzard/blizzard-warcraft-3/providers/jass-language/provider.json, modkit-core/extensions/lua/contributions/provider-lua-language.json"
+    },
+    {
+      "id": "mk3-carrier:analyze",
+      "verdict": "identical",
+      "resultDigest": "6ea1f937bbbcab3c9055f24843cf959d3b90745c373aff3aeac2a676b3e75e54",
+      "mk3Operation": "blizzard/war3-jass-language analyze"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/warcraft3-script/audit",
+      "kind": "audit",
+      "adapterOperation": "source-feature-audit",
+      "targetOperation": "source-feature-audit",
+      "handlerId": "source-feature-audit",
+      "contribution": "modkit-extensions-blizzard/blizzard-warcraft-3/providers/jass-language/provider.json",
+      "executed": true,
+      "caseIds": [
+        "mk2-source:files",
+        "mk2-manifest:runtimeVariants",
+        "mk2-manifest:match.extensions",
+        "mk3-carrier:analyze"
+      ]
+    }
+  ]
+}

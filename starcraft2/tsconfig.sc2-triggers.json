@@ -1,0 +1,49 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "composite": false, "incremental": true, "tsBuildInfoFile": "../node_modules/.cache/tsbuildinfo/starcraft2-sc2-triggers.tsbuildinfo",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "checkJs": false,
+    "baseUrl": ".",
+    "paths": {
+      "@modkit/blizzard-starcraft2/galaxy/language-core": [
+        "modules/galaxy/language-core/index.ts"
+      ],
+      "@modkit/blizzard-starcraft2/galaxy/analysis/*": [
+        "modules/galaxy/services/analysis/*"
+      ],
+      "@modkit/blizzard-starcraft2/triggers/editing/*": [
+        "modules/triggers/services/editing/*"
+      ],
+      "@modkit/blizzard-starcraft2/triggers/document/*": [
+        "modules/triggers/shared/trigger-document/*"
+      ],
+      "@modkit/blizzard-starcraft2/triggers/galaxy-conversion/internal/*": [
+        "modules/triggers/services/galaxy-conversion/internal/*"
+      ]
+    },
+    "verbatimModuleSyntax": false,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
+    "noFallthroughCasesInSwitch": false,
+    "isolatedModules": false
+  },
+  "files": [
+    "modules/triggers/codecs/triggers/src/codec.ts",
+    "modules/triggers/services/editing/rename.ts",
+    "modules/triggers/services/editing/tree-edit.ts",
+    "modules/triggers/services/source-detection.ts",
+    "modules/triggers/services/workspace/mod-libraries.ts",
+    "modules/triggers/services/galaxy-conversion/converter-entry.js",
+    "modules/triggers/services/galaxy-conversion/service.js",
+    "modules/triggers/shared/trigger-document/trigger-xml.js",
+    "modules/triggers/services/galaxy-conversion/validation.ts",
+    "src/types/sax.d.ts",
+    "modules/triggers/services/galaxy-conversion/index.js"
+  ]
+}

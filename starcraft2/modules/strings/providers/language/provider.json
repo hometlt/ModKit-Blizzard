@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-strings-language",
+  "displayName": "StarCraft II localization strings language analysis",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/strings/providers/language/runtime.js",
+      "target": { "environments": ["node"] },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./modules/strings/providers/language/runtime.js",
+      "target": { "environments": ["browser-worker", "node-worker"] },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "sc2-strings-document-analysis-v1",
+        "contract": "common.language/document-analysis",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "languageIds": ["sc2-strings"],
+          "documentKinds": ["sc2-strings-catalog"],
+          "extensions": ["txt"],
+          "completionTriggerCharacters": ["<", " ", "\"", "'", ",", "(", "+", "-", "*", "/"]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  }
+}

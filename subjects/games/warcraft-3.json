@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "kind": "game",
+  "id": "blizzard/warcraft-3",
+  "vendorId": "blizzard",
+  "displayName": "Warcraft III",
+  "description": "The Warcraft III extension provides bounded inspection of MDX and MDL model files.",
+  "officialSite": "https://warcraft3.blizzard.com/",
+  "resources": [
+    {
+      "id": "warcraft3-forums",
+      "label": "Warcraft III modding forum",
+      "url": "https://us.forums.blizzard.com/en/warcraft3/",
+      "kind": "modding"
+    }
+  ],
+  "extensionRequirements": [{ "id": "blizzard/warcraft-3", "importance": "required" }],
+  "capabilityRequirements": [
+    {
+      "id": "models",
+      "displayName": "MDX and MDL models",
+      "importance": "required",
+      "contributionIds": ["blizzard/war3-mdx"]
+    }
+  ]
+}

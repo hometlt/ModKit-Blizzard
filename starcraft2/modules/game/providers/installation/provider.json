@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/starcraft2-installation",
+  "displayName": "StarCraft II installation discovery",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/game/providers/installation/provider.js",
+      "target": {
+        "environments": [
+          "node"
+        ],
+        "operatingSystems": [
+          "windows",
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "node-worker",
+      "entrypoint": "./modules/game/providers/installation/provider.js",
+      "target": {
+        "environments": [
+          "node-worker"
+        ],
+        "operatingSystems": [
+          "windows",
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "starcraft2-installation-v1",
+        "contract": "common.game/installation-discovery",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": [
+            "blizzard/starcraft-2"
+          ]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Automatic discovery is bounded to verified platform defaults and Windows uninstall-registry entries; it never recursively scans a drive.",
+    "Steam and Epic manifest enumeration, launching, installation provisioning and content mounting are outside this provider."
+  ]
+}

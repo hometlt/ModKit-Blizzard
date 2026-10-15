@@ -1,0 +1,2 @@
+UI/Foo=Assets\Textures\base_foo.dds
+UI/Baz=Assets\Textures\baz.dds

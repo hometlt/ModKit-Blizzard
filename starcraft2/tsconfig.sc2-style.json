@@ -1,0 +1,27 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "allowJs": true,
+    "checkJs": false,
+    "composite": false, "incremental": true, "tsBuildInfoFile": "../node_modules/.cache/tsbuildinfo/starcraft2-sc2-style.tsbuildinfo",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "verbatimModuleSyntax": false,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
+    "noFallthroughCasesInSwitch": false,
+    "isolatedModules": false
+  },
+  "files": [
+    "modules/style/codecs/style/src/codec.ts",
+    "modules/style/providers/language/src/language.ts",
+    "modules/style/providers/language/src/served-definitions.ts",
+    "modules/style/shared/font-styles.ts",
+    "shared/language/code-actions.js",
+    "shared/language/sc2-colors.js"
+  ]
+}

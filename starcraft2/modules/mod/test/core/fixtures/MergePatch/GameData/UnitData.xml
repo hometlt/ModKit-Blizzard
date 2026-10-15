@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+  <!-- Patch: override LifeMax, modify indexed array slot 0, add new slot 2 -->
+  <CUnit id="Soldier">
+    <LifeMax value="120"/>
+    <WeaponArray index="0" Link="RifleUpgraded"/>
+    <WeaponArray index="2" Link="Rocket"/>
+    <Attributes index="Mechanical" value="1"/>
+    <GlossaryStrongArray value="Sniper"/>
+  </CUnit>
+
+  <!-- Cross-mod inheritance: child defined in patch, parent in base -->
+  <CUnit id="EliteHero" parent="BaseHero">
+    <LifeMax value="800"/>
+    <Armor value="10"/>
+  </CUnit>
+</Catalog>

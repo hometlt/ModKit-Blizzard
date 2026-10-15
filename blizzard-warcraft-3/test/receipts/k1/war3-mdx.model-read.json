@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "codec": "war3-mdx",
+  "corpusKind": "synthetic",
+  "verdict": "pass",
+  "tests": {
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "view.inspect",
+    "oracle": "the geometry, texture, bone and sequence written into the authored model",
+    "suite": "modkit-extensions-blizzard/blizzard-warcraft-3/test/k1-war3-mdx-receipts.test.ts",
+    "samples": [
+      {
+        "name": "authored.mdx / authored.mdl",
+        "builder": "modkit-extensions-blizzard/blizzard-warcraft-3/test/war3-harness.ts#authoredModelBytes",
+        "fixture": "modkit-extensions-blizzard/test/behavior/fixtures/minimal.mdx",
+        "sha256": "30c47af860743ebbcef1d2293329edb32aa3e3bb508e536fe1f02e662facda9e"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "authored.mdx:view.inspect",
+      "verdict": "identical",
+      "resultDigest": "2c90799c59678398b1686ec7f5402da9008d22df4730f1e8d42f46aa7f696bbc",
+      "mk3Operation": "view.inspect"
+    },
+    {
+      "id": "authored.mdx:model-scene-source",
+      "verdict": "identical",
+      "resultDigest": "1d6890b6468c6a130e35fb15ccced95b28c9eb3cb7955656b426ee67d8d0b502",
+      "mk3Operation": "view.model-scene-source"
+    },
+    {
+      "id": "authored.mdx:model-resource-refs-source",
+      "verdict": "identical",
+      "resultDigest": "57f72cb99b35e92a98602bd30f980de5e3df8c1918a8ed70c2e60ba67c570691",
+      "mk3Operation": "view.model-resource-refs-source"
+    },
+    {
+      "id": "authored.mdx:model-skeleton-source",
+      "verdict": "identical",
+      "resultDigest": "6b41a0d665e5268dfecd2ba809f6be320e91e2887ef32e741f23a144805edfb5",
+      "mk3Operation": "view.model-skeleton-source"
+    },
+    {
+      "id": "authored.mdx:model-animation-source",
+      "verdict": "identical",
+      "resultDigest": "7ac02830688276881ffba0f7a944f8ff7af044531f1448c925bd3e11b1305731",
+      "mk3Operation": "view.model-animation-source"
+    },
+    {
+      "id": "authored.mdl:view.inspect",
+      "verdict": "identical",
+      "resultDigest": "2c90799c59678398b1686ec7f5402da9008d22df4730f1e8d42f46aa7f696bbc",
+      "mk3Operation": "view.inspect"
+    },
+    {
+      "id": "authored.mdl:model-scene-source",
+      "verdict": "identical",
+      "resultDigest": "1d6890b6468c6a130e35fb15ccced95b28c9eb3cb7955656b426ee67d8d0b502",
+      "mk3Operation": "view.model-scene-source"
+    },
+    {
+      "id": "authored.mdl:model-resource-refs-source",
+      "verdict": "identical",
+      "resultDigest": "57f72cb99b35e92a98602bd30f980de5e3df8c1918a8ed70c2e60ba67c570691",
+      "mk3Operation": "view.model-resource-refs-source"
+    },
+    {
+      "id": "authored.mdl:model-skeleton-source",
+      "verdict": "identical",
+      "resultDigest": "6b41a0d665e5268dfecd2ba809f6be320e91e2887ef32e741f23a144805edfb5",
+      "mk3Operation": "view.model-skeleton-source"
+    },
+    {
+      "id": "authored.mdl:model-animation-source",
+      "verdict": "identical",
+      "resultDigest": "7ac02830688276881ffba0f7a944f8ff7af044531f1448c925bd3e11b1305731",
+      "mk3Operation": "view.model-animation-source"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/war3-mdx/operation/model.read",
+      "kind": "operation",
+      "legacyOperation": "model.read",
+      "adapterOperation": "view.inspect",
+      "targetOperation": "view.inspect",
+      "handlerId": "inspect",
+      "contribution": "modkit-extensions-blizzard/blizzard-warcraft-3/contributions/codec-war3-mdx.json",
+      "executed": true,
+      "caseIds": [
+        "authored.mdx:view.inspect",
+        "authored.mdx:model-scene-source",
+        "authored.mdx:model-resource-refs-source",
+        "authored.mdx:model-skeleton-source",
+        "authored.mdx:model-animation-source",
+        "authored.mdl:view.inspect",
+        "authored.mdl:model-scene-source",
+        "authored.mdl:model-resource-refs-source",
+        "authored.mdl:model-skeleton-source",
+        "authored.mdl:model-animation-source"
+      ]
+    }
+  ]
+}

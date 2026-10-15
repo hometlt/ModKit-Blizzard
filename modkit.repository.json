@@ -1,0 +1,59 @@
+{
+  "$schema": "https://modkit.dev/schemas/modkit.repository.schema.json",
+  "schemaVersion": 1,
+  "subjects": {
+    "vendors": [
+      "subjects/vendors/blizzard.json"
+    ],
+    "games": [
+      "subjects/games/starcraft-2.json",
+      "subjects/games/diablo-3.json",
+      "subjects/games/warcraft-3.json",
+      "subjects/games/starcraft-1.json",
+      "subjects/games/heroes-of-the-storm.json",
+      "subjects/games/world-of-warcraft.json"
+    ]
+  },
+  "extensions": [
+    {
+      "id": "blizzard/common-formats",
+      "path": "blizzard-common-formats"
+    },
+    {
+      "id": "blizzard/diablo",
+      "path": "blizzard-diablo"
+    },
+    {
+      "id": "blizzard/heroes",
+      "path": "blizzard-heroes"
+    },
+    {
+      "id": "blizzard/world-of-warcraft",
+      "path": "blizzard-world-of-warcraft"
+    },
+    {
+      "id": "blizzard/starcraft-1",
+      "path": "blizzard-starcraft-1"
+    },
+    {
+      "id": "blizzard/warcraft-3",
+      "path": "blizzard-warcraft-3"
+    },
+    {
+      "id": "blizzard/casc",
+      "path": "casc"
+    },
+    {
+      "id": "blizzard/models",
+      "path": "models"
+    },
+    {
+      "id": "blizzard/mpq",
+      "path": "mpq"
+    },
+    {
+      "id": "blizzard/starcraft2",
+      "path": "starcraft2"
+    }
+  ]
+}

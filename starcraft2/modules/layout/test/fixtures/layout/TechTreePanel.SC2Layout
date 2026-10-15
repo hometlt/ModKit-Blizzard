@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Desc>
+  <Include path="StandardTemplates.SC2Layout"/>
+  <Frame type="Panel" name="CategoryFrame_Nod">
+    <Frame type="Image" name="NodConstructionYard" template="StandardTemplates/TechItemTemplate">
+      <Anchor side="Left" relative="$parent" pos="Min" offset="20"/>
+      <Anchor side="Top" relative="$parent" pos="Min" offset="20"/>
+    </Frame>
+    <Frame type="Image" name="NodCrane" template="StandardTemplates/TechItemTemplate">
+      <Anchor side="Left" relative="$parent/NodConstructionYard" pos="Max" offset="16"/>
+      <Anchor side="Top" relative="$parent" pos="Min" offset="20"/>
+    </Frame>
+    <Frame type="Image" name="NodEmissaryDeployed" template="StandardTemplates/TechItemTemplate">
+      <Anchor side="Left" relative="$parent/NodCrane" pos="Max" offset="16"/>
+      <Anchor side="Top" relative="$parent" pos="Min" offset="20"/>
+    </Frame>
+    <Frame type="Image" name="NodPowerPlant" template="StandardTemplates/TechItemTemplate">
+      <Anchor side="Left" relative="$parent" pos="Min" offset="20"/>
+      <Anchor side="Top" relative="$parent/NodConstructionYard" pos="Max" offset="16"/>
+    </Frame>
+    <Frame type="Image" name="NodHand" template="StandardTemplates/TechItemTemplate">
+      <Anchor side="Left" relative="$parent/NodConstructionYard" pos="Max" offset="16"/>
+      <Anchor side="Top" relative="$parent/NodConstructionYard" pos="Max" offset="16"/>
+    </Frame>
+    <Frame type="Image" name="NodWarFactory" template="StandardTemplates/TechItemTemplate">
+      <Anchor side="Left" relative="$parent/NodConstructionYard" pos="Max" offset="16"/>
+      <Anchor side="Top" relative="$parent/NodHand" pos="Max" offset="16"/>
+    </Frame>
+    <Frame type="Image" name="LineH1">
+      <Anchor side="Left" relative="$parent/NodConstructionYard/BuildingIconBackgroundImage" pos="Mid"/>
+      <Anchor side="Right" relative="$parent/NodCrane/BuildingIconBackgroundImage" pos="Mid"/>
+      <Anchor side="Top" relative="$parent/NodConstructionYard/BuildingIconBackgroundImage" pos="Mid"/>
+      <Height val="2"/>
+      <Texture val="Assets/Textures/line.dds"/>
+    </Frame>
+    <StateGroup name="Mode">
+      <DefaultState val="Normal"/>
+      <State name="Normal">
+        <Action type="SetProperty" frame="$parent/NodConstructionYard" Alpha="255"/>
+      </State>
+      <State name="Hidden">
+        <Action type="SetProperty" frame="$parent/NodConstructionYard" Visible="false"/>
+      </State>
+    </StateGroup>
+  </Frame>
+</Desc>

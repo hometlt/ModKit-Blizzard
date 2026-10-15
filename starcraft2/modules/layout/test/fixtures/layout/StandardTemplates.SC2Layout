@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Desc>
+  <Constant name="ItemSize" val="64"/>
+  <Frame type="Image" name="TechItemTemplate">
+    <Width val="#ItemSize"/>
+    <Height val="#ItemSize"/>
+    <Frame type="Image" name="BuildingIconBackgroundImage">
+      <Width val="#ItemSize"/>
+      <Height val="#ItemSize"/>
+      <Texture val="Assets/Textures/tech-icon.dds"/>
+    </Frame>
+  </Frame>
+</Desc>

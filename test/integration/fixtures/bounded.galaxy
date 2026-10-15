@@ -1,0 +1,4 @@
+int LiteralAnswer() { return 42; }
+int NestedAnswer() { return LiteralAnswer(); }
+void PureMain() { NestedAnswer(); }
+void NativeMain() { TriggerDebugOutput(1, c_messageAreaSubtitle, StringToText("native"), true); }

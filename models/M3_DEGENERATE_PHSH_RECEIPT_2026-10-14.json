@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-14",
+  "task": "parked/GAME-MINECRAFT/PROMPT_M3_MODEL_FIXES_2026-10-14.md",
+  "sourceCommit": "6cabbffa5b43b2ce453caf357f2b68d395e4756a",
+  "baselineCommit": "1da06b2855c00d7f6d831fe5912e0a73dc011934",
+  "rootCause": {
+    "kind": "native-data",
+    "asset": "Assets/Buildings/Protoss/GatewayEx1/GatewayEx1.m3",
+    "aliases": [
+      "Gateway",
+      "WarpGate"
+    ],
+    "sourceByteLength": 346800,
+    "sourceSha256": "a2448855e85fb6cd27d6f3fb0e085ab68a3379e1cf39c758b05dd4b7697b6e3b",
+    "mdVersion": 34,
+    "phshVersion": 3,
+    "bodyIndex": 7,
+    "shapeIndex": 0,
+    "boneIndex": 0,
+    "boneName": "Scene Root",
+    "type": "Capsule",
+    "dimensions": [
+      2.2729997634887695,
+      0,
+      0
+    ],
+    "sizeOffsets": [
+      92,
+      96,
+      100
+    ],
+    "reference": "references/WhiteoutLib/docs/M3_FILE_FORMAT_SPECIFICATION.md:2412"
+  },
+  "behavior": {
+    "residual": "one bounded reference-free 300-byte PHSH v3 record per degenerate axial shape",
+    "activeCollision": false,
+    "warning": true,
+    "negativeDimensionsRefused": true,
+    "unknownShapesAndMissingMeshTopologyStillRefused": true,
+    "existingDisabledBodyFlagGatePreserved": true,
+    "limits": "Only audited PHSH v3 with empty native references; existing disabled-body shape omission is not changed."
+  },
+  "retailExports": [
+    {
+      "unit": "Gateway",
+      "uvmByteLength": 1078476,
+      "output": "C:/MKTEMP/m3-degenerate-20261014/gateway.uvm"
+    },
+    {
+      "unit": "WarpGate",
+      "uvmByteLength": 1078480,
+      "output": "C:/MKTEMP/m3-degenerate-20261014/warpgate.uvm"
+    }
+  ],
+  "verification": {
+    "focusedTests": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0
+    },
+    "strictProductionNoEmit": "pass",
+    "strictNewTestNoEmit": "pass",
+    "counterfactualNewTestOnBaseline": {
+      "passed": 1,
+      "failed": 3,
+      "skipped": 0,
+      "error": "M3 rigid axial dimensions must be positive"
+    },
+    "existingPhysicsSuitesOnBaseline": {
+      "passed": 19,
+      "failed": 12,
+      "skipped": 0,
+      "error": "unsupported static extension UV_game_collision"
+    },
+    "fullGateGreen": false,
+    "syntheticRoundtrip": "Capsule/Cylinder x radius0/height0/both0; residual-only bodies0/2 and mixed body1; exact300-byte SHA comparison including signed zero and NaN payload; malformed residual/ref/matrix/dimensions/bone/duplicate/length and negative dimensions rejected",
+    "fullRetailNativeRoundtrip": {
+      "state": "blocked",
+      "error": "static authoring requires one material pass",
+      "note": "Exact PHSH record roundtrip is proven synthetically; full Gateway/WarpGate native regeneration is not claimed."
+    }
+  },
+  "gasSequences": [
+    {
+      "unit": "Extractor",
+      "sequenceCount": 11,
+      "exactNamesAndOrder": true,
+      "names": [
+        "Stand D",
+        "Stand B",
+        "Work D",
+        "Work B",
+        "Build A Start",
+        "Build A Stand",
+        "Build B Start",
+        "Build B Stand",
+        "Build C Start",
+        "Build C Stand",
+        "Build D Start"
+      ]
+    },
+    {
+      "unit": "Refinery",
+      "sequenceCount": 14,
+      "exactNamesAndOrder": true,
+      "names": [
+        "Stand D",
+        "Work D",
+        "Work D 01",
+        "Stand B",
+        "Work B",
+        "Work B 01",
+        "GLstand",
+        "Build A Start",
+        "Build A Stand",
+        "Build B Start",
+        "Build B Stand",
+        "Build C Start",
+        "Build C Stand",
+        "Build D Start"
+      ]
+    },
+    {
+      "unit": "Assimilator",
+      "sequenceCount": 5,
+      "exactNamesAndOrder": true,
+      "names": [
+        "Stand D",
+        "Work D",
+        "Stand B",
+        "Work B",
+        "GLstand"
+      ]
+    }
+  ],
+  "sweep": {
+    "route": "ModContext data.ids/data.entities -> locate/read -> public CLI subject.convert and public Host openSubject/operations.invoke(model-export-uvm)",
+    "context": "Mods/VoidMulti.SC2Mod",
+    "catalogIdsComplete": true,
+    "unitCandidates": 176,
+    "races": {
+      "Zerg": 74,
+      "Terran": 58,
+      "Protoss": 44
+    },
+    "actors": 241,
+    "directUnitActorCoverage": 174,
+    "morphReuse": [
+      {
+        "unit": "DefilerMPBurrowed",
+        "model": "DefilerMP",
+        "abilities": [
+          "DefilerMPBurrow",
+          "DefilerMPUnburrow"
+        ]
+      },
+      {
+        "unit": "UltraliskBurrowed",
+        "model": "Ultralisk",
+        "abilities": [
+          "BurrowUltraliskDown",
+          "BurrowUltraliskUp"
+        ]
+      }
+    ],
+    "primaryUnitCoverage": 176,
+    "logicalAssets": 556,
+    "m3": 514,
+    "m3a": 42,
+    "found": 556,
+    "successful": 556,
+    "failed": [],
+    "affected": [
+      {
+        "asset": "Assets\\Buildings\\Protoss\\GatewayEx1\\GatewayEx1.m3",
+        "modelLinks": [
+          "Gateway"
+        ],
+        "uvmBytes": 1078496,
+        "shapes": [
+          {
+            "bodyIndex": 7,
+            "boneIndex": 0,
+            "shapeIndex": 0,
+            "type": "Capsule",
+            "size": [
+              2.2729997634887695,
+              0,
+              0
+            ],
+            "nativeRecordBytes": 300
+          }
+        ],
+        "warnings": [
+          "M3 PHRB 7 PHSH 0 has degenerate capsule dimensions; preserved in native residual without an active collision.",
+          "M3 ATT_ names and bone transforms are preserved. Native forward/up axes were not authored; UVM socket defaults are not claimed as native axes."
+        ]
+      }
+    ],
+    "scopeLimit": "Primary resolved multiplayer units/buildings, bound models/death models/variants/RequiredAnims. Recursive runtime-spawned actor effects and every cosmetic ModelSwap are not asserted complete.",
+    "retries": "Early CLI failures during shared Core rollout and private bundle replacement were retried successfully on a frozen public Host closure."
+  },
+  "artifacts": {
+    "directory": "C:/MKTEMP/m3-degenerate-20261014",
+    "manifestSha256": "9b93997ccce51442dab0d7e0912ea616fe51aad2e35c0b951897d3bb207dd6f6",
+    "cliResultsSha256": "5855a3382d26dc2ff1c3593178b75c38e87451d4cd6f0977c472b4e05962d54f",
+    "hostResultsSha256": "ba495f7023651681da1109efb4ef1f38ebc183d5860db5b90379deb27ed57d1b",
+    "runtimeReceiptSha256": "d97ebb8f7435f9fad19d7da6bd3df517c3c439fbd72f330bc67303e0382dd725"
+  },
+  "delivery": {
+    "liveModelsDistUpdated": false,
+    "status": "Integrator accepted source hash for next pickup; narrow Models build window follows current frozen acceptance.",
+    "privateBuildQualification": "Private Models bundle explicitly resolved current Core source because dist/vendor lacked required exports. It is diagnostic proof, not frozen release acceptance."
+  }
+}

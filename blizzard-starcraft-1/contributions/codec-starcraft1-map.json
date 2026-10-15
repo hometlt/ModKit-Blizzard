@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/starcraft1-map",
+  "displayName": "StarCraft map",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./src/map/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./src/map/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Opens .scm and .scx maps through the host-owned blizzard/mpq container alias and reads staredit\\scenario.chk the way the game does: the last section of a name wins, a section past the end of the file keeps the bytes there, negative sizes jump back. A protected map without a listfile is read by the scenario's exact path.",
+    "Publishes the scenario's terrain tiles (MTXM) as a map layer; a layer write replaces only the written tiles of MTXM and TILE and the host packs the entry back through blizzard/mpq. With the tileset bound (tileset/*.cv5, vx4ex or vx4, vr4, vf4, wpe from the installation behind the map, its workspace dependency layer) it also publishes the walkable and ground-level minitile layers (read-only) and the terrain as the game draws it, a raster of 32 pixels a tile drawn on demand with levels down to one pixel a tile. The world scene, unit and doodad sprites, unit names (from the game's units.dat and stat_txt.tbl) and triggers are later stages.",
+    "Strings are read as UTF-8 when valid, as Remastered does; other strings are decoded with the textEncoding setting (a WHATWG label, default windows-1252) — the map does not record its code page, so it is not guessed."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "starcraft1-map",
+        "label": "StarCraft map"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "namespace",
+    "artifactStages": [
+      "authored"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full"
+    ],
+    "match": {
+      "extensions": [
+        "scm",
+        "scx"
+      ]
+    },
+    "anchorDocuments": [
+      "staredit/scenario.chk"
+    ],
+    "probe": {
+      "kind": "namespace",
+      "markers": [
+        "staredit/scenario.chk"
+      ],
+      "maxEntries": 1,
+      "maxBytes": 65536,
+      "maxDepth": 2,
+      "maxPathBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "archive-namespace",
+        "contract": "common.archive/entry-namespace",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      },
+      {
+        "id": "map-layers",
+        "contract": "common.map/layers",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "fidelityEvidence": [
+      {
+        "formatId": "starcraft1-map",
+        "representationId": "map-layers",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": true,
+          "notes": [
+            "A layer write changes only the written tiles of MTXM and TILE in staredit\\scenario.chk; every other section keeps its bytes and order, the host packs the entry back through blizzard/mpq and commits the map, and the map reopens with the written tiles (blizzard-starcraft-1/test/starcraft1-map.test.ts)."
+          ]
+        },
+        "evidenceId": "starcraft1-map-layer-write-v1",
+        "corpusId": "modkit-extensions-blizzard/blizzard-starcraft-1/test/starcraft1-map.test.ts",
+        "corpusDigest": "none:proof-suite",
+        "conformanceProfile": "modkit/codec-contribution-v1",
+        "optionsFingerprint": "options:none",
+        "inputClass": "starcraft1-scenario-tiles",
+        "provenAt": "2026-09-28T00:00:00Z"
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/raster-image-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "none"
+        ]
+      },
+      {
+        "id": "map.layers",
+        "handlerId": "map-layers",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "map.layer-read",
+        "handlerId": "map-layer-read",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "map.layer-write",
+        "handlerId": "map-layer-write",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "container": {
+      "formatId": "mpq",
+      "assetRoots": [
+        ""
+      ]
+    }
+  }
+}

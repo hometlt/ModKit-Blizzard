@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "kind": "game",
+  "id": "blizzard/starcraft-2",
+  "vendorId": "blizzard",
+  "displayName": "StarCraft II",
+  "description": "StarCraft II Data support covers bounded inspection and editing of maps, mods, GameData, layouts, triggers, Galaxy, banks, localization, models, replays and selected runtime surfaces.",
+  "officialSite": "https://starcraft2.blizzard.com/",
+  "resources": [
+    {
+      "id": "starcraft2-client-api",
+      "label": "StarCraft II Client API",
+      "url": "https://github.com/Blizzard/s2client-api",
+      "kind": "official"
+    },
+    {
+      "id": "starcraft2-mapster",
+      "label": "SC2Mapster modding wiki",
+      "url": "https://sc2mapster.wiki.gg/wiki/Main_Page",
+      "kind": "modding"
+    }
+  ],
+  "extensionRequirements": [
+    { "id": "blizzard/starcraft2", "importance": "required" },
+    { "id": "blizzard/models", "importance": "required" },
+    { "id": "blizzard/casc", "importance": "recommended" },
+    { "id": "blizzard/mpq", "importance": "recommended" }
+  ],
+  "capabilityRequirements": [
+    {
+      "id": "data",
+      "displayName": "Game data",
+      "importance": "required",
+      "contributionIds": [
+        "blizzard/sc2-data",
+        "blizzard/starcraft2-data",
+        "blizzard/starcraft2-resolved-data",
+        "blizzard/sc2-data-knowledge",
+        "blizzard/sc2-data-schema-knowledge",
+        "blizzard/sc2-data-language"
+      ]
+    },
+    {
+      "id": "maps",
+      "displayName": "Maps",
+      "importance": "required",
+      "contributionIds": [
+        "blizzard/sc2-map",
+        "blizzard/sc2-map-directory",
+        "blizzard/starcraft2-map-semantic",
+        "blizzard/starcraft2-map-preview-preparation",
+        "blizzard/starcraft2-native-map-launch"
+      ]
+    },
+    {
+      "id": "mods",
+      "displayName": "Mods and workspaces",
+      "importance": "required",
+      "contributionIds": [
+        "blizzard/sc2-mod",
+        "blizzard/sc2-mod-directory",
+        "blizzard/sc2-authored-text-writers",
+        "blizzard/sc2-workspace-copy-writer"
+      ]
+    },
+    {
+      "id": "models",
+      "displayName": "M3 models",
+      "importance": "required",
+      "contributionIds": ["blizzard/m3", "blizzard/m3-preserving-writer"]
+    },
+    {
+      "id": "languages",
+      "displayName": "Galaxy, triggers and layout languages",
+      "importance": "required",
+      "contributionIds": [
+        "blizzard/galaxy",
+        "blizzard/galaxy-language",
+        "blizzard/sc2-triggers",
+        "blizzard/sc2-triggers-language",
+        "blizzard/sc2-layout-language"
+      ]
+    },
+    {
+      "id": "archives",
+      "displayName": "Installed archives",
+      "importance": "recommended",
+      "contributionIds": ["blizzard/casc", "blizzard/mpq"]
+    },
+    {
+      "id": "localization",
+      "displayName": "Localization",
+      "importance": "required",
+      "contributionIds": ["blizzard/sc2-strings", "blizzard/sc2-authored-text-writers"]
+    },
+    {
+      "id": "runtime",
+      "displayName": "Bounded runtime",
+      "importance": "recommended",
+      "contributionIds": ["blizzard/sc2-runtime", "blizzard/sc2-runtime-provider"]
+    },
+    {
+      "id": "banks",
+      "displayName": "Banks",
+      "importance": "recommended",
+      "contributionIds": ["blizzard/sc2-bank", "blizzard/sc2-bank-list"]
+    },
+    {
+      "id": "replays",
+      "displayName": "Replays",
+      "importance": "recommended",
+      "contributionIds": ["blizzard/sc2-replay"]
+    }
+  ]
+}

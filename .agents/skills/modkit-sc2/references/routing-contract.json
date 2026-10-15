@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "skill": "modkit-sc2",
+  "authority": "modkit-mcp",
+  "readOnly": true,
+  "requiredOrder": [
+    "modkit.open_subject",
+    "modkit.inspect",
+    "modkit.list_subjects",
+    "modkit.select_subject",
+    "modkit.subject_facts",
+    "modkit.subject_calculations",
+    "modkit.close_selected_subject",
+    "modkit.close_subject"
+  ],
+  "conditionalTools": ["modkit.open_selection", "modkit.relation_graph", "modkit.knowledge_resolve"],
+  "forbidden": {
+    "directArchiveParsing": true,
+    "guessedSubjectIds": true,
+    "mutation": true
+  }
+}

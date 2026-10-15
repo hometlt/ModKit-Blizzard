@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "contract": { "id": "modkit/subject-kind-definition", "major": 1 },
+  "id": "blizzard/sc2-catalog-override-kind",
+  "displayName": "StarCraft II catalog override",
+  "spec": { "kindId": "sc2-catalog-override", "label": "StarCraft II catalog override" }
+}

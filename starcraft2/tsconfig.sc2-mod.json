@@ -1,0 +1,44 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "allowJs": true,
+    "checkJs": false,
+    "composite": false, "incremental": true, "tsBuildInfoFile": "../node_modules/.cache/tsbuildinfo/starcraft2-sc2-mod.tsbuildinfo",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@modkit/blizzard-starcraft2/style/language": ["./modules/mod/shared/workspace/diagnostic-providers.d.ts"],
+      "@modkit/blizzard-starcraft2/wizard/language": ["./modules/mod/shared/workspace/diagnostic-providers.d.ts"],
+      "@modkit/blizzard-starcraft2/galaxy/language-core": ["./dist/modules/galaxy/language-core/index.d.ts"],
+      "@modkit/blizzard-starcraft2/galaxy/analysis/language-service.js": [
+        "./dist/modules/galaxy/services/analysis/language-service.d.ts"
+      ],
+      "@modkit/blizzard-starcraft2/layout/runtime": [
+        "./modules/mod/services/resources/src/layout-resource.d.ts"
+      ],
+      "@modkit/blizzard-starcraft2/strings/served-diagnostics": [
+        "./modules/mod/shared/workspace/strings-served-diagnostics.d.ts"
+      ]
+    },
+    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+  },
+  "include": [
+    "modules/mod/codecs/document-metadata/codec.ts",
+    "modules/mod/codecs/document-metadata/dependencies.ts",
+    "modules/mod/codecs/document-metadata/core/**/*.ts",
+    "modules/mod/codecs/mod/src/codec.ts",
+    "modules/mod/codecs/mod/src/portable-json-export.ts",
+    "modules/mod/services/resources/src/mod-card.ts",
+    "modules/mod/services/resources/src/galaxy-symbols.js",
+    "modules/mod/services/resources/src/layout-resource.js",
+    "modules/mod/codecs/document-metadata/facts.ts",
+    "modules/mod/shared/workspace/implicit-dependencies.js",
+    "modules/mod/codecs/directory/src/codec.ts",
+    "modules/mod/shared/**/*.ts"
+  ],
+  "exclude": ["modules/mod/shared/workspace/implicit-dependencies.d.ts"]
+}

@@ -1,0 +1,10 @@
+<StyleFile>
+  <Constant name="ColorAttackInfo" val="ffff8a"/>
+  <Constant name="ColorLinked" val="#ColorAttackInfo"/>
+  <Constant name="FontStandard" val="StandardFontGroup"/>
+  <FontGroup name="StandardFontGroup">
+    <CodepointRange font="UI\Fonts\Base.ttf"/>
+  </FontGroup>
+  <Style name="StandardTemplate" font="#FontStandard" styleflags="Shadow" shadowoffset="2" textcolor="#ColorAttackInfo"/>
+  <Style name="TooltipStyle" template="StandardTemplate" height="18" styleflags="Bold|Italic"/>
+</StyleFile>

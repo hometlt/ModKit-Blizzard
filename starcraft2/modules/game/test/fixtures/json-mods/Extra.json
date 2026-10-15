@@ -1,0 +1,5 @@
+{
+  "manifest": { "format": "modkit-json-mod@1" },
+  "deps": [],
+  "entries": { "Unit": { "ExtraUnit": { "LifeMax": "7" } } }
+}

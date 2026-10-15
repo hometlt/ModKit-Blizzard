@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "codec": "starcraft-grp",
+  "corpusKind": "synthetic",
+  "verdict": "pass",
+  "tests": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "source-feature-audit",
+    "oracle": "the MK2 codec (references/modkitmk2/extensions/blizzard/starcraft-1/codecs/starcraft-grp at 1a14ba4eddd0ae88de273348ebd44cfb98a0581d) is its manifest alone, planned and unsupported; every extension it names against the MK3 carrier that matches it, and the carrier run on a file written for the test",
+    "suite": "modkit-extensions-blizzard/blizzard-starcraft-1/test/k1-sc1-manifest-audits.test.ts",
+    "samples": [
+      {
+        "name": "authored.grp",
+        "builder": "modkit-extensions-blizzard/blizzard-starcraft-1/test/sc1-fixtures.ts#authoredGrp",
+        "sha256": "0e7169904072d3f75768cba78bc52c0dd3dae47052ae8ca667ee5688bc3911aa"
+      },
+      {
+        "name": "mk2 codec.manifest.json",
+        "fixture": "references/modkitmk2/extensions/blizzard/starcraft-1/codecs/starcraft-grp/codec.manifest.json",
+        "sha256LF": "7e81a49685a6e292dde3d9892525f7f98266b48d9ba0a703221fca81cce78c50"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "mk2-source:files",
+      "verdict": "identical",
+      "resultDigest": "a714a2d5317692b8e1d331c1b2bcaac50083de7fa340e6a32bea06a9e51e8bf0",
+      "mk3Operation": "no MK2 source to carry"
+    },
+    {
+      "id": "mk2-manifest:runtimeVariants",
+      "verdict": "identical",
+      "resultDigest": "0910687d65dd0269c754ca4dd17eb69794565ee5a641e27dbcff13303f0f5cd7",
+      "mk3Operation": "no MK2 runtime to carry"
+    },
+    {
+      "id": "mk2-manifest:match.extensions",
+      "verdict": "identical",
+      "resultDigest": "9005997dbd51b8123445eec85fb10200d6474b35347a0027ca43378c9b937d1b",
+      "mk3Operation": "modkit-extensions-blizzard/blizzard-starcraft-1/contributions/codec-starcraft1-grp.json"
+    },
+    {
+      "id": "mk3-carrier:raster-image-source",
+      "verdict": "identical",
+      "resultDigest": "34ef9439e49bd4e3f011c5f54e4ced4c24119d564f27595f5068d0aed6e0891f",
+      "mk3Operation": "blizzard/starcraft1-grp common.view/raster-image-source"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/starcraft-grp/audit",
+      "kind": "audit",
+      "adapterOperation": "source-feature-audit",
+      "targetOperation": "source-feature-audit",
+      "handlerId": "source-feature-audit",
+      "contribution": "modkit-extensions-blizzard/blizzard-starcraft-1/contributions/codec-starcraft1-grp.json",
+      "executed": true,
+      "caseIds": [
+        "mk2-source:files",
+        "mk2-manifest:runtimeVariants",
+        "mk2-manifest:match.extensions",
+        "mk3-carrier:raster-image-source"
+      ]
+    }
+  ]
+}

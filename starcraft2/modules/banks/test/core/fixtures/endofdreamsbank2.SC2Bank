@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Bank version="1">
+	<Section name="Ranks">
+		<Key name="Rank">
+			<Value string="Hero"/>
+		</Key>
+	</Section>
+	<Section name="Stats">
+		<Key name="TotalKills">
+			<Value int="9999999"/>
+		</Key>
+		<Key name="Score">
+			<Value int="9999999"/>
+		</Key>
+		<Key name="EasyWins">
+			<Value int="9999999"/>
+		</Key>
+		<Key name="MediumWins">
+			<Value int="9999999"/>
+		</Key>
+		<Key name="HardWins">
+			<Value int="9999999"/>
+		</Key>
+		<Key name="HellWins">
+			<Value int="9999999"/>
+		</Key>
+	</Section>
+	<Section name="Check">
+		<Key name="Sum">
+			<Value int="31"/>
+		</Key>
+	</Section>
+	<Signature value="B786E6B04930A2B9D6789019D9D7DAD476A3A9DB"/>
+</Bank>

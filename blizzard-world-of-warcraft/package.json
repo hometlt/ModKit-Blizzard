@@ -1,0 +1,51 @@
+{
+  "name": "@modkit/blizzard-world-of-warcraft",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "description": "World of Warcraft for Modkit.",
+  "files": [
+    "contributions",
+    "dist",
+    "providers",
+    "src",
+    "NOTICE.md",
+    "README.md"
+  ],
+  "modkit": {
+    "schemaVersion": 1,
+    "publisher": "blizzard",
+    "id": "world-of-warcraft",
+    "presentation": {
+      "displayName": "Blizzard World of Warcraft",
+      "description": "World of Warcraft for Modkit.",
+      "vendor": {
+        "id": "blizzard",
+        "displayName": "Blizzard"
+      },
+      "games": [
+        {
+          "id": "blizzard/world-of-warcraft",
+          "displayName": "World of Warcraft"
+        }
+      ]
+    },
+    "contributionManifests": [
+      "./providers/*/provider.json",
+      "./contributions/*.json"
+    ],
+    "contentSources": "./dist/game/content-sources.js"
+  },
+  "dependencies": {
+    "@modkit/blizzard-casc": "workspace:*",
+    "@modkit/codec-kit": "file:../vendor/modkit-codec-kit-1.0.0.tgz",
+    "@modkit/sdk": "file:../vendor/modkit-sdk-0.1.0.tgz",
+    "@modkit/uv": "file:../vendor/modkit-uv-1.0.0.tgz",
+    "@modkit/vfs": "file:../vendor/modkit-vfs-0.1.0.tgz"
+  },
+  "scripts": {
+    "build": "tsc -b ./tsconfig.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  }
+}

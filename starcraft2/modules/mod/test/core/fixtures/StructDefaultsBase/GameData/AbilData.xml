@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <SCost>
+        <Charge Link="Abil/##id##"/>
+        <Cooldown Link="Abil/##id##"/>
+    </SCost>
+    <CAbilEffectInstant id="Blink">
+        <Cost>
+            <Vital index="Energy" value="50"/>
+            <Cooldown TimeUse="10"/>
+        </Cost>
+    </CAbilEffectInstant>
+</Catalog>

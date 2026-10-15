@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+  <CWeapon id="GaussRifle">
+    <Range value="5"/>
+    <Period value="0.8608"/>
+  </CWeapon>
+</Catalog>

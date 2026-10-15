@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "codec": "diablo3-app",
+  "corpusKind": "mixed",
+  "verdict": "pass",
+  "tests": {
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "source-feature-audit",
+    "oracle": "every export of the MK2 source (references/modkitmk2/extensions/blizzard/diablo/codecs/diablo3-app at 1a14ba4eddd0ae88de273348ebd44cfb98a0581d) and its manifest, run on the installed game (and synthetic blocks where the game has no oracle) against the MK3 module that carries it",
+    "suite": "modkit-extensions-blizzard/blizzard-diablo/test/diablo3-receipts-corpus.test.ts",
+    "corpus": {
+      "game": "blizzard/diablo-3",
+      "version": "2.8.0.99920",
+      "discovery": "common.game/installation-discovery (blizzard/diablo3-installation)",
+      "container": "blizzard/casc",
+      "listed": {
+        "appearances": 11347,
+        "textures": 33431
+      }
+    },
+    "samples": [
+      {
+        "name": "mk2 codec.manifest.json",
+        "fixture": "references/modkitmk2/extensions/blizzard/diablo/codecs/diablo3-app/codec.manifest.json",
+        "sha256LF": "3d0dbf1597450b7b2b2dfd12d7b89ea0b1d283ca967d4b9d1c50d12c4bd54f26"
+      },
+      {
+        "name": "mk2 src/detect.ts",
+        "fixture": "references/modkitmk2/extensions/blizzard/diablo/codecs/diablo3-app/src/detect.ts",
+        "sha256LF": "af01f35799da102dc28185e83e2d4584ba981f1dfb0da5476b6ff89a17b5f83a"
+      },
+      {
+        "name": "mk2 src/index.ts",
+        "fixture": "references/modkitmk2/extensions/blizzard/diablo/codecs/diablo3-app/src/index.ts",
+        "sha256LF": "285ee2ef54a9fd6f96b3f1dda375b17fc6d3722e377180db2fea53a6701cc502"
+      },
+      {
+        "name": "appearance/breakable_painting_c.app",
+        "sha256": "42b8cb18291382be5f5df6ca69295d8cbd1711fe9ead55e169b353fb4d1a8c98"
+      },
+      {
+        "name": "actor/1000monster_spawner_shadowvermin_b.acr",
+        "sha256": "97d64a7fdd88e412b0a90cea1f01a5d661faa2c0137dd51f2291b005b4b6784f"
+      },
+      {
+        "name": "appearance/15405.app",
+        "sha256": "f1ae4ccc8dd71d4c805a432f3e4f86b992f41ce2e72ff7df29c2b17172bb03b7"
+      },
+      {
+        "name": "actor/a1dun_leor_iron_maiden_aventure.acr",
+        "sha256": "fdaafc298e294f607b40ce72acaa2ff724883ae87ad4c7748e093093fba78e62"
+      },
+      {
+        "name": "animset/97029.ans",
+        "sha256": "dc4dd33b3a8ad5da7cc8cef1a98c0053a9ecc14d7d116ad5c3958b802c21b559"
+      },
+      {
+        "name": "anim/97025.ani",
+        "sha256": "127d84a1a62b840465e63a4162f6b892cec7957924b33f161688d7a70ae127b9"
+      },
+      {
+        "name": "anim/97026.ani",
+        "sha256": "0d1c08a63bca62d2af5fe414d051a87611b964392afbadbe4fb91597f2921327"
+      },
+      {
+        "name": "anim/97027.ani",
+        "sha256": "fca226a34ba168a0f120fda3ef26bcd7d973cded17a42e6c8012b8dbf6130333"
+      },
+      {
+        "name": "appearance/97022.app",
+        "sha256": "2b36b794231eca9e8513a1bfbdcf068b6c499cec7cb528dcd8f39e489935a528"
+      }
+    ]
+  },
+  "oracleVerification": {
+    "verified": true,
+    "modules": [
+      "cross-file SNO links of the installed game (actor -> appearance, animation set -> animations)",
+      "MK2 codec.manifest.json"
+    ],
+    "operation": "source-feature-audit"
+  },
+  "cases": [
+    {
+      "id": "mk2-source:src/detect.ts#detectHeader",
+      "verdict": "identical",
+      "resultDigest": "72422c7520365c10505ce2e298d8ddae62e7678027922329b504125a71d118b4",
+      "mk3Operation": "src/diablo3-app/codec.ts detect (host routing)"
+    },
+    {
+      "id": "mk2-source:src/index.ts#isDiablo3Appearance+parseDiablo3Appearance",
+      "verdict": "identical",
+      "resultDigest": "3e0726765928ac0ca2f3fcd110e1131c598bf99d795692f3b07280ddcb35f298",
+      "mk3Operation": "src/diablo3-app/appearance.ts via view.inspect"
+    },
+    {
+      "id": "mk2-source:src/index.ts#isDiablo3Actor+parseDiablo3ActorLinks",
+      "verdict": "identical",
+      "resultDigest": "96c3ef59b29c086a16d6662db03bc04e80e81278ce6f096f5f157f9123879f4f",
+      "mk3Operation": "src/diablo3-app/appearance.ts (host companion route)"
+    },
+    {
+      "id": "mk2-source:src/index.ts#isDiablo3AnimSet+parseDiablo3AnimSet",
+      "verdict": "identical",
+      "resultDigest": "46b2ee2538fa56c201bee15c6a9092799a0d075e574713525c422c697abd2376",
+      "mk3Operation": "src/diablo3-app/appearance.ts (host companion route)"
+    },
+    {
+      "id": "mk2-source:src/index.ts#isDiablo3Animation+parseDiablo3Animation",
+      "verdict": "identical",
+      "resultDigest": "e0e62f8b945fb2e0586e847e946d4b954d732c46755b0670bb141c4224ab2e21",
+      "mk3Operation": "src/diablo3-app/appearance.ts (host companion route)"
+    },
+    {
+      "id": "mk2-source:src/index.ts#attachDiablo3Animations",
+      "verdict": "identical",
+      "resultDigest": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "mk3Operation": "src/diablo3-app/codec.ts attachDiablo3Animations (host companion route)"
+    },
+    {
+      "id": "mk2-source:src/index.ts#diablo3AniSidecarPatterns",
+      "verdict": "identical",
+      "resultDigest": "412293e5892b0f8c7c5a60a72a5676f34ca27a1beec414ececb5402ff08ad410",
+      "mk3Operation": "model.companions"
+    },
+    {
+      "id": "mk2-source:src/index.ts#diablo3AppearanceModelCodec",
+      "verdict": "identical",
+      "resultDigest": "3982f0e64e511338cebcbaa2000a97aa5a4341c6d6f870903640b6fd4cf8d11b",
+      "mk3Operation": "codec contribution blizzard/diablo3-app"
+    },
+    {
+      "id": "mk2-manifest:match.extensions",
+      "verdict": "identical",
+      "resultDigest": "542ebf5dab54c0b9c7c511011183efe728b33a73518bed8f36636e3bcffd5f36",
+      "mk3Operation": "spec.match.extensions"
+    },
+    {
+      "id": "mk2-manifest:operations",
+      "verdict": "identical",
+      "resultDigest": "daf112d8f5319ac8dc383de89c384b849a0fe8b0e3898f74bdc5d1f0fda21e91",
+      "mk3Operation": "model.export-uvm (model.read); model.render of the core UVM codec (model.render)"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/diablo3-app/audit",
+      "kind": "audit",
+      "adapterOperation": "source-feature-audit",
+      "targetOperation": "source-feature-audit",
+      "handlerId": "source-feature-audit",
+      "contribution": "modkit-extensions-blizzard/blizzard-diablo/contributions/codec-diablo3-app.json",
+      "executed": true,
+      "caseIds": [
+        "mk2-source:src/detect.ts#detectHeader",
+        "mk2-source:src/index.ts#isDiablo3Appearance+parseDiablo3Appearance",
+        "mk2-source:src/index.ts#isDiablo3Actor+parseDiablo3ActorLinks",
+        "mk2-source:src/index.ts#isDiablo3AnimSet+parseDiablo3AnimSet",
+        "mk2-source:src/index.ts#isDiablo3Animation+parseDiablo3Animation",
+        "mk2-source:src/index.ts#attachDiablo3Animations",
+        "mk2-source:src/index.ts#diablo3AniSidecarPatterns",
+        "mk2-source:src/index.ts#diablo3AppearanceModelCodec",
+        "mk2-manifest:match.extensions",
+        "mk2-manifest:operations"
+      ]
+    }
+  ]
+}

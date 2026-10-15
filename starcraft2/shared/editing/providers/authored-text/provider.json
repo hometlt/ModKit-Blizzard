@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-authored-text-writers",
+  "displayName": "StarCraft II authored text writers",
+  "runtimeVariants": [
+    {
+      "variantId": "portable",
+      "entrypoint": "./shared/editing/providers/authored-text/runtime.js",
+      "target": {
+        "environments": ["browser-worker", "node-worker"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "lifecycleScope": "session",
+    "provides": [
+      {
+        "offerId": "galaxy-source",
+        "contract": "common.edit/writer",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "providerId": "blizzard/sc2-authored-text-writers",
+          "fidelityEvidenceId": "sc2-galaxy-writer-v1",
+          "formatId": "galaxy",
+          "representationId": "source",
+          "mutationMode": "mutate",
+          "minimumRoundTrip": "byte-identical"
+        }
+      },
+      {
+        "offerId": "sc2-strings-source",
+        "contract": "common.edit/writer",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "providerId": "blizzard/sc2-authored-text-writers",
+          "fidelityEvidenceId": "sc2-strings-writer-v1",
+          "formatId": "sc2-strings",
+          "representationId": "source",
+          "mutationMode": "mutate",
+          "minimumRoundTrip": "byte-identical"
+        }
+      },
+      {
+        "offerId": "sc2-layout-source",
+        "contract": "common.edit/writer",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "providerId": "blizzard/sc2-authored-text-writers",
+          "fidelityEvidenceId": "sc2-layout-writer-v1",
+          "formatId": "sc2-layout",
+          "representationId": "source",
+          "mutationMode": "mutate",
+          "minimumRoundTrip": "byte-identical"
+        }
+      },
+      {
+        "offerId": "sc2-data-source",
+        "contract": "common.edit/writer",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "providerId": "blizzard/sc2-authored-text-writers",
+          "fidelityEvidenceId": "sc2-data-writer-v1",
+          "formatId": "sc2-data",
+          "representationId": "source",
+          "mutationMode": "mutate",
+          "minimumRoundTrip": "byte-identical"
+        }
+      },
+      {
+        "offerId": "sc2-triggers-source",
+        "contract": "common.edit/writer",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "providerId": "blizzard/sc2-authored-text-writers",
+          "fidelityEvidenceId": "sc2-triggers-writer-v1",
+          "formatId": "sc2-triggers",
+          "representationId": "source",
+          "mutationMode": "mutate",
+          "minimumRoundTrip": "byte-identical"
+        }
+      },
+      {
+        "offerId": "sc2-bank-unsigned-source",
+        "contract": "common.edit/writer",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "providerId": "blizzard/sc2-authored-text-writers",
+          "fidelityEvidenceId": "sc2-bank-unsigned-writer-v1",
+          "formatId": "sc2-bank",
+          "representationId": "source",
+          "mutationMode": "mutate",
+          "minimumRoundTrip": "byte-identical"
+        }
+      }
+    ]
+  }
+}

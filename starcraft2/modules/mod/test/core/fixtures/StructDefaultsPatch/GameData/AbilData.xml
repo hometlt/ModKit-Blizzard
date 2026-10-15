@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CAbilEffectInstant id="BlinkElite" parent="Blink">
+        <Cost>
+            <Cooldown TimeUse="5"/>
+        </Cost>
+    </CAbilEffectInstant>
+    <CAbilEffectInstant id="Recall"/>
+</Catalog>

@@ -1,0 +1,27 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "allowJs": true,
+    "checkJs": false,
+    "composite": false, "incremental": true, "tsBuildInfoFile": "../node_modules/.cache/tsbuildinfo/starcraft2-sc2-banks.tsbuildinfo",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "verbatimModuleSyntax": false,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
+    "noFallthroughCasesInSwitch": false,
+    "isolatedModules": false
+  },
+  "files": [
+    "modules/banks/codecs/bank/src/codec.ts",
+    "modules/banks/codecs/bank/src/core.ts",
+    "modules/banks/codecs/bank/src/node.ts",
+    "modules/banks/providers/language/src/language.ts",
+    "modules/banks/providers/language/src/bank-list-language.ts",
+    "modules/banks/shared/inspection.js"
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "codec": "diablo3-app",
+  "corpusKind": "real",
+  "verdict": "pass",
+  "tests": {
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "model.export-uvm",
+    "oracle": "the exported UVM, read back by the shared UVM readers, carries exactly the vertices the appearance inspection counted, and one animation with channels for every clip the inspection counted (the actor → AnimSet → Anim link)",
+    "suite": "modkit-extensions-blizzard/blizzard-diablo/test/diablo3-receipts-corpus.test.ts",
+    "corpus": {
+      "game": "blizzard/diablo-3",
+      "version": "2.8.0.99920",
+      "discovery": "common.game/installation-discovery (blizzard/diablo3-installation)",
+      "container": "blizzard/casc",
+      "listed": {
+        "appearances": 11347,
+        "textures": 33431
+      }
+    },
+    "samples": [
+      {
+        "name": "appearance/a2dun_zolt_tesla_tower.app",
+        "sha256": "1089fea97d10aab07d3fab5368501657da50762b2dc21dd2f2c7f66c50525a51"
+      },
+      {
+        "name": "appearance/barbarian_male.app",
+        "sha256": "858970ceb3ef481f0d9dcdac805c470635697ed0f59253e430a2f75f78293173"
+      },
+      {
+        "name": "appearance/breakable_painting_c.app",
+        "sha256": "42b8cb18291382be5f5df6ca69295d8cbd1711fe9ead55e169b353fb4d1a8c98"
+      },
+      {
+        "name": "appearance/1000monsterfight_e01_s02.app",
+        "sha256": "3944b4c29373d6e651d54cfc288e107b973915d1e9b9fb3f2871456be3a539b3"
+      },
+      {
+        "name": "appearance/a3dun_rmpt_sw_03_destruction_a_debris_b.app",
+        "sha256": "2694e905f79991140b2d4e11bc8d2de8b63aca746165d58ca385985a8b14e372"
+      },
+      {
+        "name": "appearance/crafting_mystic_lvl_01_wipe.app",
+        "sha256": "6813a7ac7a79215baffc7409893a5b226d9f6f5ac2e6dfbf9c58eb96a53def3f"
+      },
+      {
+        "name": "appearance/npc_witchdoctor_male.app",
+        "sha256": "2d7cd0f5a9995e0debe714702eaa21ad5657138561a298922f4e47e4ddaabf66"
+      },
+      {
+        "name": "appearance/p6_necro_revive_ghost.app",
+        "sha256": "01680902beb1cea02f7477f8a4e499aa2284239f82b406c8f8ecafba6ef4f178"
+      },
+      {
+        "name": "appearance/spear_norm_base_flippy_02.app",
+        "sha256": "bb8c088c0ec7e2ef229717d9642c5fb8a573ce0c0d484f068bd9c0dcaad2c045"
+      },
+      {
+        "name": "appearance/wizardhat_wizm_norm_base_02.app",
+        "sha256": "934c70dd4ab3af0bbbafe1b119747b9cee1b94f23dc212891eb82a0a4b8755a2"
+      },
+      {
+        "name": "appearance/x1_pand_ext_120_nsw_cellar_entrance_01.app",
+        "sha256": "78b52e1a92430ae5341fc05b383338102c799b4c94f661cb55b7a2714f2ebfd0"
+      }
+    ]
+  },
+  "oracleVerification": {
+    "verified": true,
+    "modules": [
+      "@modkit/uv/model/container",
+      "@modkit/scene/uvm/model",
+      "@modkit/scene/model"
+    ],
+    "operation": "model.export-uvm"
+  },
+  "cases": [
+    {
+      "id": "real:appearance/a2dun_zolt_tesla_tower.app:model.export-uvm",
+      "verdict": "identical",
+      "resultDigest": "b198a0536d0be84e57f6d513c4ed905e6e4adde7a37b823c3f5f60fea602981f",
+      "mk3Operation": "model.export-uvm"
+    },
+    {
+      "id": "real:appearance/barbarian_male.app:model.export-uvm",
+      "verdict": "identical",
+      "resultDigest": "bb462239a492651f69fdf7c28aeb88418c4658a298e33d7734d1505808f312a0",
+      "mk3Operation": "model.export-uvm"
+    },
+    {
+      "id": "real:appearance/breakable_painting_c.app:model.export-uvm",
+      "verdict": "identical",
+      "resultDigest": "b53ca402ac93ca0fe2b1dc0e456066e53dbd60526874d7a86260a81e32b1ef0b",
+      "mk3Operation": "model.export-uvm"
+    },
+    {
+      "id": "real:appearance/1000monsterfight_e01_s02.app:model.export-uvm",
+      "verdict": "identical",
+      "resultDigest": "2394e473da84298f0294e8a0a483cd1e22a51babba0b261928278e0f36bd9e5f",
+      "mk3Operation": "model.export-uvm"
+    },
+    {
+      "id": "real:appearance/a3dun_rmpt_sw_03_destruction_a_debris_b.app:model.export-uvm",
+      "verdict": "identical",
+      "resultDigest": "fce68a4e6240f147e09d50bf8ee751799ed9ca38d2e73849689d24c6859e882f",
+      "mk3Operation": "model.export-uvm"
+    },
+    {
+      "id": "real:appearance/crafting_mystic_lvl_01_wipe.app:model.export-uvm",
+      "verdict": "identical",
+      "resultDigest": "9eb0995a42bc4d590f367e43c8c3692d4992efde23f37957f5d686ee093d2611",
+      "mk3Operation": "model.export-uvm"
+    },
+    {
+      "id": "real:appearance/npc_witchdoctor_male.app:model.export-uvm",
+      "verdict": "identical",
+      "resultDigest": "7a2949911f2eedefc8657206e3fea154dbd5cf94942729c9bae9592ee624d948",
+      "mk3Operation": "model.export-uvm"
+    },
+    {
+      "id": "real:appearance/p6_necro_revive_ghost.app:model.export-uvm",
+      "verdict": "identical",
+      "resultDigest": "c338e83da3e0494073caeb9469528c5e40974a878d752909e2dd000c751b6efa",
+      "mk3Operation": "model.export-uvm"
+    },
+    {
+      "id": "real:appearance/spear_norm_base_flippy_02.app:model.export-uvm",
+      "verdict": "identical",
+      "resultDigest": "005a044ef55a11ee75044ba0f8608d0b977221fc7a29be762b2c5d8fa01d5d9f",
+      "mk3Operation": "model.export-uvm"
+    },
+    {
+      "id": "real:appearance/wizardhat_wizm_norm_base_02.app:model.export-uvm",
+      "verdict": "identical",
+      "resultDigest": "9b22dff8f5f6df1a9bd994139da778b8eee07e290ac063f85f30d36893be0ef7",
+      "mk3Operation": "model.export-uvm"
+    },
+    {
+      "id": "real:appearance/x1_pand_ext_120_nsw_cellar_entrance_01.app:model.export-uvm",
+      "verdict": "identical",
+      "resultDigest": "e7a8fd8f725c200eb18d44e7311faaee6428091d7486eb398aa8e51da56cd05c",
+      "mk3Operation": "model.export-uvm"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/diablo3-app/operation/model.read",
+      "kind": "operation",
+      "legacyOperation": "model.read",
+      "adapterOperation": "model.export-uvm",
+      "targetOperation": "model.export-uvm",
+      "handlerId": "model-export-uvm",
+      "contribution": "modkit-extensions-blizzard/blizzard-diablo/contributions/codec-diablo3-app.json",
+      "executed": true,
+      "caseIds": [
+        "real:appearance/a2dun_zolt_tesla_tower.app:model.export-uvm",
+        "real:appearance/barbarian_male.app:model.export-uvm",
+        "real:appearance/breakable_painting_c.app:model.export-uvm",
+        "real:appearance/1000monsterfight_e01_s02.app:model.export-uvm",
+        "real:appearance/a3dun_rmpt_sw_03_destruction_a_debris_b.app:model.export-uvm",
+        "real:appearance/crafting_mystic_lvl_01_wipe.app:model.export-uvm",
+        "real:appearance/npc_witchdoctor_male.app:model.export-uvm",
+        "real:appearance/p6_necro_revive_ghost.app:model.export-uvm",
+        "real:appearance/spear_norm_base_flippy_02.app:model.export-uvm",
+        "real:appearance/wizardhat_wizm_norm_base_02.app:model.export-uvm",
+        "real:appearance/x1_pand_ext_120_nsw_cellar_entrance_01.app:model.export-uvm"
+      ]
+    }
+  ]
+}

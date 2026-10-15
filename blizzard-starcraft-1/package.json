@@ -1,0 +1,51 @@
+{
+  "name": "@modkit/blizzard-starcraft-1",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "description": "StarCraft and StarCraft: Remastered for Modkit.",
+  "files": [
+    "contributions",
+    "dist",
+    "providers",
+    "src",
+    "README.md"
+  ],
+  "modkit": {
+    "schemaVersion": 1,
+    "publisher": "blizzard",
+    "id": "starcraft-1",
+    "presentation": {
+      "displayName": "Blizzard StarCraft",
+      "description": "StarCraft and StarCraft: Remastered for Modkit.",
+      "vendor": {
+        "id": "blizzard",
+        "displayName": "Blizzard"
+      },
+      "games": [
+        {
+          "id": "blizzard/starcraft-1",
+          "displayName": "StarCraft"
+        }
+      ]
+    },
+    "contributionManifests": [
+      "./contributions/*.json",
+      "./providers/*/provider.json"
+    ],
+    "contentSources": "./dist/game/content-sources.js"
+  },
+  "dependencies": {
+    "@modkit/blizzard-casc": "workspace:*",
+    "@modkit/blizzard-mpq": "workspace:*",
+    "@modkit/codec-kit": "file:../vendor/modkit-codec-kit-1.0.0.tgz",
+    "@modkit/sdk": "file:../vendor/modkit-sdk-0.1.0.tgz",
+    "@modkit/uv": "file:../vendor/modkit-uv-1.0.0.tgz",
+    "@modkit/vfs": "file:../vendor/modkit-vfs-0.1.0.tgz"
+  },
+  "scripts": {
+    "build": "tsc -b ./tsconfig.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  }
+}

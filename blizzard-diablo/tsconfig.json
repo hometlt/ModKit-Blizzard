@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "../node_modules/.cache/blizzard-diablo/tsconfig.tsbuildinfo"
+  },
+  "include": [
+    "src/diablo3-app/**/*.ts",
+    "src/diablo3-sno/**/*.ts",
+    "src/diablo3-stl/**/*.ts",
+    "src/diablo3-tex/**/*.ts",
+    "src/game/**/*.ts"
+  ]
+}

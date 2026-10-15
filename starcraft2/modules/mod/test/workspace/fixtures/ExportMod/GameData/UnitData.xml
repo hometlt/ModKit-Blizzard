@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CUnit id="" parent="">
+        <LifeMax value="100"/>
+        <ShieldsMax value="0"/>
+    </CUnit>
+    <CUnit id="Trooper">
+        <LifeMax value="45"/>
+        <Attributes index="Light" value="1"/>
+        <Attributes index="Biological" value="1"/>
+        <WeaponArray index="0" Link="TrooperRifle"/>
+    </CUnit>
+    <CUnitHero id="Hero" parent="Trooper">
+        <LifeMax value="200"/>
+        <WeaponArray index="0" Link="HeroRifle"/>
+    </CUnitHero>
+</Catalog>

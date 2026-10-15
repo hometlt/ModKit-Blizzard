@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wizardfile>
+    <wizard id="MKTest_UppercaseRoot">
+        <name>MK T5a uppercase WizardFile root Import</name>
+        <category>Modkit Tests/T5 roots</category>
+        <objecttypes create="Unit"/>
+        <instructions page="1">
+            T5a. If you can read this, a WizardFile root (capital W and F) is accepted.
+        </instructions>
+        <input id="Info" type="WizardText">
+            <name>Status</name>
+            <default value="uppercase root loaded"/>
+            <layout/>
+        </input>
+    </wizard>
+    <wizard id="MKTest_StandaloneRoot">
+        <name>MK T5b standalone wizard root Import</name>
+        <category>Modkit Tests/T5 roots</category>
+        <objecttypes create="Unit"/>
+        <instructions page="1">
+            T5b. If you can read this, a standalone wizard root (no wizardfile) is accepted.
+        </instructions>
+        <input id="Info" type="WizardText">
+            <name>Status</name>
+            <default value="standalone root loaded"/>
+            <layout/>
+        </input>
+    </wizard>
+    <wizard id="MKTest_Control">
+        <name>MK T0 Control Import</name>
+        <description>If this wizard is listed, the external wizard folder is loaded.</description>
+        <category>Modkit Tests</category>
+        <objecttypes create="Unit" load="Unit"/>
+        <instructions page="1">
+            T0 control. Nothing to check here beyond the fact that this dialog opened.
+        </instructions>
+        <input id="Info" type="WizardText">
+            <name>Status</name>
+            <default value="The wizard folder is loaded."/>
+            <layout/>
+        </input>
+    </wizard>
+    <wizard id="MKTest_ObjectTypes_Abil">
+        <name>MK T1a objecttypes Abil Import</name>
+        <category>Modkit Tests/T1 objecttypes</category>
+        <objecttypes create="Abil" load="Abil" view="Abil"/>
+        <instructions page="1">
+            T1a. Select any ability in the Data Editor and open Wizards &gt; Load In Wizard.
+            Record whether this wizard (Abil) is offered, and whether it shows in Wizard View.
+        </instructions>
+        <input id="Loaded" type="WizardText">
+            <name>Loaded ability</name>
+            <default value="(not loaded)"/>
+            <loadvalue>^LOADID^</loadvalue>
+            <layout/>
+        </input>
+    </wizard>
+    <wizard id="MKTest_ObjectTypes_Ability">
+        <name>MK T1b objecttypes Ability Import</name>
+        <category>Modkit Tests/T1 objecttypes</category>
+        <objecttypes/>
+        <instructions page="1">
+            T1b. Same as T1a with the spelling Ability.
+            Record whether this wizard is offered for a selected ability.
+        </instructions>
+        <input id="Loaded" type="WizardText">
+            <name>Loaded ability</name>
+            <default value="(not loaded)"/>
+            <loadvalue>^LOADID^</loadvalue>
+            <layout/>
+        </input>
+    </wizard>
+    <wizard id="MKTest_InputCount">
+        <name>MK T2 count inside input Import</name>
+        <category>Modkit Tests</category>
+        <objecttypes create="Unit"/>
+        <instructions page="1">
+            T2. Run Wizard. Record how many &quot;Repeated&quot; rows appear (1 = count ignored, 3 = repeated),
+            and what ^ITEMINDEX^ shows in them. The menu below uses the documented item count as a control:
+            it should list Option 0, Option 1, Option 2.
+        </instructions>
+        <input id="Repeated" type="WizardText">
+            <name>Repeated</name>
+            <default value="Row ^ITEMINDEX^"/>
+            <layout/>
+        </input>
+        <input id="ControlMenu" type="WizardMenu">
+            <item value="o^ITEMINDEX^" text="Option ^ITEMINDEX^" count="3"/>
+            <name>Control menu</name>
+            <default value="o0"/>
+            <layout/>
+        </input>
+    </wizard>
+    <wizard id="MKTest_EmbeddedPart">
+        <name>MK T3 embedded part Import</name>
+        <category>Modkit Tests/T3 separator</category>
+        <hidden/>
+        <objecttypes/>
+        <input id="Flag" type="WizardCheckbox">
+            <name>Flag (tick me)</name>
+            <default value="0"/>
+            <layout/>
+        </input>
+    </wizard>
+    <wizard id="MKTest_EmbeddedSeparator">
+        <name>MK T3 embedded separator Import 01</name>
+        <category>Modkit Tests/T3 separator</category>
+        <objecttypes create="Unit"/>
+        <instructions page="1">
+            T3. Run Wizard, tick &quot;Flag&quot; inside the embedded part. Record which labels become visible:
+            &quot;colon&quot; (Sub:Flag), &quot;semicolon&quot; (Sub;Flag), and what the token line shows before and after.
+            Also note whether the Manage Wizards dialog lists MK T3 embedded part (it is hidden).
+        </instructions>
+        <input id="Sub" type="Wizard:MKTest_EmbeddedPart">
+            <name>Embedded part</name>
+            <layout/>
+        </input>
+        <input id="ViaColon" type="WizardText">
+            <name>colon</name>
+            <default value="visible through Sub:Flag"/>
+            <layout/>
+            <condition input="Sub:Flag" value="1"/>
+        </input>
+        <input id="ViaSemicolon" type="WizardText">
+            <name>semicolon</name>
+            <default value="visible through Sub;Flag"/>
+            <layout/>
+            <condition input="Sub;Flag" value="1"/>
+        </input>
+        <input id="TokenLine" type="WizardText">
+            <name>token</name>
+            <default value="Sub:Flag = ^Sub:Flag^, MKTest_EmbeddedPart:Flag = ^MKTest_EmbeddedPart:Flag^"/>
+            <loadvalue>Sub:Flag = ^Sub:Flag^, MKTest_EmbeddedPart:Flag = ^MKTest_EmbeddedPart:Flag^</loadvalue>
+            <layout/>
+            <reloadfrom>Sub</reloadfrom>
+        </input>
+    </wizard>
+    <wizard id="MKTest_LoadedEntryLegacy">
+        <name>MK T4a loaded entry without type and id Import</name>
+        <category>Modkit Tests/T4 loaded entry</category>
+        <objecttypes load="Effect"/>
+        <instructions page="1">
+            T4a. TEST COPY ONLY. Select any effect, Wizards &gt; Load In Wizard &gt; this wizard.
+            Record: errors in the dialog error list; how the untyped validate is shown (error, confirm or
+            warning) and whether Finish is blocked while Suffix is empty; after choosing a suffix and
+            Finish, whether the effect&apos;s Editor Suffix changed.
+        </instructions>
+        <input id="Loaded" type="WizardText">
+            <name>Loaded effect</name>
+            <loadvalue>^LOADID^</loadvalue>
+            <layout/>
+        </input>
+        <input id="Suffix" type="WizardMenu">
+            <item text="(empty)"/>
+            <item value="MKTestA" text="MKTestA"/>
+            <name>Suffix</name>
+            <layout/>
+        </input>
+        <validate>
+            <condition input="Suffix" empty="0"/>
+            <text>T4a: untyped validate — Suffix is empty</text>
+        </validate>
+        <entry catalog="Effect">
+            <useloaded/>
+            <field id="EditorSuffix">
+                <value>^Suffix^</value>
+            </field>
+        </entry>
+    </wizard>
+    <wizard id="MKTest_LoadedEntryControl">
+        <name>MK T4b loaded entry control Import</name>
+        <category>Modkit Tests/T4 loaded entry</category>
+        <objecttypes load="Effect"/>
+        <instructions page="1">
+            T4b. TEST COPY ONLY. Documented form of T4a (type from the loaded entry is not expressible,
+            so this uses CEffectDamage: load a Damage effect). Compare the error list and the result with T4a.
+        </instructions>
+        <input id="Loaded" type="WizardText">
+            <name>Loaded effect</name>
+            <loadvalue>^LOADID^</loadvalue>
+            <layout/>
+        </input>
+        <input id="Suffix" type="WizardMenu">
+            <item text="(empty)"/>
+            <item value="MKTestB" text="MKTestB"/>
+            <name>Suffix</name>
+            <layout/>
+        </input>
+        <validate type="error">
+            <condition input="Suffix" empty="0"/>
+            <text>T4b: typed validate (error) — Suffix is empty</text>
+        </validate>
+        <entry catalog="Effect" type="CEffectDamage">
+            <id>^LOADID^</id>
+            <useloaded/>
+            <field id="EditorSuffix">
+                <value>^Suffix^</value>
+            </field>
+        </entry>
+    </wizard>
+</wizardfile>

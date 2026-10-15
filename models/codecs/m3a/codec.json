@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/m3a",
+  "displayName": "StarCraft II M3A animation bundle",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./codecs/m3a/runtime.js",
+      "target": {
+        "environments": ["node"]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": ["read-source", "write-source"]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./codecs/m3a/runtime.browser.js",
+      "target": {
+        "environments": ["browser-worker", "node-worker"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": ["read-source", "write-source"]
+    }
+  ],
+  "limitations": [
+    "This suffix-selected codec opens M3A as an animation-only asset and never recursively discovers other companions.",
+    "model.export-uvm emits source-free schema 1 UVM with skeleton identity, sequences, TRS, material/effect channels, sockets and compact native reconstruction bindings. It does not embed the original M3A.",
+    "model.write creates a fresh native M3A from that UVM, preserving primary/additional hashes, sequence events, AnimationReference headers and STC/STS grouping for the admitted profile, then verifies the result by reopening it.",
+    "M3A contains no active render geometry of its own. Rendering requires explicit attachment to a compatible model; the codec does not fabricate a mesh or fallback pose channels.",
+    "Unknown sections, incompatible skeleton targets, unsupported channel families and obsolete BlizzardM3 metadata schemas refuse explicitly."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "m3a",
+        "label": "StarCraft II M3A animation bundle"
+      }
+    ],
+    "roles": ["media"],
+    "sourceTopology": "single",
+    "artifactStages": ["authored", "compiled", "runtime"],
+    "openIntents": ["probe", "inspect", "full", "export"],
+    "match": {
+      "extensions": ["m3a"]
+    },
+    "companions": [],
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ],
+      "maxBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "geometry-metadata",
+        "contract": "common.model/geometry-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/model-scene-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-resource-refs-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-skeleton-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-animation-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-socket-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/model-collision-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "model.render",
+        "handlerId": "render-m3-scene",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["bytes"]
+      },
+      {
+        "id": "model.edit",
+        "handlerId": "edit-m3-scene",
+        "mutatesSource": true,
+        "requiredPermissions": ["read-source", "write-source"],
+        "outputKinds": ["edit-plan"]
+      },
+      {
+        "id": "edit.field",
+        "handlerId": "edit-m3-native-field",
+        "mutatesSource": true,
+        "requiredPermissions": ["read-source", "write-source"],
+        "outputKinds": ["edit-plan"]
+      },
+      {
+        "id": "model.export-uvm",
+        "handlerId": "model-export-uvm",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["bytes"]
+      },
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["json"]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["none"]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["bytes"]
+      },
+      {
+        "id": "model.write",
+        "handlerId": "model-write",
+        "mutatesSource": false,
+        "requiredPermissions": ["read-source"],
+        "outputKinds": ["bytes"]
+      }
+    ],
+    "traitDeclarations": [
+      {
+        "id": "model.animations",
+        "representation": "runtime",
+        "presence": "may-expose"
+      },
+      {
+        "id": "model.skeleton",
+        "representation": "runtime",
+        "presence": "may-expose"
+      },
+      {
+        "id": "structure.hierarchy",
+        "representation": "runtime",
+        "presence": "will-expose"
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 1000000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "fidelityEvidence": [
+      {
+        "formatId": "m3a",
+        "representationId": "geometry-metadata",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": false
+        },
+        "evidenceId": "m3a-uvm-sequence-name-v1",
+        "corpusId": "modkit/models/test/m3-uvm-strings.test.ts",
+        "corpusDigest": "none:proof-suite",
+        "conformanceProfile": "modkit/codec-contribution-v1",
+        "optionsFingerprint": "options:uvm-sequence-name-v1",
+        "inputClass": "mapped-seqs-name-edits",
+        "provenAt": "2026-09-09T00:00:00Z"
+      }
+    ]
+  }
+}

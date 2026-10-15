@@ -1,0 +1,4 @@
+include "TriggerLibs/natives"
+int libRuntimeFixture_gf_Run ();
+
+

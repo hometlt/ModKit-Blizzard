@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "$comment": [
+    "Real .BlizWiz files written by mod authors, read in place and never copied into the repository:",
+    "their licence is not established. The root defaults to the AllRaces working tree next to the",
+    "coding checkout and is overridden with MODKITX_SC2_WIZARD_CORPUS_ROOT. wizard-corpus.test.ts",
+    "runs in the real test tier only.",
+    "",
+    "diagnostics is the baseline in editor-compatible mode with the StarCraft II schema - what the",
+    "language provider shows. A change in these numbers is a change in the checker and must be",
+    "explained, not re-recorded. Findings believed real: RequierementNode (typo of RequirementNode).",
+    "SC2Editor 5.0.16 raises nothing for an unknown object type but drops it when saving: load=\"Ability\"",
+    "was exported as <objecttypes/> while Abil survived, and <count> inside <input> was dropped",
+    "(runtime-confirmed 2026-09-15, fixtures/editor-saved-export.BlizWiz). Unknown object types are warnings.",
+    "2026-09-15: legacy-missing-entry-id warnings were added to the baseline when the checker began",
+    "enforcing the documented rule that entry/id is required (fileformat.rtf, read through blizzard/casc)."
+  ],
+  "provenance": {
+    "all-races-scevo-merger/scevo-core.SC2Mod": "ScEvo core mod as merged into the AllRaces project (compare references/ScEvoComplete2); author and licence not recorded",
+    "factions-backup/UPL2023.SC2Mod": "UPL2023 faction mod backup; author and licence not recorded"
+  },
+  "files": [
+    {
+      "path": "all-races-scevo-merger/scevo-core.SC2Mod/Launch Missile.BlizWiz",
+      "sha256": "68ee4e6c09bdbfa6abc7d1ca2889fb019ba3070575663d1b1bb127bc55105193",
+      "wizards": 2,
+      "diagnostics": { "warning:legacy-missing-validate-type": 3, "warning:missing-text": 1 }
+    },
+    {
+      "path": "all-races-scevo-merger/scevo-core.SC2Mod/test.BlizWiz",
+      "sha256": "1f43be9b5014e7ef7b8b7000c348531f4258752d708386c39eac5ef5b054cfd6",
+      "wizards": 2,
+      "diagnostics": {
+        "warning:embedded-token-unresolved": 12,
+        "warning:embedded-wizard-missing": 2,
+        "warning:legacy-missing-validate-type": 6,
+        "warning:missing-text": 2
+      }
+    },
+    {
+      "path": "all-races-scevo-merger/scevo-core.SC2Mod/Base.SC2Data/Wizards/SCBW/CreateSCBWUnit.BlizWiz",
+      "sha256": "3811ee4b4c36b7a76a0b8f47b1356040c2b81d5951314f06c2b192d6b05b8757",
+      "wizards": 5,
+      "diagnostics": { "info:unknown-element": 1 }
+    },
+    {
+      "path": "all-races-scevo-merger/scevo-core.SC2Mod/Base.SC2Data/Wizards/SCBW/SCBW Ability.BlizWiz",
+      "sha256": "f0ea776935b019081fa48eee1edd9b6fca3884862ce941c03310c977a0670d16",
+      "wizards": 3,
+      "diagnostics": { "warning:legacy-missing-entry-id": 2, "warning:legacy-missing-entry-type": 2 }
+    },
+    {
+      "path": "all-races-scevo-merger/scevo-core.SC2Mod/Base.SC2Data/Wizards/SCBW/SCBW Effects.BlizWiz",
+      "sha256": "d50d5b78bbd1cfad2145fd8f2905a55e98ccfb5a96441d57c7ba5715e42138b5",
+      "wizards": 3,
+      "diagnostics": { "warning:legacy-missing-entry-id": 3, "warning:legacy-missing-entry-type": 3, "warning:unknown-object-type": 1 }
+    },
+    {
+      "path": "all-races-scevo-merger/scevo-core.SC2Mod/Base.SC2Data/Wizards/SCBW/SCBW Requirements.BlizWiz",
+      "sha256": "7ac51d3093f0121b2bd8f2011eb002595e7682855ad92c4c52ce7d6fdc1d7e8e",
+      "wizards": 1,
+      "diagnostics": { "warning:legacy-missing-entry-id": 1, "warning:legacy-missing-entry-type": 1 }
+    },
+    {
+      "path": "all-races-scevo-merger/scevo-core.SC2Mod/Base.SC2Data/Wizards/SCBW/SCBW Upgrades.BlizWiz",
+      "sha256": "56fe41fd3c6b67c4ed0d316107481a62db5d1a42e52438630da87110b1074129",
+      "wizards": 2,
+      "diagnostics": { "warning:unknown-object-type": 1 }
+    },
+    {
+      "path": "all-races-scevo-merger/scevo-core.SC2Mod/Base.SC2Data/Wizards/SCBW/SetSCBWImportedData.BlizWiz",
+      "sha256": "c8e12c362015179fa7967f4f01118e62e076428fc3c321301699c19e4d53a6d7",
+      "wizards": 1,
+      "diagnostics": {}
+    },
+    {
+      "path": "factions-backup/UPL2023.SC2Mod/LaunchMissile.BlizWiz",
+      "sha256": "73e65bd3da70eb8b90fdf2c5ece7dea9c452b75afef2c5736dc0f1c24743cb87",
+      "wizards": 2,
+      "diagnostics": { "warning:legacy-missing-validate-type": 3, "warning:missing-text": 1 }
+    }
+  ]
+}

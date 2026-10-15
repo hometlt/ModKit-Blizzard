@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/starcraft2-map-semantic",
+  "displayName": "StarCraft II semantic map analysis",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/map/providers/semantic/runtime.js",
+      "target": {
+        "environments": ["node"]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "worker-portable",
+      "entrypoint": "./modules/map/providers/semantic/runtime.js",
+      "target": {
+        "environments": ["node-worker", "browser-worker"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "starcraft2-map-semantic-v1",
+        "contract": "common.map/semantic-analysis",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": ["blizzard/starcraft-2"]
+        }
+      },
+      {
+        "offerId": "starcraft2-map-resolved-workspace-v1",
+        "contract": "common.map/resolved-workspace",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": ["blizzard/starcraft-2"]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "The bounded slice opens placed objects, regions, HMAP terrain summaries and sampled native PATH flags; other map internals remain raw and explicitly unavailable.",
+    "Container extraction, localization, trigger semantics, rendering, launch, writing and packing are intentionally excluded.",
+    "Placed units bind only to resolved Unit catalog entities supplied by the caller; catalog discovery is explicit through catalogQueries.",
+    "The world scene surface is publisher-qualified candidate blizzard.starcraft2/world-scene-source@1, not an admitted common.view contract."
+  ]
+}

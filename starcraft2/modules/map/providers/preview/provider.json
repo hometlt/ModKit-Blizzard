@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/starcraft2-map-preview-preparation",
+  "displayName": "StarCraft II map preview preparation",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/map/providers/preview/runtime.js",
+      "target": { "environments": ["node"] },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "worker-portable",
+      "entrypoint": "./modules/map/providers/preview/runtime.js",
+      "target": { "environments": ["node-worker", "browser-worker"] },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "starcraft2-map-preview-preparation-v1",
+        "contract": "common.map/preview-preparation",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": { "subjectFormatIds": ["casc", "sc2-map", "sc2-map-directory"] }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Preparation consumes only bounded JSON-safe descriptor and namespace facts and never receives live CASC, archive, filesystem or installation capabilities.",
+    "Installed CASC is the primary supported subject: roots are proved only by observed Objects, Regions and t3HeightMap documents, and a truncated listing never causes an implicit first-map choice.",
+    "The current 4096-entry product root listing ends before the pinned Liberty/TArcade map; a bounded host prefix-discovery round is required to expose deeper CASC map roots without enumerating the full installation.",
+    "A standalone sc2-map is prepared only when its opened codec publishes both namespace-entry-source and container.extract; the current packed SC2Map codec extracts stored single-unit entries, while compressed, encrypted and sector-based map documents remain explicit remainders.",
+    "A loose SC2Map directory keeps the active map in the opened namespace and asks the trusted host resolver to prefer exact installed dependency directories before the installed CASC namespace.",
+    "Transitive DocumentInfo closure for loose external dependencies, unresolved Battle.net-only dependencies, and native map launch remain named remainders.",
+    "The provider validates opaque selectionId continuation; application callers must preserve the exact subject revision and resubmit only an id returned for that revision."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "kind": "game",
+  "id": "blizzard/heroes-of-the-storm",
+  "vendorId": "blizzard",
+  "displayName": "Heroes of the Storm",
+  "description": "The Heroes of the Storm extension finds installed copies and serves the game's CASC storage; its models, maps and data are read by the StarCraft II modules the game shares an engine with.",
+  "officialSite": "https://heroesofthestorm.blizzard.com/",
+  "extensionRequirements": [
+    {
+      "id": "blizzard/heroes",
+      "importance": "required"
+    }
+  ],
+  "capabilityRequirements": [
+    {
+      "id": "installation",
+      "displayName": "Installation discovery",
+      "importance": "required",
+      "contributionIds": [
+        "blizzard/heroes-installation"
+      ]
+    }
+  ]
+}

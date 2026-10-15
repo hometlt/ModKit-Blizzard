@@ -1,0 +1,520 @@
+{
+  "schemaVersion": 1,
+  "contributions": [
+    {
+      "id": "blizzard/blp",
+      "sourceManifest": "blizzard-common-formats/codecs/blp/codec.json",
+      "targetPath": "packages/common-formats/modules/blp/codecs/blp"
+    },
+    {
+      "id": "blizzard/casc",
+      "sourceManifest": "casc/contributions/codec-casc.json",
+      "targetPath": "packages/casc/modules/casc/codecs/storage-casc"
+    },
+    {
+      "id": "blizzard/diablo3-app",
+      "sourceManifest": "blizzard-diablo/contributions/codec-diablo3-app.json",
+      "targetPath": "packages/diablo3/modules/app/codecs/app"
+    },
+    {
+      "id": "blizzard/diablo3-installation",
+      "sourceManifest": "blizzard-diablo/providers/diablo3-installation/provider.json",
+      "targetPath": "packages/diablo3/modules/game/providers/installation"
+    },
+    {
+      "id": "blizzard/diablo3-sno",
+      "sourceManifest": "blizzard-diablo/contributions/codec-diablo3-sno.json",
+      "targetPath": "packages/diablo3/modules/sno/codecs/sno"
+    },
+    {
+      "id": "blizzard/diablo3-sno-registry",
+      "sourceManifest": "blizzard-diablo/providers/diablo3-sno-registry/provider.json",
+      "targetPath": "packages/diablo3/modules/sno/providers/registry"
+    },
+    {
+      "id": "blizzard/diablo3-stl",
+      "sourceManifest": "blizzard-diablo/contributions/codec-diablo3-stl.json",
+      "targetPath": "packages/diablo3/modules/stringlist/codecs/stringlist"
+    },
+    {
+      "id": "blizzard/diablo3-tex",
+      "sourceManifest": "blizzard-diablo/contributions/codec-diablo3-tex.json",
+      "targetPath": "packages/diablo3/modules/tex/codecs/tex"
+    },
+    {
+      "id": "blizzard/galaxy",
+      "sourceManifest": "starcraft2/modules/galaxy/codecs/galaxy/codec.json",
+      "targetPath": "packages/starcraft2/modules/galaxy/codecs/galaxy"
+    },
+    {
+      "id": "blizzard/galaxy-language",
+      "sourceManifest": "starcraft2/modules/galaxy/providers/language/provider.json",
+      "targetPath": "packages/starcraft2/modules/galaxy/providers/language"
+    },
+    {
+      "id": "blizzard/heroes-installation",
+      "sourceManifest": "blizzard-heroes/providers/heroes-installation/provider.json",
+      "targetPath": "packages/heroes/modules/game/providers/installation"
+    },
+    {
+      "id": "blizzard/m3",
+      "sourceManifest": "models/codecs/m3/codec.json",
+      "targetPath": "packages/m3-models/modules/m3/codecs/m3"
+    },
+    {
+      "id": "blizzard/m3-native-encoder",
+      "sourceManifest": "models/providers/m3-native-encoder/provider.json",
+      "targetPath": "packages/m3-models/modules/m3/providers/native-encoder"
+    },
+    {
+      "id": "blizzard/m3-preserving-writer",
+      "sourceManifest": "models/providers/m3-writer/provider.json",
+      "targetPath": "packages/m3-models/modules/m3/providers/preserving-writer"
+    },
+    {
+      "id": "blizzard/m3a",
+      "sourceManifest": "models/codecs/m3a/codec.json",
+      "targetPath": "packages/m3-models/modules/m3a/codecs/m3a"
+    },
+    {
+      "id": "blizzard/mpq",
+      "sourceManifest": "mpq/codecs/container-mpq/codec.json",
+      "targetPath": "packages/mpq/modules/mpq/codecs/container-mpq"
+    },
+    {
+      "id": "blizzard/mpq-fresh-writer",
+      "sourceManifest": "mpq/contributions/writer-fresh-mpq.json",
+      "targetPath": "packages/mpq/modules/mpq/providers/fresh-writer"
+    },
+    {
+      "id": "blizzard/s2protocol-provider",
+      "sourceManifest": "blizzard-common-formats/modules/s2protocol/provider.json",
+      "targetPath": "packages/common-formats/modules/s2protocol/providers/s2protocol"
+    },
+    {
+      "id": "blizzard/sc2-attributes",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/attributes/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/attributes"
+    },
+    {
+      "id": "blizzard/sc2-authored-text-writers",
+      "sourceManifest": "starcraft2/shared/editing/providers/authored-text/provider.json",
+      "targetPath": "packages/starcraft2/shared/editing/providers/authored-text"
+    },
+    {
+      "id": "blizzard/sc2-bank",
+      "sourceManifest": "starcraft2/modules/banks/codecs/bank/codec.json",
+      "targetPath": "packages/starcraft2/modules/banks/codecs/bank"
+    },
+    {
+      "id": "blizzard/sc2-bank-language",
+      "sourceManifest": "starcraft2/modules/banks/providers/language/provider.json",
+      "targetPath": "packages/starcraft2/modules/banks/providers/language"
+    },
+    {
+      "id": "blizzard/sc2-bank-list",
+      "sourceManifest": "starcraft2/modules/banks/codecs/bank-list/codec.json",
+      "targetPath": "packages/starcraft2/modules/banks/codecs/bank-list"
+    },
+    {
+      "id": "blizzard/sc2-campaign",
+      "sourceManifest": "starcraft2/modules/campaign/codecs/campaign/codec.json",
+      "targetPath": "packages/starcraft2/modules/campaign/codecs/campaign"
+    },
+    {
+      "id": "blizzard/sc2-campaign-data",
+      "sourceManifest": "starcraft2/modules/campaign/codecs/data/codec.json",
+      "targetPath": "packages/starcraft2/modules/campaign/codecs/data"
+    },
+    {
+      "id": "blizzard/sc2-campaign-directory",
+      "sourceManifest": "starcraft2/modules/campaign/codecs/directory/codec.json",
+      "targetPath": "packages/starcraft2/modules/campaign/codecs/directory"
+    },
+    {
+      "id": "blizzard/sc2-cell-attribute",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/cell-attribute/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/cell-attribute"
+    },
+    {
+      "id": "blizzard/sc2-cell-flags",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/cell-flags/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/cell-flags"
+    },
+    {
+      "id": "blizzard/sc2-cliff-level",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/cliff-level/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/cliff-level"
+    },
+    {
+      "id": "blizzard/sc2-custom-ai",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/custom-ai/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/custom-ai"
+    },
+    {
+      "id": "blizzard/sc2-cutscene",
+      "sourceManifest": "starcraft2/modules/cutscene/codecs/cutscene/codec.json",
+      "targetPath": "packages/starcraft2/modules/cutscene/codecs/cutscene"
+    },
+    {
+      "id": "blizzard/sc2-cutscene-language",
+      "sourceManifest": "starcraft2/modules/cutscene/providers/language/provider.json",
+      "targetPath": "packages/starcraft2/modules/cutscene/providers/language"
+    },
+    {
+      "id": "blizzard/sc2-data",
+      "sourceManifest": "starcraft2/modules/data/codecs/sc2data/codec.json",
+      "targetPath": "packages/starcraft2/modules/data/codecs/sc2data"
+    },
+    {
+      "id": "blizzard/sc2-data-language",
+      "sourceManifest": "starcraft2/modules/data/providers/language/provider.json",
+      "targetPath": "packages/starcraft2/modules/data/providers/language"
+    },
+    {
+      "id": "blizzard/sc2-document-metadata",
+      "sourceManifest": "starcraft2/modules/mod/codecs/document-metadata/codec.json",
+      "targetPath": "packages/starcraft2/modules/mod/codecs/document-metadata"
+    },
+    {
+      "id": "blizzard/sc2-fluff-doodad",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/fluff-doodad/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/fluff-doodad"
+    },
+    {
+      "id": "blizzard/sc2-hard-tile",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/hard-tile/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/hard-tile"
+    },
+    {
+      "id": "blizzard/sc2-height-map",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/height-map/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/height-map"
+    },
+    {
+      "id": "blizzard/sc2-layout",
+      "sourceManifest": "starcraft2/modules/layout/codecs/layout/codec.json",
+      "targetPath": "packages/starcraft2/modules/layout/codecs/layout"
+    },
+    {
+      "id": "blizzard/sc2-layout-language",
+      "sourceManifest": "starcraft2/modules/layout/providers/language/provider.json",
+      "targetPath": "packages/starcraft2/modules/layout/providers/language"
+    },
+    {
+      "id": "blizzard/sc2-map",
+      "sourceManifest": "starcraft2/modules/map/codecs/package/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/package"
+    },
+    {
+      "id": "blizzard/sc2-map-directory",
+      "sourceManifest": "starcraft2/modules/map/codecs/package-directory/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/package-directory"
+    },
+    {
+      "id": "blizzard/sc2-map-info",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/map-info/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/map-info"
+    },
+    {
+      "id": "blizzard/sc2-map-language",
+      "sourceManifest": "starcraft2/modules/map/providers/language/provider.json",
+      "targetPath": "packages/starcraft2/modules/map/providers/language"
+    },
+    {
+      "id": "blizzard/sc2-map-objects",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/objects/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/objects"
+    },
+    {
+      "id": "blizzard/sc2-map-regions",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/regions/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/regions"
+    },
+    {
+      "id": "blizzard/sc2-mod",
+      "sourceManifest": "starcraft2/modules/mod/codecs/mod/codec.json",
+      "targetPath": "packages/starcraft2/modules/mod/codecs/mod"
+    },
+    {
+      "id": "blizzard/sc2-mod-directory",
+      "sourceManifest": "starcraft2/modules/mod/codecs/directory/codec.json",
+      "targetPath": "packages/starcraft2/modules/mod/codecs/directory"
+    },
+    {
+      "id": "blizzard/sc2-painted-creep",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/painted-creep/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/painted-creep"
+    },
+    {
+      "id": "blizzard/sc2-painted-pathing",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/painted-pathing/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/painted-pathing"
+    },
+    {
+      "id": "blizzard/sc2-preload",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/preload/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/preload"
+    },
+    {
+      "id": "blizzard/sc2-preload-asset-db",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/preload-asset-db/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/preload-asset-db"
+    },
+    {
+      "id": "blizzard/sc2-publication-header",
+      "sourceManifest": "starcraft2/modules/game/battlenet/codecs/publication-header/codec.json",
+      "targetPath": "packages/starcraft2/modules/game/battlenet/codecs/publication-header"
+    },
+    {
+      "id": "blizzard/sc2-publication-locale",
+      "sourceManifest": "starcraft2/modules/game/battlenet/codecs/publication-locale/codec.json",
+      "targetPath": "packages/starcraft2/modules/game/battlenet/codecs/publication-locale"
+    },
+    {
+      "id": "blizzard/sc2-queue-header",
+      "sourceManifest": "starcraft2/modules/game/battlenet/codecs/queue-header/codec.json",
+      "targetPath": "packages/starcraft2/modules/game/battlenet/codecs/queue-header"
+    },
+    {
+      "id": "blizzard/sc2-queue-locale",
+      "sourceManifest": "starcraft2/modules/game/battlenet/codecs/queue-locale/codec.json",
+      "targetPath": "packages/starcraft2/modules/game/battlenet/codecs/queue-locale"
+    },
+    {
+      "id": "blizzard/sc2-replay",
+      "sourceManifest": "starcraft2/modules/replay/codecs/replay/codec.json",
+      "targetPath": "packages/starcraft2/modules/replay/codecs/replay"
+    },
+    {
+      "id": "blizzard/sc2-runtime",
+      "sourceManifest": "starcraft2/modules/runtime/codecs/runtime/codec.json",
+      "targetPath": "packages/starcraft2/modules/runtime/codecs/runtime"
+    },
+    {
+      "id": "blizzard/sc2-runtime-provider",
+      "sourceManifest": "starcraft2/modules/runtime/providers/runtime/provider.json",
+      "targetPath": "packages/starcraft2/modules/runtime/providers/runtime"
+    },
+    {
+      "id": "blizzard/sc2-strings",
+      "sourceManifest": "starcraft2/modules/strings/codecs/strings/codec.json",
+      "targetPath": "packages/starcraft2/modules/strings/codecs/strings"
+    },
+    {
+      "id": "blizzard/sc2-strings-language",
+      "sourceManifest": "starcraft2/modules/strings/providers/language/provider.json",
+      "targetPath": "packages/starcraft2/modules/strings/providers/language"
+    },
+    {
+      "id": "blizzard/sc2-style",
+      "sourceManifest": "starcraft2/modules/style/codecs/style/codec.json",
+      "targetPath": "packages/starcraft2/modules/style/codecs/style"
+    },
+    {
+      "id": "blizzard/sc2-style-language",
+      "sourceManifest": "starcraft2/modules/style/providers/language/provider.json",
+      "targetPath": "packages/starcraft2/modules/style/providers/language"
+    },
+    {
+      "id": "blizzard/sc2-sync-height-map",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/sync-height-map/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/sync-height-map"
+    },
+    {
+      "id": "blizzard/sc2-terrain-xml",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/terrain-xml/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/terrain-xml"
+    },
+    {
+      "id": "blizzard/sc2-texture-info",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/texture-info/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/texture-info"
+    },
+    {
+      "id": "blizzard/sc2-texture-masks",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/texture-masks/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/texture-masks"
+    },
+    {
+      "id": "blizzard/sc2-triggers",
+      "sourceManifest": "starcraft2/modules/triggers/codecs/triggers/codec.json",
+      "targetPath": "packages/starcraft2/modules/triggers/codecs/triggers"
+    },
+    {
+      "id": "blizzard/sc2-triggers-language",
+      "sourceManifest": "starcraft2/modules/triggers/providers/language/provider.json",
+      "targetPath": "packages/starcraft2/modules/triggers/providers/language"
+    },
+    {
+      "id": "blizzard/sc2-vertex-color",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/vertex-color/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/vertex-color"
+    },
+    {
+      "id": "blizzard/sc2-water",
+      "sourceManifest": "starcraft2/modules/map/codecs/documents/water/codec.json",
+      "targetPath": "packages/starcraft2/modules/map/codecs/documents/water"
+    },
+    {
+      "id": "blizzard/sc2-wizard",
+      "sourceManifest": "starcraft2/modules/wizard/codecs/wizard/codec.json",
+      "targetPath": "packages/starcraft2/modules/wizard/codecs/wizard"
+    },
+    {
+      "id": "blizzard/sc2-wizard-language",
+      "sourceManifest": "starcraft2/modules/wizard/providers/language/provider.json",
+      "targetPath": "packages/starcraft2/modules/wizard/providers/language"
+    },
+    {
+      "id": "blizzard/sc2-workspace-copy-writer",
+      "sourceManifest": "starcraft2/shared/editing/providers/workspace-copy/provider.json",
+      "targetPath": "packages/starcraft2/shared/editing/providers/workspace-copy"
+    },
+    {
+      "id": "blizzard/starcraft1-chk",
+      "sourceManifest": "blizzard-starcraft-1/contributions/codec-starcraft1-chk.json",
+      "targetPath": "packages/starcraft1/modules/map/codecs/chk"
+    },
+    {
+      "id": "blizzard/starcraft1-dat",
+      "sourceManifest": "blizzard-starcraft-1/contributions/codec-starcraft1-dat.json",
+      "targetPath": "packages/starcraft1/modules/data/codecs/dat"
+    },
+    {
+      "id": "blizzard/starcraft1-grp",
+      "sourceManifest": "blizzard-starcraft-1/contributions/codec-starcraft1-grp.json",
+      "targetPath": "packages/starcraft1/modules/grp/codecs/grp"
+    },
+    {
+      "id": "blizzard/starcraft1-installation",
+      "sourceManifest": "blizzard-starcraft-1/providers/sc1-installation/provider.json",
+      "targetPath": "packages/starcraft1/modules/game/providers/installation"
+    },
+    {
+      "id": "blizzard/starcraft1-map",
+      "sourceManifest": "blizzard-starcraft-1/contributions/codec-starcraft1-map.json",
+      "targetPath": "packages/starcraft1/modules/map/codecs/map"
+    },
+    {
+      "id": "blizzard/starcraft1-tbl",
+      "sourceManifest": "blizzard-starcraft-1/contributions/codec-starcraft1-tbl.json",
+      "targetPath": "packages/starcraft1/modules/strings/codecs/tbl"
+    },
+    {
+      "id": "blizzard/starcraft1-tileset",
+      "sourceManifest": "blizzard-starcraft-1/contributions/codec-starcraft1-tileset.json",
+      "targetPath": "packages/starcraft1/modules/tileset/codecs/tileset"
+    },
+    {
+      "id": "blizzard/starcraft2-data",
+      "sourceManifest": "starcraft2/modules/data/providers/catalog-analysis/provider.json",
+      "targetPath": "packages/starcraft2/modules/data/providers/catalog-analysis"
+    },
+    {
+      "id": "blizzard/starcraft2-image-operations",
+      "sourceManifest": "starcraft2/modules/textures/providers/image-operations/provider.json",
+      "targetPath": "packages/starcraft2/modules/textures/providers/image-operations"
+    },
+    {
+      "id": "blizzard/starcraft2-installation",
+      "sourceManifest": "starcraft2/modules/game/providers/installation/provider.json",
+      "targetPath": "packages/starcraft2/modules/game/providers/installation"
+    },
+    {
+      "id": "blizzard/starcraft2-map-preview-preparation",
+      "sourceManifest": "starcraft2/modules/map/providers/preview/provider.json",
+      "targetPath": "packages/starcraft2/modules/map/providers/preview"
+    },
+    {
+      "id": "blizzard/starcraft2-map-semantic",
+      "sourceManifest": "starcraft2/modules/map/providers/semantic/provider.json",
+      "targetPath": "packages/starcraft2/modules/map/providers/semantic"
+    },
+    {
+      "id": "blizzard/starcraft2-native-map-launch",
+      "sourceManifest": "starcraft2/modules/game/providers/launch/provider.json",
+      "targetPath": "packages/starcraft2/modules/game/providers/launch"
+    },
+    {
+      "id": "blizzard/starcraft2-resolved-data",
+      "sourceManifest": "starcraft2/modules/data/providers/resolved-data/provider.json",
+      "targetPath": "packages/starcraft2/modules/data/providers/resolved-data"
+    },
+    {
+      "id": "blizzard/war3-jass-language",
+      "sourceManifest": "blizzard-warcraft-3/providers/jass-language/provider.json",
+      "targetPath": "packages/warcraft3/modules/jass/providers/language"
+    },
+    {
+      "id": "blizzard/war3-map",
+      "sourceManifest": "blizzard-warcraft-3/contributions/codec-war3-map.json",
+      "targetPath": "packages/warcraft3/modules/map/codecs/map"
+    },
+    {
+      "id": "blizzard/war3-map-encoder",
+      "sourceManifest": "blizzard-warcraft-3/providers/war3-map-encoder/provider.json",
+      "targetPath": "packages/warcraft3/modules/map/providers/encoder"
+    },
+    {
+      "id": "blizzard/war3-map-preview",
+      "sourceManifest": "blizzard-warcraft-3/providers/war3-map-preview/provider.json",
+      "targetPath": "packages/warcraft3/modules/map/providers/preview"
+    },
+    {
+      "id": "blizzard/war3-map-world",
+      "sourceManifest": "blizzard-warcraft-3/providers/war3-map-world/provider.json",
+      "targetPath": "packages/warcraft3/modules/map/providers/world"
+    },
+    {
+      "id": "blizzard/war3-mdx",
+      "sourceManifest": "blizzard-warcraft-3/contributions/codec-war3-mdx.json",
+      "targetPath": "packages/warcraft3/modules/mdx/codecs/mdx"
+    },
+    {
+      "id": "blizzard/war3-mdx-native-encoder",
+      "sourceManifest": "blizzard-warcraft-3/providers/war3-mdx-native-encoder/provider.json",
+      "targetPath": "packages/warcraft3/modules/mdx/providers/native-encoder"
+    },
+    {
+      "id": "blizzard/war3-object-mods",
+      "sourceManifest": "blizzard-warcraft-3/contributions/codec-war3-object-mods.json",
+      "targetPath": "packages/warcraft3/modules/data/codecs/object-mods"
+    },
+    {
+      "id": "blizzard/war3-pkb",
+      "sourceManifest": "blizzard-warcraft-3/contributions/codec-war3-pkb.json",
+      "targetPath": "packages/warcraft3/modules/effects/codecs/pkb"
+    },
+    {
+      "id": "blizzard/war3-replay",
+      "sourceManifest": "blizzard-warcraft-3/contributions/codec-war3-replay.json",
+      "targetPath": "packages/warcraft3/modules/replay/codecs/replay"
+    },
+    {
+      "id": "blizzard/war3-resolved-data",
+      "sourceManifest": "blizzard-warcraft-3/providers/war3-data/provider.json",
+      "targetPath": "packages/warcraft3/modules/data/providers/resolved-data"
+    },
+    {
+      "id": "blizzard/war3-wts-language",
+      "sourceManifest": "blizzard-warcraft-3/providers/wts-language/provider.json",
+      "targetPath": "packages/warcraft3/modules/wts/providers/language"
+    },
+    {
+      "id": "blizzard/warcraft3-installation",
+      "sourceManifest": "blizzard-warcraft-3/providers/war3-installation/provider.json",
+      "targetPath": "packages/warcraft3/modules/game/providers/installation"
+    },
+    {
+      "id": "blizzard/world-of-warcraft-installation",
+      "sourceManifest": "blizzard-world-of-warcraft/providers/wow-installation/provider.json",
+      "targetPath": "packages/world-of-warcraft/modules/game/providers/installation"
+    },
+    {
+      "id": "blizzard/wow-m2",
+      "sourceManifest": "blizzard-world-of-warcraft/contributions/codec-wow-m2.json",
+      "targetPath": "packages/world-of-warcraft/modules/models/codecs/m2"
+    }
+  ]
+}

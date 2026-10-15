@@ -1,0 +1,6 @@
+<Desc>
+  <Include path="Missing.SC2Layout"/>
+  <Frame name="Broken" template="Missing/Template">
+    <Anchor side="Diagonal" relative="$parent"/>
+  </Frame>
+</Desc>

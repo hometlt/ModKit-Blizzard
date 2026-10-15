@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-mod",
+  "displayName": "StarCraft II mod",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/modules/mod/codecs/mod/portable/codec.mjs",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./dist/modules/mod/codecs/mod/portable/codec.mjs",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Opens MPQ-backed mods through host-owned MPQ container composition; the semantic codec does not import or duplicate MPQ logic.",
+    "edit.structure fails closed until shared container composition can atomically create a new locale entry alongside ComponentList replacement."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "sc2-mod",
+        "label": "StarCraft II mod"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "namespace",
+    "artifactStages": [
+      "authored",
+      "compiled",
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "extensions": [
+        "sc2mod"
+      ]
+    },
+    "anchorDocuments": [
+      "DocumentInfo"
+    ],
+    "probe": {
+      "kind": "namespace",
+      "markers": [
+        "ComponentList.SC2Components",
+        "DocumentHeader",
+        "DocumentInfo",
+        "Base.SC2Data",
+        "Base.SC2Data/GameData",
+        "GameData"
+      ],
+      "maxEntries": 6,
+      "maxBytes": 65536,
+      "maxDepth": 4,
+      "maxPathBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "archive-namespace",
+        "contract": "common.archive/entry-namespace",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/namespace-entry-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/subject-facts-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/relation-graph-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.compare",
+        "handlerId": "compare",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "container.extract",
+        "handlerId": "extract-entry",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "edit.structure",
+        "handlerId": "edit-structure",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "edit.field",
+        "handlerId": "edit-field",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "export.convert",
+        "handlerId": "export-convert",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 400000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "container": {
+      "formatId": "mpq",
+      "assetRoots": ["Base.SC2Assets", "*.SC2Assets", ""]
+    },
+    "traitDeclarations": [
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "container.entries"
+      },
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "structure.hierarchy"
+      },
+      {
+        "presence": "may-expose",
+        "representation": "source",
+        "id": "game.catalog"
+      },
+      {
+        "presence": "may-expose",
+        "representation": "source",
+        "id": "source.dependencies"
+      },
+      {
+        "presence": "may-expose",
+        "representation": "source",
+        "id": "container.overlay"
+      },
+      {
+        "presence": "may-expose",
+        "representation": "source",
+        "id": "game.localization"
+      },
+      {
+        "presence": "may-expose",
+        "representation": "source",
+        "id": "game.layout"
+      },
+      {
+        "presence": "may-expose",
+        "representation": "source",
+        "id": "content.metadata"
+      },
+      {
+        "presence": "may-expose",
+        "representation": "source",
+        "id": "project.editable"
+      }
+    ]
+  }
+}

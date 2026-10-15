@@ -1,0 +1,43 @@
+{
+  "name": "@modkit/blizzard-casc",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "description": "Blizzard CASC namespace codec for MK3.",
+  "exports": {
+    ".": {
+      "types": "./src/casc/index.d.ts",
+      "default": "./src/casc/index.js"
+    },
+    "./cache-node": "./src/casc/cached-reader.js",
+    "./cdn": "./src/casc/cdn.js",
+    "./installation-node": {
+      "types": "./dist/casc/installation.d.ts",
+      "default": "./dist/casc/installation.js"
+    },
+    "./root-cache-node": {
+      "types": "./src/casc/root-cache-node.d.ts",
+      "default": "./src/casc/root-cache-node.js"
+    },
+    "./writer": "./src/casc/writer.js"
+  },
+  "modkit": {
+    "schemaVersion": 1,
+    "publisher": "blizzard",
+    "id": "casc",
+    "presentation": {
+      "displayName": "Blizzard CASC",
+      "description": "Blizzard CASC namespace codec for MK3.",
+      "vendor": {
+        "id": "blizzard",
+        "displayName": "Blizzard"
+      }
+    },
+    "contributionManifests": [
+      "./contributions/*.json"
+    ]
+  },
+  "dependencies": {
+    "@modkit/codec-kit": "file:../vendor/modkit-codec-kit-1.0.0.tgz"
+  }
+}

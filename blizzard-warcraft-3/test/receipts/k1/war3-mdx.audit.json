@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "codec": "war3-mdx",
+  "corpusKind": "synthetic",
+  "verdict": "pass",
+  "tests": {
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "source-feature-audit",
+    "oracle": "every export of the MK2 source (references/modkitmk2/extensions/blizzard/warcraft-3/codecs/war3-mdx at 1a14ba4eddd0ae88de273348ebd44cfb98a0581d) and its manifest, against the MK3 module that carries it",
+    "suite": "modkit-extensions-blizzard/blizzard-warcraft-3/test/k1-war3-mdx-receipts.test.ts",
+    "samples": [
+      {
+        "name": "authored.mdx / authored.mdl",
+        "builder": "modkit-extensions-blizzard/blizzard-warcraft-3/test/war3-harness.ts#authoredModelBytes",
+        "fixture": "modkit-extensions-blizzard/test/behavior/fixtures/minimal.mdx",
+        "sha256": "30c47af860743ebbcef1d2293329edb32aa3e3bb508e536fe1f02e662facda9e"
+      },
+      {
+        "name": "mk2 codec.manifest.json",
+        "fixture": "references/modkitmk2/extensions/blizzard/warcraft-3/codecs/war3-mdx/codec.manifest.json",
+        "sha256LF": "c0581b2293e6db2ed3ffb903c273d57f571b802ee678af92b6e4ff87e5a55685"
+      },
+      {
+        "name": "mk2 src/detect.ts",
+        "fixture": "references/modkitmk2/extensions/blizzard/warcraft-3/codecs/war3-mdx/src/detect.ts",
+        "sha256LF": "b8a680ed46e4e8b8fa19397f64c19805063adbb939f12094acf2c1a7f1f412ff"
+      },
+      {
+        "name": "mk2 src/implementation.ts",
+        "fixture": "references/modkitmk2/extensions/blizzard/warcraft-3/codecs/war3-mdx/src/implementation.ts",
+        "sha256LF": "61ddd75d021c1f15ffce75b1ecee6dcfcc72ae9b66ac6709301e74be522570fe"
+      },
+      {
+        "name": "mk2 src/codec.ts",
+        "fixture": "references/modkitmk2/extensions/blizzard/warcraft-3/codecs/war3-mdx/src/codec.ts",
+        "sha256LF": "3bd70289b5da3c5a36906ef4bbdd0d8af801917fbdee60e5dbb48db8f5df6094"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "mk2-source:src/detect.ts",
+      "verdict": "identical",
+      "resultDigest": "308518be4d5de3a2f27db302aad30883f4a3deaa752fc0c7615c11a90ed41a30",
+      "mk3Operation": "src/war3-mdx/detect.ts"
+    },
+    {
+      "id": "mk2-source:WAR3_REPLACEABLE_TEXTURE_PATHS",
+      "verdict": "identical",
+      "resultDigest": "0e79d1718d8cd517c796c3bccb48c2200625c7502d9977a3dd2777fd25f8aa2d",
+      "mk3Operation": "src/war3-mdx/render-model.ts"
+    },
+    {
+      "id": "mk2-source:war3ReplaceableTexturePath",
+      "verdict": "identical",
+      "resultDigest": "bbabd7dff1f9d386d1a1b50f62fa4a73c2bded2592e18fdc896af6ab25d69bbc",
+      "mk3Operation": "src/war3-mdx/render-model.ts"
+    },
+    {
+      "id": "mk2-source:parseWar3Mdx+generateWar3Mdx",
+      "verdict": "identical",
+      "resultDigest": "9e07ab64261fb6803c6572f7b5c3098ea68fb45873128af820d42a2262eb900b",
+      "mk3Operation": "src/lib/war3-model (vendored) via render-model.ts"
+    },
+    {
+      "id": "mk2-source:parseWar3Mdl+generateWar3Mdl",
+      "verdict": "identical",
+      "resultDigest": "9e07ab64261fb6803c6572f7b5c3098ea68fb45873128af820d42a2262eb900b",
+      "mk3Operation": "src/lib/war3-model (vendored) via render-model.ts"
+    },
+    {
+      "id": "mk2-source:parseWar3ModelToRenderModel",
+      "verdict": "identical",
+      "resultDigest": "9e8ecc2bbf6398a70a407393d626470d7902bcab0050fe0f8a56dc82482fb7c9",
+      "mk3Operation": "src/war3-mdx/render-model.ts"
+    },
+    {
+      "id": "mk2-source:MdxModelParser+MdlModelParser",
+      "verdict": "identical",
+      "resultDigest": "9c11220fa61ad86b205189a00cf8baf375a21898b993d8f952d2c01e5fb31024",
+      "mk3Operation": "src/war3-mdx/render-model.ts"
+    },
+    {
+      "id": "mk2-source:src/codec.ts",
+      "verdict": "identical",
+      "resultDigest": "2ffca34c9b58e5ab9dbb1a54716e4598b27ac164f331b44c1bb93f6576d7eb64",
+      "mk3Operation": "src/war3-mdx/codec.ts (view.inspect)"
+    },
+    {
+      "id": "mk2-manifest:match.extensions",
+      "verdict": "identical",
+      "resultDigest": "84450dc555cc65fed2c6f16fb3e17b476e69a9f98e5e971245f0c6e67de4b452",
+      "mk3Operation": "spec.match.extensions"
+    },
+    {
+      "id": "mk2-manifest:operations",
+      "verdict": "identical",
+      "resultDigest": "daf112d8f5319ac8dc383de89c384b849a0fe8b0e3898f74bdc5d1f0fda21e91",
+      "mk3Operation": "view.inspect, model.export-uvm"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/war3-mdx/audit",
+      "kind": "audit",
+      "adapterOperation": "source-feature-audit",
+      "targetOperation": "source-feature-audit",
+      "handlerId": "source-feature-audit",
+      "contribution": "modkit-extensions-blizzard/blizzard-warcraft-3/contributions/codec-war3-mdx.json",
+      "executed": true,
+      "caseIds": [
+        "mk2-source:src/detect.ts",
+        "mk2-source:WAR3_REPLACEABLE_TEXTURE_PATHS",
+        "mk2-source:war3ReplaceableTexturePath",
+        "mk2-source:parseWar3Mdx+generateWar3Mdx",
+        "mk2-source:parseWar3Mdl+generateWar3Mdl",
+        "mk2-source:parseWar3ModelToRenderModel",
+        "mk2-source:MdxModelParser+MdlModelParser",
+        "mk2-source:src/codec.ts",
+        "mk2-manifest:match.extensions",
+        "mk2-manifest:operations"
+      ]
+    }
+  ]
+}

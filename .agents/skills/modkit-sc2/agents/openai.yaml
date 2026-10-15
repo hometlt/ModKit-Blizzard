@@ -1,0 +1,4 @@
+interface:
+  display_name: 'StarCraft II Inspector'
+  short_description: 'Inspect resolved StarCraft II mod data and assets'
+  default_prompt: 'Use $modkit-sc2 to inspect this StarCraft II map or mod through Modkit.'

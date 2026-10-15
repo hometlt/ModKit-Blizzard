@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/m3-preserving-writer",
+  "displayName": "StarCraft II M3/M3A preserving writer",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./providers/m3-writer/runtime.js",
+      "target": {
+        "environments": ["node"]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./providers/m3-writer/runtime.browser.js",
+      "target": {
+        "environments": ["browser-worker", "node-worker"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "m3-native-source",
+        "contract": "common.edit/writer",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "providerId": "blizzard/m3-preserving-writer",
+          "fidelityEvidenceId": "m3-m3a-preserving-writer-v1",
+          "formatId": "m3",
+          "representationId": "source",
+          "mutationMode": "mutate",
+          "minimumRoundTrip": "semantic"
+        }
+      }
+    ],
+    "fidelityEvidence": [
+      {
+        "offerId": "m3-native-source",
+        "evidenceId": "m3-m3a-preserving-writer-v1",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": true,
+          "notes": [
+            "The pinned triangle M3 is sha256:d34480c1b726c37bfeea9dd75fc71a13ca7e47d6ff15b2d66487c6a4b3369de7.",
+            "The pinned Cybros M3A is sha256:07a632fb165b98e60b0e6803451e92c7d94ec527cae8252ca6ed2a3a0661b9e5.",
+            "No-op writes are byte-identical; scale, sequence-name and LAYR texture-path edits reopen through the current MK3 decoder with the intended semantic values.",
+            "Known sections are relocated deterministically and unknown section payload bytes are preserved."
+          ]
+        },
+        "corpusId": "modkit-m3-writer-ga:triangle-m3+cybros-m3a",
+        "corpusDigest": "sha256:c26fc84599e4d055bd1c7c81ea67b3f2bd7c5d854757f632152778ac4446cf53",
+        "conformanceProfile": "common.edit/writer-v1",
+        "optionsFingerprint": "options:m3-native-preserving-semantic-edits-v1",
+        "inputClass": "m3-m3a-complete-native-section-graphs",
+        "provenAt": "2026-08-28T00:00:00Z"
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Existing-source semantic edits are scale, sequence rename and exact LAYR texture-path rename; full new-model authoring is published separately as the codec's bounded model.write operation and encoder API.",
+    "The writer requires one complete digest-bound source snapshot, one revision-pinned target and the host atomic commit path.",
+    "Both variants use the exact embedded XML schema without filesystem access. Isolated browser-worker conformance covers provider creation, source validation and byte-identical no-op preparation; full browser-host activation/commit and worker semantic edit coverage remain pending."
+  ]
+}

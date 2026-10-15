@@ -1,0 +1,9 @@
+<Desc>
+  <Frame
+    type="Image"
+    name="CategoryFrame_Nod/NodConstructionYard"
+    file="TechTreePanel"
+  >
+    <Text val="UI/TechTree/NodConstructionYard"/>
+  </Frame>
+</Desc>

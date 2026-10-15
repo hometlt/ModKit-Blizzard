@@ -1,0 +1,43 @@
+{
+  "kind": "EngineProgram",
+  "modules": [
+    {
+      "kind": "EngineModule",
+      "id": "Synthetic",
+      "functions": [
+        {
+          "kind": "EngineFunction",
+          "name": "Unsupported",
+          "body": [
+            {
+              "kind": "EngineRawStatement",
+              "language": "galaxy",
+              "code": "unsupported();",
+              "source": {
+                "format": "galaxy",
+                "fileName": "synthetic/Lib.galaxy",
+                "elementType": "SyntheticUnsupported"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "EngineFunction",
+          "name": "Custom",
+          "body": [
+            {
+              "kind": "EngineRawExpression",
+              "language": "trigger-script",
+              "code": "CustomScriptExpression()",
+              "source": {
+                "format": "sc2-triggers",
+                "fileName": "synthetic/Triggers",
+                "elementId": "CustomScript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

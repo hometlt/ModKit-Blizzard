@@ -1,0 +1,7 @@
+# Byte-stable generated Galaxy API artifacts; regenerate with starcraft2/modules/galaxy/scripts/generate-native-api.mjs.
+starcraft2/modules/galaxy/data/galaxy-script-api.v1.json
+starcraft2/modules/galaxy/language/native-api.generated.js
+
+# Byte-exact behavioral fixtures copied from the Core testkit evidence.
+test/behavior/fixtures/
+

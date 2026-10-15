@@ -1,0 +1,672 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/knowledge-pack",
+    "major": 1
+  },
+  "id": "blizzard/sc2-data-knowledge",
+  "displayName": "StarCraft II data field knowledge",
+  "spec": {
+    "schemaVersion": 1,
+    "sourceLocale": "en",
+    "priority": 100,
+    "gameIds": ["blizzard/starcraft-2"],
+    "entries": [
+      {
+        "id": "blizzard.sc2/subject-unit",
+        "target": { "kind": "subject", "ecosystem": "starcraft-2", "subjectKind": "Unit" },
+        "locale": "en",
+        "title": "Unit catalog entry",
+        "summary": "A Unit catalog entry contains the authored data for one StarCraft II unit; Modkit cards show values resolved in one pinned workspace snapshot.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cunit-name",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CUnit",
+          "canonicalPath": ["Name"]
+        },
+        "locale": "en",
+        "title": "Unit name",
+        "summary": "Stores the localization key that Modkit resolves for the unit's displayed name.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cunit-description",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CUnit",
+          "canonicalPath": ["Description"]
+        },
+        "locale": "en",
+        "title": "Unit description",
+        "summary": "Stores a localization key used to resolve descriptive text for the unit.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cunit-life-max",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CUnit",
+          "canonicalPath": ["LifeMax"]
+        },
+        "locale": "en",
+        "title": "Maximum life",
+        "summary": "Sets the unit's base maximum life before upgrades, behaviors, and other runtime modifiers are applied.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cunit-shields-max",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CUnit",
+          "canonicalPath": ["ShieldsMax"]
+        },
+        "locale": "en",
+        "title": "Maximum shields",
+        "summary": "Sets the authored maximum shield value shown by the resolved unit data.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cunit-energy-max",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CUnit",
+          "canonicalPath": ["EnergyMax"]
+        },
+        "locale": "en",
+        "title": "Maximum energy",
+        "summary": "Sets the authored maximum energy value shown by the resolved unit data.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cunit-speed",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CUnit",
+          "canonicalPath": ["Speed"]
+        },
+        "locale": "en",
+        "title": "Movement speed",
+        "summary": "Publishes the unit's authored movement speed value from the resolved catalog snapshot.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cunit-food",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CUnit",
+          "canonicalPath": ["Food"]
+        },
+        "locale": "en",
+        "title": "Supply used",
+        "summary": "Records the authored supply value that the Modkit unit card labels as supply.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cunit-kill-xp",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CUnit",
+          "canonicalPath": ["KillXP"]
+        },
+        "locale": "en",
+        "title": "Kill experience",
+        "summary": "Publishes the unit's authored KillXP value from the resolved catalog snapshot without simulating runtime modifiers.",
+        "claimKind": "documented-interpretation",
+        "confidence": "medium",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cunit-race",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CUnit",
+          "canonicalPath": ["Race"]
+        },
+        "locale": "en",
+        "title": "Unit race",
+        "summary": "Publishes the race identifier authored on the resolved Unit catalog entry.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cunit-attributes",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CUnit",
+          "canonicalPath": ["Attributes"]
+        },
+        "locale": "en",
+        "title": "Unit attributes",
+        "summary": "Lists the authored unit classifications, such as Biological, Mechanical, or Armored, present in resolved data.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cunit-weapon-link",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CUnit",
+          "canonicalPath": ["WeaponArray", "Link"]
+        },
+        "locale": "en",
+        "title": "Unit weapon link",
+        "summary": "Connects one indexed weapon slot on a unit to a Weapon catalog entry.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Units",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Units",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cweapon-period",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CWeapon",
+          "canonicalPath": ["Period"]
+        },
+        "locale": "en",
+        "title": "Weapon period",
+        "summary": "Defines the authored time between attacks and is the denominator of the strict simple DPS formula.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Weapons",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Weapons",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cweapon-range",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CWeapon",
+          "canonicalPath": ["Range"]
+        },
+        "locale": "en",
+        "title": "Weapon range",
+        "summary": "Sets the weapon's authored firing range value before runtime modifiers are considered.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Weapons",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Weapons",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cweapon-effect-link",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CWeapon",
+          "canonicalPath": ["Effect", "Link"]
+        },
+        "locale": "en",
+        "title": "Weapon effect link",
+        "summary": "Points from the weapon to its authored root Effect catalog entry.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Weapons",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Weapons",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-cweapon-display-effect-link",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CWeapon",
+          "canonicalPath": ["DisplayEffect", "Link"]
+        },
+        "locale": "en",
+        "title": "Displayed weapon effect link",
+        "summary": "Names the effect used for displayed weapon information; the strict calculation accepts it only when it directly resolves to a Damage effect.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Weapons",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Weapons",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/field-ceffect-damage-amount",
+        "target": {
+          "kind": "field",
+          "ecosystem": "starcraft-2",
+          "schema": {
+            "contract": "blizzard/sc2-data-schema",
+            "major": 1,
+            "revision": "full-8a21060f86336d4d03f5471b03f5de4cbeb9c07e-sha256-a094b68559c77374"
+          },
+          "typeId": "CEffectDamage",
+          "canonicalPath": ["Amount"]
+        },
+        "locale": "en",
+        "title": "Damage amount",
+        "summary": "Provides the base flat damage contributed by this Damage effect before armor and other runtime modifiers change the result.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Effects/Damage",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Effects/Damage",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/concept-simple-weapon-dps",
+        "target": {
+          "kind": "concept",
+          "ecosystem": "starcraft-2",
+          "conceptId": "simple-weapon-dps"
+        },
+        "locale": "en",
+        "title": "Simple displayed weapon DPS",
+        "summary": "For a direct Damage effect, Modkit computes Amount times DisplayAttackCount, defaulting that count to one, divided by Period; indirect effect chains remain explicitly unsupported.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Weapons",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Weapons",
+            "reviewedAt": "2026-08-28"
+          },
+          {
+            "kind": "source-code",
+            "title": "Modkit SC2 unit-card weapon calculation",
+            "url": "https://github.com/sc2-arcade-watcher/modkit",
+            "revision": "1a14ba4eddd0ae88de273348ebd44cfb98a0581d",
+            "reviewedAt": "2026-08-28"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/subject-weapon",
+        "target": { "kind": "subject", "ecosystem": "starcraft-2", "subjectKind": "Weapon" },
+        "locale": "en",
+        "title": "Weapon catalog entry",
+        "summary": "A Weapon entry describes attack timing, range, targeting rules and the Effect that executes the attack; runtime buffs may change the resolved authored values.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Weapons",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Weapons",
+            "reviewedAt": "2026-08-29"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/subject-abil",
+        "target": { "kind": "subject", "ecosystem": "starcraft-2", "subjectKind": "Abil" },
+        "locale": "en",
+        "title": "Ability catalog entry",
+        "summary": "An Ability entry defines commands a unit can expose, together with costs, validators, production choices or Effect entry points according to its concrete ability type.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Abilities",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Abilities",
+            "reviewedAt": "2026-08-29"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/subject-effect",
+        "target": { "kind": "subject", "ecosystem": "starcraft-2", "subjectKind": "Effect" },
+        "locale": "en",
+        "title": "Effect catalog entry",
+        "summary": "An Effect entry is one composable action in an execution chain, such as damage, a set, a persistent sequence, a missile, behavior application or unit creation.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Effects",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Effects",
+            "reviewedAt": "2026-08-29"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/subject-behavior",
+        "target": { "kind": "subject", "ecosystem": "starcraft-2", "subjectKind": "Behavior" },
+        "locale": "en",
+        "title": "Behavior catalog entry",
+        "summary": "A Behavior entry represents persistent state such as buffs, resources or veterancy and can apply periodic effects and modifications while active.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Behaviors",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Behaviors",
+            "reviewedAt": "2026-08-29"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/subject-upgrade",
+        "target": { "kind": "subject", "ecosystem": "starcraft-2", "subjectKind": "Upgrade" },
+        "locale": "en",
+        "title": "Upgrade catalog entry",
+        "summary": "An Upgrade entry defines research levels, costs and catalog-field changes; the card reports authored changes without pretending to simulate every runtime modifier.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Upgrades",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Upgrades",
+            "reviewedAt": "2026-08-29"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/subject-button",
+        "target": { "kind": "subject", "ecosystem": "starcraft-2", "subjectKind": "Button" },
+        "locale": "en",
+        "title": "Button catalog entry",
+        "summary": "A Button entry supplies localized command presentation such as a name, tooltip, icon, alert text and hotkey; command-card placement belongs to the owning Unit data.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Buttons",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Buttons",
+            "reviewedAt": "2026-08-29"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/subject-actor",
+        "target": { "kind": "subject", "ecosystem": "starcraft-2", "subjectKind": "Actor" },
+        "locale": "en",
+        "title": "Actor catalog entry",
+        "summary": "An Actor entry connects game-data events to presentation through actor events, models, sounds and messages; it does not itself define unit simulation state.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Actors",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Actors",
+            "reviewedAt": "2026-08-29"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/subject-model",
+        "target": { "kind": "subject", "ecosystem": "starcraft-2", "subjectKind": "Model" },
+        "locale": "en",
+        "title": "Model catalog entry",
+        "summary": "A Model entry points at an M3 or related visual asset and records authored animation, scale and bounds metadata used by presentation systems.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Models",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Models",
+            "reviewedAt": "2026-08-29"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/concept-unit-production-route",
+        "target": {
+          "kind": "concept",
+          "ecosystem": "starcraft-2",
+          "conceptId": "unit-production-route"
+        },
+        "locale": "en",
+        "title": "Verified unit production route",
+        "summary": "Modkit reports production only when resolved relations prove both the owning Unit to Ability edge and a supported production field from that concrete Ability type to the produced Unit.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Abilities",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Abilities",
+            "reviewedAt": "2026-08-29"
+          }
+        ]
+      },
+      {
+        "id": "blizzard.sc2/concept-ability-effect-chain",
+        "target": {
+          "kind": "concept",
+          "ecosystem": "starcraft-2",
+          "conceptId": "ability-effect-chain"
+        },
+        "locale": "en",
+        "title": "Verified ability effect chain",
+        "summary": "Modkit follows only schema-backed Effect execution fields from an Ability and labels unknown effect classes, unverified fields, missing targets and depth caps instead of inferring gameplay.",
+        "claimKind": "documented-interpretation",
+        "confidence": "high",
+        "sources": [
+          {
+            "kind": "community-wiki",
+            "title": "SC2Mapster Data/Effects",
+            "url": "https://sc2mapster.wiki.gg/wiki/Data/Effects",
+            "reviewedAt": "2026-08-29"
+          }
+        ]
+      }
+    ]
+  }
+}

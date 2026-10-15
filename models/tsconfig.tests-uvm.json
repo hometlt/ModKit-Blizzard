@@ -1,0 +1,41 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": false,
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["node"]
+  },
+  "files": [
+    "test/uvm-conversion-render.ts",
+    "test/m3-uvm-volumes.test.ts",
+    "test/m3-uvm-mesh-fixture.ts",
+    "test/m3-uvm-native-patch.ts",
+    "test/m3-uvm-edit-host.test.ts",
+    "test/m3-uvm-world-material.test.ts",
+    "test/m3-uvm-textured-corpus.test.ts",
+    "test/m3a-uvm-session.ts",
+    "test/m3a-uvm-rigid-bodies.test.ts",
+    "test/fixtures/rigid-body.ts",
+    "test/m3a-standalone.test.ts",
+    "test/m3-uvm-physics-binding.test.ts",
+    "test/m3-degenerate-rigid-shapes.test.ts",
+    "test/m3-displacement-material.test.ts",
+    "test/m3-variation-animation-ids.test.ts",
+    "test/m3-material-layer-animation-ids.test.ts",
+    "test/m3-uvm-physics-corpus.test.ts",
+    "test/fixtures/physics-layout.ts",
+    "test/fixtures/physics-proof.ts",
+    "test/m3a-binding.test.ts",
+    "test/fixtures/m3a-material-binding.ts",
+    "test/m3-uvm-material-export.test.ts",
+    "test/fixtures/m3-material-export.ts",
+    "test/m3-uvm-strings.test.ts",
+    "test/m3-uvm-effects.test.ts",
+    "test/m3a-effect-binding.test.ts",
+    "test/m3a-effects-host.test.ts",
+    "test/m3-uvm-write-operation.test.ts",
+    "test/m3-cli-scene.test.ts",
+    "test/fixtures/m3a-effect-binding.ts"
+  ]
+}

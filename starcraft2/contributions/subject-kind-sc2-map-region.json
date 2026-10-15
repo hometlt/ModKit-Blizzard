@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "contract": { "id": "modkit/subject-kind-definition", "major": 1 },
+  "id": "blizzard/sc2-map-region-kind",
+  "displayName": "StarCraft II map region",
+  "spec": { "kindId": "sc2-map-region", "label": "StarCraft II map region" }
+}

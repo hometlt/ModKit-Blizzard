@@ -1,0 +1,181 @@
+{
+  "$comment": [
+    "MK2 operation -> MK3 operation, stated rather than guessed.",
+    "MK2 named operations after their handler ('patchValue', 'exportRaw'); MK3 names them after the",
+    "contract ('edit.content', 'export.raw'). No heuristic should be trusted to connect those, so",
+    "each pair is written here and check-operation-parity.mjs verifies both ends still exist.",
+    "A value of { absent: <reason> } records an MK2 operation MK3 deliberately does not offer.",
+    "It is checked too: the gate fails when the named MK3 id later appears, so the note cannot rot."
+  ],
+  "codecs": {
+    "sc2-bank": {
+      "legacySnapshot": {
+        "source": "src/lib/mk2/codecs/sc2-bank/src/describe.ts",
+        "sha256": "7d1d069fbaea9ad7530a2b56000414455fe80211cc47997b4652babc9eb08e45",
+        "capturedAt": "2026-09-13",
+        "operations": [
+          { "name": "inspect", "state": "available" },
+          { "name": "validate", "state": "available" },
+          { "name": "patchValue", "state": "available" },
+          { "name": "saveAs", "state": "available" },
+          { "name": "exportRaw", "state": "available" },
+          { "name": "sign", "state": "disabled" }
+        ]
+      },
+      "contribution": "modules/banks/codecs/bank/codec.json",
+      "operations": {
+        "inspect": "view.inspect",
+        "validate": "asset.validate",
+        "exportRaw": "export.raw",
+        "patchValue": "edit.content",
+        "saveAs": "source.save-as",
+        "sign": "blizzard/sc2-bank.sign"
+      }
+    },
+    "sc2-data": {
+      "mk2Source": "modules/data/shared/format/describe.ts",
+      "contribution": "modules/data/codecs/sc2data/codec.json",
+      "operations": {
+        "inspect": "view.inspect",
+        "query": "asset.search",
+        "resolveInheritance": "blizzard/sc2-data.resolve-inheritance",
+        "references": "blizzard/sc2-data.references",
+        "diagnostics": "asset.validate",
+        "compare": "asset.compare",
+        "edit": "edit.content",
+        "export": "export.convert",
+        "entityCards": "blizzard/sc2-data.entity-cards"
+      }
+    },
+    "sc2-strings": {
+      "legacySnapshot": {
+        "source": "src/lib/mk2/codecs/sc2-strings/src/describe.ts",
+        "sha256": "8fbafba213267f5a2a623810670ed247de829047ac27aac91f8715add56099d7",
+        "capturedAt": "2026-09-13",
+        "operations": [
+          { "name": "browse", "state": "available" },
+          { "name": "resolveFallback", "state": "dependency-required" },
+          { "name": "resolveMarkup", "state": "available" },
+          { "name": "diagnostics", "state": "available" },
+          { "name": "references", "state": "available" },
+          { "name": "compare", "state": "dependency-required" },
+          { "name": "edit", "state": "available" },
+          { "name": "export", "state": "available" },
+          { "name": "translate", "state": "available" },
+          { "name": "gitChanges", "state": "disabled" },
+          { "name": "source.save", "state": "disabled" }
+        ]
+      },
+      "contribution": "modules/strings/codecs/strings/codec.json",
+      "operations": {
+        "browse": "view.inspect",
+        "diagnostics": "asset.validate",
+        "references": "blizzard/sc2-strings.references",
+        "resolveFallback": "blizzard/sc2-strings.resolve-fallback",
+        "resolveMarkup": "blizzard/sc2-strings.render",
+        "compare": "asset.compare",
+        "edit": "edit.content",
+        "export": "export.convert",
+        "translate": "blizzard/sc2-strings.translate",
+        "gitChanges": {
+          "absent": "MK2 declared it disabled: version control is the host's, not a codec's. MK3 has no such operation and should not.",
+          "mk3": "blizzard/sc2-strings.git-changes"
+        }
+      }
+    },
+    "sc2-triggers": {
+      "legacySnapshot": {
+        "source": "modules/triggers/codecs/triggers/legacy/describe.ts",
+        "sha256": "d5f80456ddcc8df82a15b95d1911ba09dba82cfc3fcb42ab6f84f06f6b11d99f",
+        "capturedAt": "2026-09-13",
+        "operations": [
+          { "name": "parse", "state": "available" },
+          { "name": "symbols", "state": "available" },
+          { "name": "references", "state": "available" },
+          { "name": "diagnostics", "state": "available" },
+          { "name": "search", "state": "available" },
+          { "name": "convert", "state": "available" },
+          { "name": "compare", "state": "dependency-required" },
+          { "name": "edit", "state": "dependency-required" },
+          { "name": "completion", "state": "disabled" },
+          { "name": "formatting", "state": "disabled" },
+          { "name": "refactor", "state": "disabled" },
+          { "name": "compile", "state": "disabled" }
+        ]
+      },
+      "contribution": "modules/triggers/codecs/triggers/codec.json",
+      "operations": {
+        "parse": "view.inspect",
+        "symbols": "script.symbols",
+        "references": "script.references",
+        "diagnostics": "asset.validate",
+        "search": "asset.search",
+        "compare": "asset.compare",
+        "convert": "export.convert",
+        "edit": "edit.content",
+        "completion": {
+          "absent": "MK2 declares it not-implemented ('Trigger XML completion, formatting, and identifier-level refactor operations are not implemented'). Parity means MK3 need not offer it either; offering it would be new work, not a port.",
+          "mk3": "script.completion"
+        },
+        "formatting": {
+          "absent": "Not implemented in MK2, same reason as completion.",
+          "mk3": "script.format"
+        },
+        "refactor": {
+          "absent": "Not implemented in MK2; the catalog-driven gamelink rename is a separate operation and is available as edit.content.",
+          "mk3": "edit.structure"
+        },
+        "compile": {
+          "absent": "Disabled in MK2: compilation belongs to the separately permissioned runtime codec.",
+          "mk3": "blizzard/sc2-triggers.compile"
+        }
+      }
+    },
+    "galaxy": {
+      "legacySnapshot": {
+        "source": "modules/galaxy/codecs/galaxy/legacy/describe.ts",
+        "sha256": "de1430be83644c0fc66d7a02edb24a141380276bda4f9b2ae3fc7f26bf05d1f7",
+        "capturedAt": "2026-09-13",
+        "operations": [
+          { "name": "parse", "state": "available" },
+          { "name": "symbols", "state": "available" },
+          { "name": "references", "state": "available" },
+          { "name": "diagnostics", "state": "available" },
+          { "name": "completion", "state": "available" },
+          { "name": "formatting", "state": "available" },
+          { "name": "refactor", "state": "available" },
+          { "name": "convert", "state": "available" },
+          { "name": "compile", "state": "disabled" }
+        ]
+      },
+      "contribution": "modules/galaxy/codecs/galaxy/codec.json",
+      "operations": {
+        "parse": "view.inspect",
+        "symbols": "script.symbols",
+        "references": "script.references",
+        "diagnostics": "asset.validate",
+        "completion": "script.completion",
+        "formatting": "script.format",
+        "refactor": "edit.structure",
+        "convert": "export.convert",
+        "compile": {
+          "absent": "Disabled in MK2: execution and compilation are the runtime codec's, under its own permissions.",
+          "mk3": "blizzard/galaxy.compile"
+        }
+      }
+    },
+    "sc2-layout": {
+      "mk2Source": "modules/layout/shared/format/describe.ts",
+      "contribution": "modules/layout/codecs/layout/codec.json",
+      "operations": {
+        "parse": "blizzard/sc2-layout.parse",
+        "resolve": "blizzard/sc2-layout.resolve",
+        "validate": "asset.validate",
+        "render": "view.render",
+        "exportHtml": "export.convert",
+        "inspect": "view.inspect",
+        "raw": "export.raw"
+      }
+    }
+  }
+}

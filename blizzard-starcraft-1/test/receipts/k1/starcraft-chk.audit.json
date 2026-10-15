@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "codec": "starcraft-chk",
+  "corpusKind": "synthetic",
+  "verdict": "pass",
+  "tests": {
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "source-feature-audit",
+    "oracle": "the MK2 codec (references/modkitmk2/extensions/blizzard/starcraft-1/codecs/starcraft-chk at 1a14ba4eddd0ae88de273348ebd44cfb98a0581d) is its manifest alone, planned and unsupported; every extension it names against the MK3 carrier that matches it, and the carrier run on a file written for the test",
+    "suite": "modkit-extensions-blizzard/blizzard-starcraft-1/test/k1-sc1-manifest-audits.test.ts",
+    "samples": [
+      {
+        "name": "authored.chk",
+        "builder": "modkit-extensions-blizzard/blizzard-starcraft-1/test/sc1-fixtures.ts#authoredScenario",
+        "sha256": "8e99211fb452dd1cc93e35fbb71356bc7c0e9ee049da72e8391fe8b2dec9f74d"
+      },
+      {
+        "name": "mk2 codec.manifest.json",
+        "fixture": "references/modkitmk2/extensions/blizzard/starcraft-1/codecs/starcraft-chk/codec.manifest.json",
+        "sha256LF": "6103ce9060cf5d396c33836616d397f185e2891fc96eec64c71be81f0c57e1d5"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "mk2-source:files",
+      "verdict": "identical",
+      "resultDigest": "a714a2d5317692b8e1d331c1b2bcaac50083de7fa340e6a32bea06a9e51e8bf0",
+      "mk3Operation": "no MK2 source to carry"
+    },
+    {
+      "id": "mk2-manifest:runtimeVariants",
+      "verdict": "identical",
+      "resultDigest": "0910687d65dd0269c754ca4dd17eb69794565ee5a641e27dbcff13303f0f5cd7",
+      "mk3Operation": "no MK2 runtime to carry"
+    },
+    {
+      "id": "mk2-manifest:match.extensions",
+      "verdict": "identical",
+      "resultDigest": "ced87c94e74a407317bb3788a4dd040d205b2512311439c8ae256c1f1accc3d0",
+      "mk3Operation": "modkit-extensions-blizzard/blizzard-starcraft-1/contributions/codec-starcraft1-chk.json, modkit-extensions-blizzard/blizzard-starcraft-1/contributions/codec-starcraft1-map.json"
+    },
+    {
+      "id": "mk3-carrier:view.inspect",
+      "verdict": "identical",
+      "resultDigest": "bf6f5b87761821dd9ff1551c85c26e68abce797cef686dda13b028d3e5185461",
+      "mk3Operation": "blizzard/starcraft1-chk view.inspect"
+    },
+    {
+      "id": "mk3-carrier:map.layer-read",
+      "verdict": "identical",
+      "resultDigest": "5078a45ae26c0dd70b27a2e9dc98ed301713d298adb66ff715259ee596be3453",
+      "mk3Operation": "blizzard/starcraft1-chk map.layer-read"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/starcraft-chk/audit",
+      "kind": "audit",
+      "adapterOperation": "source-feature-audit",
+      "targetOperation": "source-feature-audit",
+      "handlerId": "source-feature-audit",
+      "contribution": "modkit-extensions-blizzard/blizzard-starcraft-1/contributions/codec-starcraft1-chk.json",
+      "executed": true,
+      "caseIds": [
+        "mk2-source:files",
+        "mk2-manifest:runtimeVariants",
+        "mk2-manifest:match.extensions",
+        "mk3-carrier:view.inspect",
+        "mk3-carrier:map.layer-read"
+      ]
+    }
+  ]
+}

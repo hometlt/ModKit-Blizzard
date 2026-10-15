@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "codec": "sc2-triggers",
+  "source": "synthetic/Triggers",
+  "findings": [
+    {
+      "codec": "sc2-triggers",
+      "source": "synthetic/Triggers",
+      "kind": "EngineRawExpression",
+      "reason": "source-preserving-custom-script",
+      "language": "trigger-script",
+      "code": "CustomScriptExpression()",
+      "libraryId": "Synthetic",
+      "functionName": "Custom",
+      "evidence": {
+        "format": "sc2-triggers",
+        "fileName": "synthetic/Triggers",
+        "elementId": "CustomScript"
+      }
+    },
+    {
+      "codec": "sc2-triggers",
+      "source": "synthetic/Triggers",
+      "kind": "EngineRawStatement",
+      "reason": "unsupported-lowering",
+      "language": "galaxy",
+      "code": "unsupported();",
+      "libraryId": "Synthetic",
+      "functionName": "Unsupported",
+      "evidence": {
+        "format": "galaxy",
+        "fileName": "synthetic/Lib.galaxy",
+        "elementType": "SyntheticUnsupported"
+      }
+    }
+  ],
+  "diagnostics": [],
+  "summary": {
+    "unsupported-lowering": 1,
+    "source-preserving-custom-script": 1
+  },
+  "nonExecutable": {
+    "comments": 1
+  }
+}

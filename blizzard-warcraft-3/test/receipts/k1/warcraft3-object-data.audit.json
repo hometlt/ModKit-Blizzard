@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "codec": "warcraft3-object-data",
+  "corpusKind": "synthetic",
+  "verdict": "pass",
+  "tests": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "source-feature-audit",
+    "oracle": "the MK2 codec (references/modkitmk2/extensions/blizzard/warcraft-3/codecs/warcraft3-object-data at 1a14ba4eddd0ae88de273348ebd44cfb98a0581d) is its manifest alone, planned and unsupported; every extension it names against the MK3 carrier that matches it, and the carrier run on a file written for the test",
+    "suite": "modkit-extensions-blizzard/blizzard-warcraft-3/test/k1-war3-manifest-audits.test.ts",
+    "samples": [
+      {
+        "name": "authored.w3u",
+        "builder": "modkit-extensions-blizzard/blizzard-warcraft-3/test/war3-fixtures.ts#authoredUnitChanges",
+        "sha256": "7e151a664b5f9da1e46144d14ae73746c266852cfab4ab44f5bcb252ce537c4b"
+      },
+      {
+        "name": "mk2 codec.manifest.json",
+        "fixture": "references/modkitmk2/extensions/blizzard/warcraft-3/codecs/warcraft3-object-data/codec.manifest.json",
+        "sha256LF": "01ae82a503d4004f03c18afed3eaf5cd3502ebce1bd59d00480f9e500da0d7e1"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "mk2-source:files",
+      "verdict": "identical",
+      "resultDigest": "a714a2d5317692b8e1d331c1b2bcaac50083de7fa340e6a32bea06a9e51e8bf0",
+      "mk3Operation": "no MK2 source to carry"
+    },
+    {
+      "id": "mk2-manifest:runtimeVariants",
+      "verdict": "identical",
+      "resultDigest": "0910687d65dd0269c754ca4dd17eb69794565ee5a641e27dbcff13303f0f5cd7",
+      "mk3Operation": "no MK2 runtime to carry"
+    },
+    {
+      "id": "mk2-manifest:match.extensions",
+      "verdict": "identical",
+      "resultDigest": "8f2f76f8946087f26f85117e019111439c947fb2c59dbfa6af146622c3b76529",
+      "mk3Operation": "modkit-extensions-blizzard/blizzard-warcraft-3/contributions/codec-war3-object-mods.json, modkit-core/extensions/data/contributions/codec-slk.json"
+    },
+    {
+      "id": "mk3-carrier:table-data-source",
+      "verdict": "identical",
+      "resultDigest": "c5c809c2caf799bbd2c54d051f5a1decb07626b2acf6e9e8202989450b12c3bd",
+      "mk3Operation": "blizzard/war3-object-mods table-data-source"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/warcraft3-object-data/audit",
+      "kind": "audit",
+      "adapterOperation": "source-feature-audit",
+      "targetOperation": "source-feature-audit",
+      "handlerId": "source-feature-audit",
+      "contribution": "modkit-extensions-blizzard/blizzard-warcraft-3/contributions/codec-war3-object-mods.json",
+      "executed": true,
+      "caseIds": [
+        "mk2-source:files",
+        "mk2-manifest:runtimeVariants",
+        "mk2-manifest:match.extensions",
+        "mk3-carrier:table-data-source"
+      ]
+    }
+  ]
+}

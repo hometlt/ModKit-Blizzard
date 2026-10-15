@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "contract": { "id": "modkit/subject-kind-definition", "major": 1 },
+  "id": "blizzard/sc2-height-map-kind",
+  "displayName": "StarCraft II terrain height map",
+  "spec": { "kindId": "sc2-height-map", "label": "StarCraft II terrain height map" }
+}

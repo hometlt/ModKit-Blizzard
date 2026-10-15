@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/starcraft1-installation",
+  "displayName": "StarCraft installation discovery",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node-windows",
+      "entrypoint": "./providers/sc1-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ],
+        "operatingSystems": [
+          "windows"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "trusted-node-portable",
+      "entrypoint": "./providers/sc1-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ],
+        "operatingSystems": [
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "node-worker-windows",
+      "entrypoint": "./providers/sc1-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker"
+        ],
+        "operatingSystems": [
+          "windows"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "node-worker-portable",
+      "entrypoint": "./providers/sc1-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker"
+        ],
+        "operatingSystems": [
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "starcraft1-installation-v1",
+        "contract": "common.game/installation-discovery",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": [
+            "blizzard/starcraft-1"
+          ]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Discovery is bounded to configured paths, the MODKIT_STARCRAFT1_ROOT environment root, the registry values the installers write (the Remastered uninstall entry and the Blizzard Entertainment\\Starcraft InstallPath) read through the host's installation probes, and platform defaults; it never scans a drive.",
+    "Remastered is confirmed by the active record in .build.info naming the StarCraft CASC product (s1, or the sc1 CDN path when the product column is empty). A classic 1.x installation is confirmed by StarDat.mpq beside StarCraft.exe or storm.dll, and is named Brood War when BrooDat.mpq is present.",
+    "No version is reported for a classic installation: it has no build record, and reading the version resource of its executable is not implemented.",
+    "Launching, provisioning and content mounting are outside this provider."
+  ]
+}

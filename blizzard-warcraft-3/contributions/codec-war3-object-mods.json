@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/war3-object-mods",
+  "displayName": "Warcraft III object-editor changes",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./src/war3-object-mods/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./src/war3-object-mods/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Reads the object editor's changes (.w3u units, .w3t items, .w3b destructables, .w3d doodads, .w3a abilities, .w3h buffs, .w3q upgrades — files and war3map.* inside a map) with the vendored mdx-m3-viewer parsers (MIT): changed standard objects, custom objects and their base, each change with its field id, level, data column, type and value, as a tree and one table.",
+    "Read only. Format 3 is an opaque integer array followed by one modification list per object, not repeated sets. Inspection preserves/displays the complete header and changes; the native parser/writer preserves the opaque integers and refuses a lossy downgrade. Unknown-header semantics are not inferred. Resolved object data admits only empty or single-zero v3 headers and diagnoses other headers without applying the document. Native World Editor acceptance of this v3 profile is not yet verified."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "war3-object-mods",
+        "label": "Warcraft III object-editor changes"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "authored"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full"
+    ],
+    "match": {
+      "extensions": [
+        "w3u",
+        "w3t",
+        "w3b",
+        "w3d",
+        "w3a",
+        "w3h",
+        "w3q"
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 8
+        }
+      ],
+      "maxBytes": 8
+    },
+    "representations": [
+      {
+        "id": "flow-metadata",
+        "contract": "common.document/flow-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": true
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "none"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "268435456",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    }
+  }
+}

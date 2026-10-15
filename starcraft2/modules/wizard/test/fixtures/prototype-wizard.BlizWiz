@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The prototype wizard, reassembled from the examples in Blizzard's own format specification:
+    mods/core.sc2mod/base.sc2data/editordata/wizardhelp/fileformat.rtf.
+
+    Provenance: spec-derived, not saved by the StarCraft II Editor. Every element and attribute
+    below appears verbatim in that document; the file that ties them together is ours, because the
+    game ships the documentation and no wizard files at all.
+-->
+<wizardfile>
+    <wizard id="PrototypeWizard">
+        <name>Prototype Wizard</name>
+        <description>Example wizard definition illustrating the complete file format</description>
+        <category>Test/Prototypes</category>
+        <objecttypes create="Unit;Actor;Model" load="Unit;Actor" view="Unit"/>
+        <instructions page="1">
+            This wizard illustrates all possible wizard functionality.
+            - Creates a unit, actor, and model entry
+            - Enter 'math' in the string input for sample arithmetic expressions
+        </instructions>
+
+        <condition id="HasOlives" input="ExtraMenu" visible="1" value="oliv"/>
+        <condition id="BestPizza" logic="and">
+            <condition input="ExtraMenu" value="oliv"/>
+            <condition input="OliveType" value="black"/>
+            <condition input="CrustType" value="deep"/>
+        </condition>
+
+        <input id="SimpleString" type="CStringLink">
+            <name>String</name>
+            <tooltip>Simple string value input (CStringLink)</tooltip>
+            <simpletext/>
+            <default value="Prototype"/>
+        </input>
+        <input id="SimpleInteger" type="int32">
+            <name>Integer</name>
+            <tooltip>Simple integer value input (int32)</tooltip>
+            <default value="5"/>
+            <minimum value="0"/>
+            <maximum value="100"/>
+            <increment value="1"/>
+        </input>
+        <input id="SimpleReal" type="real32">
+            <name>Real</name>
+            <tooltip>Simple real value input (real32)</tooltip>
+            <default value="0"/>
+            <minimum value="-100"/>
+            <maximum value="100"/>
+            <condition input="SimpleString" value="math"/>
+        </input>
+        <input id="BaseValue" type="CStringLink">
+            <name>Base Value</name>
+            <default value="Some Long Name"/>
+            <nosave/>
+        </input>
+        <input id="ExtraMenu" type="WizardMenu">
+            <name>Extras</name>
+            <item value="none" text="None"/>
+            <item value="oliv" text="Olives"/>
+            <item value="mush" text="Mushrooms"/>
+            <sorted/>
+            <default value="none"/>
+        </input>
+        <input id="OliveType" type="WizardRadio">
+            <name>Olive Type</name>
+            <item value="green" text="Green"/>
+            <item value="black" text="Black"/>
+            <default value="green"/>
+            <condition id="HasOlives"/>
+        </input>
+        <input id="CrustType" type="WizardRadio">
+            <name>Crust Type</name>
+            <item value="thin" text="Thin"/>
+            <item value="deep" text="Deep Dish"/>
+            <default value="thin"/>
+        </input>
+        <input id="MathPreview" type="WizardText">
+            <name>Math</name>
+            <color value="255,128,0,0"/>
+            <loadvalue>^TestMath3^</loadvalue>
+            <reloadfrom>SimpleInteger</reloadfrom>
+            <nopreview/>
+            <layout page="2" column="1"/>
+        </input>
+
+        <validate type="error">
+            <condition input="SimpleString" empty="0"/>
+            <text>String is empty</text>
+        </validate>
+        <validate type="confirm">
+            <condition id="BestPizza"/>
+            <text>That is a lot of olives. Continue?</text>
+        </validate>
+        <validate type="warning">
+            <condition input="SimpleString" value="math" logic="not"/>
+            <text>Math test #1: i * 2 + 1 = ^TestMath1^</text>
+        </validate>
+
+        <macro id="EntryId">PrototypeWizardUnit_^SimpleString^</macro>
+        <macro id="TestMath1">^SimpleInteger^ * 2 + 1</macro>
+        <macro id="TestMath3">((^SimpleInteger^ - 1) * 2) / 8</macro>
+        <macro id="KillPlusLost">ref=Unit,^LOADID^,ScoreKill + ref=Unit,^LOADID^,ScoreLost</macro>
+        <macro id="RemoveSpaces" replaceSrc=" " replaceDst="">^BaseValue^</macro>
+        <macro id="SpaceToUnderscore" replaceSrc=" " replaceDst="_">^BaseValue^</macro>
+        <macro id="Truncate" truncate="4">^BaseValue^</macro>
+        <macro id="RemoveSpacesThenTruncate" truncate="4">^RemoveSpaces^</macro>
+
+        <entry catalog="Unit" type="CUnit">
+            <id>^EntryId^</id>
+            <allowmodify/>
+            <field id="Name">
+                <value>^SimpleString^</value>
+                <stringid>Unit/Name/^EntryId^</stringid>
+            </field>
+            <field id="LifeMax">
+                <value>^SimpleInteger^ * 10</value>
+            </field>
+            <token id="race">
+                <value>Terr</value>
+            </token>
+        </entry>
+        <entry catalog="Actor" type="CActorUnit">
+            <id>^EntryId^</id>
+            <field id="WireframeVariations_Number">
+                <index>^VALUEINDEX^ + 1</index>
+                <count>5</count>
+                <value>^SimpleInteger^ + ^VALUEINDEX^</value>
+            </field>
+            <condition input="ExtraMenu" value="none" logic="not"/>
+        </entry>
+    </wizard>
+</wizardfile>

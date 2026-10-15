@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "../node_modules/.cache/casc/tsconfig.tsbuildinfo"
+  },
+  "include": ["src/casc/installation.ts", "src/casc/cdn-archives.ts", "src/casc/wow-root.ts"]
+}

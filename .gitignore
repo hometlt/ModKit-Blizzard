@@ -1,0 +1,28 @@
+node_modules/
+dist/
+coverage/
+artifacts/
+.cache/
+*.tsbuildinfo
+.env
+.env.*
+.tmp/
+
+# Reproducible Galaxy Native API adapter generated from the tracked JSON catalog.
+starcraft2/modules/galaxy/language/native-api.generated.js
+
+# Local compiler experiments and game-derived inputs are not publication payloads.
+.benchmark-build/
+.benchmark-fix-check/
+models/test/fixtures/m3/corpus/Harbinger.m3
+models/test/fixtures/m3/corpus/aiur_cliffrocks_00.m3
+models/test/fixtures/m3/corpus/analysisterminal.m3
+models/test/fixtures/m3/corpus/portrait.m3
+models/test/fixtures/m3/cybros-cover.m3a.b64
+models/test/fixtures/m3/model.m3
+starcraft2/modules/galaxy/data/galaxy-script-api.v1.json
+starcraft2/test/fixtures/replays/Gresvan-LE.SC2Replay
+starcraft2/test/fixtures/replays/Lost-on-the-Horizon-FFA.SC2Replay
+starcraft2/test/fixtures/replays/Taito-Citadel-LE.SC2Replay
+starcraft2/test/fixtures/replays/Tokamak-LE.SC2Replay
+starcraft2/test/fixtures/replays/early/Wings-of-Liberty-1.1.0.SC2Replay

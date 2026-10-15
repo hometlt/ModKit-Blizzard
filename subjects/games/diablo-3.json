@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "kind": "game",
+  "id": "blizzard/diablo-3",
+  "vendorId": "blizzard",
+  "displayName": "Diablo III",
+  "description": "The Diablo III extension provides bounded inspection of APP appearance data and TEX textures; it does not claim an official general-purpose Diablo III modding API.",
+  "officialSite": "https://diablo3.blizzard.com/",
+  "extensionRequirements": [{ "id": "blizzard/diablo", "importance": "required" }],
+  "capabilityRequirements": [
+    {
+      "id": "assets",
+      "displayName": "Appearance and textures",
+      "importance": "required",
+      "contributionIds": ["blizzard/diablo3-app", "blizzard/diablo3-tex"]
+    }
+  ]
+}

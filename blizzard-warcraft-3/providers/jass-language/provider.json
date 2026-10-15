@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/war3-jass-language",
+  "displayName": "Warcraft III JASS language services",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./providers/jass-language/runtime.js",
+      "target": { "environments": ["node"] },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./providers/jass-language/runtime.js",
+      "target": { "environments": ["browser-worker", "node-worker"] },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "war3-jass-document-analysis-v1",
+        "contract": "common.language/document-analysis",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "languageIds": ["jass"],
+          "extensions": ["j", "jass"],
+          "fileNames": ["common.ai", "human.ai", "orc.ai", "undead.ai", "elf.ai"],
+          "signatureHelpTriggerCharacters": ["(", ","]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "JASS 2 as common.j, Blizzard.j, the AI scripts and war3map.j write it; vJASS is not parsed.",
+    "Names resolve across the JASS documents of the workspace. The game's common.j and Blizzard.j reach a map script only when they are in that workspace; undefined names are reported only when the workspace holds natives.",
+    "Types are checked by name only: expressions are not type-checked."
+  ]
+}

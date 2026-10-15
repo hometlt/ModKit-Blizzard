@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/modules/map/codecs/documents/hard-tile/src/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./dist/modules/map/codecs/documents/hard-tile/src/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Observed v102 structure only; unknown fields remain explicit. Spline inference and UVW projection are not implemented by this codec.",
+    "Replacing groups intentionally replaces their opaque fields; the raw-default writer remains byte-exact."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "sc2-hard-tile",
+        "label": "StarCraft II hard tiles"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "single",
+    "artifactStages": [
+      "authored"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "pathGlobs": [
+        "**/t3HardTile",
+        "**/mapHardTile"
+      ],
+      "signatures": [
+        {
+          "from": "start",
+          "offset": 0,
+          "bytesHex": "48524454"
+        }
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 64
+        }
+      ],
+      "maxBytes": 64
+    },
+    "representations": [
+      {
+        "id": "hard-tile",
+        "contract": "common.document/grid",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-hard-tile.repair-group-keys",
+        "handlerId": "repair-group-keys",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-hard-tile.replace-groups",
+        "handlerId": "replace-groups",
+        "inputSchema": {
+          "$ref": "modkit://blizzard/sc2-hard-tile/replace-groups.v1",
+          "document": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "groups"
+            ],
+            "description": "Replace all native v102 groups. Header is preserved. Every opaque field must be explicit; duplicate group words are refused. This is not a portable road-chain input.",
+            "properties": {
+              "groups": {
+                "type": "array",
+                "maxItems": 16384,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "maxLength": 255,
+                      "pattern": "^[^\\u0000]*$"
+                    },
+                    "flags": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 255
+                      },
+                      "minItems": 3,
+                      "maxItems": 3
+                    },
+                    "tailWord": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 4294967295
+                    },
+                    "subs": {
+                      "type": "array",
+                      "maxItems": 1000000,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "x": {
+                            "type": "number",
+                            "minimum": -3.4028234663852886e+38,
+                            "maximum": 3.4028234663852886e+38
+                          },
+                          "y": {
+                            "type": "number",
+                            "minimum": -3.4028234663852886e+38,
+                            "maximum": 3.4028234663852886e+38
+                          },
+                          "z": {
+                            "type": "number",
+                            "minimum": -3.4028234663852886e+38,
+                            "maximum": 3.4028234663852886e+38
+                          },
+                          "normal": {
+                            "type": "array",
+                            "items": {
+                              "type": "number",
+                              "minimum": -3.4028234663852886e+38,
+                              "maximum": 3.4028234663852886e+38
+                            },
+                            "minItems": 3,
+                            "maxItems": 3
+                          },
+                          "unknownWords": {
+                            "type": "array",
+                            "items": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 4294967295
+                            },
+                            "minItems": 6,
+                            "maxItems": 6
+                          },
+                          "scale": {
+                            "type": "number",
+                            "minimum": -3.4028234663852886e+38,
+                            "maximum": 3.4028234663852886e+38
+                          },
+                          "tailWord": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                          },
+                          "flags": {
+                            "type": "array",
+                            "items": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 255
+                            },
+                            "minItems": 2,
+                            "maxItems": 2
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y",
+                          "z",
+                          "normal",
+                          "unknownWords",
+                          "scale",
+                          "tailWord",
+                          "flags"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "flags",
+                    "tailWord",
+                    "subs"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "traitDeclarations": [
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "content.binary"
+      }
+    ],
+    "fidelityEvidence": [
+      {
+        "formatId": "sc2-hard-tile",
+        "representationId": "hard-tile",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": true,
+          "notes": [
+            "Explicit duplicate-key repair changes only verified group-word offsets; original unique values and all other native bytes survive."
+          ]
+        },
+        "evidenceId": "sc2-hard-tile-group-key-repair-v1",
+        "corpusId": "modkit-extensions-blizzard/starcraft2/modules/map/test/sc2-hard-tile-group-keys.test.ts",
+        "corpusDigest": "none:proof-suite",
+        "conformanceProfile": "modkit/codec-contribution-v1",
+        "optionsFingerprint": "options:none",
+        "inputClass": "complete-hrdt102",
+        "provenAt": "2026-10-14T00:00:00Z"
+      },
+      {
+        "formatId": "sc2-hard-tile",
+        "representationId": "hard-tile",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": false,
+          "notes": [
+            "Explicit complete group replacement preserves the original header and serializes all supplied native fields."
+          ]
+        },
+        "evidenceId": "sc2-hard-tile-structural-groups-v1",
+        "corpusId": "modkit-extensions-blizzard/starcraft2/modules/map/test/sc2-hard-tile-structural.test.ts",
+        "corpusDigest": "none:proof-suite",
+        "conformanceProfile": "modkit/codec-contribution-v1",
+        "optionsFingerprint": "options:none",
+        "inputClass": "complete-hrdt102",
+        "provenAt": "2026-10-14T00:00:00Z"
+      }
+    ]
+  },
+  "id": "blizzard/sc2-hard-tile",
+  "displayName": "StarCraft II hard tiles"
+}

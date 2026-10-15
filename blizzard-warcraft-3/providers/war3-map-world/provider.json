@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/war3-map-world",
+  "displayName": "Warcraft III map world analysis",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./providers/war3-map-world/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "worker-portable",
+      "entrypoint": "./providers/war3-map-world/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker",
+          "browser-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "war3-map-semantic-v1",
+        "contract": "common.map/semantic-analysis",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": [
+            "blizzard/warcraft-3"
+          ]
+        }
+      },
+      {
+        "offerId": "war3-map-resolved-workspace-v1",
+        "contract": "common.map/resolved-workspace",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": [
+            "blizzard/warcraft-3"
+          ]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Terrain: the corners of war3map.w3e, 128 world units apart from its centre offset, each at its ground height plus its cliff level, in the game world frame (x east, y north, z up).",
+    "Cliffs: each cell whose corners stand on different levels is a piece of the installation's cliff model named by those levels (CliffTypes.slk), the corner's variation and every lower one offered so the installation decides; where a cliff cell's ramp flags split it across, the ramp wall model of CliffTypes.slk rampModelDir covers it and the cell down the slope, and a ramp entrance's middle rises half a level (rules adapted from WarsmashModEngine, AGPL-3.0); a piece stands at the mean ground height under it, where the game bends it over that ground. Water: cells with a water corner in zones at the corner's water height plus the tileset's offset, coloured and textured by TerrainArt/Water.slk; the game's per-corner water interpolation and depth colours are not reproduced.",
+    "Terrain materials: each corner's ground tileset (the cliff set's ground next to a cliff), the full-ground tile of its atlas in every cell; each cell also states its tilesets as layers from the lowest, the others over it by the atlas tile of the corners they hold (Warsmash getTextureVariations), drawn once the renderer reads layers; a blighted corner shows its tileset's blight texture (material tile-blight) over the others; the lowest layer's variation tiles (8 x 4 atlases) are not reproduced.",
+    "Objects: the doodads and destructables of war3map.doo and the units and items of war3mapUnits.doo, each with the model its table names after the map's object-editor changes, its variation, angle and scale; start locations are points; units, items and start locations stand on the terrain. Players come from war3map.w3i, each slot in its TeamColorNN colour (twelve slots of 1.24), which tints its units' team-colour layer; regions from war3map.w3r as world-unit rectangles with the editor's colour; cameras from war3map.w3c as camera objects at their target and yaw (distance, angle of attack, roll and field of view are not published). Pathing cells of war3map.wpm are the navigation summary (sampled; the navigation-grid to map-native transform is not declared). Lighting is not published; replaceable textures (trees by texFile, cliffs by set) keep their defaults until the sdk carries per-object texture substitution (WW5). UVW: the map-native transform of ADR-WORLD-003, proved against mdx-m3-viewer (third-party-reference-differential) on (2)BootyBay; the half level of a ramp entrance is drawn only."
+  ]
+}

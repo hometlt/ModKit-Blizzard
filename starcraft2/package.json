@@ -1,0 +1,405 @@
+{
+  "name": "@modkit/blizzard-starcraft2",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "description": "StarCraft II authored-data, layout, localization, map, replay and runtime codecs for MK3.",
+  "exports": {
+    "./codecs/sc2-cutscene": "./modules/cutscene/codecs/cutscene/runtime.js",
+    "./cutscene/provider": "./modules/cutscene/providers/language/runtime.js",
+    "./codecs/sc2-style": "./modules/style/codecs/style/runtime.js",
+    "./codecs/sc2-wizard": "./modules/wizard/codecs/wizard/runtime.js",
+    "./sources/local/node": {
+      "types": "./dist/modules/game/battlenet/content-sources/local-content-sources.d.ts",
+      "default": "./dist/modules/game/battlenet/content-sources/local-content-sources.js"
+    },
+    "./sources/cache/node": {
+      "types": "./dist/modules/game/battlenet/content-sources/cache-source.d.ts",
+      "default": "./dist/modules/game/battlenet/content-sources/cache-source.js"
+    },
+    "./sources/folder/node": {
+      "types": "./dist/modules/game/battlenet/content-sources/local-files.d.ts",
+      "default": "./dist/modules/game/battlenet/content-sources/local-files.js"
+    },
+    "./battlenet/content-sources/node": {
+      "types": "./dist/modules/game/battlenet/content-sources/content-sources.d.ts",
+      "default": "./dist/modules/game/battlenet/content-sources/content-sources.js"
+    },
+    "./battlenet/desktop/node": {
+      "types": "./dist/modules/game/battlenet/desktop/desktop-backend.d.ts",
+      "default": "./dist/modules/game/battlenet/desktop/desktop-backend.js"
+    },
+    "./battlenet/accounts/node": {
+      "types": "./dist/modules/game/battlenet/accounts/account-provider.d.ts",
+      "default": "./dist/modules/game/battlenet/accounts/account-provider.js"
+    },
+    "./battlenet/vfs/node": {
+      "types": "./dist/modules/game/battlenet/content-sources/vfs-provider.d.ts",
+      "default": "./dist/modules/game/battlenet/content-sources/vfs-provider.js"
+    },
+    "./battlenet/sc2arcade": {
+      "types": "./dist/modules/game/battlenet/content-sources/sc2arcade.d.ts",
+      "default": "./dist/modules/game/battlenet/content-sources/sc2arcade.js"
+    },
+    ".": "./modules/game/providers/installation/provider.js",
+    "./data": "./modules/data/services/catalog/provider.js",
+    "./data/runtime-unit-slice": {
+      "types": "./dist/modules/data/services/uvd/unit-slice.d.ts",
+      "default": "./dist/modules/data/services/uvd/unit-slice.js"
+    },
+    "./runtime/subject-composition": "./modules/runtime/services/subject-composition.js",
+    "./runtime/galaxy-spawn-lowering": "./modules/runtime/services/galaxy-spawn-lowering.js",
+    "./schema": "./modules/data/services/schema/full-data-schema.js",
+    "./knowledge-data": "./modules/data/services/knowledge/knowledge-data.js",
+    "./calculations": "./modules/data/services/calculations/index.js",
+    "./facts": "./modules/data/services/projections/subject-facts.js",
+    "./subject-calculations": "./modules/data/services/projections/subject-calculations.js",
+    "./data/graph-isolation": "./modules/data/services/editing/graph-isolation.js",
+    "./data/format": {
+      "types": "./dist/modules/data/shared/format/index.d.ts",
+      "default": "./dist/modules/data/shared/format/index.js"
+    },
+    "./data/references": {
+      "types": "./modules/data/shared/format/language/references.ts",
+      "default": "./dist/modules/data/shared/format/language/references.js"
+    },
+    "./data/catalog": {
+      "types": "./modules/data/shared/catalog-engine/sc2-catalog/index.ts",
+      "default": "./dist/modules/data/shared/catalog-engine/sc2-catalog/index.js"
+    },
+    "./data/authoring-index": {
+      "types": "./modules/data/services/catalog/authoring-index.ts",
+      "default": "./dist/modules/data/services/catalog/authoring-index.js"
+    },
+    "./data/catalog-analysis": {
+      "types": "./modules/data/services/catalog/catalog-analysis.ts",
+      "default": "./dist/modules/data/services/catalog/catalog-analysis.js"
+    },
+    "./data/context-workspace-projection": {
+      "types": "./modules/data/services/catalog/context-workspace-projection.ts",
+      "default": "./dist/modules/data/services/catalog/context-workspace-projection.js"
+    },
+    "./data/data-session": {
+      "types": "./modules/data/services/catalog/data-session.ts",
+      "default": "./dist/modules/data/services/catalog/data-session.js"
+    },
+    "./data/engine-resolution": {
+      "types": "./modules/data/services/catalog/engine-resolution.ts",
+      "default": "./dist/modules/data/services/catalog/engine-resolution.js"
+    },
+    "./data/entity-cards": {
+      "types": "./modules/data/codecs/sc2data/src/entity-cards.ts",
+      "default": "./dist/modules/data/codecs/sc2data/src/entity-cards.js"
+    },
+    "./data/gamedata-order": {
+      "types": "./modules/data/shared/catalog-engine/gamedata-order.ts",
+      "default": "./dist/modules/data/shared/catalog-engine/gamedata-order.js"
+    },
+    "./data/xml": {
+      "types": "./modules/data/shared/catalog-engine/xml/index.ts",
+      "default": "./dist/modules/data/shared/catalog-engine/xml/index.js"
+    },
+    "./data/schema": {
+      "types": "./dist/modules/data/shared/catalog-engine/sc2-schema/index.d.ts",
+      "default": "./dist/modules/data/shared/catalog-engine/sc2-schema/index.js"
+    },
+    "./data/editor": {
+      "types": "./dist/modules/data/shared/catalog-engine/sc2-editor-core/index.d.ts",
+      "default": "./dist/modules/data/shared/catalog-engine/sc2-editor-core/index.js"
+    },
+    "./layout/format": {
+      "types": "./dist/modules/layout/shared/format/index.d.ts",
+      "default": "./dist/modules/layout/shared/format/index.js"
+    },
+    "./layout/core": {
+      "types": "./dist/modules/layout/shared/layout-engine/sc2-layout-core/index.d.ts",
+      "default": "./dist/modules/layout/shared/layout-engine/sc2-layout-core/index.js"
+    },
+    "./layout/parse": {
+      "types": "./dist/modules/layout/shared/layout-engine/sc2-layout-core/simple-parse/index.d.ts",
+      "default": "./dist/modules/layout/shared/layout-engine/sc2-layout-core/simple-parse/index.js"
+    },
+    "./layout/runtime": {
+      "types": "./dist/modules/layout/shared/runtime.d.ts",
+      "default": "./dist/modules/layout/shared/runtime.js"
+    },
+    "./layout/rendering": {
+      "types": "./dist/modules/layout/shared/format/rendering/index.d.ts",
+      "default": "./dist/modules/layout/shared/format/rendering/index.js"
+    },
+    "./authoring/authored-text": {
+      "types": "./shared/editing/authored-text-format.d.ts",
+      "default": "./shared/editing/authored-text-format.js"
+    },
+    "./maps": "./modules/map/providers/semantic/runtime.js",
+    "./maps/uvw-converter": "./modules/map/codecs/package/src/uvw-map-converter.js",
+    "./map-preview": "./modules/map/providers/preview/runtime.js",
+    "./map/catalog-usages": {
+      "types": "./modules/map/shared/format/catalog-usages.ts",
+      "default": "./dist/modules/map/shared/format/catalog-usages.js"
+    },
+    "./language/entity-id": {
+      "types": "./shared/language/entity-id.ts",
+      "default": "./dist/shared/language/entity-id.js"
+    },
+    "./launch": "./modules/game/providers/launch/runtime.js",
+    "./game-linked": "./integration/linked.js",
+    "./ts-lane": {
+      "types": "./dist/src/ts-lane/index.d.ts",
+      "default": "./dist/src/ts-lane/index.js"
+    },
+    "./package.json": "./package.json",
+    "./bank/core": {
+      "types": "./dist/modules/banks/codecs/bank/src/core.d.ts",
+      "default": "./dist/modules/banks/codecs/bank/src/core.js"
+    },
+    "./bank/node": {
+      "types": "./dist/modules/banks/codecs/bank/src/node.d.ts",
+      "default": "./dist/modules/banks/codecs/bank/src/node.js"
+    },
+    "./bank/codec": {
+      "types": "./dist/modules/banks/codecs/bank/src/codec.d.ts",
+      "default": "./dist/modules/banks/codecs/bank/src/codec.js"
+    },
+    "./strings/core": {
+      "types": "./dist/modules/strings/shared/core/index.d.ts",
+      "default": "./dist/modules/strings/shared/core/index.js"
+    },
+    "./strings/node": {
+      "types": "./dist/modules/strings/shared/core/node.d.ts",
+      "default": "./dist/modules/strings/shared/core/node.js"
+    },
+    "./galaxy/language-core": {
+      "types": "./dist/modules/galaxy/language-core/index.d.ts",
+      "default": "./dist/modules/galaxy/language-core/index.js"
+    },
+    "./galaxy/language-service": "./modules/galaxy/language/language-service.js",
+    "./galaxy/sc2-workspace-links": "./modules/galaxy/language/sc2-workspace-links.js",
+    "./style/served-definitions": {
+      "types": "./dist/modules/style/providers/language/src/served-definitions.d.ts",
+      "default": "./dist/modules/style/providers/language/src/served-definitions.js"
+    },
+    "./style/language": {
+      "types": "./dist/modules/style/providers/language/src/language.d.ts",
+      "default": "./dist/modules/style/providers/language/src/language.js"
+    },
+    "./wizard/language": {
+      "types": "./dist/modules/wizard/providers/language/src/language.d.ts",
+      "default": "./dist/modules/wizard/providers/language/src/language.js"
+    },
+    "./strings/served-diagnostics": {
+      "types": "./dist/modules/strings/providers/language/src/served-diagnostics.d.ts",
+      "default": "./dist/modules/strings/providers/language/src/served-diagnostics.js"
+    },
+    "./strings/language-keys": {
+      "types": "./dist/modules/strings/providers/language/src/workspace.d.ts",
+      "default": "./dist/modules/strings/providers/language/src/workspace.js"
+    },
+    "./strings/served-keys": {
+      "types": "./dist/modules/strings/providers/language/src/served-keys.d.ts",
+      "default": "./dist/modules/strings/providers/language/src/served-keys.js"
+    },
+    "./layout/served-definitions": {
+      "types": "./modules/layout/providers/language/served-definitions.d.ts",
+      "default": "./modules/layout/providers/language/served-definitions.js"
+    },
+    "./galaxy/served-links": {
+      "types": "./modules/galaxy/language/served-links.d.ts",
+      "default": "./modules/galaxy/language/served-links.js"
+    },
+    "./galaxy/served-references": {
+      "types": "./modules/galaxy/language/served-references.d.ts",
+      "default": "./modules/galaxy/language/served-references.js"
+    },
+    "./mod/served-language-owner": {
+      "types": "./modules/mod/shared/workspace/served-language-owner.d.ts",
+      "default": "./modules/mod/shared/workspace/served-language-owner.js"
+    },
+    "./language/served-feature": {
+      "types": "./shared/language/served-feature.d.ts",
+      "default": "./shared/language/served-feature.js"
+    },
+    "./language/served-rename": {
+      "types": "./shared/language/served-rename.d.ts",
+      "default": "./shared/language/served-rename.js"
+    },
+    "./language/served-project-diagnostics": {
+      "types": "./shared/language/served-project-diagnostics.d.ts",
+      "default": "./shared/language/served-project-diagnostics.js"
+    },
+    "./galaxy/provider": "./modules/galaxy/language/provider.js",
+    "./galaxy/workspace-document-source": "./dist/modules/galaxy/language/workspace/document-source.js",
+    "./galaxy/detection": "./dist/modules/galaxy/services/source-detection.js",
+    "./triggers/detection": "./dist/modules/triggers/services/source-detection.js",
+    "./galaxy/analysis/*": "./dist/modules/galaxy/services/analysis/*",
+    "./triggers/editing/*": "./dist/modules/triggers/services/editing/*",
+    "./triggers/document": "./dist/modules/triggers/shared/trigger-document/index.js",
+    "./triggers/document/*": "./dist/modules/triggers/shared/trigger-document/*",
+    "./triggers/conversion": "./dist/modules/triggers/services/galaxy-conversion/index.js",
+    "./galaxy/analysis": "./dist/modules/galaxy/services/analysis/index.js",
+    "./galaxy/fallback-audit": "./dist/modules/galaxy/services/auditing/fallback-audit.js",
+    "./galaxy/fallback-audit/file": "./dist/modules/galaxy/services/auditing/file-audit.js"
+  },
+  "files": [
+    "assets",
+    "codecs",
+    "modules",
+    "shared",
+    "contributions",
+    "dist",
+    "integration",
+    "providers",
+    "src",
+    "README.md"
+  ],
+  "modkit": {
+    "schemaVersion": 1,
+    "publisher": "blizzard",
+    "id": "starcraft2",
+    "contentSources": "./dist/modules/game/battlenet/content-sources/local-content-sources.js",
+    "languageFiles": [
+      {
+        "extension": "xml",
+        "rootElement": "Catalog",
+        "languageId": "sc2-data"
+      }
+    ],
+    "credentials": [
+      {
+        "id": "blizzard/battlenet",
+        "kind": "provider-session",
+        "label": "Battle.net account",
+        "scoped": true
+      }
+    ],
+    "presentation": {
+      "displayName": "Blizzard StarCraft II Data",
+      "description": "StarCraft II Data authored-data, layout, localization, map, replay and runtime codecs for MK3.",
+      "vendor": {
+        "id": "blizzard",
+        "displayName": "Blizzard"
+      },
+      "games": [
+        {
+          "id": "blizzard/starcraft-2",
+          "displayName": "StarCraft II"
+        }
+      ],
+      "icon": {
+        "path": "assets/icons/blizzard-starcraft2-placeholder.svg",
+        "mediaType": "image/svg+xml"
+      }
+    },
+    "contributionManifests": [
+      "./contributions/*.json",
+      "./modules/style/codecs/style/codec.json",
+      "./modules/style/providers/language/provider.json",
+      "./modules/wizard/codecs/wizard/codec.json",
+      "./modules/wizard/providers/language/provider.json",
+      "./modules/cutscene/codecs/cutscene/codec.json",
+      "./modules/cutscene/providers/language/provider.json",
+      "./modules/banks/codecs/bank/codec.json",
+      "./modules/banks/codecs/bank-list/codec.json",
+      "./modules/banks/providers/language/provider.json",
+      "./modules/strings/codecs/strings/codec.json",
+      "./modules/strings/providers/language/provider.json",
+      "./modules/layout/codecs/layout/codec.json",
+      "./modules/layout/providers/language/provider.json",
+      "./modules/triggers/codecs/triggers/codec.json",
+      "./modules/triggers/providers/language/provider.json",
+      "./modules/data/codecs/sc2data/codec.json",
+      "./modules/data/providers/language/provider.json",
+      "./modules/data/providers/catalog-analysis/provider.json",
+      "./modules/data/providers/resolved-data/provider.json",
+      "./modules/game/providers/installation/provider.json",
+      "./modules/game/providers/launch/provider.json",
+      "./shared/editing/providers/workspace-copy/provider.json",
+      "./shared/editing/providers/authored-text/provider.json",
+      "./modules/galaxy/codecs/galaxy/codec.json",
+      "./modules/map/providers/semantic/provider.json",
+      "./modules/map/providers/preview/provider.json",
+      "./modules/map/providers/language/provider.json",
+      "./modules/map/codecs/documents/attributes/codec.json",
+      "./modules/map/codecs/documents/cell-attribute/codec.json",
+      "./modules/map/codecs/documents/cell-flags/codec.json",
+      "./modules/map/codecs/documents/cliff-level/codec.json",
+      "./modules/map/codecs/documents/custom-ai/codec.json",
+      "./modules/map/codecs/documents/fluff-doodad/codec.json",
+      "./modules/map/codecs/documents/hard-tile/codec.json",
+      "./modules/map/codecs/documents/height-map/codec.json",
+      "./modules/map/codecs/documents/map-info/codec.json",
+      "./modules/map/codecs/documents/objects/codec.json",
+      "./modules/map/codecs/documents/painted-creep/codec.json",
+      "./modules/map/codecs/documents/painted-pathing/codec.json",
+      "./modules/map/codecs/documents/preload-asset-db/codec.json",
+      "./modules/map/codecs/documents/preload/codec.json",
+      "./modules/map/codecs/documents/regions/codec.json",
+      "./modules/map/codecs/documents/sync-height-map/codec.json",
+      "./modules/map/codecs/documents/terrain-xml/codec.json",
+      "./modules/map/codecs/documents/texture-info/codec.json",
+      "./modules/map/codecs/documents/texture-masks/codec.json",
+      "./modules/map/codecs/documents/vertex-color/codec.json",
+      "./modules/map/codecs/documents/water/codec.json",
+      "./modules/map/codecs/package-directory/codec.json",
+      "./modules/map/codecs/package/codec.json",
+      "./modules/mod/codecs/document-metadata/codec.json",
+      "./modules/mod/codecs/mod/codec.json",
+      "./modules/mod/codecs/directory/codec.json",
+      "./modules/replay/codecs/replay/codec.json",
+      "./modules/runtime/codecs/runtime/codec.json",
+      "./modules/runtime/providers/runtime/provider.json",
+      "./modules/campaign/codecs/campaign/codec.json",
+      "./modules/campaign/codecs/directory/codec.json",
+      "./modules/campaign/codecs/data/codec.json",
+      "./modules/galaxy/providers/language/provider.json",
+      "./modules/textures/providers/image-operations/provider.json",
+      "./modules/game/battlenet/codecs/publication-header/codec.json",
+      "./modules/game/battlenet/codecs/publication-locale/codec.json",
+      "./modules/game/battlenet/codecs/queue-header/codec.json",
+      "./modules/game/battlenet/codecs/queue-locale/codec.json"
+    ]
+  },
+  "dependencies": {
+    "@modkit/blizzard-casc": "workspace:*",
+    "@modkit/blizzard-common-formats": "workspace:*",
+    "@modkit/blizzard-mpq": "workspace:*",
+    "@modkit/codec-kit": "file:../vendor/modkit-codec-kit-1.0.0.tgz",
+    "@modkit/core": "file:../vendor/modkit-core-0.1.0.tgz",
+    "@modkit/sdk": "file:../vendor/modkit-sdk-0.1.0.tgz",
+    "@modkit/uv": "file:../vendor/modkit-uv-1.0.0.tgz",
+    "@modkit/vfs": "file:../vendor/modkit-vfs-0.1.0.tgz",
+    "@rgrove/parse-xml": "^4.2.3",
+    "extract-zip": "^1.7.0",
+    "fast-glob": "^3.3.3",
+    "fast-xml-parser": "4.5.6",
+    "fflate": "^0.8.3",
+    "modkit-extension-archives": "file:../vendor/modkit-extension-archives-1.0.0.tgz",
+    "sax": "^1.6.1",
+    "vscode-languageserver": "10.0.1",
+    "vscode-languageserver-textdocument": "1.0.13",
+    "vscode-languageserver-types": "3.18.0",
+    "vscode-uri": "^3.2.0",
+    "xml-js": "^1.6.11",
+    "xml2js": "^0.4.23"
+  },
+  "peerDependencies": {
+    "@modkit/host": ">=0.1.0 <1"
+  },
+  "peerDependenciesMeta": {
+    "@modkit/host": {
+      "optional": true
+    }
+  },
+  "bin": {
+    "modkitx-bank": "./dist/modules/banks/shared/core/cli.js",
+    "modkitx-galaxy-lsp": "./dist/modules/galaxy/language/lsp-cli.js"
+  },
+  "scripts": {
+    "test:battlenet": "tsc -p tsconfig.battlenet.json && node --test modules/game/test/battlenet-*.test.mjs"
+  },
+  "devDependencies": {
+    "@types/xml2js": "^0.4.14",
+    "tsx": "^4.23.15",
+    "vite": "^5.4.21"
+  }
+}

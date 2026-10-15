@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-strings",
+  "displayName": "StarCraft II Localization Strings",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/modules/strings/codecs/strings/src/codec.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./dist/modules/strings/codecs/strings/src/codec.js",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "The native adapter uses codec-kit's canonical lossless ordered line model: BOM, comments, blank lines, per-line terminators, duplicate order, and untouched source bytes survive edits.",
+    "Fallback and comparison accept a caller-supplied locale layer or a sibling locale of the same mod bound by the host (enclosing-container / current-mount); catalog reference resolution needs an injected catalog, and translation needs a configured common.language/translation provider.",
+    "edit.content returns a revision-pinned complete-source edit plan; the shared SC2 writer performs permissioned host persistence."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "sc2-strings",
+        "label": "StarCraft II Localization Strings"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "bundle",
+    "artifactStages": [
+      "authored",
+      "compiled",
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "companions": [
+      {
+        "id": "locales",
+        "role": "localization",
+        "required": false,
+        "patterns": [
+          "*.txt"
+        ],
+        "searchScopes": [
+          "enclosing-container",
+          "current-mount"
+        ]
+      }
+    ],
+    "match": {
+      "extensions": [
+        "txt"
+      ]
+    },
+    "probe": {
+      "kind": "bytes",
+      "ranges": [
+        {
+          "from": "start",
+          "length": 4096
+        }
+      ],
+      "maxBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "flow-metadata",
+        "contract": "common.document/flow-metadata",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/text-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/byte-range-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/subject-facts-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/relation-graph-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "export.convert",
+        "handlerId": "export-convert",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes",
+          "json"
+        ]
+      },
+      {
+        "id": "edit.content",
+        "handlerId": "edit-strings",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-strings.references",
+        "handlerId": "references",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-strings.resolve-fallback",
+        "handlerId": "resolve-fallback",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.compare",
+        "handlerId": "compare-locales",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-strings.render",
+        "handlerId": "render-markup",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-strings.highlight",
+        "handlerId": "highlight-value",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-strings.complete",
+        "handlerId": "complete-value",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "edit.field",
+        "handlerId": "edit-field",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-strings.translate",
+        "handlerId": "translate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      }
+    ],
+    "traitDeclarations": [
+      {
+        "id": "content.text",
+        "representation": "source",
+        "presence": "will-expose"
+      },
+      {
+        "id": "game.localization",
+        "representation": "source",
+        "presence": "will-expose"
+      },
+      {
+        "id": "structure.hierarchy",
+        "representation": "source",
+        "presence": "will-expose"
+      },
+      {
+        "id": "table.cells",
+        "representation": "source",
+        "presence": "will-expose"
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "requires": [
+      {
+        "contract": "common.language/translation",
+        "major": 1,
+        "range": "^1.0.0"
+      }
+    ]
+  }
+}

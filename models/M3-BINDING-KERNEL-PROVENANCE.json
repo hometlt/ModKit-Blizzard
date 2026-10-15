@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "commit": "1a14ba4eddd0ae88de273348ebd44cfb98a0581d",
+  "transformation": "exact top-level declaration extraction; explicit import bindings and export list only",
+  "sources": [
+    {
+      "path": "extensions/blizzard/starcraft-2/codecs/m3/src/model-codec.ts",
+      "sha256": "b9593571874b5111053e35980ae7890bd82c78213c53b841a23a4f90b166ee21",
+      "symbols": [
+        {
+          "name": "M3MaterialTrackMerge",
+          "sha256": "94d95ce851745822ee43c039383c779c1b93db9ae60ac7af64277795816dd829"
+        },
+        {
+          "name": "mergeM3MaterialAnimationTracks",
+          "sha256": "1256f9c18f21c684b0f387afdcc00c946721e11b9cd9c343c0b191db0fb4a7ac"
+        },
+        {
+          "name": "countRenderMaterialTracks",
+          "sha256": "7087e2daa0074bd3e15108d1dc33de5ffe4628a5223e11a3bdbd0c0fef53794e"
+        },
+        {
+          "name": "countStandardMaterialTracks",
+          "sha256": "a3013babacf63c3d4665aaf69a0b5d7b4001277bf9393667392ebba8de5c1e1a"
+        },
+        {
+          "name": "countLayerTracks",
+          "sha256": "e747f0c744e95b2e1f32d6116132ebfb819392c04472d5c43f913c38c8e9b5ec"
+        },
+        {
+          "name": "countAnimatedTracks",
+          "sha256": "31b95e32c69358d80b39ca2b59b423766513fef329c3eabffe398e43d8b5154c"
+        },
+        {
+          "name": "validBundleSequence",
+          "sha256": "ce262fbb3d7cda6fc1d31e3d5ceeec5dde6c457afd2e57b40f4ae1d29ae1e32d"
+        },
+        {
+          "name": "materialLayoutsCompatible",
+          "sha256": "dedb930ae919eda28f17d04c2c5200c55d75d76052e5efd0d48d5bd0bf887a0a"
+        },
+        {
+          "name": "standardMaterialLayoutsCompatible",
+          "sha256": "ca06bbc900fbd293b80a698ee339d6a6e1ba7ad6f09e92f4c214be1b03defa06"
+        },
+        {
+          "name": "layerLayoutsCompatible",
+          "sha256": "a8ecf18a63d3e0daac3dd66b933b3e8891c51491b3f9d06333390daa11a96dc2"
+        },
+        {
+          "name": "flipbookLayoutsCompatible",
+          "sha256": "9c4e05af4f6bb0cc12cda2093290d6975a56b34b5e6cf4ab66eff015b2c8b376"
+        },
+        {
+          "name": "normalizeMaterialPath",
+          "sha256": "ad06d1b304c55882dbdbfaf3c4719367ce403d70ed4002ca71594c7d3b54dcad"
+        },
+        {
+          "name": "mergeRenderMaterialTracks",
+          "sha256": "1b13962d4a6789c9542e1c4c492554b1919d61413bc4c09d0cde5e7ae01620e3"
+        },
+        {
+          "name": "mergeStandardMaterialTracks",
+          "sha256": "c33c08e291fa853fd5e319e354b10037bd9b2d7e80adf4aea4d1de2cdbae1457"
+        },
+        {
+          "name": "mergeNormalBlendFactorTracks",
+          "sha256": "9a405eca1efd4f1b901695f693fd0e395fa94fff7d8f8929e275b8655036d20c"
+        },
+        {
+          "name": "mergeLayerTracks",
+          "sha256": "aaad97b6f1ed53947ae9b3513977141eb337843de793960ed19599c45de7ee83"
+        },
+        {
+          "name": "mergeAnimatedTracks",
+          "sha256": "bbe72c6100a79ab21c9592a8674743976ed20f03cdf082d02a3726b1f7f73596"
+        },
+        {
+          "name": "normalizePath",
+          "sha256": "542b5c44867c4ee7d4b6b2da1c47dc6d1e5ba089dac0b00c1b94d7026809b34f"
+        },
+        {
+          "name": "normalizedPathStem",
+          "sha256": "e0b5b47a7863eafe64be4907eb3c0a3b852c4ae29f72f3a582f3525ab7bd94c5"
+        },
+        {
+          "name": "hasSiblingStemAssociation",
+          "sha256": "6fd0d9ed415f14e15d46215dadf105656b2c54e3814379bb7630230473209a63"
+        },
+        {
+          "name": "m3AnimationBundlePattern",
+          "sha256": "0af1899b80bbafcf1f26006f6e2c1470903fd2cd03a30077be3b02c7851bb158"
+        }
+      ]
+    }
+  ],
+  "imports": [
+    "import type { AnimatedScalar, AnimatedValueTracks, RenderMaterial, SequenceIndexedAnimationTrack, StandardLayerSlot, StandardMaterialLayer, StandardMaterialModel } from '@modkitx/models-processing'"
+  ],
+  "exports": [
+    "mergeM3MaterialAnimationTracks",
+    "countRenderMaterialTracks",
+    "hasSiblingStemAssociation",
+    "m3AnimationBundlePattern"
+  ],
+  "output": {
+    "path": "models/src/m3/legacy-binding/binding-kernel.ts",
+    "sha256": "d8d55e0d06c27206e63897a2c36e6aa956e0b3547f3e643f9501e7848839291c"
+  }
+}

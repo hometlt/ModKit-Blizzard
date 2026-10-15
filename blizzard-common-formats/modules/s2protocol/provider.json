@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/s2protocol-provider",
+  "displayName": "Blizzard S2 protocol tables and decoder",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/s2protocol/index.js",
+      "target": {
+        "environments": ["node"]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./modules/s2protocol/index.js",
+      "target": {
+        "environments": ["node-worker", "browser-worker"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "s2protocol-v1",
+        "contract": "common.blizzard/s2protocol",
+        "major": 1,
+        "version": "1.0.0"
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Exact build selection is required unless a caller explicitly requests nearest-lower fallback and surfaces its diagnostic.",
+    "The provider decodes protocol streams and does not open MPQ containers or perform high-level replay analysis."
+  ]
+}

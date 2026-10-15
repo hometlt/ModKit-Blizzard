@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/diablo3-sno-registry",
+  "displayName": "Diablo III SNO type registry",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./providers/diablo3-sno-registry/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ],
+        "operatingSystems": [
+          "windows",
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "node-worker",
+      "entrypoint": "./providers/diablo3-sno-registry/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker"
+        ],
+        "operatingSystems": [
+          "windows",
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "diablo3-sno-registry-v1",
+        "contract": "blizzard/diablo3-sno-registry",
+        "major": 1,
+        "version": "1.0.0"
+      }
+    ],
+    "lifecycleScope": "process"
+  },
+  "limitations": [
+    "The registry is recovered from the installation's own x64 client (Diablo III64.exe): its C++ static initializers are run by a small x86-64 interpreter and the structure descriptors they build are read back; nothing of the game is shipped.",
+    "Field names are not in the executable; structures, field types, offsets, array extents and the SNO group of each reference are.",
+    "The executable is read through the host's installation files (ContributionContext.installationFiles): the Diablo III installation the user selected, or discovery confirmed, not necessarily the storage a file was opened from; no filesystem permission is asked, and a host offering none (a browser) refuses. The result is kept for the process and in the host's cache directory under the executable's SHA-256."
+  ]
+}

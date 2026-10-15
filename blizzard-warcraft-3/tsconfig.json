@@ -1,0 +1,25 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "../node_modules/.cache/blizzard-warcraft-3/tsconfig.tsbuildinfo"
+  },
+  "references": [
+    {
+      "path": "./tsconfig.vendored.json"
+    }
+  ],
+  "include": [
+    "src/war3-mdx/**/*.ts",
+    "src/war3-replay/**/*.ts",
+    "src/war3-pkb/**/*.ts",
+    "src/jass/**/*.ts",
+    "src/wts/**/*.ts",
+    "src/game/**/*.ts",
+    "src/war3-map/**/*.ts",
+    "src/war3-data/**/*.ts",
+    "src/war3-object-mods/**/*.ts",
+    "src/war3-map-world/**/*.ts"
+  ]
+}

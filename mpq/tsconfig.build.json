@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "../node_modules/.cache/mpq/tsconfig.tsbuildinfo"
+  },
+  "include": ["src/mpq/storm/**/*.ts", "src/mpq/layer-node.ts"]
+}

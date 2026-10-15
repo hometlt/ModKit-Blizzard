@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/war3-map-preview",
+  "displayName": "Warcraft III map preview preparation",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./providers/war3-map-preview/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "worker-portable",
+      "entrypoint": "./providers/war3-map-preview/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker",
+          "browser-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "war3-map-preview-preparation-v1",
+        "contract": "common.map/preview-preparation",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "subjectFormatIds": [
+            "war3-map"
+          ]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "A map opened as blizzard/war3-map is one workspace: the map (the opened archive) above the game installation (local:warcraft3), resolved by the host through the content sources, so the map's own tables and imported models stand in front of the game's."
+  ]
+}

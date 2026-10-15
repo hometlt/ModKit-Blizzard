@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "legacyRevision": "1a14ba4eddd0ae88de273348ebd44cfb98a0581d",
+  "exactCopies": [
+    { "source": "packages/documents-processing/src/sc2-metadata-core/document-header.ts", "destination": "modules/mod/codecs/document-metadata/core/document-header.ts", "blob": "6bd46b28d7c030ce41f3d4eecb4a1c6f0564db55" },
+    { "source": "packages/documents-processing/src/sc2-metadata-core/document-info.ts", "destination": "modules/mod/codecs/document-metadata/core/document-info.ts", "blob": "043661f1841a81d4ac1965406519f6f77f9fef0c" },
+    { "source": "packages/documents-processing/src/sc2-metadata-core/types.ts", "destination": "modules/mod/codecs/document-metadata/core/types.ts", "blob": "599f5aa17b6aaa5c470017d93109fcc61e2c1c08" },
+    { "source": "packages/documents-processing/src/sc2-metadata-core/index.ts", "destination": "modules/mod/codecs/document-metadata/core/index.ts", "blob": "6fc444aa1e65b80bb27127c98349a696d77c9c54" },
+    { "source": "packages/documents-processing/src/sc2-metadata-core/version-file.ts", "destination": "modules/mod/codecs/document-metadata/core/version-file.ts", "blob": "7ce0f8d8572eee468a1473d75e44fa1eff5f95fe" }
+  ],
+  "importRewrites": [],
+  "authoredAdapter": [
+    "MK3 createInspectionCodec lifecycle and editPlanFromInput replace the legacy AssetEditTransaction host adapter.",
+    "Detection consumes the current prefix-and-URI contract; empty .version uses URI context evidence because parent artifact/game context is unavailable to this contract.",
+    "modules/mod/codecs/document-metadata/codec.js is a compatibility forwarder only; compiled codec.ts is the canonical runtime."
+  ]
+}

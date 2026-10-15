@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.portable.json",
+  "files": ["m3-browser-host.test.ts", "fixtures/m3-browser-host.ts"]
+}

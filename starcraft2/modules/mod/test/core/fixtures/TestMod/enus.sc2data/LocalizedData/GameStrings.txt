@@ -1,0 +1,2 @@
+Unit/Name/Marine=Marine
+Button/Name/Attack=Attack

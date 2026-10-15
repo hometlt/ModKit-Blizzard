@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "kind": "game",
+  "id": "blizzard/world-of-warcraft",
+  "vendorId": "blizzard",
+  "displayName": "World of Warcraft",
+  "description": "The World of Warcraft extension finds installed copies and serves each installed product's CASC storage (retail, classic, PTR), its files named by the community listfile.",
+  "officialSite": "https://worldofwarcraft.blizzard.com/",
+  "extensionRequirements": [
+    {
+      "id": "blizzard/world-of-warcraft",
+      "importance": "required"
+    }
+  ],
+  "capabilityRequirements": [
+    {
+      "id": "installation",
+      "displayName": "Installation discovery",
+      "importance": "required",
+      "contributionIds": [
+        "blizzard/world-of-warcraft-installation"
+      ]
+    }
+  ]
+}

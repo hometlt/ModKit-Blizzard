@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/contract-definition",
+    "major": 1
+  },
+  "id": "blizzard/s2protocol-contract",
+  "displayName": "Blizzard S2 protocol service contract",
+  "spec": {
+    "schemaVersion": 1,
+    "kind": "service",
+    "contract": "common.blizzard/s2protocol",
+    "major": 1,
+    "offerFacet": { "presence": "forbidden" },
+    "requestFacet": { "presence": "forbidden" },
+    "matching": {
+      "profile": "modkit/facetless-matcher",
+      "major": 1
+    },
+    "conformanceProfile": "common.blizzard/s2protocol-v1",
+    "surface": {
+      "fields": ["contract"],
+      "methods": {
+        "listBuilds": { "kind": "value" },
+        "resolve": { "kind": "value" },
+        "decodeVersioned": { "kind": "value" },
+        "decodeBitPacked": {
+          "kind": "value",
+          "signal": { "arg": 1, "key": "signal" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-15",
+  "scope": "Gateway/WarpGate source-free M3 -> UVM -> M3; bounded native material/geometry/physics readback",
+  "coreProjectionCommit": "39eaade62babf4d0701e3a51a9a2b694a94c0a41",
+  "coreProjectionSource": {
+    "bytes": 15891,
+    "sha256": "862490bf3e2cc880bbee9a248a422cf365bf778a8c14e44fc2a556f53fe2f040"
+  },
+  "profile": {
+    "sourceArchive": "1da06b2855c00d7f6d831fe5912e0a73dc011934",
+    "priorOverlay": "6cabbffa5b43b2ce453caf357f2b68d395e4756a",
+    "directory": "C:/MKTEMP/m3-degenerate-20261014/head",
+    "coreResolution": "private portable bundle uses Core source aliases, including actual approved projection; no diagnostic guard override",
+    "hostRuntimeReceipt": {
+      "bytes": 876,
+      "sha256": "d97ebb8f7435f9fad19d7da6bd3df517c3c439fbd72f330bc67303e0382dd725"
+    },
+    "sharedDistRebuilt": false
+  },
+  "sourceBaseAtReceipt": "0b922d977e3beb59ac834f46983fe7571643a4c8",
+  "sourceFiles": {
+    "models/src/m3/native/encoder.js": {
+      "bytes": 129095,
+      "sha256": "2b2236ad1cd7152d583c6144a06f4259998965877100307fd5f03fc921646c85"
+    },
+    "models/src/m3/uvm/material-layer-addresses.ts": {
+      "bytes": 4732,
+      "sha256": "a2cff7df1825ff5736a81b2c700dc90ee8e29fc2522ccdd0688504916def33fa"
+    },
+    "models/src/m3/runtime/fresh-export.js": {
+      "bytes": 69685,
+      "sha256": "414bbd904d18bc333716ec97aeec27af2a2f61e81c29f529925b630b9e47f9cc"
+    },
+    "models/src/m3/runtime/geometry.js": {
+      "bytes": 20446,
+      "sha256": "04a2e564f6b46a56c340680595df31ad661d0a7ed2ad702d55f9fc892e84c79f"
+    },
+    "models/test/m3-displacement-material.test.ts": {
+      "bytes": 3794,
+      "sha256": "39058395e8a73903c58e06515144ed54d6441fa4a788abf0184d14aa3ea44c26"
+    },
+    "models/test/m3-variation-animation-ids.test.ts": {
+      "bytes": 2452,
+      "sha256": "a93cd7ad138e8ece4a406e2cd46c5918acea3649e201218c9c76cbd1de90961e"
+    },
+    "models/test/m3-material-layer-animation-ids.test.ts": {
+      "bytes": 10429,
+      "sha256": "7c463886dc9953c0e1d9d32f28f3f13b635f261af292fb113f03ed7302298f7d"
+    },
+    "models/tsconfig.tests-uvm.json": {
+      "bytes": 1385,
+      "sha256": "76d3379c85387fb2718a197e3413a6e2e9e056ac6fa97cb67be8e1ae96d97080"
+    }
+  },
+  "foreignKeepHashes": {
+    "models/src/m3/native/builder/standard-material.ts": {
+      "bytes": 34448,
+      "sha256": "4cfb7b52581e9164983c0dd75662294df376ace976aee5bdfb353e06b3b6012a"
+    },
+    "models/test/m3-rtt-material.test.ts": {
+      "bytes": 2549,
+      "sha256": "11419d29d266b082e52ebefcb063bebf7f2a3bbfbf6626257e6d9a8aba320e0a"
+    }
+  },
+  "retail": [
+    {
+      "name": "gateway",
+      "uvmBytes": 1214124,
+      "nativeBytes": 402800,
+      "shapeBefore": "194c7f7d08b180d35e3ee974b212a76bcbdd2d5b59c2b0900c0559aae562afb6",
+      "shapeAfter": "194c7f7d08b180d35e3ee974b212a76bcbdd2d5b59c2b0900c0559aae562afb6",
+      "shapeExact": true,
+      "diagnostics": [],
+      "original": {
+        "bytes": 346800,
+        "sha256": "a2448855e85fb6cd27d6f3fb0e085ab68a3379e1cf39c758b05dd4b7697b6e3b"
+      },
+      "uvm": {
+        "bytes": 1214124,
+        "sha256": "e2417779ac12d874b97bb9d14623b35494dcebc1e4fd40b1b66d556c37fdf865"
+      },
+      "native": {
+        "bytes": 402800,
+        "sha256": "5bcf927ba38950b1ff414269f4b4d882c2d4bd01bb70d9144ae6fe98ec09433e"
+      },
+      "bindings": {
+        "total": 3381,
+        "layer": 2576,
+        "semanticLayer": 2576
+      }
+    },
+    {
+      "name": "warpgate",
+      "uvmBytes": 1214124,
+      "nativeBytes": 402800,
+      "shapeBefore": "194c7f7d08b180d35e3ee974b212a76bcbdd2d5b59c2b0900c0559aae562afb6",
+      "shapeAfter": "194c7f7d08b180d35e3ee974b212a76bcbdd2d5b59c2b0900c0559aae562afb6",
+      "shapeExact": true,
+      "diagnostics": [],
+      "original": {
+        "bytes": 346800,
+        "sha256": "a2448855e85fb6cd27d6f3fb0e085ab68a3379e1cf39c758b05dd4b7697b6e3b"
+      },
+      "uvm": {
+        "bytes": 1214124,
+        "sha256": "88c61e22be15812d660bf58ee709a8d732024800f00650d2c599daacd7e5af57"
+      },
+      "native": {
+        "bytes": 402800,
+        "sha256": "5bcf927ba38950b1ff414269f4b4d882c2d4bd01bb70d9144ae6fe98ec09433e"
+      },
+      "bindings": {
+        "total": 3381,
+        "layer": 2576,
+        "semanticLayer": 2576
+      }
+    }
+  ],
+  "retailQualification": {
+    "namedRuns": 2,
+    "uniqueNativeSourceSha256Count": 1,
+    "uniqueOutputSha256Count": 1
+  },
+  "legacyUvmRefusals": [
+    {
+      "name": "gateway",
+      "error": "TypeError: M3 LAYR animation binding needs a semantic materialLayer owner; re-import the native source before re-export"
+    },
+    {
+      "name": "warpgate",
+      "error": "TypeError: M3 LAYR animation binding needs a semantic materialLayer owner; re-import the native source before re-export"
+    }
+  ],
+  "validation": {
+    "privateBuild": {
+      "command": "node models/build.mjs",
+      "directory": "C:/MKTEMP/m3-degenerate-20261014/head",
+      "exitCode": 0,
+      "session": 91783,
+      "includes": "native emit, strict production compile including uvm/material-layer-addresses.ts, portable bundle with Core source aliases; no guard override"
+    },
+    "directTests": {
+      "command": "node node_modules/vitest/vitest.mjs run models/test/m3-displacement-material.test.ts models/test/m3-variation-animation-ids.test.ts models/test/m3-material-layer-animation-ids.test.ts models/test/m3-material-policy.test.ts models/test/m3-degenerate-rigid-shapes.test.ts models/test/m3-writer.test.ts --config test/vitest.config.mjs --maxWorkers=1 --minWorkers=1 --reporter=dot",
+      "environment": {
+        "MODKIT_LINK_MODE": "core",
+        "MODKIT_CORE_ROOT": "C:/MODDING/modkit-core"
+      },
+      "exitCode": 0,
+      "passed": 32,
+      "skipped": 0,
+      "scope": "native DIS_ strength/UV readback; emitter reference IDs; semantic LAYR headers/STC/STS, composite/shared/budget/cancel/refusals; material policy; degenerate shapes; native preserving writer"
+    },
+    "strictNewTests": {
+      "command": "node node_modules/typescript/bin/tsc -p models/tsconfig.tests-displacement.temp.json --noEmit",
+      "exitCode": 0,
+      "files": [
+        "test/m3-displacement-material.test.ts",
+        "test/m3-variation-animation-ids.test.ts",
+        "test/m3-material-layer-animation-ids.test.ts"
+      ]
+    },
+    "strictProduction": {
+      "command": "node node_modules/typescript/bin/tsc -p models/tsconfig.m3.json --noEmit",
+      "exitCode": 0,
+      "includesHelperSource": "src/m3/uvm/material-layer-addresses.ts",
+      "newHelperAnyOrTsIgnore": false
+    },
+    "variationCounterfactual": {
+      "baseline": "1da06b2855c00d7f6d831fe5912e0a73dc011934",
+      "exitCode": 1,
+      "failed": 1,
+      "skipped": 0,
+      "reason": "generated animation id 2387452583 maps to both 100 and 102 at RIB_/0/0/yaw_var_amplitude"
+    },
+    "retail": {
+      "forward": "fresh public Host worker model-export-uvm",
+      "reverse": "common.model/native-encoder m3-from-uvm public provider",
+      "passed": 2,
+      "uniqueModels": 1,
+      "guardOverride": false,
+      "sourceFreeUvm": true,
+      "repeatedAfterStrictTsConversion": true
+    },
+    "review": {
+      "finder": true,
+      "removalAuditBefore": true,
+      "removalAuditAfter": true,
+      "gateCheckIndependent": true
+    },
+    "notClaimed": [
+      "full gate green",
+      "native Editor playback or GPU rendering",
+      "shared dist/vendor/acceptance/VSIX pickup",
+      "556-asset forward corpus rerun with new capture"
+    ]
+  },
+  "limitations": [
+    "No native Editor or GPU distortion/playback verification.",
+    "No shared dist/vendor/acceptance/VSIX pickup.",
+    "Old physical-only LAYR bindings require a fresh export from native source.",
+    "Nested/unsupported material families and unowned layer bindings remain explicit fresh-export refusals.",
+    "Original DIS_ strength animId/header bits are not preserved by the generic LAYR binding change; authored strength values/tracks are checked by native material readback.",
+    "The earlier 556-asset forward corpus was not rerun with the new material binding capture."
+  ]
+}

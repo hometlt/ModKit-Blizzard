@@ -1,0 +1,5 @@
+* text=auto eol=lf
+
+
+# SC2Editor-saved wizard oracle: CRLF, no BOM, no final newline are the evidence.
+starcraft2/modules/wizard/test/fixtures/editor-saved-export.BlizWiz -text

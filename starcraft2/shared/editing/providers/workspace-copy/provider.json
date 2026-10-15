@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-workspace-copy-writer",
+  "displayName": "StarCraft II workspace-copy export writer",
+  "runtimeVariants": [
+    {
+      "variantId": "portable",
+      "entrypoint": "./shared/editing/providers/workspace-copy/runtime.js",
+      "target": {
+        "environments": ["browser-worker", "node-worker"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "lifecycleScope": "session",
+    "provides": [
+      {
+        "offerId": "sc2-workspace-copy-v1",
+        "contract": "common.edit/writer",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "providerId": "blizzard/sc2-workspace-copy-writer",
+          "fidelityEvidenceId": "sc2-workspace-copy-writer-v1",
+          "formatId": "sc2-workspace-copy",
+          "representationId": "namespace",
+          "mutationMode": "export-only",
+          "minimumRoundTrip": "byte-identical"
+        }
+      }
+    ]
+  }
+}

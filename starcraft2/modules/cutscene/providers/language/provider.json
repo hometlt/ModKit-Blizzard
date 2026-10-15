@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-cutscene-language",
+  "displayName": "StarCraft II Cutscene language analysis",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/cutscene/providers/language/runtime.js",
+      "target": { "environments": ["node"] },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./modules/cutscene/providers/language/runtime.js",
+      "target": { "environments": ["browser-worker", "node-worker"] },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "sc2-cutscene-document-analysis-v1",
+        "contract": "common.language/document-analysis",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "languageIds": ["sc2-cutscene"],
+          "documentKinds": ["sc2-cutscene-source"],
+          "extensions": ["sc2cutscene"]
+        }
+      },
+      {
+        "offerId": "storm-cutscene-document-analysis-v1",
+        "contract": "common.language/document-analysis",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "languageIds": ["storm-cutscene"],
+          "documentKinds": ["sc2-cutscene-source"],
+          "extensions": ["stormcutscene"]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  }
+}

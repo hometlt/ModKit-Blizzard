@@ -1,0 +1,55 @@
+{
+  "legacyRepositoryCommit": "1a14ba4eddd0ae88de273348ebd44cfb98a0581d",
+  "legacySchemaCommit": "8a21060f86336d4d03f5471b03f5de4cbeb9c07e",
+  "digest": "sha256:a094b68559c773745bdbc7671619309b538ff18d73025f49fccdc411b75ab761",
+  "coverage": {
+    "typeCount": 644,
+    "generatedTypeCount": 643,
+    "namespaceCount": 108,
+    "directFieldCount": 5066,
+    "structureCount": 338,
+    "structureFieldCount": 2108,
+    "linkFieldCount": 1453,
+    "assetFieldCount": 223
+  },
+  "types": {
+    "CAbilTrain": {
+      "namespace": "Abil",
+      "parentTypeId": "CAbil",
+      "links": [
+        "InfoArray.Button.DefaultButtonFace:Button",
+        "InfoArray.Effect:Effect",
+        "InfoArray.Unit:Unit"
+      ]
+    },
+    "CActorAction": {
+      "namespace": "Actor",
+      "parentTypeId": "CActorBase",
+      "links": [
+        "ContainerAssets.Model:Model",
+        "ContainerAssets.Sound:Sound",
+        "ContainerModel:Actor"
+      ]
+    },
+    "CActorMissile": {
+      "namespace": "Actor",
+      "parentTypeId": "CActorUnit",
+      "links": ["CustomUnitStatusFrame:Layout"]
+    },
+    "CEffectDamage": {
+      "namespace": "Effect",
+      "parentTypeId": "CEffect",
+      "links": ["Amount.AccumulatorArray:Accumulator"]
+    },
+    "CModel": {
+      "namespace": "Model",
+      "parentTypeId": "CBase",
+      "assets": ["Image:File", "Model:File"]
+    },
+    "CUnit": {
+      "namespace": "Unit",
+      "parentTypeId": "CBase",
+      "links": ["AbilArray.Link:Abil", "WeaponArray.Link:Weapon"]
+    }
+  }
+}

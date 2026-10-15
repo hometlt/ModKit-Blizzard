@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/warcraft3-installation",
+  "displayName": "Warcraft III installation discovery",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node-windows",
+      "entrypoint": "./providers/war3-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ],
+        "operatingSystems": [
+          "windows"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "trusted-node-portable",
+      "entrypoint": "./providers/war3-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node"
+        ],
+        "operatingSystems": [
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "node-worker-windows",
+      "entrypoint": "./providers/war3-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker"
+        ],
+        "operatingSystems": [
+          "windows"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    },
+    {
+      "variantId": "node-worker-portable",
+      "entrypoint": "./providers/war3-installation/runtime.js",
+      "target": {
+        "environments": [
+          "node-worker"
+        ],
+        "operatingSystems": [
+          "darwin",
+          "linux"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "filesystem-read"
+      ]
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "warcraft3-installation-v1",
+        "contract": "common.game/installation-discovery",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": [
+            "blizzard/warcraft-3"
+          ],
+          "markers": [
+            {
+              "gameId": "blizzard/warcraft-3",
+              "files": [
+                ".build.info",
+                "Warcraft III Launcher.exe"
+              ]
+            },
+            {
+              "gameId": "blizzard/warcraft-3",
+              "files": [
+                "war3.mpq",
+                "game.dll"
+              ]
+            },
+            {
+              "gameId": "blizzard/warcraft-3",
+              "files": [
+                "war3.mpq",
+                "war3.exe"
+              ]
+            },
+            {
+              "gameId": "blizzard/warcraft-3",
+              "files": [
+                "war3.mpq",
+                "Warcraft III.exe"
+              ]
+            },
+            {
+              "gameId": "blizzard/warcraft-3",
+              "files": [
+                "war3.mpq",
+                "Frozen Throne.exe"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Candidates are configured paths, the MODKIT_WARCRAFT3_ROOT environment root, the registry values the installers write (the Reforged uninstall entry, the classic InstallPath and InstallPathX) read through the host's installation probes, verified platform defaults, and the folders the host's folder search found by this offer's markers (.build.info beside the Reforged launcher, or war3.mpq beside game.dll or a game executable), confirmed last. A host without probes or folder search (a browser) uses configured paths and the environment root only.",
+    "Reforged is confirmed by the active record in .build.info naming the Warcraft III CASC product; its payload directory is reported as evidence but not required, because its name has moved between builds. A classic 1.x installation is confirmed by war3.mpq beside game.dll or one of the game executables, and is named The Frozen Throne when war3x.mpq is present.",
+    "No version is reported for a classic installation: it has no build record, and reading the version resource of its executables is not implemented.",
+    "Launching, provisioning and content mounting are outside this provider."
+  ]
+}

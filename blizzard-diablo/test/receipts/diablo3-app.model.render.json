@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "codec": "diablo3-app",
+  "corpusKind": "real",
+  "verdict": "pass",
+  "tests": {
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "operation": "model.render",
+    "oracle": "the PNG, decoded by codec-kit, is 256x256 and has pixels other than the clear colour",
+    "suite": "modkit-extensions-blizzard/blizzard-diablo/test/diablo3-receipts-corpus.test.ts",
+    "corpus": {
+      "game": "blizzard/diablo-3",
+      "version": "2.8.0.99920",
+      "discovery": "common.game/installation-discovery (blizzard/diablo3-installation)",
+      "container": "blizzard/casc",
+      "listed": {
+        "appearances": 11347,
+        "textures": 33431
+      }
+    },
+    "samples": [
+      {
+        "name": "appearance/a2dun_zolt_tesla_tower.app",
+        "sha256": "1089fea97d10aab07d3fab5368501657da50762b2dc21dd2f2c7f66c50525a51"
+      },
+      {
+        "name": "appearance/barbarian_male.app",
+        "sha256": "858970ceb3ef481f0d9dcdac805c470635697ed0f59253e430a2f75f78293173"
+      },
+      {
+        "name": "appearance/breakable_painting_c.app",
+        "sha256": "42b8cb18291382be5f5df6ca69295d8cbd1711fe9ead55e169b353fb4d1a8c98"
+      },
+      {
+        "name": "appearance/1000monsterfight_e01_s02.app",
+        "sha256": "3944b4c29373d6e651d54cfc288e107b973915d1e9b9fb3f2871456be3a539b3"
+      },
+      {
+        "name": "appearance/a3dun_rmpt_sw_03_destruction_a_debris_b.app",
+        "sha256": "2694e905f79991140b2d4e11bc8d2de8b63aca746165d58ca385985a8b14e372"
+      },
+      {
+        "name": "appearance/crafting_mystic_lvl_01_wipe.app",
+        "sha256": "6813a7ac7a79215baffc7409893a5b226d9f6f5ac2e6dfbf9c58eb96a53def3f"
+      },
+      {
+        "name": "appearance/npc_witchdoctor_male.app",
+        "sha256": "2d7cd0f5a9995e0debe714702eaa21ad5657138561a298922f4e47e4ddaabf66"
+      },
+      {
+        "name": "appearance/p6_necro_revive_ghost.app",
+        "sha256": "01680902beb1cea02f7477f8a4e499aa2284239f82b406c8f8ecafba6ef4f178"
+      },
+      {
+        "name": "appearance/spear_norm_base_flippy_02.app",
+        "sha256": "bb8c088c0ec7e2ef229717d9642c5fb8a573ce0c0d484f068bd9c0dcaad2c045"
+      },
+      {
+        "name": "appearance/wizardhat_wizm_norm_base_02.app",
+        "sha256": "934c70dd4ab3af0bbbafe1b119747b9cee1b94f23dc212891eb82a0a4b8755a2"
+      },
+      {
+        "name": "appearance/x1_pand_ext_120_nsw_cellar_entrance_01.app",
+        "sha256": "78b52e1a92430ae5341fc05b383338102c799b4c94f661cb55b7a2714f2ebfd0"
+      }
+    ]
+  },
+  "oracleVerification": {
+    "verified": true,
+    "modules": [
+      "@modkit/codec-kit/raster"
+    ],
+    "operation": "model.render"
+  },
+  "cases": [
+    {
+      "id": "real:appearance/a2dun_zolt_tesla_tower.app:model.render",
+      "verdict": "identical",
+      "resultDigest": "b3599d07b1faad9a09c7141add489b825688221518f2fdff5e3288ff86ef2e59",
+      "mk3Operation": "model.render"
+    },
+    {
+      "id": "real:appearance/barbarian_male.app:model.render",
+      "verdict": "identical",
+      "resultDigest": "0a0889dbf729b2bbae6fb9a73a48c528e9b8500ae56e2d57375704079e00ba68",
+      "mk3Operation": "model.render"
+    },
+    {
+      "id": "real:appearance/breakable_painting_c.app:model.render",
+      "verdict": "identical",
+      "resultDigest": "102ac11a95865b91aca5f7e8124f76b3e1047a49eb1d03c1cd1e86f2b494fd45",
+      "mk3Operation": "model.render"
+    },
+    {
+      "id": "real:appearance/1000monsterfight_e01_s02.app:model.render",
+      "verdict": "identical",
+      "resultDigest": "34cee93e7fdedfc3c3380dd46e1c47c4c957a034a2bed6a58a2e249521fdfae8",
+      "mk3Operation": "model.render"
+    },
+    {
+      "id": "real:appearance/a3dun_rmpt_sw_03_destruction_a_debris_b.app:model.render",
+      "verdict": "identical",
+      "resultDigest": "efe2704bb43e9c60d9cd5246e4e0a5616843aaa61a806173550e56bd2c86ac9d",
+      "mk3Operation": "model.render"
+    },
+    {
+      "id": "real:appearance/crafting_mystic_lvl_01_wipe.app:model.render",
+      "verdict": "identical",
+      "resultDigest": "9ffa617be085ac16bd1ee319ec27d9354110bb6dd777bcca8c0041ba48564f57",
+      "mk3Operation": "model.render"
+    },
+    {
+      "id": "real:appearance/npc_witchdoctor_male.app:model.render",
+      "verdict": "identical",
+      "resultDigest": "abd44bffaa440aa6ba71614c414d8e64e46ad90b6473110676d10c6ce5ebd55b",
+      "mk3Operation": "model.render"
+    },
+    {
+      "id": "real:appearance/p6_necro_revive_ghost.app:model.render",
+      "verdict": "identical",
+      "resultDigest": "648356051b60c9c767b946462751b2fac0993558d1701887d8e24f46f04a0bb4",
+      "mk3Operation": "model.render"
+    },
+    {
+      "id": "real:appearance/spear_norm_base_flippy_02.app:model.render",
+      "verdict": "identical",
+      "resultDigest": "2bba163acc6b3384baf9bee39d01ab6718404c1c689fdc6534c36036b586406f",
+      "mk3Operation": "model.render"
+    },
+    {
+      "id": "real:appearance/wizardhat_wizm_norm_base_02.app:model.render",
+      "verdict": "identical",
+      "resultDigest": "c5fff5edafe7503b6c19eac0594015b4a0e63fd92e17a9aad8e882cc044e4b0c",
+      "mk3Operation": "model.render"
+    },
+    {
+      "id": "real:appearance/x1_pand_ext_120_nsw_cellar_entrance_01.app:model.render",
+      "verdict": "identical",
+      "resultDigest": "683966d43bd8110ef60abd054f20d1168fcaf5bd955b19b32a65f54338c53948",
+      "mk3Operation": "model.render"
+    }
+  ],
+  "proofs": [
+    {
+      "requirement": "legacy/codec-manifest/modkit/diablo3-app/operation/model.render",
+      "kind": "operation",
+      "legacyOperation": "model.render",
+      "adapterOperation": "model.render",
+      "targetOperation": "model.render",
+      "handlerId": "render-uvm-scene",
+      "contribution": "modkit-core/extensions/models/contributions/codec-uvm.json",
+      "executed": true,
+      "caseIds": [
+        "real:appearance/a2dun_zolt_tesla_tower.app:model.render",
+        "real:appearance/barbarian_male.app:model.render",
+        "real:appearance/breakable_painting_c.app:model.render",
+        "real:appearance/1000monsterfight_e01_s02.app:model.render",
+        "real:appearance/a3dun_rmpt_sw_03_destruction_a_debris_b.app:model.render",
+        "real:appearance/crafting_mystic_lvl_01_wipe.app:model.render",
+        "real:appearance/npc_witchdoctor_male.app:model.render",
+        "real:appearance/p6_necro_revive_ghost.app:model.render",
+        "real:appearance/spear_norm_base_flippy_02.app:model.render",
+        "real:appearance/wizardhat_wizm_norm_base_02.app:model.render",
+        "real:appearance/x1_pand_ext_120_nsw_cellar_entrance_01.app:model.render"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": false,
+    "target": "ES2023",
+    "lib": [
+      "ES2023",
+      "DOM"
+    ],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@modkit/codec-kit": [
+        "../../modkit-core/extensions/codec-kit/codec-kit/src/index.d.ts"
+      ],
+      "@modkit/blizzard-mpq/fresh-writer": [
+        "../mpq/src/mpq/fresh-writer.js"
+      ],
+      "@modkit/blizzard-mpq/native-preserving": [
+        "../mpq/src/mpq/native-preserving.js"
+      ],
+      "@modkit/uv/world": [
+        "../../modkit-core/packages/uv/dist/world/index.js"
+      ]
+    }
+  },
+  "include": [
+    "modules/map/codecs/package/src/world-writer.js",
+    "modules/map/codecs/package/src/uvw-map-converter.js"
+  ]
+}

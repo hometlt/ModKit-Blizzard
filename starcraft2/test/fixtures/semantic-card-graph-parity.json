@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "reportId": "org.modkitx.blizzard.starcraft2/semantic-card-graph-parity",
+  "verdict": "parity",
+  "legacy": {
+    "repositoryCommit": "1a14ba4eddd0ae88de273348ebd44cfb98a0581d",
+    "cardsPath": "extensions/blizzard/starcraft-2/codecs/sc2-data/src/wiki/cards.ts",
+    "cardsBlob": "09481357ba1774013de3154592c50507e809e854",
+    "graphPath": "extensions/blizzard/starcraft-2/codecs/sc2-data/src/graph-view.ts",
+    "graphBlob": "809b50a286f1bb57dcdc669dd3d36b62784b97b5"
+  },
+  "semanticSurfaces": [
+    "resolved-identity-and-localization",
+    "curated-and-complete-fields",
+    "cost-vitals-and-classification",
+    "command-cards-abilities-behaviors-and-weapons",
+    "visual-assets",
+    "incoming-and-outgoing-relations",
+    "bounded-multi-hop-relations",
+    "declaration-and-edge-provenance",
+    "unresolved-relation-targets"
+  ],
+  "namespaces": {
+    "Unit": {
+      "typeId": "CUnit",
+      "sections": {
+        "vitals": ["LifeMax", "LifeArmor"],
+        "movement": ["Speed", "Race", "Attributes"],
+        "cost": ["CostResource", "Food"],
+        "command-cards": ["CardLayouts"],
+        "abilities": ["AbilArray"],
+        "behaviors": ["BehaviorArray"],
+        "weapons": ["WeaponArray"]
+      },
+      "schemaFields": [
+        { "path": "LifeMax", "valueKind": "number" },
+        { "path": "CostResource", "valueKind": "number" },
+        {
+          "path": "CardLayouts.LayoutButtons.Face",
+          "valueKind": "link",
+          "linkNamespace": "Button"
+        },
+        { "path": "AbilArray.Link", "valueKind": "link", "linkNamespace": "Abil" },
+        { "path": "BehaviorArray.Link", "valueKind": "link", "linkNamespace": "Behavior" },
+        { "path": "WeaponArray.Link", "valueKind": "link", "linkNamespace": "Weapon" }
+      ]
+    },
+    "Weapon": {
+      "typeId": "CWeapon",
+      "sections": {
+        "combat": ["Range", "Period"],
+        "effects": ["Effect"],
+        "targeting": ["TargetFilters"]
+      },
+      "sampleFields": {
+        "Range": 6,
+        "Period": 1.25,
+        "Effect": "CardEffect",
+        "TargetFilters": ["Ground", "Visible"]
+      },
+      "schemaFields": [
+        { "path": "Range", "valueKind": "number" },
+        { "path": "Period", "valueKind": "number" },
+        { "path": "Effect", "valueKind": "link", "linkNamespace": "Effect" },
+        { "path": "TargetFilters", "valueKind": "flags" }
+      ]
+    },
+    "Abil": {
+      "typeId": "CAbilTrain",
+      "sections": {
+        "commands": ["InfoArray"],
+        "use": ["Range", "Flags"]
+      },
+      "sampleFields": {
+        "InfoArray": [
+          {
+            "index": "0",
+            "value": {
+              "Unit": "Marine",
+              "Effect": "CardEffect",
+              "Button": { "DefaultButtonFace": "CardButton" }
+            }
+          }
+        ],
+        "Range": 6,
+        "Flags": ["BestUnit"]
+      },
+      "schemaFields": [
+        { "path": "InfoArray.Unit", "valueKind": "link", "linkNamespace": "Unit" },
+        { "path": "InfoArray.Effect", "valueKind": "link", "linkNamespace": "Effect" },
+        {
+          "path": "InfoArray.Button.DefaultButtonFace",
+          "valueKind": "link",
+          "linkNamespace": "Button"
+        },
+        { "path": "Range", "valueKind": "number" },
+        { "path": "Flags", "valueKind": "flags" }
+      ]
+    },
+    "Effect": {
+      "typeId": "CEffectDamage",
+      "sections": {
+        "execution": ["Amount"],
+        "constraints": ["ValidatorArray", "Flags"]
+      },
+      "sampleFields": {
+        "Amount": 15,
+        "ValidatorArray": ["CardValidator"],
+        "Flags": ["Impact"]
+      },
+      "schemaFields": [
+        { "path": "Amount.value", "valueKind": "number" },
+        { "path": "ValidatorArray", "valueKind": "link", "linkNamespace": "Validator" },
+        { "path": "Flags", "valueKind": "flags" }
+      ]
+    },
+    "Behavior": {
+      "typeId": "CBehaviorBuff",
+      "sections": {
+        "lifecycle": ["Duration", "Period", "PeriodicEffect"],
+        "modification": ["Modification", "MaxStackCount"]
+      },
+      "sampleFields": {
+        "Duration": 10,
+        "Period": 1,
+        "PeriodicEffect": "CardEffect",
+        "Modification": { "MoveSpeedMultiplier": 1.2 },
+        "MaxStackCount": 3
+      },
+      "schemaFields": [
+        { "path": "Duration.value", "valueKind": "number" },
+        { "path": "PeriodicEffect", "valueKind": "link", "linkNamespace": "Effect" },
+        { "path": "Modification.MoveSpeedMultiplier", "valueKind": "number" },
+        { "path": "MaxStackCount", "valueKind": "number" }
+      ]
+    },
+    "Upgrade": {
+      "typeId": "CUpgrade",
+      "sections": {
+        "levels": ["MaxLevel", "EffectArray", "AffectedUnitArray"],
+        "cost": ["BonusResourcePerLevel"]
+      },
+      "sampleFields": {
+        "MaxLevel": 3,
+        "EffectArray": [{ "Reference": "Unit,Marine,LifeMax", "Value": 10 }],
+        "AffectedUnitArray": ["Marine"],
+        "BonusResourcePerLevel": [{ "index": "Minerals", "value": 25 }]
+      },
+      "schemaFields": [
+        { "path": "MaxLevel", "valueKind": "number" },
+        { "path": "EffectArray.Reference", "valueKind": "catalogRef" },
+        { "path": "AffectedUnitArray", "valueKind": "link", "linkNamespace": "Unit" },
+        { "path": "BonusResourcePerLevel", "valueKind": "number" }
+      ]
+    },
+    "Button": {
+      "typeId": "CButton",
+      "sections": {
+        "presentation": ["Name", "Tooltip", "Icon", "Hotkey"]
+      },
+      "sampleFields": {
+        "Name": "Button/Name/CardButton",
+        "Tooltip": "Button/Tooltip/CardButton",
+        "Icon": "Assets/Textures/card-button.dds",
+        "Hotkey": "C"
+      },
+      "schemaFields": [
+        { "path": "Name", "valueKind": "link" },
+        { "path": "Tooltip", "valueKind": "link" },
+        { "path": "Icon", "valueKind": "link", "assetKind": "File" },
+        { "path": "Hotkey", "valueKind": "link" }
+      ]
+    },
+    "Actor": {
+      "typeId": "CActorUnit",
+      "sections": {
+        "presentation": ["Model"]
+      },
+      "sampleFields": {
+        "Model": "CardModel",
+        "Flags": ["Visible"]
+      },
+      "schemaFields": [
+        { "path": "Model", "valueKind": "link", "linkNamespace": "Model" },
+        { "path": "Flags", "valueKind": "flags" }
+      ]
+    },
+    "Model": {
+      "typeId": "CModel",
+      "sections": {
+        "asset": ["Model", "Image"],
+        "bounds": ["Radius", "Flags"]
+      },
+      "sampleFields": {
+        "Model": "Assets/Models/card-model.m3",
+        "Image": "Assets/Textures/card-model.dds",
+        "Radius": 1.5,
+        "Flags": ["IgnoreLighting"]
+      },
+      "schemaFields": [
+        { "path": "Model", "valueKind": "link", "assetKind": "File" },
+        { "path": "Image", "valueKind": "link", "assetKind": "File" },
+        { "path": "Radius", "valueKind": "number" },
+        { "path": "Flags", "valueKind": "flags" }
+      ]
+    }
+  },
+  "graphScenario": {
+    "root": "Unit/Factory",
+    "directions": ["incoming", "outgoing"],
+    "multiHopPaths": [
+      ["Unit/Factory", "Weapon/FactoryGun", "Effect/FactoryDamage"],
+      ["Unit/Factory", "Behavior/FactoryAura", "Effect/AuraPulse"],
+      ["Upgrade/FactoryUpgrade", "Unit/Factory", "Abil/TrainWorker", "Unit/Worker"]
+    ],
+    "requiredNamespaces": ["Unit", "Weapon", "Abil", "Effect", "Behavior", "Upgrade"],
+    "requiresEdgeProvenance": true,
+    "requiresDeadTarget": true
+  },
+  "namedRemainder": [
+    "pixel-identical-legacy-layout",
+    "runtime-simulation-of-arbitrary-upgrade-and-behavior-modifiers",
+    "unbounded-relation-graph-expansion"
+  ]
+}

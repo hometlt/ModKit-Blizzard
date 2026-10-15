@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "contract": { "id": "modkit/subject-kind-definition", "major": 1 },
+  "id": "blizzard/sc2-mod-kind",
+  "displayName": "StarCraft II mod",
+  "spec": { "kindId": "sc2-mod", "label": "StarCraft II mod" }
+}

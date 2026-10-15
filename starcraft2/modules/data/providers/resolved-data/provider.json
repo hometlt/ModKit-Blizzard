@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/service-provider-contribution",
+    "major": 1
+  },
+  "id": "blizzard/starcraft2-resolved-data",
+  "displayName": "StarCraft II resolved workspace data",
+  "status": "supported",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./modules/data/providers/resolved-data/runtime.js",
+      "target": {
+        "environments": ["node"]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": []
+    },
+    {
+      "variantId": "worker-portable",
+      "entrypoint": "./modules/data/providers/resolved-data/runtime.js",
+      "target": {
+        "environments": ["node-worker", "browser-worker"]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": []
+    }
+  ],
+  "spec": {
+    "provides": [
+      {
+        "offerId": "starcraft2-resolved-data-v1",
+        "contract": "common.data/resolved-workspace",
+        "major": 1,
+        "version": "1.0.0",
+        "facet": {
+          "gameIds": ["blizzard/starcraft-2"]
+        }
+      }
+    ],
+    "lifecycleScope": "session"
+  },
+  "limitations": [
+    "Live schema, definition, localization and relation facets cover the pinned full legacy schema and preserve explicit installed-schema extensions; they are not a portable UVD artifact.",
+    "Full planning requires enough caller budget for the official sc2data.xml bootstrap and 108 namespace catalog files per dependency; smaller callers retain the bootstrap plus eight Product-GA priority catalogs with an explicit coverage warning. Built-in ##id##/$id substitution is resolved and unresolved declared token templates are excluded from concrete graph edges; full declared/global token substitution, schema validator execution and localized sources other than GameStrings remain named remainder.",
+    "The optional edit-target service resolves only the active writable mod context, returns every document revision guard and computes a re-resolved prospective value. It returns logical replacement/create output; permissions, binding selection, commit, history and atomicity remain host responsibilities."
+  ]
+}

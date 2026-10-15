@@ -1,0 +1,53 @@
+{
+  "name": "@modkit/blizzard-warcraft-3",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "description": "Warcraft III format codecs for Modkit.",
+  "files": [
+    "contributions",
+    "dist",
+    "providers",
+    "src",
+    "MDX-PORT-PROVENANCE.json",
+    "README.md"
+  ],
+  "modkit": {
+    "schemaVersion": 1,
+    "publisher": "blizzard",
+    "id": "warcraft-3",
+    "presentation": {
+      "displayName": "Blizzard Warcraft III",
+      "description": "Warcraft III format codecs for Modkit.",
+      "vendor": {
+        "id": "blizzard",
+        "displayName": "Blizzard"
+      },
+      "games": [
+        {
+          "id": "blizzard/warcraft-3",
+          "displayName": "Warcraft III"
+        }
+      ]
+    },
+    "contributionManifests": [
+      "./contributions/*.json",
+      "./providers/*/provider.json"
+    ],
+    "contentSources": "./dist/game/content-sources.js"
+  },
+  "dependencies": {
+    "@modkit/blizzard-casc": "workspace:*",
+    "@modkit/blizzard-mpq": "workspace:*",
+    "@modkit/codec-kit": "file:../vendor/modkit-codec-kit-1.0.0.tgz",
+    "@modkit/scene": "file:../vendor/modkit-scene-1.0.0.tgz",
+    "@modkit/sdk": "file:../vendor/modkit-sdk-0.1.0.tgz",
+    "@modkit/uv": "file:../vendor/modkit-uv-1.0.0.tgz",
+    "@modkit/vfs": "file:../vendor/modkit-vfs-0.1.0.tgz"
+  },
+  "scripts": {
+    "build": "tsc -b ./tsconfig.json",
+    "typecheck": "tsc -p ./tsconfig.vendored.json --noEmit && tsc -p ./tsconfig.json --noEmit"
+  }
+}

@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 1,
+  "contract": {
+    "id": "modkit/codec-contribution",
+    "major": 1
+  },
+  "id": "blizzard/sc2-map",
+  "displayName": "StarCraft II map",
+  "status": "partial",
+  "runtimeVariants": [
+    {
+      "variantId": "trusted-node",
+      "entrypoint": "./dist/modules/map/codecs/package/portable/codec.mjs",
+      "target": {
+        "environments": [
+          "node"
+        ]
+      },
+      "executionProfile": "trusted-in-process",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    },
+    {
+      "variantId": "portable",
+      "entrypoint": "./dist/modules/map/codecs/package/portable/codec.mjs",
+      "target": {
+        "environments": [
+          "browser-worker",
+          "node-worker"
+        ]
+      },
+      "executionProfile": "worker-brokered",
+      "requestedPermissionClasses": [
+        "read-source",
+        "write-source"
+      ]
+    }
+  ],
+  "limitations": [
+    "Opens MPQ-backed maps through the host-owned blizzard/mpq container alias and uses the same bounded namespace parser for loose maps.",
+    "The native adapter parses every pinned modeled entry family, preserves every unknown entry, composes DocumentHeader, DocumentInfo and version metadata, and renders height (base, adjustments or sum), height-sum, cliff, pathing, cell-flags, painted-pathing, texture, texture-overlay, overlay, vertex-color, cliff-vertices, cliff-cells, overview and navigation PNG layers; its facts carry the map name, MapInfo size, playable area, theme, planet and start locations.",
+    "The richer M4 edit-world transaction remains the write surface; the host delegates native-preserving or deterministic MPQ commit to blizzard/mpq.",
+    "Cross-codec coordinated rename, a 3D map scene, signing, native launch execution and installed-editor acceptance remain outside this milestone."
+  ],
+  "spec": {
+    "formatRefs": [
+      {
+        "formatId": "sc2-map",
+        "label": "StarCraft II map"
+      }
+    ],
+    "roles": [
+      "semantic"
+    ],
+    "sourceTopology": "namespace",
+    "artifactStages": [
+      "authored",
+      "compiled",
+      "runtime"
+    ],
+    "openIntents": [
+      "probe",
+      "inspect",
+      "full",
+      "export"
+    ],
+    "match": {
+      "extensions": [
+        "sc2map"
+      ]
+    },
+    "anchorDocuments": [
+      "MapInfo"
+    ],
+    "probe": {
+      "kind": "namespace",
+      "markers": [
+        "DocumentHeader",
+        "MapInfo",
+        "Objects",
+        "Regions",
+        "t3HeightMap",
+        "t3SyncPathingInfo"
+      ],
+      "maxEntries": 6,
+      "maxBytes": 65536,
+      "maxDepth": 4,
+      "maxPathBytes": 4096
+    },
+    "representations": [
+      {
+        "id": "archive-namespace",
+        "contract": "common.archive/entry-namespace",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      },
+      {
+        "id": "map-layers",
+        "contract": "common.map/layers",
+        "major": 1,
+        "stage": "authored",
+        "lossy": false
+      }
+    ],
+    "fidelityEvidence": [
+      {
+        "formatId": "sc2-map",
+        "representationId": "map-layers",
+        "claim": {
+          "roundTrip": "semantic",
+          "preservesUnknownData": true,
+          "notes": [
+            "A layer write changes only the written samples of t3HeightMap, t3SyncCliffLevel or t3SyncPathingInfo; the header, every untouched cell, the other fields of a height cell (adjustment, mask) and trailing bytes keep their bytes, the host commits a folder map's plan, the map reopens with the written samples, and undo restores the original (modules/map/test/sc2-map-layer-window.test.ts).",
+            "Object, region and reference edits keep untouched XML bytes and unknown attributes (test/sc2-map-world-writer.test.ts); a region shape the writer normalizes reports preservesUnknownData false and is not covered.",
+            "t3SyncHeightMap is not recomputed after a height write; the plan says so with the warning blizzard/sc2-map-sync-height-not-updated."
+          ]
+        },
+        "evidenceId": "sc2-map-layer-window-v1",
+        "corpusId": "modkit-extensions-blizzard/starcraft2/modules/map/test/sc2-map-layer-window.test.ts",
+        "corpusDigest": "none:proof-suite",
+        "conformanceProfile": "modkit/codec-contribution-v1",
+        "optionsFingerprint": "options:none",
+        "inputClass": "sc2-map-grid-documents",
+        "provenAt": "2026-09-26T00:00:00Z"
+      }
+    ],
+    "publishesDataSources": [
+      {
+        "contract": "common.view/namespace-entry-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/tree-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/table-data-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/subject-facts-source",
+        "major": 1
+      },
+      {
+        "contract": "common.view/relation-graph-source",
+        "major": 1
+      }
+    ],
+    "operations": [
+      {
+        "id": "blizzard/sc2-map.detect",
+        "handlerId": "detect-map",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map.open",
+        "handlerId": "open-map",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map.embedded",
+        "handlerId": "embedded-map",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map.metadata",
+        "handlerId": "metadata-map",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "view.inspect",
+        "handlerId": "inspect",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "asset.validate",
+        "handlerId": "validate",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "export.raw",
+        "handlerId": "export-raw",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "view.thumbnail",
+        "handlerId": "thumbnail",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "view.render",
+        "handlerId": "render-preview",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map.world",
+        "handlerId": "world-map",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map.edit-world",
+        "handlerId": "edit-world",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "map.layers",
+        "handlerId": "map-layers",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "map.layer-read",
+        "handlerId": "map-layer-read",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "json"
+        ]
+      },
+      {
+        "id": "map.layer-write",
+        "handlerId": "map-layer-write",
+        "mutatesSource": true,
+        "requiredPermissions": [
+          "read-source",
+          "write-source"
+        ],
+        "outputKinds": [
+          "edit-plan"
+        ]
+      },
+      {
+        "id": "container.extract",
+        "handlerId": "extract-entry",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      },
+      {
+        "id": "blizzard/sc2-map.extract-modeled",
+        "handlerId": "extract-modeled",
+        "mutatesSource": false,
+        "requiredPermissions": [
+          "read-source"
+        ],
+        "outputKinds": [
+          "bytes"
+        ]
+      }
+    ],
+    "implementationTier": {
+      "claimed": 1
+    },
+    "budgets": {
+      "maxInputBytes": "1073741824",
+      "maxDepth": 64,
+      "maxNodes": 100000,
+      "maxScalarBytes": 104857600,
+      "maxDiagnostics": 1000
+    },
+    "traitDeclarations": [
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "container.entries"
+      },
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "structure.hierarchy"
+      },
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "game.map"
+      },
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "structure.layers"
+      },
+      {
+        "presence": "will-expose",
+        "representation": "source",
+        "id": "content.metadata"
+      },
+      {
+        "presence": "may-expose",
+        "representation": "source",
+        "id": "scene.objects"
+      }
+    ],
+    "container": {
+      "formatId": "mpq",
+      "assetRoots": ["Base.SC2Assets", "*.SC2Assets", ""]
+    }
+  }
+}

@@ -1,0 +1,2589 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Constant name="TechTreeHorizontalGap" val="5"/>
+    <Constant name="TechTreeHorizontalGapLarge" val="50"/>
+
+    <Frame type="TechTreeStructureFrame" name="TTSFT_NoProduction_Crimson" template="TechTreePanel/TechTreeStructureFrameNoProductionTemplate">
+        <Frame type="Label" name="BuildingNameLabel">
+            <Style val="TechTreeBuildingLabel_Crimson"/>
+        </Frame>
+        <Frame type="Image" name="BuildingNameBackgroundImage">
+            <Texture val="@UI/TechTreeBuildingNameBackground_Crimson"/>
+        </Frame>
+        <Frame type="Image" name="BuildingIconBackgroundImage">
+            <Texture val="@UI/TechGlossaryButtonNormal_Crimson"/>
+        </Frame>
+        <Frame type="Label" name="UnlocksLabel">
+            <Style val="TechTreeUnlocksLabel_Crimson"/>
+        </Frame>
+        <Frame type="Label" name="UnlocksColonLabel">
+            <Style val="TechTreeUnlocksLabel_Crimson"/>
+        </Frame>
+    </Frame>
+    <Frame type="TechTreeStructureFrame" name="TTSFT_Crimson" template="TechTreePanel/TechTreeStructureFrameTemplate">
+        <Frame type="Label" name="BuildingNameLabel">
+            <Style val="TechTreeBuildingLabel_Crimson"/>
+        </Frame>
+
+        <Frame type="Image" name="BuildingNameBackgroundImage">
+            <Texture val="@UI/TechTreeBuildingNameBackground_Crimson"/>
+        </Frame>
+
+        <Frame type="Image" name="BuildingIconBackgroundImage">
+            <Texture val="@UI/TechGlossaryButtonNormal_Crimson"/>
+        </Frame>
+
+        <Frame type="Frame" name="UnitListContainerFrame">
+            <Frame type="Frame" name="Unit0">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit1">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit2">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit3">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit4">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit5">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit6">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit7" >
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit8" template="TechTreePanel/UnitIconTemplate">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit9" template="TechTreePanel/UnitIconTemplate">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit10" template="TechTreePanel/UnitIconTemplate">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit11" template="TechTreePanel/UnitIconTemplate">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit12" template="TechTreePanel/UnitIconTemplate">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit13" template="TechTreePanel/UnitIconTemplate">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Frame type="Frame" name="Unit14" template="TechTreePanel/UnitIconTemplate">
+                <Frame type="Image" name="Background">
+                    <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                </Frame>
+            </Frame>
+            <Anchor side="Bottom" relative="$parent/UnitListContainerFrame" pos="Max" offset="0"/>
+            <Height val="300"/>
+        </Frame>
+
+        <Frame type="Label" name="UnlocksLabel">
+            <Style val="TechTreeUnlocksLabel_Crimson"/>
+        </Frame>
+        <Frame type="Label" name="UnlocksColonLabel">
+            <Style val="TechTreeUnlocksLabel_Crimson"/>
+        </Frame>
+        <Height val="128"/>
+    </Frame>
+    <Frame type="TechTreeStructureFrame" name="TTSFT_Wide_Crimson" template="TechTreePanel_CNC/TTSFT_Crimson">
+        <Width val="350"/>
+
+        <Frame type="Frame" name="UnitListContainerFrame">
+            <Frame type="Frame" name="Unit4">
+                <Anchor side="Top" relative="$parent/Unit3" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/Unit3" pos="Max" offset="0"/>
+            </Frame>
+            <Frame type="Frame" name="Unit5">
+                <Anchor side="Top" relative="$parent/Unit0" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/Unit0" pos="Min" offset="0"/>
+            </Frame>
+            <Frame type="Frame" name="Unit6" >
+                <Anchor side="Top" relative="$parent/Unit5" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/Unit5" pos="Max" offset="0"/>
+            </Frame>
+            <Frame type="Frame" name="Unit7" >
+                <Anchor side="Top" relative="$parent/Unit6" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/Unit6" pos="Max" offset="0"/>
+            </Frame>
+            <Frame type="Frame" name="Unit8" >
+                <Anchor side="Top" relative="$parent/Unit7" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/Unit7" pos="Max" offset="0"/>
+            </Frame>
+            <Frame type="Frame" name="Unit9" >
+                <Anchor side="Top" relative="$parent/Unit8" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/Unit8" pos="Max" offset="0"/>
+            </Frame>
+            <Frame type="Frame" name="Unit10" >
+                <Anchor side="Top" relative="$parent/Unit5" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/Unit5" pos="Min" offset="0"/>
+            </Frame>
+            <Frame type="Frame" name="Unit11" >
+                <Anchor side="Top" relative="$parent/Unit10" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/Unit10" pos="Max" offset="0"/>
+            </Frame>
+        </Frame>
+    </Frame>
+    <Frame type="Frame" name="VerticalArrow_Crimson" template="TechTreePanel/VerticalArrow">
+        <Frame type="Image" name="Head">
+            <LayerColor val="##LineColor_Crimson"/>
+        </Frame>
+        <Frame type="Image" name="Tail">
+            <LayerColor val="##LineColor_Crimson"/>
+        </Frame>
+    </Frame>
+
+    <Frame type="TechTreePanel" name="GameUI/UIContainer/FullscreenUpperContainer/HelpMenuDialogGame/PanelFrame/TechTreePanel" file="GameUI">
+        <Frame type="Frame" name="CategoryFrame_Nod" >
+            <Anchor relative="$parent"/>
+            <Visible val="false"/>
+
+            <!--Line1-->
+            <Frame type="TechTreeStructureFrame" name="NodConstructionYard" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                <Height val="130"/>
+                <Width val="300"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodCrane" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodConstructionYard" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodConstructionYard" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodEmissaryDeployed" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodCrane" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodCrane" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+            </Frame>
+
+            <!--Line2-->
+            <Frame type="TechTreeStructureFrame" name="NodPowerPlant" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodConstructionYard" pos="Max" offset="30"/>
+                <Anchor side="Left" relative="$parent/NodConstructionYard" pos="Min" offset="0"/>
+                <Height val="130"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodTiberiumRefinery" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/NodPowerPlant" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodPowerPlant" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="130"/>
+                <Width val="300"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodVespeneRefinery" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/NodTiberiumRefinery" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodTiberiumRefinery" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="130"/>
+                <Width val="300"/>
+            </Frame>
+
+            <!--Line3-->
+            <Frame type="TechTreeStructureFrame" name="NodHand" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/NodPowerPlant" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodPowerPlant" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodOperationsCenter" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodHand" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodHand" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="125"/>
+
+
+                <Frame type="Label" name="UnlocksLabel">
+                    <Text val=""/>
+                    <Style val="TechTreeInvisible"/>
+                </Frame>
+                <Frame type="Frame" name="Unlock0" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/UnlocksColonLabel" pos="Max" offset="0"/>
+                    <Anchor side="Left" relative="$parent/UnlocksColonLabel" pos="Min" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodFlameTank" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodFlameTank" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-FlameTank.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock1" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock0" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock0" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodReckoner" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodReckoner" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-Reckoner.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock2" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock1" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock1" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodBlackHand" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodBlackHand" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-BlackHand.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock3" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock2" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock2" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodFanatic" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodFanatic" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-Fanatic.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="NodTurretsHub" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodOperationsCenter" pos="Min" offset="-40"/>
+                <Anchor side="Left" relative="$parent/NodOperationsCenter" pos="Max" offset="30"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodChemicalPlant" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodTurretsHub" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Anchor side="Left" relative="$parent/NodTurretsHub" pos="Min" offset="0"/>
+                <Frame type="Label" name="UnlocksLabel">
+                    <Text val=""/>
+                    <Style val="TechTreeInvisible"/>
+                </Frame>
+                <Frame type="Frame" name="Unlock0" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/UnlocksColonLabel" pos="Max" offset="0"/>
+                    <Anchor side="Left" relative="$parent/UnlocksColonLabel" pos="Min" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodTiberiumTrooper" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodTiberiumTrooper" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-TiberiumTrooper.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock1" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock0" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock0" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodSpecter" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodSpecter" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-Specter.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock2" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock1" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock1" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodBanshee" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodBanshee" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-Banshee.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+            </Frame>
+
+            <!--Line4-->
+            <Frame type="TechTreeStructureFrame" name="NodWarFactory" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/NodHand" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodHand" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodShrine" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodWarFactory" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodWarFactory" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Frame type="Label" name="UnlocksLabel">
+                    <Text val=""/>
+                    <Style val="TechTreeInvisible"/>
+                </Frame>
+                <Frame type="Frame" name="Unlock0" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/UnlocksColonLabel" pos="Max" offset="0"/>
+                    <Anchor side="Left" relative="$parent/UnlocksColonLabel" pos="Min" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodShadow" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodShadow" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-Shadow.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock1" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock0" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock0" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodConfessor" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodConfessor" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-Confessor.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock2" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock1" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock1" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodCommando" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodCommando" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-Commando.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Height val="125"/>
+            </Frame>
+
+            <!--Tier5-->
+            <Frame type="TechTreeStructureFrame" name="NodAirTower" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/NodWarFactory" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Anchor side="Left" relative="$parent/NodWarFactory" pos="Min" offset="0"/>
+                <Height val="140"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodTechLab" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodAirTower" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodAirTower" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="140"/>
+
+                <Frame type="Label" name="UnlocksLabel">
+                    <Text val=""/>
+                    <Style val="TechTreeInvisible"/>
+                </Frame>
+                <Frame type="Frame" name="Unlock0" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/UnlocksColonLabel" pos="Max" offset="0"/>
+                    <Anchor side="Left" relative="$parent/UnlocksColonLabel" pos="Min" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodEnlightened" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodEnlightened" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-Enlightened.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock1" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock0" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock0" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodStealthTank" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodStealthTank" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-stealthtank.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock2" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock1" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock1" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodBeamCannon" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodBeamCannon" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-BeamCannon.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock3" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock2" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock2" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodAvatar" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodAvatar" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-Avatar.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock4" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock3" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock3" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/NodVertigo" index="3"/>
+                        <Replacement val="@Button/Tooltip/NodVertigo" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Nod/btn-nod-unit-Vertigo.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodDisruptionTower" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodShrine" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodShrine" pos="Max" offset="30"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodVoiceOfKane" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodDisruptionTower" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Anchor side="Left" relative="$parent/NodDisruptionTower" pos="Min" offset="0"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodRedeemerFacility" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/NodTechLab" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodTechLab" pos="Max" offset="30"/>
+                <Height val="130"/>
+                <Width val="300"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodObelisk" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodRedeemerFacility" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodRedeemerFacility" pos="Min" offset="0"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodTemple" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodObelisk" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Anchor side="Left" relative="$parent/NodObelisk" pos="Min" offset="0"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="NodAirSupport" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/NodAirTower" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Anchor side="Left" relative="$parent/NodAirTower" pos="Min" offset="0"/>
+            </Frame>
+
+            <!--line2-->
+            <Frame type="Image" name="LineH1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodConstructionYard" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodCrane/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodPowerPlant" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodPowerPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodVespeneRefinery/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodConstructionYard/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodCrane/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodCrane/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV3">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/NodPowerPlant/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/NodPowerPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV4">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/NodTiberiumRefinery/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/NodTiberiumRefinery/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV5">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/NodVespeneRefinery/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/NodVespeneRefinery/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow1" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+            <!--Line3-->
+            <Frame type="Image" name="LineH3">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodHand" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodHand/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodOperationsCenter/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV6">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH3" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/NodHand/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/NodHand/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV7">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH3" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/NodOperationsCenter/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/NodOperationsCenter/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow2" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/NodPowerPlant/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH3" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodPowerPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodPowerPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+
+            <Frame type="Image" name="LineH4">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodWarFactory" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodWarFactory/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodShrine/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH5">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodAirTower" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodAirTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodTechLab/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+
+
+            <Frame type="Image" name="LineV8">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH4" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/NodWarFactory/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/NodWarFactory/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV9">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH4" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/NodShrine/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/NodShrine/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV10">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH5" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/NodAirTower/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/NodAirTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV11">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH5" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/NodTechLab/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/NodTechLab/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow3" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/NodHand/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH4" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodHand/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodHand/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow4" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/NodWarFactory/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH5" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodWarFactory/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodWarFactory/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow5" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/NodAirTower/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/NodAirSupport/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/NodAirTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodAirTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+            <Frame type="Image" name="LineH1OC">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodOperationsCenter" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodOperationsCenter/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodOperationsCenter" pos="Max" offset="15"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Frame" name="ArrowOC" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/NodOperationsCenter/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH1OC" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodOperationsCenter/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodOperationsCenter/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Image" name="LineV2OC">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodTurretsHub/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/LineH1OC" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/LineH1OC" pos="Max" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH2OC">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodTurretsHub/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/LineV2OC" pos="Min" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodTurretsHub/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH3OC">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodChemicalPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/LineV2OC" pos="Min" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodChemicalPlant/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+
+            <Frame type="Image" name="LineH1Shrine">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodShrine" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodShrine/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodShrine" pos="Max" offset="15"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Frame" name="ArrowShrine" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/NodShrine/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH1Shrine" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodShrine/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodShrine/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Image" name="LineV2Shrine">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodDisruptionTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/NodVoiceOfKane/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/LineH1Shrine" pos="Max" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH2Shrine">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodDisruptionTower/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/LineV2Shrine" pos="Min" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodDisruptionTower/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH3Shrine">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodVoiceOfKane/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/LineV2Shrine" pos="Min" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodVoiceOfKane/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+
+            <Frame type="Image" name="LineH1TL">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodTechLab" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodTechLab/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodTechLab" pos="Max" offset="15"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Frame" name="ArrowTL" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/NodTechLab/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH1TL" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/NodTechLab/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodTechLab/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Image" name="LineV2TL">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodRedeemerFacility/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/NodTemple/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/LineH1TL" pos="Max" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH2TL">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodRedeemerFacility/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/LineV2TL" pos="Min" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodRedeemerFacility/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH3TL">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodObelisk/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/LineV2TL" pos="Min" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodObelisk/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH4TL">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/NodTemple/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/LineV2TL" pos="Min" offset="0"/>
+                <Anchor side="Right" relative="$parent/NodTemple/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+
+        </Frame>
+        <Frame type="Frame" name="CategoryFrame_CABAL" >
+            <Anchor relative="$parent"/>
+            <Visible val="false"/>
+
+            <Frame type="TechTreeStructureFrame" name="CABALCommandCenter" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                <Height val="130"/>
+                <Width val="300"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALVespeneRefinery" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALCommandCenter" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALCommandCenter" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALControlNode" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALVespeneRefinery" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALVespeneRefinery" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALOutpost" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALControlNode" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALControlNode" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="CABALPyramid" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/CABALCommandCenter" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALCommandCenter" pos="Min" offset="0"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALShrine" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/CABALPyramid" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALPyramid" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALGrandShrine" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/CABALShrine" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALShrine" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="CABALViperTurret" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALPyramid" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Anchor side="Left" relative="$parent/CABALPyramid" pos="Min" offset="75"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALMissilePod" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALViperTurret" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Anchor side="Left" relative="$parent/CABALViperTurret" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALShieldGenerator" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALShrine" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Anchor side="Left" relative="$parent/CABALShrine" pos="Min" offset="75"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALPrimeTemple" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALGrandShrine" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Anchor side="Left" relative="$parent/CABALGrandShrine" pos="Min" offset="75"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="CABALDefenseCrawlerDeployed" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/CABALMissilePod" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                <Height val="240"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALOffenseCrawlerDeployed" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/CABALDefenseCrawlerDeployed" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALDefenseCrawlerDeployed" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="240"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALSupportCrawlerDeployed" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/CABALOffenseCrawlerDeployed" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALOffenseCrawlerDeployed" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="240"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="CABALBunker" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALDefenseCrawlerDeployed" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALDefenseCrawlerDeployed" pos="Min" offset="75"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALObelisk" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALBunker" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALBunker" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="CABALTunnel" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALOffenseCrawlerDeployed" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALOffenseCrawlerDeployed" pos="Min" offset="75"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALFlameColumn" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALTunnel" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALTunnel" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="CABALHelipad" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALSupportCrawlerDeployed" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALSupportCrawlerDeployed" pos="Min" offset="75"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="CABALIncinerator" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/CABALHelipad" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALHelipad" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+
+
+            <Frame type="Frame" name="Arrow1" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/CABALCommandCenter/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/CABALPyramid/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/CABALCommandCenter/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALCommandCenter/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow2" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/CABALPyramid/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/CABALViperTurret/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALPyramid/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALPyramid/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Image" name="LineV1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALViperTurret/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/CABALMissilePod/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow2" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALViperTurret/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow2" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALViperTurret/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALMissilePod/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow2" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALMissilePod/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+
+            <Frame type="Frame" name="Arrow3" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/CABALShrine/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/CABALShieldGenerator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALShrine/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALShrine/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Image" name="LineH3">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALShieldGenerator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow3" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALShieldGenerator/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+
+            <Frame type="Frame" name="Arrow4" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/CABALGrandShrine/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/CABALPrimeTemple/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALGrandShrine/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALGrandShrine/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Image" name="LineH4">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALPrimeTemple/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow4" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALPrimeTemple/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+
+
+
+
+            <Frame type="Frame" name="Arrow5" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/CABALDefenseCrawlerDeployed/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/CABALBunker/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALDefenseCrawlerDeployed/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALDefenseCrawlerDeployed/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Image" name="LineV2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALBunker/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/CABALObelisk/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow5" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH5">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALBunker/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow5" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALBunker/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH6">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALObelisk/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow5" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALObelisk/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+
+
+            <Frame type="Frame" name="Arrow6" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/CABALOffenseCrawlerDeployed/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/CABALTunnel/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALOffenseCrawlerDeployed/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALOffenseCrawlerDeployed/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Image" name="LineV3">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALTunnel/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/CABALFlameColumn/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow6" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH7">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALTunnel/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow6" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALTunnel/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH8">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALFlameColumn/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow6" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALFlameColumn/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+
+
+            <Frame type="Frame" name="Arrow7" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/CABALSupportCrawlerDeployed/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/CABALHelipad/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/CABALSupportCrawlerDeployed/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALSupportCrawlerDeployed/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+            <Frame type="Image" name="LineV4">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALHelipad/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/CABALIncinerator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow7" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH9">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALHelipad/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow7" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALHelipad/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH10">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/CABALIncinerator/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Left" relative="$parent/Arrow7" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/CABALIncinerator/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Height val="2"/>
+            </Frame>
+
+
+
+        </Frame>
+        <Frame type="Frame" name="CategoryFrame_Scrin" >
+            <Anchor relative="$parent"/>
+            <Visible val="false"/>
+
+            <Frame type="TechTreeStructureFrame" name="ScrinDronePlatform" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinFoundry" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinDronePlatform" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinDronePlatform" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinReactor" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinDronePlatform" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinDronePlatform" pos="Min" offset="0"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinExtractor" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinReactor" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinReactor" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinGrowthAccelerator" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinExtractor" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinExtractor" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinPortal" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinReactor" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinReactor" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinWarpSphere" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinPortal" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinPortal" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinGravityStabilizer" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinWarpSphere" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinWarpSphere" pos="Min" offset="0"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinNerveCenter" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinPortal" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinPortal" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinStasisChamber" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinWarpSphere" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinWarpSphere" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinTechnologyAssembler" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinGravityStabilizer" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinGravityStabilizer" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="130"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinSignalTransmitter" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinGravityStabilizer" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinGravityStabilizer" pos="Min" offset="0"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinWarpChasm" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinTechnologyAssembler" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinTechnologyAssembler" pos="Min" offset="0"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinStormColumn" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinWarpChasm" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinWarpChasm" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinRiftGenerator" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinStormColumn" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinStormColumn" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="ScrinOutpost" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinFoundry" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinFoundry" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinBuzzerHive" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinSignalTransmitter" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinSignalTransmitter" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinPhotonCannon" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinBuzzerHive" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinBuzzerHive" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ScrinPlasmaMissileBattery" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ScrinPhotonCannon" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ScrinPhotonCannon" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+
+        </Frame>
+        <Frame type="Frame" name="CategoryFrame_GDI" >
+            <Anchor relative="$parent"/>
+            <Visible val="false"/>
+
+            <Frame type="TechTreeStructureFrame" name="GDIConstructionYard" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                <Height val="130"/>
+                <Width val="300"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDICrane" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDIConstructionYard" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIConstructionYard" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIPowerPlant" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDIConstructionYard" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIConstructionYard" pos="Min" offset="0"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDITiberiumRefinery" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/GDIPowerPlant" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIPowerPlant" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIVespeneRefinery" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDITiberiumRefinery" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDITiberiumRefinery" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIBarracks" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/GDIPowerPlant" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIPowerPlant" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIWarFactory" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/GDIBarracks" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIBarracks" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIAirfield" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/GDIWarFactory" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIWarFactory" pos="Min" offset="0"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDICombatSupportAirfield" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDIAirfield" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIAirfield" pos="Min" offset="0"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDICommandPost" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDIBarracks" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIBarracks" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIArmoury" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDIWarFactory" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIWarFactory" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDITechCenter" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDIAirfield" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIAirfield" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDISpaceCommandUplink" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDITechCenter" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDITechCenter" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIReclamatorHub" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/GDITechCenter" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDITechCenter" pos="Min" offset="0"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIIonCannon" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDIReclamatorHub" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIReclamatorHub" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIOutpost" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDICrane" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDICrane" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIWatchtower" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDICombatSupportAirfield" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDICombatSupportAirfield" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIGuardianTower" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDIWatchtower" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIWatchtower" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDIAABattery" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDIGuardianTower" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIGuardianTower" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="GDISonicEmitter" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/GDIAABattery" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/GDIAABattery" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+        </Frame>
+        <Frame type="Frame" name="CategoryFrame_ZOCOM" >
+            <Anchor relative="$parent"/>
+            <Visible val="false"/>
+
+            <Frame type="TechTreeStructureFrame" name="ZOCOMCommandCenter" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                <Height val="130"/>
+                <Width val="300"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMVespeneRefinery" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMCommandCenter" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMCommandCenter" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMOutpost" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMVespeneRefinery" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMVespeneRefinery" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="ZOCOMControlTower" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMCommandCenter" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMCommandCenter" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMOrbitalControl" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMControlTower" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMControlTower" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMDefenseLaboratory" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMOrbitalControl" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMOrbitalControl" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMScienceLaboratory" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMOrbitalControl" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMOrbitalControl" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMTacitusArchives" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMScienceLaboratory" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMScienceLaboratory" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="ZOCOMDefenseCrawlerDeployed" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMOrbitalControl" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMOrbitalControl" pos="Min" offset="0"/>
+                <Height val="240"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMOffenseCrawlerDeployed" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMDefenseCrawlerDeployed" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMDefenseCrawlerDeployed" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="240"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMSupportCrawlerDeployed" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMOffenseCrawlerDeployed" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMOffenseCrawlerDeployed" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="240"/>
+            </Frame>
+
+
+
+            <Frame type="TechTreeStructureFrame" name="ZOCOMBunker" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMDefenseCrawlerDeployed" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMDefenseCrawlerDeployed" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMFocusBeam" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMBunker" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMBunker" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMGuardianCannon" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMFocusBeam" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMFocusBeam" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMMissileTurret" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMGuardianCannon" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMGuardianCannon" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="ZOCOMTunnel" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMBunker" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMBunker" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMIonCannon" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMTunnel" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMTunnel" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMSkystrikeArtillery" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMIonCannon" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMIonCannon" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="ZOCOMFalconMLRS" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMSkystrikeArtillery" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMSkystrikeArtillery" pos="Min" offset="0"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="ZOCOMCrystalShield" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/ZOCOMTunnel" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/ZOCOMTunnel" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Height val="90"/>
+                <Width val="270"/>
+            </Frame>
+
+
+
+
+
+        </Frame>
+        <Frame type="Frame" name="CategoryFrame_Empire" >
+            <Anchor relative="$parent"/>
+            <Visible val="false"/>
+
+            <Frame type="TechTreeStructureFrame" name="EmpireConstructionYard" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                <Height val="130"/>
+                <Width val="300"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpireGenerator" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/EmpireConstructionYard" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpireConstructionYard" pos="Min" offset="0"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpireOreRefinery" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/EmpireGenerator" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpireGenerator" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpireDojo" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/EmpireGenerator" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpireGenerator" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpireMechaBay" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/EmpireDojo" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpireDojo" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpireDocks" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/EmpireMechaBay" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpireMechaBay" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpireNanotechMainframe" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/EmpireDocks" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpireDocks" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpireNanoSwarmHive" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/EmpireMechaBay" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpireMechaBay" pos="Min" offset="0"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpirePsionicDecimator" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/EmpireNanoSwarmHive" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpireNanoSwarmHive" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpireGigaFortressGrounded" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/EmpirePsionicDecimator" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpirePsionicDecimator" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpireDefenderVX" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/EmpireNanoSwarmHive" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpireNanoSwarmHive" pos="Min" offset="0"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpireWaveForceTower" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/EmpireDefenderVX" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpireDefenderVX" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="EmpireArtilleryCannon" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/EmpireWaveForceTower" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/EmpireWaveForceTower" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+        </Frame>
+        <Frame type="Frame" name="CategoryFrame_Soviet" >
+            <Anchor relative="$parent"/>
+            <Visible val="false"/>
+
+            <!--Line1-->
+            <Frame type="TechTreeStructureFrame" name="SovietConstructionYard" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                <Height val="130"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="SovietCrusherCrane" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietConstructionYard" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietConstructionYard" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="SovietOutpost" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietCrusherCrane" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietCrusherCrane" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+
+            <!--Line2-->
+            <Frame type="TechTreeStructureFrame" name="SovietReactor" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietConstructionYard" pos="Max" offset="30"/>
+                <Anchor side="Left" relative="$parent/SovietConstructionYard" pos="Min" offset="0"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="SovietOreRefinery" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/SovietReactor" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietReactor" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="SovietVespenePurifier" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietOreRefinery" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietOreRefinery" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+
+            <!--Line3-->
+            <Frame type="TechTreeStructureFrame" name="SovietBarracks" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/SovietReactor" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietReactor" pos="Min" offset="0"/>
+                <Height val="230"/>
+
+                <Frame type="Label" name="UnlocksColonLabel">
+                    <Text val="@UI/Unlocks_Colon"/>
+                    <Anchor side="Top" relative="$parent/UnitListContainerFrame" pos="Max" offset="2"/>
+                    <Anchor side="Left" relative="$parent/UnitListContainerFrame" pos="Min" offset="5"/>
+                    <Style val="TechTreeUnlocksLabel_Crimson"/>
+                </Frame>
+                <Frame type="Frame" name="Unlock0" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/UnlocksColonLabel" pos="Max" offset="0"/>
+                    <Anchor side="Left" relative="$parent/UnlocksColonLabel" pos="Min" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietSentryGun" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietSentryGun" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/building-SentryGun.dds"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock1" template="TechTreePanel/UnitIconTemplate">
+                    <Anchor side="Top" relative="$parent/Unlock0" pos="Min" offset="0"/>
+                    <Anchor side="Left" relative="$parent/Unlock0" pos="Max" offset="0"/>
+                    <Width val="36"/>
+                    <Height val="36"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip">
+                        <Anchor relative="$parent"/>
+                        <FormatText val="%0%%3%%1%%2%%2%%4%"/>
+                        <Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/>
+                        <Replacement val="@UI/CloseStyle" index="1"/>
+                        <Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietFlakCannon" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietFlakCannon" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background">
+                        <Texture val="@UI/UnitListBackgroundImage_Crimson"/>
+                    </Frame>
+                    <Frame type="Image" name="Icon">
+                        <Texture val="Assets/Icons/Soviet/building-FlakCannon.dds"/>
+                        <Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                    </Frame>
+                </Frame>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="SovietSuperReactor" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietBarracks" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietBarracks" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+
+
+                <Frame type="Label" name="UnlocksColonLabelAlt">
+                    <Text val="@UI/Unlocks_Colon"/>
+                    <Anchor side="Top" relative="$parent/BuildingNameLabel" pos="Max" offset="2"/>
+                    <Anchor side="Left" relative="$parent/BuildingIconBackgroundImage" pos="Max" offset="-5"/>
+                    <Style val="TechTreeUnlocksLabel_Crimson"/>
+                </Frame>
+                <Frame type="Frame" name="Unlock0" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/UnlocksColonLabelAlt" pos="Max" offset="0"/><Anchor side="Left" relative="$parent/UnlocksColonLabelAlt" pos="Min" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietTeslaTrooper" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietTeslaTrooper" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/unit-TeslaTrooper.dds"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock1" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/Unlock0" pos="Min" offset="0"/><Anchor side="Left" relative="$parent/Unlock0" pos="Max" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietHammerTank" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietHammerTank" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/unit-HammerTank.dds"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock2" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/Unlock1" pos="Min" offset="0"/><Anchor side="Left" relative="$parent/Unlock1" pos="Max" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietReaper" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietReaper" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/unit-Reaper.dds"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock3" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/Unlock2" pos="Min" offset="0"/><Anchor side="Left" relative="$parent/Unlock2" pos="Max" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietTeslaTank" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietTeslaTank" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/unit-TeslaTank.dds"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock4" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/Unlock3" pos="Min" offset="0"/><Anchor side="Left" relative="$parent/Unlock3" pos="Max" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietTeslaCoil" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietTeslaCoil" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/building-TeslaCoil.dds"/>
+                    </Frame>
+                </Frame>
+            </Frame>
+
+            <!--Line4-->
+            <Frame type="TechTreeStructureFrame" name="SovietWarFactory" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/SovietBarracks" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietBarracks" pos="Min" offset="0"/>
+                <Height val="230"/>
+                <Frame type="Label" name="UnlocksColonLabelAlt">
+                    <Text val="@UI/Unlocks_Colon"/>
+                    <Anchor side="Top" relative="$parent/UnitListContainerFrame/Unit5" pos="Max" offset="2"/>
+                    <Anchor side="Left" relative="$parent/UnitListContainerFrame" pos="Min" offset="5"/>
+                    <Style val="TechTreeUnlocksLabel_Crimson"/>
+                </Frame>
+                <Frame type="Frame" name="Unlock0" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/UnlocksColonLabelAlt" pos="Max" offset="0"/><Anchor side="Left" relative="$parent/UnlocksColonLabelAlt" pos="Min" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietMortarCycle" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietMortarCycle" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/unit-MortarCycle.dds"/>
+                    </Frame>
+                </Frame>
+            </Frame>
+
+            <!--Line5-->
+            <Frame type="TechTreeStructureFrame" name="SovietAirfield" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/SovietWarFactory" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietWarFactory" pos="Min" offset="0"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="SovietNavalYard" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/SovietAirfield" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietAirfield" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="SovietBattleLab" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietSuperReactor" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietSuperReactor" pos="Min" offset="0"/>
+                <Width val="270"/>
+
+                <Frame type="Label" name="UnlocksColonLabelAlt">
+                    <Text val="@UI/Unlocks_Colon"/>
+                    <Anchor side="Top" relative="$parent/BuildingNameLabel" pos="Max" offset="2"/>
+                    <Anchor side="Left" relative="$parent/BuildingIconBackgroundImage" pos="Max" offset="-5"/>
+                    <Style val="TechTreeUnlocksLabel_Crimson"/>
+                </Frame>
+                <Frame type="Frame" name="Unlock0" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/UnlocksColonLabelAlt" pos="Max" offset="0"/><Anchor side="Left" relative="$parent/UnlocksColonLabelAlt" pos="Min" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietDesolator" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietDesolator" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/unit-Desolator.dds"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock1" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/Unlock0" pos="Min" offset="0"/><Anchor side="Left" relative="$parent/Unlock0" pos="Max" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietNatasha" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietNatasha" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/unit-Natasha.dds"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock2" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/Unlock1" pos="Min" offset="0"/><Anchor side="Left" relative="$parent/Unlock1" pos="Max" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietGrinder" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietGrinder" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/unit-Grinder.dds"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock3" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/Unlock2" pos="Min" offset="0"/><Anchor side="Left" relative="$parent/Unlock2" pos="Max" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietApocalypseTank" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietApocalypseTank" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/unit-ApocalypseTank.dds"/>
+                    </Frame>
+                </Frame>
+                <Frame type="Frame" name="Unlock4" template="TechTreePanel/UnitIconTemplate"><Width val="36"/><Height val="36"/>
+                    <Anchor side="Top" relative="$parent/Unlock3" pos="Min" offset="0"/><Anchor side="Left" relative="$parent/Unlock3" pos="Max" offset="0"/>
+                    <Frame type="TextFormatFrame" name="FormatTooltip"><Anchor relative="$parent"/><FormatText val="%0%%3%%1%%2%%2%%4%"/><Replacement val="@UI/OpenStyle_TooltipHeader" index="0"/><Replacement val="@UI/CloseStyle" index="1"/><Replacement val="@UI/NewLine" index="2"/>
+                        <Replacement val="@Unit/Name/SovietKirov" index="3"/>
+                        <Replacement val="@Button/Tooltip/SovietKirov" index="4"/>
+                    </Frame>
+                    <Frame type="Image" name="Background"><Texture val="@UI/UnitListBackgroundImage_Crimson"/></Frame>
+                    <Frame type="Image" name="Icon"><Tooltip val="{$parent/FormatTooltip/@Text}"/>
+                        <Texture val="Assets/Icons/Soviet/unit-Kirov.dds"/>
+                    </Frame>
+                </Frame>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="SovietIronCurtainDevice" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietBattleLab" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietBattleLab" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="SovietVacuumImploder" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietBattleLab" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietBattleLab" pos="Min" offset="0"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="SovietSentryGun" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietAirfield" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietAirfield" pos="Min" offset="0"/>
+                <Width val="200"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="SovietFlakCannon" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietSentryGun" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietSentryGun" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="SovietTeslaCoil" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietFlakCannon" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietFlakCannon" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="SovietArtilleryCannon" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/SovietTeslaCoil" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietTeslaCoil" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+            </Frame>
+
+
+            <!--Line2-->
+            <Frame type="Image" name="LineH1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/SovietConstructionYard" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/SovietCrusherCrane/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineH2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/SovietReactor" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/SovietVespenePurifier/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/SovietConstructionYard/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/SovietCrusherCrane/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietCrusherCrane/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV3">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/SovietReactor/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/SovietReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV4">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/SovietOreRefinery/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/SovietOreRefinery/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV5">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/SovietVespenePurifier/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/SovietVespenePurifier/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow1" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/SovietConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+            <!--Line3-->
+            <Frame type="Image" name="LineH3">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/SovietBarracks" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietBarracks/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/SovietSuperReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV6">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH3" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/SovietBarracks/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/SovietBarracks/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV7">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH3" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/SovietSuperReactor/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/SovietSuperReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow2" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/SovietReactor/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH3" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/SovietReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/SovietReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+
+        </Frame>
+        <Frame type="Frame" name="CategoryFrame_Allied" >
+            <Anchor relative="$parent"/>
+            <Visible val="false"/>
+
+            <Frame type="TechTreeStructureFrame" name="AlliedConstructionYard" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                <Height val="90"/>
+                <Width val="300"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="AlliedCommandHub" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedConstructionYard" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedConstructionYard" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="AlliedPowerPlant" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedConstructionYard" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedConstructionYard" pos="Min" offset="0"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="AlliedOreRefinery" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedPowerPlant" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedPowerPlant" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="AlliedVespenePurifier" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedOreRefinery" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedOreRefinery" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="AlliedBootCamp" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedPowerPlant" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedPowerPlant" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="AlliedArmourFacility" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedBootCamp" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedBootCamp" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="AlliedDefenceBureau" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedArmourFacility" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedArmourFacility" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="AlliedAirbase" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedArmourFacility" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedArmourFacility" pos="Min" offset="0"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="AlliedSeaport" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedAirbase" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedAirbase" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="AlliedChronosphere" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedAirbase" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedAirbase" pos="Min" offset="0"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="AlliedProtonCollider" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedChronosphere" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedChronosphere" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="AlliedMultigunnerTurret" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedChronosphere" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedChronosphere" pos="Min" offset="0"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="AlliedSpectrumTower" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedMultigunnerTurret" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedMultigunnerTurret" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="AlliedArtilleryCannon" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/AlliedSpectrumTower" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/AlliedSpectrumTower" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+
+        </Frame>
+        <Frame type="Frame" name="CategoryFrame_Blue" >
+            <Anchor relative="$parent"/>
+            <Visible val="false"/>
+
+            <Frame type="TechTreeStructureFrame" name="BlueConstructionYard" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                <Height val="150"/>
+                <Width val="300"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="BluePowerPlant" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/BlueConstructionYard" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueConstructionYard" pos="Min" offset="0"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="BlueOreRefinery" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/BluePowerPlant" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BluePowerPlant" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="BlueVespenePurifier" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/BlueOreRefinery" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueOreRefinery" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="BlueBarracks" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/BluePowerPlant" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/BluePowerPlant" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="BlueSpySat" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/BlueBarracks" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueBarracks" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="BlueWarFactory" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/BlueBarracks" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueBarracks" pos="Min" offset="0"/>
+                <Height val="220"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="BlueBattleLab" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/BlueWarFactory" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueWarFactory" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="100"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="BlueAirCommand" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/BlueWarFactory" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueWarFactory" pos="Min" offset="0"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="BlueServiceDepot" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/BlueAirCommand" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueAirCommand" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="BlueRobotControlCenter" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/BlueServiceDepot" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueServiceDepot" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="BlueChronosphere" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/BlueBattleLab" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueBattleLab" pos="Min" offset="0"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="BlueWeatherController" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/BlueChronosphere" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueChronosphere" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+
+
+            <Frame type="Image" name="LineH1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/BluePowerPlant" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BluePowerPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/BlueVespenePurifier/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/BluePowerPlant/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/BluePowerPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/BlueOreRefinery/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/BlueOreRefinery/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV3">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH1" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/BlueVespenePurifier/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/BlueVespenePurifier/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow1" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/BlueConstructionYard/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH1" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/BlueConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+            <Frame type="Image" name="LineH2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/BlueBarracks" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueBarracks/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/BlueSpySat/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV6">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/BlueBarracks/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/BlueBarracks/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV7">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/BlueSpySat/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/BlueSpySat/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow2" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/BluePowerPlant/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BluePowerPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/BluePowerPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+
+            <Frame type="TechTreeStructureFrame" name="BlueMGBunker" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/BlueAirCommand" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueAirCommand" pos="Min" offset="0"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="BluePatriotMissiles" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/BlueMGBunker" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueMGBunker" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="BluePrismTower" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/BluePatriotMissiles" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BluePatriotMissiles" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="BlueGrandCannon" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/BluePrismTower" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BluePrismTower" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="BlueGapGenerator" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/BlueGrandCannon" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/BlueGrandCannon" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+
+
+        </Frame>
+        <Frame type="Frame" name="CategoryFrame_Red" >
+            <Anchor relative="$parent"/>
+            <Visible val="false"/>
+
+
+            <Frame type="TechTreeStructureFrame" name="RedConstructionYard" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                <Height val="150"/>
+                <Width val="300"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="RedTeslaReactor" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/RedConstructionYard" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedConstructionYard" pos="Min" offset="0"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="RedOreRefinery" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/RedTeslaReactor" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedTeslaReactor" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="RedIndustrialPlant" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/RedOreRefinery" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedOreRefinery" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="RedBarracks" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/RedTeslaReactor" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedTeslaReactor" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="RedRadar" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/RedBarracks" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedBarracks" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="RedWarFactory" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/RedBarracks" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedBarracks" pos="Min" offset="0"/>
+                <Height val="220"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="RedBattleLab" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/RedWarFactory" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedWarFactory" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="100"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="RedAirCommand" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/RedWarFactory" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedWarFactory" pos="Min" offset="0"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="RedNuclearReactor" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/RedAirCommand" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedAirCommand" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="RedServiceDepot" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/RedNuclearReactor" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedNuclearReactor" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="RedIronCurtain" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/RedBattleLab" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedBattleLab" pos="Min" offset="0"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="RedNuclearBombSilo" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/RedIronCurtain" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedIronCurtain" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+
+
+            <Frame type="Image" name="LineH1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/RedTeslaReactor" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedTeslaReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/RedIndustrialPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/RedTeslaReactor/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/RedTeslaReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/RedOreRefinery/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/RedOreRefinery/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV3">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH1" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/RedIndustrialPlant/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/RedIndustrialPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow1" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/RedConstructionYard/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH1" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/RedConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+            <Frame type="Image" name="LineH2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/RedBarracks" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedBarracks/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/RedRadar/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV6">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/RedBarracks/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/RedBarracks/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV7">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/RedRadar/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/RedRadar/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow2" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/RedTeslaReactor/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedTeslaReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/RedTeslaReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+                <Frame type="TechTreeStructureFrame" name="RedSentryGun" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/RedAirCommand" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedAirCommand" pos="Min" offset="0"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="RedFlakTurret" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/RedSentryGun" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedSentryGun" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="RedTeslaCoil" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/RedFlakTurret" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedFlakTurret" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="RedBunker" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/RedTeslaCoil" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/RedTeslaCoil" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+<!--            <Frame type="TechTreeStructureFrame" name="RedPsyonicSensor" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">-->
+<!--                <Anchor side="Top" relative="$parent/RedBunker" pos="Min" offset="0"/>-->
+<!--                <Anchor side="Left" relative="$parent/RedBunker" pos="Max" offset="#TechTreeHorizontalGap"/>-->
+<!--                <Width val="200"/>-->
+<!--                <Height val="90"/>-->
+<!--            </Frame>-->
+
+        </Frame>
+        <Frame type="Frame" name="CategoryFrame_Yuri" >
+            <Anchor relative="$parent"/>
+            <Visible val="false"/>
+
+            <Frame type="TechTreeStructureFrame" name="YuriConstructionYard" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                <Height val="150"/>
+                <Width val="300"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="YuriBioReactor" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/YuriConstructionYard" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriConstructionYard" pos="Min" offset="0"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="YuriOreRefinery" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/YuriBioReactor" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriBioReactor" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="YuriSlaveMinerDeployed" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/YuriOreRefinery" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriOreRefinery" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="YuriBarracks" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/YuriBioReactor" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriBioReactor" pos="Min" offset="0"/>
+                <Height val="180"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="YuriPsychicRadar" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/YuriBarracks" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriBarracks" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="YuriWarFactory" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/YuriBarracks" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriBarracks" pos="Min" offset="0"/>
+                <Height val="220"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="YuriBattleLab" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/YuriWarFactory" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriWarFactory" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="100"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="YuriAirCommand" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/YuriWarFactory" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriWarFactory" pos="Min" offset="0"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="YuriGrinder" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/YuriAirCommand" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriAirCommand" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="YuriCloningVats" template="TechTreePanel_CNC/TTSFT_Wide_Crimson">
+                <Anchor side="Top" relative="$parent/YuriGrinder" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriGrinder" pos="Max" offset="#TechTreeHorizontalGap"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="YuriGeneticMutator" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/YuriBattleLab" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriBattleLab" pos="Min" offset="0"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="YuriPsychicDominator" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/YuriGeneticMutator" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriGeneticMutator" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="270"/>
+                <Height val="90"/>
+            </Frame>
+
+            <Frame type="Image" name="LineH1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/YuriBioReactor" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriBioReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/YuriIndustrialPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV1">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/YuriBioReactor/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/YuriBioReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH1" pos="Max" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/YuriOreRefinery/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/YuriOreRefinery/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV3">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH1" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/YuriIndustrialPlant/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/YuriIndustrialPlant/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow1" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/YuriConstructionYard/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH1" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/YuriConstructionYard/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+            <Frame type="Image" name="LineH2">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/YuriBarracks" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriBarracks/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/YuriPsychicRadar/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Height val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV6">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/YuriBarracks/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/YuriBarracks/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Image" name="LineV7">
+                <LayerColor val="##LineColor_Crimson"/>
+                <Anchor side="Top" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Bottom" relative="$parent/YuriPsychicRadar/BuildingIconBackgroundImage" pos="Min" offset="12"/>
+                <Anchor side="Left" relative="$parent/YuriPsychicRadar/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Width val="2"/>
+            </Frame>
+            <Frame type="Frame" name="Arrow2" template="TechTreePanel_CNC/VerticalArrow_Crimson">
+                <Anchor side="Top" relative="$parent/YuriBioReactor/BuildingIconBackgroundImage" pos="Max" offset="-12"/>
+                <Anchor side="Bottom" relative="$parent/LineH2" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriBioReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+                <Anchor side="Right" relative="$parent/YuriBioReactor/BuildingIconBackgroundImage" pos="Mid" offset="0"/>
+            </Frame>
+
+            <Frame type="TechTreeStructureFrame" name="YuriGatlingCannon" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/YuriCloningVats" pos="Max" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriCloningVats" pos="Min" offset="0"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="YuriTankBunker" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/YuriGatlingCannon" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriGatlingCannon" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+            <Frame type="TechTreeStructureFrame" name="YuriPsychicTower" template="TechTreePanel_CNC/TTSFT_NoProduction_Crimson">
+                <Anchor side="Top" relative="$parent/YuriTankBunker" pos="Min" offset="0"/>
+                <Anchor side="Left" relative="$parent/YuriTankBunker" pos="Max" offset="#TechTreeHorizontalGap"/>
+                <Width val="200"/>
+                <Height val="90"/>
+            </Frame>
+
+        </Frame>
+    </Frame>
+</Desc>

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "kind": "game",
+  "id": "blizzard/starcraft-1",
+  "vendorId": "blizzard",
+  "displayName": "StarCraft",
+  "description": "The StarCraft extension covers StarCraft, Brood War and StarCraft: Remastered: it finds installed copies and reads the game's own formats.",
+  "officialSite": "https://starcraft.blizzard.com/",
+  "extensionRequirements": [
+    {
+      "id": "blizzard/starcraft-1",
+      "importance": "required"
+    }
+  ],
+  "capabilityRequirements": [
+    {
+      "id": "installation",
+      "displayName": "Installation discovery",
+      "importance": "required",
+      "contributionIds": [
+        "blizzard/starcraft1-installation"
+      ]
+    },
+    {
+      "id": "formats",
+      "displayName": "Maps, sprites, tilesets, data and string tables",
+      "importance": "required",
+      "contributionIds": [
+        "blizzard/starcraft1-map",
+        "blizzard/starcraft1-chk",
+        "blizzard/starcraft1-grp",
+        "blizzard/starcraft1-tbl",
+        "blizzard/starcraft1-dat",
+        "blizzard/starcraft1-tileset"
+      ]
+    }
+  ]
+}
