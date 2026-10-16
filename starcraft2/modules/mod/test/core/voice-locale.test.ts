@@ -1,36 +1,43 @@
-import assert from 'node:assert/strict'
-import { test } from 'node:test'
+import { describe, expect, it } from 'vitest'
 import {
-  canonicalSc2Locale, DEFAULT_VOICE_LOCALE, localeOfPath, localizedAssetPath, pickVoiceLocale, voiceLocaleFrom,
-} from '../../shared/core/voice-locale.ts'
+  canonicalSc2Locale, DEFAULT_VOICE_LOCALE, localeOfPath, localizedAssetPath, pickVoiceLocale, SC2_LOCALES, voiceLocaleFrom,
+} from '../../shared/core/voice-locale.js'
 
-test('voice locale: English unless chosen', () => {
-  assert.equal(voiceLocaleFrom([]), 'enUS')
-  assert.equal(DEFAULT_VOICE_LOCALE, 'enUS')
-  assert.equal(voiceLocaleFrom(['--voice-locale=ruRU']), 'ruRU')
-  assert.equal(voiceLocaleFrom(['--voice-locale', 'de-de']), 'deDE')
-  assert.equal(voiceLocaleFrom([], { MODKIT_VOICE_LOCALE: 'frfr' }), 'frFR')
-  assert.equal(voiceLocaleFrom(['--voice-locale=enGB'], { MODKIT_VOICE_LOCALE: 'frFR' }), 'enGB')
-  assert.throws(() => voiceLocaleFrom(['--voice-locale=xxYY']), /Unknown StarCraft II voice locale/u)
-})
+describe('voice locale', () => {
+  it('is English unless chosen', () => {
+    expect(voiceLocaleFrom([])).toBe('enUS')
+    expect(DEFAULT_VOICE_LOCALE).toBe('enUS')
+    expect(voiceLocaleFrom(['--voice-locale=ruRU'])).toBe('ruRU')
+    expect(voiceLocaleFrom(['--voice-locale', 'de-de'])).toBe('deDE')
+    expect(voiceLocaleFrom([], { MODKIT_VOICE_LOCALE: 'frfr' })).toBe('frFR')
+    expect(voiceLocaleFrom(['--voice-locale=enGB'], { MODKIT_VOICE_LOCALE: 'frFR' })).toBe('enGB')
+    expect(() => voiceLocaleFrom(['--voice-locale=xxYY'])).toThrow(/Unknown StarCraft II voice locale/u)
+  })
 
-test('localized paths move to the chosen locale, others stay', () => {
-  assert.equal(localizedAssetPath('mods/liberty.sc2mod/dede.sc2assets/sounds/vo/marine_yes00.ogg', 'enUS'),
-    'mods/liberty.sc2mod/enus.sc2assets/sounds/vo/marine_yes00.ogg')
-  assert.equal(localizedAssetPath('Mods/Liberty.SC2Mod/deDE.SC2Assets/Sounds/VO/Marine_Yes00.ogg', 'enUS'),
-    'Mods/Liberty.SC2Mod/enUS.SC2Assets/Sounds/VO/Marine_Yes00.ogg')
-  assert.equal(localizedAssetPath('mods/core.sc2mod/ruRU.SC2Data/LocalizedData/GameStrings.txt', 'enUS'),
-    'mods/core.sc2mod/enUS.SC2Data/LocalizedData/GameStrings.txt')
-  assert.equal(localizedAssetPath('mods/liberty.sc2mod/base.sc2assets/sounds/weapon/gauss.ogg', 'ruRU'),
-    'mods/liberty.sc2mod/base.sc2assets/sounds/weapon/gauss.ogg')
-  assert.equal(localeOfPath('mods/x.sc2mod/dede.sc2assets/a.ogg'), 'deDE')
-  assert.equal(localeOfPath('mods/x.sc2mod/base.sc2assets/a.ogg'), undefined)
-  assert.equal(canonicalSc2Locale('ZHTW'), 'zhTW')
-})
+  it('uses the strings module locale table', () => {
+    expect(SC2_LOCALES).toHaveLength(13)
+    expect(SC2_LOCALES).toContain('zhTW')
+    expect(canonicalSc2Locale('ZHTW')).toBe('zhTW')
+    expect(canonicalSc2Locale('xxYY')).toBeUndefined()
+  })
 
-test('the best held locale', () => {
-  assert.equal(pickVoiceLocale('enUS', ['deDE', 'enUS']), 'enUS')
-  assert.equal(pickVoiceLocale('ruRU', ['deDE', 'enUS']), 'enUS')
-  assert.equal(pickVoiceLocale('ruRU', ['dede']), 'deDE')
-  assert.equal(pickVoiceLocale('ruRU', []), undefined)
+  it('moves localized paths to the chosen locale and leaves others', () => {
+    expect(localizedAssetPath('mods/liberty.sc2mod/dede.sc2assets/sounds/vo/marine_yes00.ogg', 'enUS'))
+      .toBe('mods/liberty.sc2mod/enus.sc2assets/sounds/vo/marine_yes00.ogg')
+    expect(localizedAssetPath('Mods/Liberty.SC2Mod/deDE.SC2Assets/Sounds/VO/Marine_Yes00.ogg', 'enUS'))
+      .toBe('Mods/Liberty.SC2Mod/enUS.SC2Assets/Sounds/VO/Marine_Yes00.ogg')
+    expect(localizedAssetPath('mods/core.sc2mod/ruRU.SC2Data/LocalizedData/GameStrings.txt', 'enUS'))
+      .toBe('mods/core.sc2mod/enUS.SC2Data/LocalizedData/GameStrings.txt')
+    expect(localizedAssetPath('mods/liberty.sc2mod/base.sc2assets/sounds/weapon/gauss.ogg', 'ruRU'))
+      .toBe('mods/liberty.sc2mod/base.sc2assets/sounds/weapon/gauss.ogg')
+    expect(localeOfPath('mods/x.sc2mod/dede.sc2assets/a.ogg')).toBe('deDE')
+    expect(localeOfPath('mods/x.sc2mod/base.sc2assets/a.ogg')).toBeUndefined()
+  })
+
+  it('picks the best held locale', () => {
+    expect(pickVoiceLocale('enUS', ['deDE', 'enUS'])).toBe('enUS')
+    expect(pickVoiceLocale('ruRU', ['deDE', 'enUS'])).toBe('enUS')
+    expect(pickVoiceLocale('ruRU', ['dede'])).toBe('deDE')
+    expect(pickVoiceLocale('ruRU', [])).toBeUndefined()
+  })
 })
