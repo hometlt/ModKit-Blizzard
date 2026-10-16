@@ -141,8 +141,8 @@ export interface EngineCatalogEntries {
   getStructureDefaults(namespace: string): ReadonlyMap<string, RawValue>
 }
 
-/** Load the documents, in the provider's order, into one catalog. */
-export function createEngineCatalog(documents: readonly EngineCatalogDocument[]): EngineCatalog {
+/** One canonical catalog builder; checkpoints expose no catalog until every document is loaded. */
+export function* engineCatalogPreparation(documents: readonly EngineCatalogDocument[]): Generator<void, EngineCatalog> {
   const catalog = new TypedCatalog({ schema: createBuiltinRegistry(), structureDefaults: STARCRAFT2_STRUCTURE_DEFAULT_RULES })
   for (const document of documents) {
     const file = catalogFileOfElements(document.elements, document.text, { filePath: document.path, trackSource: true })
@@ -150,6 +150,7 @@ export function createEngineCatalog(documents: readonly EngineCatalogDocument[])
     for (const item of catalogStructureDefaultEntries(document.text, document.path, file.rootTypes)) {
       catalog.addStructureDefault(item.namespace, item.structureType, item.fields)
     }
+    yield
   }
   // One declaration supplies many fields and leaf origins. Keep its immutable projection within
   // this catalog, so the provider's existing source interning also sees the same declaration.
@@ -241,5 +242,14 @@ export function createEngineCatalog(documents: readonly EngineCatalogDocument[])
       const template = catalog.getClassDefault(typeId)
       return template === undefined ? undefined : resolved(template, catalog.resolveEntityFields(template))
     },
+  }
+}
+
+/** Synchronous consumers drain the same builder, retaining complete results and declaration order. */
+export function createEngineCatalog(documents: readonly EngineCatalogDocument[]): EngineCatalog {
+  const building = engineCatalogPreparation(documents)
+  for (;;) {
+    const next = building.next()
+    if (next.done) return next.value
   }
 }

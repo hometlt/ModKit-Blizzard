@@ -52,6 +52,7 @@ import type {
   LogicalResourceRequirement,
 } from '@modkit/sdk'
 import type {
+  MapGameRasterSummary,
   MapCliffPiece,
   MapCliffPieceModel,
   MapCliffSummary,
@@ -80,7 +81,7 @@ import { srgbToLinear } from '@modkit/codec-kit/raster'
 import { decodeInput, parseSylk } from '@modkit/codec-kit/text'
 import { analyzeWar3ResolvedData } from '../war3-data/provider.js'
 import { WAR3_OBJECT_MOD_DOCUMENTS } from '../war3-data/tables.js'
-import { BLIGHT_MATERIAL, readWar3Map, war3MapText, type War3Map } from '../war3-map/map.js'
+import { WAR3_PATHING_FLAG_ENCODING, BLIGHT_MATERIAL, WAR3_TERRAIN_RASTERS, readWar3Map, war3MapText, war3MapLayers, readWar3MapLayer, type War3Map } from '../war3-map/map.js'
 import { terrainPieces } from './cliffs.js'
 
 export const WAR3_GAME_ID = 'blizzard/warcraft-3'
@@ -827,8 +828,9 @@ export function war3WorldCanonicalTransform(transform: MapTerrainNativeTransform
 /**
  * The map's pathing cells (`war3map.wpm`, four to a corner cell, south row first) as a bounded
  * navigation summary: one flags byte a cell, evenly spaced samples up to `maxSamples`.
+ * Complete WPM v0 declares cell centres and 32-unit native steps; partial samples never claim exactness.
  */
-function navigationOf(map: War3Map, maxSamples: number): MapNavigationSummary | undefined {
+function navigationOf(map: War3Map, maxSamples: number, sourceBytes: Uint8Array | undefined): MapNavigationSummary | undefined {
   const wpm = map.pathing
   if (wpm === undefined) return undefined
   const [width = 0, height = 0] = wpm.size
@@ -845,7 +847,46 @@ function navigationOf(map: War3Map, maxSamples: number): MapNavigationSummary | 
     const cell = sampleCount === 1 ? 0 : Math.floor((index * (cellCount - 1)) / (sampleCount - 1))
     samples.push(Object.freeze({ x: cell % width, y: Math.floor(cell / width), flags: wpm.pathing[cell] ?? 0 }))
   }
-  return Object.freeze({ version: wpm.version, width, height, cellCount, minimumFlags, maximumFlags, trailingBytes: 0, samples: Object.freeze(samples) })
+  const trailingBytes = Math.max(0, (sourceBytes?.byteLength ?? 16 + cellCount) - (16 + cellCount))
+  const exact = width > 0 && height > 0 && cellCount > 0 && sampleCount === cellCount && wpm.pathing.length === cellCount &&
+    sourceBytes?.byteLength === 16 + cellCount && wpm.version === 0 && map.terrain !== undefined
+  const [offsetX = 0, offsetY = 0] = map.terrain?.centerOffset ?? []
+  return Object.freeze({ version: wpm.version, width, height, cellCount, minimumFlags, maximumFlags, trailingBytes,
+    exact, ...(wpm.version === 0 ? { flagEncoding: WAR3_PATHING_FLAG_ENCODING } : {}),
+    ...(exact ? { grid: Object.freeze({ coordinateSpaceId: 'map-native' as const,
+      origin: Object.freeze({ x: offsetX + CORNER_UNITS / 8, y: offsetY + CORNER_UNITS / 8, z: 0 }),
+      columnStep: Object.freeze({ x: CORNER_UNITS / 4, y: 0, z: 0 }),
+      rowStep: Object.freeze({ x: 0, y: CORNER_UNITS / 4, z: 0 }),
+    }) } : {}), samples: Object.freeze(samples) })
+}
+
+/** Exact authored W3E scalars, independent of the approximate visual atlas projection.
+ * Read/window/bit ownership stays with map.layers. These versioned vocabularies do not
+ * define portable materials, movement or height. Categories retain native tileset spellings.
+ */
+function terrainGameRasters(map: War3Map, document: Uint8Array | undefined, maxSamples: number): readonly MapGameRasterSummary[] {
+  const terrain = map.terrain
+  if (terrain === undefined || document === undefined || maxSamples < 1) return Object.freeze([])
+  const [columns = 0, rows = 0] = terrain.mapSize
+  if (columns < 1 || rows < 1) return Object.freeze([])
+  const width = Math.min(columns, maxSamples), height = Math.min(rows, Math.floor(maxSamples / width))
+  const trailingBytes = document.byteLength - terrain.getByteLength()
+  if (trailingBytes < 0) return Object.freeze([])
+  const [x = 0, y = 0] = terrain.centerOffset
+  const grid = Object.freeze({ coordinateSpaceId: 'map-native' as const,
+    origin: Object.freeze({ x, y: y + (rows - 1) * CORNER_UNITS, z: 0 }),
+    columnStep: Object.freeze({ x: CORNER_UNITS, y: 0, z: 0 }),
+    rowStep: Object.freeze({ x: 0, y: -CORNER_UNITS, z: 0 }) })
+  const rasters: MapGameRasterSummary[] = []
+  for (const [id, layer] of war3MapLayers(map)) {
+    const metadata = WAR3_TERRAIN_RASTERS[id]
+    if (metadata === undefined) continue
+    rasters.push(Object.freeze({ descriptor: Object.freeze(layer.descriptor),
+      values: Object.freeze(readWar3MapLayer(map, { layer: id, x: 0, y: 0, width, height })),
+      metadata,
+      exact: width === columns && height === rows && trailingBytes === 0, trailingBytes, grid }))
+  }
+  return Object.freeze(rasters)
 }
 
 /** The resolved snapshot the host turns into the map's world scene. */
@@ -866,7 +907,8 @@ export async function analyzeWar3MapWorkspace(request: ResolvedMapWorkspaceAnaly
     semantic.terrain === undefined || terrainTransform === undefined ? undefined : terrainMaterials(map, semantic.terrain, textures, cliffTypes)
   const cliffs = terrainTransform === undefined ? undefined : cliffsOf(map, cliffTypes)
   const water = terrainTransform === undefined ? undefined : waterOf(map, table(byTail.get('terrainart/water.slk')?.bytes))
-  const navigation = navigationOf(map, request.maxTerrainSamples)
+  const navigation = navigationOf(map, request.maxTerrainSamples, byTail.get('war3map.wpm')?.bytes)
+  const gameRasters = terrainGameRasters(map, terrainDocument?.bytes, Math.min(request.maxTerrainSamples, request.maxTerrainCells))
   const required = new Set(request.requiredRequirementIds)
   const diagnostics = request.unresolvedRequirementIds.map(requirementId =>
     diagnostic(
@@ -890,6 +932,7 @@ export async function analyzeWar3MapWorkspace(request: ResolvedMapWorkspaceAnaly
     ...(cliffs === undefined ? {} : { cliffs }),
     ...(water === undefined ? {} : { water }),
     ...(navigation === undefined ? {} : { navigation }),
+    ...(gameRasters.length === 0 ? {} : { gameRasters }),
     worldCandidate: Object.freeze({
       contract: WAR3_WORLD_SCENE_SOURCE_CONTRACT,
       major: 1 as const,
@@ -942,8 +985,8 @@ export async function analyzeWar3MapWorkspace(request: ResolvedMapWorkspaceAnaly
         Object.freeze({
           from: 'navigation-grid',
           to: 'map-native',
-          state: 'unknown' as const,
-          reason: 'a pathing cell is a quarter corner cell from the corner origin, but the sdk carries no navigation transform',
+          state: navigation?.grid === undefined ? 'unknown' as const : 'known' as const,
+          ...(navigation?.grid === undefined ? { reason: 'complete WPM v0 sample geometry is unavailable' } : {}),
         }),
         Object.freeze({
           from: 'map-native',

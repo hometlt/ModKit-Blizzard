@@ -8,13 +8,16 @@
  * them carries a content fingerprint (CASC layers: the installation's build). A record is keyed by
  * the code that reads and parses it (SHA-256 of this module's folder files and the Data module's
  * files) and by those layers' paths, roots and fingerprints, so a new build, another installation or
- * a changed parser is a miss. Records are v8-serialized (structured clone keeps Maps, Sets and the
- * source objects declarations share), written to a temporary file and renamed; at most
+ * a changed parser is a miss. Records contain separate V8 document frames (`data-cache-record`),
+ * preserving native references within each document and yielding between document turns. They
+ * are written to a temporary file and renamed; at most
  * `MAXIMUM_RECORDS` are kept, oldest removed first. Any failure to read or write is a miss: the chain
  * is read and parsed as without a cache.
  * Instances over the same absolute cache directory and immutable prefix share an in-flight cold
  * producer, reads and writes. A producer builds its existing full session once, not a prefix model.
  * Its record bridges to the pending disk write only; failures release operations for retry.
+ * Data owns the stored parse form and restores lazy fields after decoding; V8 never enumerates
+ * derived own values during a save. Older parse envelopes are ordinary misses, not eager fallbacks.
  * Code fingerprints read at most four files concurrently and hash them in sorted order,
  * preserving the digest rules without serial filesystem latency or an unbounded buffer batch.
  */
@@ -22,8 +25,8 @@ import { createHash, randomUUID } from 'node:crypto'
 import { mkdir, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises'
 import { join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { deserialize, serialize } from 'node:v8'
 import type { ChainDataCache, ChainLayer, ChainPrefixRecord } from './chain-data.js'
+import { encodeDataCacheRecord, decodeDataCacheRecord } from './data-cache-record.js'
 
 /** Stock mods kept when the user names none. */
 export const DEFAULT_CACHED_MODS: readonly string[] = Object.freeze(['Liberty', 'Void', 'VoidMulti'])
@@ -114,10 +117,7 @@ export function createSc2DataCache(options: Sc2DataCacheOptions): ChainDataCache
       const reading = (async () => {
         try {
           const bytes = await readFile(await fileOf(key))
-          const record = deserialize(bytes) as { readonly key?: unknown; readonly record?: ChainPrefixRecord } | null
-          if (record?.key === key && record.record !== undefined && Array.isArray(record.record.catalogs) &&
-              Array.isArray(record.record.editorCategories) && Array.isArray(record.record.parses) &&
-              Number.isSafeInteger(record.record.bytes)) return record.record
+          return await decodeDataCacheRecord(bytes, key)
         } catch {
           // Absent/corrupt/unreadable records are misses; producer errors must remain retryable.
         }
@@ -151,7 +151,7 @@ export function createSc2DataCache(options: Sc2DataCacheOptions): ChainDataCache
         // Separate cache instances in this process must not rename one another's temporary files.
         const temporary = `${file}.${process.pid}.${randomUUID()}.tmp`
         try {
-          await writeFile(temporary, serialize({ key, record }))
+          await writeFile(temporary, encodeDataCacheRecord(key, record))
           await rename(temporary, file)
         } finally { await rm(temporary, { force: true }).catch(() => {}) }
         // Keep the newest records only.

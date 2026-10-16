@@ -67,16 +67,18 @@ function compareRows(keys, keyOff, left, right) {
  * Sort rows by key bytes with a three-way radix quicksort (Bentley–Sedgewick). Installed SC2
  * paths share ~30-byte prefixes (`mods/liberty.sc2mod/base.sc2assets/…`), so a comparison sort
  * re-reads each prefix on every one of its ~13M comparisons (~0.9 s for 666k rows); this reads
- * a byte position once per partition. Equal keys come out in row order, as from a stable sort.
+ * a byte position once per partition. Shared prefixes are skipped in bounded word reads before
+ * partitioning. Equal keys come out in row order, as from a stable sort.
  */
 function sortRows(keys, keyOff, order) {
   const byteAt = (row, depth) => {
     const at = keyOff[row] + depth
     return at < keyOff[row + 1] ? keys[at] : -1
   }
+  const view = new DataView(keys.buffer, keys.byteOffset, keys.byteLength)
   const stack = [0, order.length, 0]
   while (stack.length > 0) {
-    const depth = stack.pop()
+    let depth = stack.pop()
     const hi = stack.pop()
     const lo = stack.pop()
     if (hi - lo < 2) continue
@@ -92,6 +94,18 @@ function sortRows(keys, keyOff, order) {
       }
       continue
     }
+    const reference = keyOff[order[lo]]
+    let shared = keyOff[order[lo] + 1] - reference
+    for (let rowAt = lo + 1; rowAt < hi && shared > depth; rowAt++) {
+      const row = order[rowAt]
+      const start = keyOff[row]
+      const limit = Math.min(shared, keyOff[row + 1] - start)
+      let at = depth
+      while (at + 4 <= limit && view.getUint32(reference + at, true) === view.getUint32(start + at, true)) at += 4
+      while (at < limit && keys[reference + at] === keys[start + at]) at++
+      shared = at
+    }
+    depth = shared
     const a = byteAt(order[lo], depth)
     const b = byteAt(order[(lo + hi) >>> 1], depth)
     const c = byteAt(order[hi - 1], depth)

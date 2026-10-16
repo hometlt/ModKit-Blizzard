@@ -9,6 +9,9 @@
  *   as indexed entries, nested structures), inferred schema extensions for unverified types and
  *   fields, root-level structure defaults, duplicate-id errors, synthetic `@default:` identities of
  *   anonymous declarations; DTDs and custom entities are refused.
+ *   Declaration/schema facts are eager; own typed fields and numeric lexemes are memoized on access.
+ *   The cache projection (`storeCatalogDocument`/`restoreCatalogDocument`) preserves checked facts
+ *   and native elements without materializing own values during structured-clone serialization.
  * - The ordered parse of a whole document list (`parseCatalogDocuments`) with the provider's
  *   document-invalid diagnostics, merged schema extensions and structure defaults.
  * - The effective schemas (`effectiveSchemas`): canonical resolution schemas extended by what the
@@ -466,8 +469,104 @@ function parseFieldsForShape(
   return { fields: Object.freeze([...parsed.values()]), byId: parsed, extensions }
 }
 
-/** One declaration typed through its class schema, as an entity patch with its schema extensions. */
-export function parseCatalogEntity(
+/** Native input of a typed projection; the parser has already checked its schema and depth. */
+interface CatalogValueInput {
+  readonly element: CatalogElement
+  readonly typeId: string
+  readonly maxDepth: number
+}
+
+/** One lazily typed value pair per declaration; shared accessors allocate no per-patch functions. */
+interface CatalogValueState {
+  readonly input: CatalogValueInput
+  readonly knownFields?: ReadonlyMap<string, CatalogFieldShape>
+  values?: ReturnType<typeof catalogValues>
+}
+
+/** Weak ownership avoids keeping declarations alive after their session/cache record is released. */
+const catalogValueInputs = new WeakMap<object, CatalogValueState>()
+
+/** Type one declaration's values through the same inferred shapes, only when a consumer asks. */
+function catalogValues(input: CatalogValueInput, knownFields?: ReadonlyMap<string, CatalogFieldShape>) {
+  const children = entityFieldElements(input.element)
+  const fieldSchemas = knownFields ?? parseFieldsForEntity(input.typeId, children, new Set(), input.maxDepth).byId
+  const fields: Record<string, unknown> = {}
+  const fieldLexemes: Record<string, string> = {}
+  const occurrences = new Map<string, number>()
+  for (const child of children) {
+    const field = fieldSchemas.get(child.name)
+    if (field === undefined) throw new TypeError(`${input.typeId}.${child.name} was not inferred`)
+    const occurrence = nextOccurrence(occurrences, child, field)
+    const value = fieldValue(child, field, occurrence, 0, input.maxDepth)
+    if (field.cardinality === 'append' || field.cardinality === 'indexed') {
+      const current = Array.isArray(fields[child.name]) ? (fields[child.name] as unknown[]) : []
+      current.push(value)
+      fields[child.name] = current
+    } else {
+      fields[child.name] = value
+      if (field.cardinality === 'scalar' && field.valueKind === 'number' &&
+          typeof child.attributes?.['value'] === 'string')
+        fieldLexemes[child.name] = child.attributes['value'] as string
+      else delete fieldLexemes[child.name]
+    }
+  }
+  return { fields: Object.freeze(fields) as Readonly<Record<string, JsonValue>>, fieldLexemes: Object.freeze(fieldLexemes) }
+}
+
+/** Materialize both projections once, through the same parser used for resolved values. */
+function readCatalogValues(patch: object) {
+  const state = catalogValueInputs.get(patch)
+  if (state === undefined) throw new TypeError('catalog patch has no canonical native input')
+  return state.values ??= catalogValues(state.input, state.knownFields)
+}
+
+/** Shared enumerable accessors preserve the former public property shape. */
+function catalogFields(this: object) { return readCatalogValues(this).fields }
+/** Numeric lexemes use the same memoized projection as fields. */
+function catalogFieldLexemes(this: object) { return readCatalogValues(this).fieldLexemes }
+
+/** Attach ordinary enumerable projections without allocating a getter closure per declaration. */
+function withCatalogValues<T extends object>(facts: T, input: CatalogValueInput, knownFields?: ReadonlyMap<string, CatalogFieldShape>) {
+  const patch = Object.freeze(Object.defineProperties({ ...facts }, {
+    fields: { enumerable: true, get: catalogFields },
+    fieldLexemes: { enumerable: true, get: catalogFieldLexemes },
+  })) as Readonly<T> & Pick<CatalogPatch, 'fields' | 'fieldLexemes'>
+  catalogValueInputs.set(patch, { input, ...(knownFields === undefined ? {} : { knownFields }) })
+  return patch
+}
+
+/** The cache stores native input and checked declaration facts, never enumerable value getters. */
+export interface StoredCatalogDocument extends Omit<ParsedCatalogDocument, 'patches'> {
+  readonly patches: readonly {
+    readonly facts: Omit<CatalogPatch, 'fields' | 'fieldLexemes'>
+    readonly input: CatalogValueInput
+  }[]
+}
+
+/** Project an existing parse for structured-clone storage without reading any own typed value. */
+export function storeCatalogDocument(parsed: ParsedCatalogDocument): StoredCatalogDocument {
+  return { ...parsed, patches: parsed.patches.map(patch => {
+    const state = catalogValueInputs.get(patch)
+    if (state === undefined) throw new TypeError('catalog patch has no canonical native input')
+    const facts = Object.fromEntries(Object.keys(patch)
+      .filter(key => key !== 'fields' && key !== 'fieldLexemes')
+      .map(key => [key, patch[key as keyof CatalogPatch]])) as Omit<CatalogPatch, 'fields' | 'fieldLexemes'>
+    return { facts, input: state.input }
+  }) }
+}
+
+/** Reattach the same memoized projections after a parser-fingerprinted cache record is decoded. */
+export function restoreCatalogDocument(stored: StoredCatalogDocument): ParsedCatalogDocument {
+  return { ...stored, patches: stored.patches.map(({ facts, input }) => {
+    if (typeof input?.typeId !== 'string' || !Number.isSafeInteger(input.maxDepth) ||
+        input.maxDepth < 0 || typeof input.element?.name !== 'string')
+      throw new TypeError('invalid stored catalog value input')
+    return withCatalogValues(facts, input)
+  }) }
+}
+
+/** Infer one declaration's metadata without allocating a disposable lazy value projection. */
+function catalogEntityFacts(
   element: CatalogElement,
   schema: DataTypeSchema,
   namespace: string,
@@ -484,43 +583,37 @@ export function parseCatalogEntity(
   // child elements; a later child spelling remains the deterministic winner for scalar fields.
   const children = entityFieldElements(element)
   const parsing = parseFieldsForEntity(schema.typeId, children, unverifiedFields, maxDepth)
-  const fieldSchemas = parsing.byId
-  const fields: Record<string, unknown> = {}
-  const fieldLexemes: Record<string, string> = {}
-  const occurrences = new Map<string, number>()
-  for (const child of children) {
-    const field = fieldSchemas.get(child.name)
-    if (field === undefined) throw new TypeError(`${schema.typeId}.${child.name} was not inferred`)
-    const occurrence = nextOccurrence(occurrences, child, field)
-    const value = fieldValue(child, field, occurrence, 0, maxDepth)
-    if (field.cardinality === 'append' || field.cardinality === 'indexed') {
-      const current = Array.isArray(fields[child.name]) ? (fields[child.name] as unknown[]) : []
-      current.push(value)
-      fields[child.name] = current
-    } else {
-      fields[child.name] = value
-      if (field.cardinality === 'scalar' && field.valueKind === 'number' &&
-          typeof child.attributes?.['value'] === 'string')
-        fieldLexemes[child.name] = child.attributes['value'] as string
-      else delete fieldLexemes[child.name]
-    }
-  }
   const parent = element.attributes?.['parent']
   const defaultValue = element.attributes?.['default']
   const tokens = entityTokens(element)
-  return Object.freeze({
-    namespace,
-    typeId: schema.typeId,
-    entityId,
-    ...(typeof parent === 'string' && parent.length > 0 ? { parentEntityId: parent } : {}),
-    fields: Object.freeze(fields) as Readonly<Record<string, JsonValue>>,
-    fieldLexemes: Object.freeze(fieldLexemes),
-    source: Object.freeze(source),
-    schemaExtensions: parsing.extensions,
-    synthetic: declaredId === undefined || (declaredId as string).length === 0,
-    defaultTemplate: defaultValue === '1' || defaultValue === 'true',
-    ...(tokens.length === 0 ? {} : { tokens }),
-  })
+  return {
+    facts: {
+      namespace,
+      typeId: schema.typeId,
+      entityId,
+      ...(typeof parent === 'string' && parent.length > 0 ? { parentEntityId: parent } : {}),
+      source: Object.freeze(source),
+      schemaExtensions: parsing.extensions,
+      synthetic: declaredId === undefined || (declaredId as string).length === 0,
+      defaultTemplate: defaultValue === '1' || defaultValue === 'true',
+      ...(tokens.length === 0 ? {} : { tokens }),
+    },
+    fields: parsing.byId,
+  }
+}
+
+/** One declaration's schema facts now, with its typed values memoized on first access. */
+export function parseCatalogEntity(
+  element: CatalogElement,
+  schema: DataTypeSchema,
+  namespace: string,
+  source: DataEntitySource,
+  syntheticId: string,
+  unverifiedFields: Set<string>,
+  maxDepth: number,
+) {
+  const { facts, fields } = catalogEntityFacts(element, schema, namespace, source, syntheticId, unverifiedFields, maxDepth)
+  return withCatalogValues(facts, { element, typeId: schema.typeId, maxDepth }, fields)
 }
 
 /** The typed declarations of one GameData document, in document order. */
@@ -594,7 +687,7 @@ export function parseCatalogDocument(
     const schema: DataTypeSchema =
       canonicalSchema ??
       Object.freeze({ typeId: element.name, parentTypeId: 'CBase', fields: Object.freeze([]) })
-    const patch = parseCatalogEntity(
+    const { facts: patch } = catalogEntityFacts(
       element,
       schema,
       namespace,
@@ -625,18 +718,16 @@ export function parseCatalogDocument(
     for (const [fieldId, field] of patch.schemaExtensions) extensions.set(fieldId, field)
     schemaExtensions.set(patch.typeId, extensions)
     patches.push(
-      Object.freeze({
+      withCatalogValues({
         namespace: patch.namespace,
         typeId: patch.typeId,
         entityId: patch.entityId,
         ...(patch.parentEntityId === undefined ? {} : { parentEntityId: patch.parentEntityId }),
-        fields: patch.fields,
-        fieldLexemes: patch.fieldLexemes,
         source: patch.source,
         ...(patch.defaultTemplate ? { defaultTemplate: true as const } : {}),
         ...(patch.tokens === undefined ? {} : { tokens: patch.tokens }),
         ...(patch.synthetic ? { synthetic: true as const } : {}),
-      }),
+      }, { element, typeId: patch.typeId, maxDepth }),
     )
   }
   return {

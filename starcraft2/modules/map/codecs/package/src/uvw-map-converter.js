@@ -1,3 +1,4 @@
+import { pureYawQuaternion } from '@modkit/codec-kit/model-math/transform'
 /** SC2 Maps owner: bounded UVW spatial conversion, explicit target mappings/losses and
  * fresh MPQ verification. Rectangular water uses the native WATR 110 entry writer,
  * with no authored shoreline/wave bodies. This geometry profile does not qualify
@@ -7,6 +8,7 @@ import { writeWater } from '../../../shared/format/formats/water.js'
 import { serializeTriggerLibrary } from '../../../../triggers/shared/trigger-document/trigger-xml.js'
 import {
   canonicalizeUvwProfile,
+  unretainedWorldFields,
   createUvwConversionReceipt,
   parseUvwProfile,
   preflightUvwConversionProfile,
@@ -330,6 +332,22 @@ function encodeLighting(layer, losses) {
     return Object.freeze({ documents: Object.freeze([]) })
   }
   const roles = ['Key', 'Fill', 'Back']
+  for (const field of ['model', 'unlitColor', 'toneMapping', 'terrain']) {
+    if (layer[field] !== undefined) losses.push(Object.freeze({
+      feature: `layers.${layer.id}.${field}`,
+      reason: `SC2 CLight writer does not encode portable ${field}`,
+      replacement: field === 'model' ? 'native lit CLight' : 'omitted',
+    }))
+  }
+  for (const [index, light] of layer.directional.slice(0, roles.length).entries()) {
+    for (const field of ['specularColor', 'specularIntensity', 'useAmbientOcclusion']) {
+      if (light[field] !== undefined) losses.push(Object.freeze({
+        feature: `layers.${layer.id}.directional[${index}].${field}`,
+        reason: `SC2 CLight writer does not encode portable ${field}`,
+        replacement: 'native CLight default',
+      }))
+    }
+  }
   if (layer.directional.length > roles.length) {
     losses.push(
       Object.freeze({
@@ -514,13 +532,8 @@ function encodeTextureDocuments(materials, terrain, encoded) {
 }
 
 function yaw(rotation, path, refusals) {
-  if (
-    !Array.isArray(rotation) ||
-    rotation.length !== 4 ||
-    !rotation.every(Number.isFinite) ||
-    !same(rotation[0], 0) ||
-    !same(rotation[2], 0)
-  ) {
+  const angle = Array.isArray(rotation) ? pureYawQuaternion(rotation) : undefined
+  if (angle === undefined) {
     fail(
       refusals,
       'object-rotation-unrepresentable',
@@ -529,7 +542,7 @@ function yaw(rotation, path, refusals) {
     )
     return undefined
   }
-  return 2 * Math.atan2(rotation[1], rotation[3])
+  return angle
 }
 
 function encodeObjects(layer, refusals, losses) {
@@ -574,6 +587,16 @@ function encodeObjects(layer, refusals, losses) {
       )
       continue
     }
+    const retained = new Set(['id', 'objectKind', 'position', 'rotation', 'scale',
+      ...(instance.objectKind === 'unit' || instance.objectKind === 'doodad' ? ['typeId', 'variation'] : []),
+      ...(instance.objectKind === 'unit' ? ['player'] : []),
+      ...(instance.objectKind === 'point' ? ['typeId', 'name'] : []),
+      ...(instance.objectKind === 'camera' ? ['name'] : [])])
+    for (const field of unretainedWorldFields(instance, (field, value) => retained.has(field) ||
+      (field === 'resourceIds' && Array.isArray(value) && value.length === 0)))
+      losses.push(Object.freeze({ feature: `${path}.${field}`,
+        reason: 'the fresh SC2 placement writer does not encode this authored field',
+        replacement: 'omitted; target placement/catalog defaults apply' }))
     const position = `${instance.position[0]},${-instance.position[2]},${instance.position[1]}`
     const scale = `${instance.scale[0]},${instance.scale[2]},${instance.scale[1]}`
     const common = `Id="${id}" Position="${position}" Scale="${scale}" Rotation="${rotation}"`
@@ -678,7 +701,7 @@ function encodeCliffs(layer, terrain, refusals) {
   return bytes
 }
 
-function encodeNavigation(layer, terrain, refusals) {
+function encodeNavigation(layer, terrain, refusals, crossGame) {
   const bytes = new Uint8Array(32 + terrain.columns * terrain.rows * 2)
   bytes.set(text.encode('PATH'))
   const view = new DataView(bytes.buffer)
@@ -686,6 +709,12 @@ function encodeNavigation(layer, terrain, refusals) {
   view.setUint32(8, terrain.columns, true)
   view.setUint32(12, terrain.rows, true)
   if (layer === undefined) return bytes
+  if ((layer.flagEncoding !== undefined && layer.flagEncoding !== 'blizzard/sc2-sync-pathing@1') ||
+    (crossGame && layer.flagEncoding === undefined)) {
+    fail(refusals, 'navigation-flag-encoding-unrepresentable',
+      'SC2 pathing needs its declared vocabulary; foreign or unknown flags require a qualified mapping', 'navigation.flagEncoding')
+    return bytes
+  }
   if (
     layer.columns !== terrain.columns ||
     layer.rows !== terrain.rows ||
@@ -1065,13 +1094,13 @@ async function convertUvwToStarcraft2MapCore(input, options = {}) {
       'spaces',
     )
   const space = document.spaces[0]
-  const terrainLayers = space?.layers.filter(layer => layer.kind === 'heightfield') ?? []
+  const terrainLayers = space?.layers.filter(layer => layer.kind === 'heightfield' && layer.role !== 'query') ?? []
   const sourceTerrain = terrainLayers[0]
   if (terrainLayers.length !== 1 || sourceTerrain === undefined)
     fail(
       refusals,
       'terrain-layer-invalid',
-      'SC2 fresh map requires exactly one heightfield layer',
+      'SC2 fresh map requires exactly one rendered ground heightfield layer',
       'spaces[0].layers',
     )
   const nativeCoordinates =
@@ -1140,11 +1169,15 @@ async function convertUvwToStarcraft2MapCore(input, options = {}) {
         layers: Object.freeze(effectiveLayers),
       })
   const layer = kind => effectiveLayers.find(candidate => candidate.kind === kind)
-  const terrain = layer('heightfield')
+  const terrain = effectiveLayers.find(candidate => candidate.kind === 'heightfield' && candidate.role !== 'query')
   if (terrain === undefined) throw new TypeError('effective SC2 terrain disappeared during mapping')
   const materials = layer('terrain-materials')
   const cliffs = layer('cliffs')
   const navigation = layer('navigation')
+  const retainedSpaceFields = new Set(['id', 'topology', 'basis', 'bounds', 'layers'])
+  for (const field of unretainedWorldFields(space, field => retainedSpaceFields.has(field)))
+    losses.push(Object.freeze({ feature: `spaces[0].${field}`,
+      reason: 'the fresh SC2 spatial writer does not encode this space metadata', replacement: 'omitted' }))
   const objects = layer('objects')
   const regions = layer('regions')
   const water = layer('water')
@@ -1152,30 +1185,19 @@ async function convertUvwToStarcraft2MapCore(input, options = {}) {
   const materialData = materialEncoding(materials, terrain, refusals)
   const height = encodeHeightMap(terrain, cliffs, options, refusals)
   const cliffBytes = encodeCliffs(cliffs, terrain, refusals)
-  const navigationBytes = encodeNavigation(navigation, terrain, refusals)
+  const navigationBytes = encodeNavigation(navigation, terrain, refusals, crossGame)
   const objectBytes = encodeObjects(objects, refusals, losses)
   const regionBytes = encodeRegions(regions, refusals)
   const waterDocuments = encodeWater(water, options.waterTemplateId, refusals, losses)
   const lightingDocuments = encodeLighting(lighting, losses)
   const targetMetadata = encodeTargetMetadataPreset(options.targetMetadataPreset, terrain, refusals)
+  const retainedLayers = new Set([terrain, materials, cliffs, navigation, objects, regions, water, lighting])
   for (const extra of effectiveLayers) {
-    if (
-      [
-        'heightfield',
-        'terrain-materials',
-        'cliffs',
-        'navigation',
-        'objects',
-        'regions',
-        'water',
-        'lighting',
-      ].includes(extra.kind)
-    )
-      continue
+    if (retainedLayers.has(extra)) continue
     losses.push(
       Object.freeze({
         feature: `layers.${extra.id}`,
-        reason: `${extra.kind} has no fresh SC2 spatial document mapping`,
+        reason: `unselected ${extra.kind} layer has no fresh SC2 spatial document mapping`,
         replacement: 'omitted',
       }),
     )

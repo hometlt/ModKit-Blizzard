@@ -9,6 +9,7 @@
  * entity resolves, types and gains provenance only when a question names it; the values and
  * provenance are the full authoring index's (`catalog-analysis` and `buildStarcraft2AuthoringIndex`
  * own both), so a feature reads the same entity here as in a full analysis.
+ * Holders may inspect existing pure parses without building the model; their reuse proof stays here.
  *
  * Questions:
  * - `authoring(refs, { chains })` — authoring index rows of those entities, and of their
@@ -28,6 +29,8 @@
  *   preserving localization/usage/diagnostics and all existing validation. One alternate bounds
  *   state is recoverably cached and shared by unchanged forks; smaller parse depth never reuses a
  *   parse validated at a larger depth. Updates drop derived state, retaining reusable typed parses.
+ *   Its asynchronous projector loads on demand; cancellation or an input revision change during
+ *   that load refuses the stale request. Ordinary entity reads do not load the workspace adapter.
  * `update(documents)` replaces the document list (an edit, a file changed on disk, a new file); the
  * next question parses only documents whose text or position changed and rebuilds the engine.
  * `fork()` creates a session view over the saved model. It shares the current parsed documents and
@@ -52,9 +55,8 @@ import {
   type ResolvedDataWorkspaceSnapshot,
 } from '@modkit/sdk/data'
 import type { DataCatalogDocument } from '@modkit/sdk/data'
-import { projectStarcraft2ResolvedDataFromPreparedCatalog } from './provider.js'
 import { buildStarcraft2AuthoringIndex, type AuthoringIndexEntityInput } from './authoring-index.js'
-import type { EngineCatalogEntries } from './engine-resolution.js'
+import { engineCatalogPreparation, type EngineCatalogEntries, type EngineCatalog } from './engine-resolution.js'
 import { sameCatalogDocuments } from './document-inputs.js'
 import { fuzzyMatches } from '../../../../shared/language/symbol-match.js'
 import {
@@ -118,6 +120,17 @@ export interface Starcraft2ParsedDocument {
   readonly parsed: ParsedCatalogDocument
 }
 
+/** The Data owner's reuse proof; a holder's map key already fixes the document root and path. */
+export function canReuseStarcraft2ParsedDocument(
+  document: CatalogDocument,
+  documentIndex: number,
+  known: Starcraft2ParsedDocument | undefined,
+  depth = DEFAULT_MAX_DEPTH,
+): known is Starcraft2ParsedDocument {
+  return known !== undefined && known.text === document.text && known.documentIndex === documentIndex &&
+    known.revision === document.revision && known.maxDepth <= depth
+}
+
 export interface Starcraft2DataSession {
   /** Complete snapshot projection; native documents remain session-owned, with no second resolver. */
   projectSnapshot(request: Omit<ResolvedDataWorkspaceAnalysisRequest, 'documents'>): Promise<ResolvedDataWorkspaceSnapshot>
@@ -153,8 +166,8 @@ export interface Starcraft2DataSession {
   definitions(refs: readonly DataEntityKey[]): readonly DataResolvedEntity[]
   /** Entities the catalog declares (first declarations), named and synthetic. */
   entityCount(): number
-  /** The typed parses the session holds, by `rootId\u0000path`, for a holder to keep. */
-  parsedDocuments(): ReadonlyMap<string, Starcraft2ParsedDocument>
+  /** Typed parses by `rootId\u0000path`; false returns only known entries without building state. */
+  parsedDocuments(buildIfMissing?: boolean): ReadonlyMap<string, Starcraft2ParsedDocument>
 }
 
 interface SessionState {
@@ -225,6 +238,10 @@ function createDataSession(
   let preparation: {
     readonly documents: readonly CatalogDocument[]
     readonly parses: Map<string, ParsedDocumentCacheEntry>
+    engine?: {
+      readonly input: ReturnType<typeof prepareInputs>
+      readonly steps: ReturnType<typeof engineCatalogPreparation>
+    }
   } | undefined
   let projectionBounds: ProjectionBoundsCache = seed?.projectionBounds ?? {}
 
@@ -236,10 +253,7 @@ function createDataSession(
     known: ParsedDocumentCacheEntry | undefined,
     signal?: AbortSignal,
   ): ParsedDocumentCacheEntry => {
-    const reuse = known !== undefined && known.text === document.text &&
-      known.documentIndex === documentIndex && known.revision === document.revision &&
-      known.maxDepth <= depth
-    return reuse ? known : {
+    return canReuseStarcraft2ParsedDocument(document, documentIndex, known, depth) ? known : {
       text: document.text,
       documentIndex,
       maxDepth: depth,
@@ -249,7 +263,7 @@ function createDataSession(
   }
 
   /** Parse with explicit bounds, sharing only entries that were validated at a safe depth. */
-  const prepareState = (
+  const prepareInputs = (
     depth: number,
     entities: number,
     knownParses: ReadonlyMap<string, ParsedDocumentCacheEntry>,
@@ -270,8 +284,14 @@ function createDataSession(
         return entry.parsed
       },
     })
+    return { parsed, diagnostics, parses: kept }
+  }
+
+  /** Publishable state over the same admitted documents, optionally using their completed engine. */
+  const resolveInputs = (input: ReturnType<typeof prepareInputs>, depth: number, engine?: EngineCatalog) => {
+    const { parsed, diagnostics } = input
     const parsedDiagnosticCount = diagnostics.length
-    const resolution = resolveThroughEngine(parsed.patches, parsed.engineDocuments, { documents: current, maxDepth: depth }, diagnostics)
+    const resolution = resolveThroughEngine(parsed.patches, parsed.engineDocuments, { documents: current, maxDepth: depth }, diagnostics, engine)
     const prepared: SessionState = {
       parsed,
       diagnostics,
@@ -281,17 +301,47 @@ function createDataSession(
       ids: new Map(),
       heirs: new Map(),
     }
-    return { state: prepared, parses: kept }
+    return { state: prepared, parses: input.parses }
+  }
+
+  /** Explicit-bounds projections retain their ordinary complete synchronous construction. */
+  const prepareState = (depth: number, entities: number, known: ReadonlyMap<string, ParsedDocumentCacheEntry>, signal?: AbortSignal) =>
+    resolveInputs(prepareInputs(depth, entities, known, signal), depth)
+
+  /** One engine attempt for these inputs; a failed attempt leaves pure parses available for retry. */
+  const engineFor = (held: NonNullable<typeof preparation>, signal?: AbortSignal) => {
+    if (held.engine === undefined) {
+      const input = prepareInputs(maxDepth, maxEntities, held.parses, signal)
+      held.engine = { input, steps: engineCatalogPreparation(input.parsed.engineDocuments) }
+    }
+    return held.engine
+  }
+
+  /** Adopt a finished model once; preparers of these inputs subsequently observe this state. */
+  const publish = (prepared: ReturnType<typeof resolveInputs>): SessionState => {
+    parses = prepared.parses
+    state = prepared.state
+    preparation = undefined
+    return state
   }
 
   /** Canonical language/model bounds, preserving the existing lazy state lifetime. */
   const build = (signal = options.signal): SessionState => {
     if (state !== undefined) return state
-    const prepared = prepareState(maxDepth, maxEntities, parses, signal)
-    parses = prepared.parses
-    state = prepared.state
-    preparation = undefined
-    return state
+    const held = preparation?.documents === current ? preparation.engine : undefined
+    if (held !== undefined) {
+      for (;;) {
+        signal?.throwIfAborted()
+        try {
+          const next = held.steps.next()
+          if (next.done) return publish(resolveInputs(held.input, maxDepth, next.value))
+        } catch (error) {
+          if (preparation?.engine === held) delete preparation.engine
+          throw error
+        }
+      }
+    }
+    return publish(prepareState(maxDepth, maxEntities, parses, signal))
   }
 
   /** Whether an entity anywhere names a parent no document declares (the full analysis's error). */
@@ -352,11 +402,18 @@ function createDataSession(
   }
 
   return {
-    projectSnapshot(request) {
-      return projectStarcraft2ResolvedDataFromPreparedCatalog({
+    async projectSnapshot(request) {
+      const requestedRevision = revision
+      const requested = {
         ...request,
         documents: current as readonly DataCatalogDocument[],
-      }, validated => {
+      }
+      request.signal?.throwIfAborted()
+      const { projectStarcraft2ResolvedDataFromPreparedCatalog } = await import('./provider.js')
+      request.signal?.throwIfAborted()
+      if (revision !== requestedRevision) throw new OperationCancelledError('Data inputs changed while loading the snapshot projector')
+      return projectStarcraft2ResolvedDataFromPreparedCatalog(requested, validated => {
+        if (revision !== requestedRevision) throw new OperationCancelledError('Data inputs changed before snapshot preparation')
         let projected: SessionState
         if (validated.maxDepth === maxDepth && validated.maxEntities === maxEntities) {
           projected = build(validated.signal)
@@ -398,7 +455,7 @@ function createDataSession(
       projectionBounds = previousParses === undefined ? {} : { parses: previousParses }
     },
     complete,
-    /** Warm the canonical parse cache in bounded turns, then use the ordinary complete builder. */
+    /** Share parse and engine checkpoints; a cancelled preparer never cancels its neighbour. */
     async prepare(signal = options.signal) {
       if (state !== undefined) return
       if (preparation === undefined || preparation.documents !== current) {
@@ -433,7 +490,29 @@ function createDataSession(
       if (state !== undefined) return
       signal?.throwIfAborted()
       if (current !== held.documents) throw new OperationCancelledError('Data inputs changed during preparation')
-      build(signal)
+      for (;;) {
+        if (state !== undefined) return
+        signal?.throwIfAborted()
+        if (current !== held.documents) throw new OperationCancelledError('Data inputs changed during preparation')
+        if (batch >= PREPARATION_BATCH_DOCUMENTS || performance.now() >= yieldAt) {
+          await new Promise<void>(resolve => setTimeout(resolve, 0))
+          batch = 0
+          yieldAt = performance.now() + PREPARATION_SLICE_MS
+          continue
+        }
+        const building = engineFor(held, signal)
+        try {
+          const next = building.steps.next()
+          if (next.done) {
+            publish(resolveInputs(building.input, maxDepth, next.value))
+            return
+          }
+        } catch (error) {
+          if (held.engine === building) delete held.engine
+          throw error
+        }
+        batch++
+      }
     },
     authoring(refs, authoringOptions) {
       const built = build()
@@ -537,8 +616,8 @@ function createDataSession(
       return Object.freeze(snapshot.entities.map(entity => built.resolution.enrich(entity, true)))
     },
     entityCount: () => build().resolution.firstPatches().size,
-    parsedDocuments() {
-      build()
+    parsedDocuments(buildIfMissing = true) {
+      if (buildIfMissing) build()
       return parses
     },
   }

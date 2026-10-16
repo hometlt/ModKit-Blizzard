@@ -12,6 +12,7 @@ import { chainCatalogDocuments, createChainData } from '../../shared/workspace/c
 import type { ContentSourceStorage } from '../../shared/workspace/content-source-provider.js'
 import { Sc2FolderSource } from '../../../game/battlenet/content-sources/local-files.js'
 import * as catalogAnalysis from '../../../data/services/catalog/catalog-analysis.js'
+import { TypedCatalog } from '../../../data/shared/catalog-engine/sc2-catalog/index.js'
 import * as languageAnswers from '../../shared/workspace/language-answer.js'
 import { SC2ModReader } from '../../shared/core/reader.js'
 import { connectModServer, modServerAddress, serveModServer } from '@modkit/host/node'
@@ -280,6 +281,42 @@ type Row = { readonly entityId: string; readonly parentEntityId?: string; readon
 const lifeOf = (rows: readonly Row[], id: string) => rows.find(row => row.entityId === id)?.fields?.find(item => item.fieldId === 'LifeMax')?.value
 
 describe('the mod context as its chain\'s server', () => {
+  it('reuses active native dependency parses without a disk cache, excludes drafts and revalidates changed bytes', async () => {
+    let changed: string | undefined
+    const source = { ...casc, read: async (file: string, maximum: number) =>
+      changed !== undefined && file.toLowerCase() === 'mods/liberty.sc2mod/base.sc2data/gamedata/unitdata.xml'
+        ? new TextEncoder().encode(changed) : casc.read(file, maximum) }
+    const loader = contexts(source)
+    const modRoot = path.join(scratch, 'LiveReuse.SC2Mod')
+    await write('LiveReuse.SC2Mod/DocumentInfo', '<DocInfo><Dependencies><Value>file:Mods/Liberty.SC2Mod</Value></Dependencies></DocInfo>')
+    await write(`LiveReuse.SC2Mod/${UNIT_DATA}`, mineUnits)
+    const unused = await loader.open({ schemaVersion: 1, target: { sourceId: casc.id, path: 'Mods/Core.SC2Mod' } })
+    const draft = await loader.open({ schemaVersion: 1, target: modRoot, sessionId: 'draft' })
+    const parent = await loader.open({ schemaVersion: 1, target: { sourceId: casc.id, path: 'Mods/Liberty.SC2Mod' } })
+    let other: Awaited<ReturnType<typeof loader.open>> | undefined
+    const parse = vi.spyOn(catalogAnalysis, 'parseCatalogDocument')
+    try {
+      const request = { kind: 'data.entities', refs: [{ namespace: 'Unit', entityId: 'SCV' }] }
+      expect(await draft.query(request)).toMatchObject({ entities: [{ fields: { LifeMax: 40 } }] })
+      const library = draft.layers.find(layer => layer.sourcePath === 'Mods/Liberty.SC2Mod')!
+      await draft.overlay([{ layerId: library.id, path: UNIT_DATA, text: '<Catalog><CUnit id="SCV"><LifeMax value="777"/></CUnit></Catalog>' }])
+      expect(await draft.query(request)).toMatchObject({ entities: [{ fields: { LifeMax: 777 } }] })
+      parse.mockClear()
+      expect(await parent.query(request)).toMatchObject({ entities: [{ fields: { LifeMax: 40 } }] })
+      expect(parse).not.toHaveBeenCalled()
+      changed = '<Catalog><CUnit id="Marine"><LifeMax value="45"/></CUnit><CUnit id="SCV"><LifeMax value="46"/></CUnit></Catalog>'
+      await parent.invalidate()
+      await write('LiveOther.SC2Mod/DocumentInfo', '<DocInfo><Dependencies><Value>file:Mods/Liberty.SC2Mod</Value></Dependencies></DocInfo>')
+      await write(`LiveOther.SC2Mod/${UNIT_DATA}`, '<Catalog/>')
+      other = await loader.open({ schemaVersion: 1, target: path.join(scratch, 'LiveOther.SC2Mod') })
+      expect(await other.query(request)).toMatchObject({ entities: [{ fields: { LifeMax: 46 } }] })
+      expect(parse.mock.calls.filter(([document]) => document.path.toLowerCase().endsWith('liberty.sc2mod/base.sc2data/gamedata/unitdata.xml'))).toHaveLength(1)
+      expect(await draft.query(request)).toMatchObject({ entities: [{ fields: { LifeMax: 777 } }] })
+    } finally {
+      parse.mockRestore(); await other?.dispose(); await parent.dispose(); await draft.dispose(); await unused.dispose(); await loader.dispose()
+    }
+  })
+
   it('serves Data asset paths and localized declarations without reading asset bytes', async () => {
     const prefix = 'Mods/Assets.SC2Mod', asset = 'Base.SC2Assets/Assets/Textures/x.dds'
     const text = '<Catalog><CButton id="Go"><Name value="Button/Name/Go"/><Icon value="Assets\\Textures\\x.dds"/></CButton></Catalog>'
@@ -550,7 +587,7 @@ describe('the mod context as its chain\'s server', () => {
     }
   }, 30_000)
 
-  it('answers a lightweight RPC while preparing an uncached Data chain', async () => {
+  it.each(['parse', 'engine'] as const)('answers a lightweight RPC during uncached Data %s preparation', async phase => {
     const files: Record<string, string> = {
       'Mods/Core.SC2Mod/DocumentInfo': '<DocInfo/>',
       'Mods/Core.SC2Mod/Base.SC2Data/GameData/UnitData.xml': '<Catalog/>',
@@ -564,7 +601,7 @@ describe('the mod context as its chain\'s server', () => {
     }
     const source = memorySource('local:cooperative', files)
     const loader = contexts(source)
-    const address = modServerAddress({ extensionRoots: [], storage: `${scratch}/cooperative-rpc` }, scratch)
+    const address = modServerAddress({ extensionRoots: [], storage: `${scratch}/cooperative-rpc-${phase}` }, scratch)
     const daemon = await serveModServer({ address, sources: { openModContext: request => loader.open(request) } })
     const client = await connectModServer(address)
     const remote = await client.openModContext({ schemaVersion: 1, target: { sourceId: source.id, path: 'Mods/Cooperative.SC2Mod' } })
@@ -579,11 +616,20 @@ describe('the mod context as its chain\'s server', () => {
       }).catch(reject) }
     })
     let scheduled = false
-    const original = catalogAnalysis.parseCatalogDocument
-    const parse = vi.spyOn(catalogAnalysis, 'parseCatalogDocument').mockImplementation((...args) => {
+    const schedule = () => {
       if (!scheduled) { scheduled = true; setTimeout(probe, 0) }
-      return original(...args)
-    })
+    }
+    const parseOriginal = catalogAnalysis.parseCatalogDocument
+    const engineOriginal = TypedCatalog.prototype.loadFromFiles
+    const preparation = phase === 'parse'
+      ? vi.spyOn(catalogAnalysis, 'parseCatalogDocument').mockImplementation((...args) => {
+        schedule()
+        return parseOriginal(...args)
+      })
+      : vi.spyOn(TypedCatalog.prototype, 'loadFromFiles').mockImplementation(function (this: TypedCatalog, ...args) {
+        schedule()
+        return engineOriginal.apply(this, args)
+      })
     try {
       await Promise.all([remote.prepare!().then(() => { events.push('prepared') }), probed])
       expect(events).toEqual(['located', 'prepared'])
@@ -591,7 +637,7 @@ describe('the mod context as its chain\'s server', () => {
       const answer = await remote.query!({ kind: 'data.ids', namespace: 'Unit' })
       expect(answer).toMatchObject({ ids: expect.arrayContaining(['Unit0_0', 'Unit255_15']) })
       expect((answer as { ids: readonly string[] }).ids).toHaveLength(4096)
-    } finally { parse.mockRestore(); await client.close(); await daemon.close(); await loader.dispose() }
+    } finally { preparation.mockRestore(); await client.close(); await daemon.close(); await loader.dispose() }
   })
 
   it('isolates the real SC2 owner over the public daemon transport', async () => {

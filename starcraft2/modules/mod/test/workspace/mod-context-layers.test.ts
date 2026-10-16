@@ -79,6 +79,26 @@ function contexts(extra: Partial<Parameters<typeof createSc2ModContexts>[0]> = {
 }
 
 describe('the one mod loader, later cases', () => {
+  it('does not strip or rename custom source roots while normalizing built-in package spelling', async () => {
+    const { canonicalSourcePackageRoot } = await import('../../shared/workspace/mod-context.js')
+    const custom = ['Nested/Mods/Liberty.SC2Mod', 'Mods/CuStOm.SC2Mod', 'Mods/Liberty.SC2Mod/Nested.SC2Mod', 'C:/Games/Mods/Liberty.SC2Mod']
+    expect(custom.map(canonicalSourcePackageRoot)).toEqual(custom)
+  })
+
+  it('uses the same stock package identity when opened with another spelling and when inherited', async () => {
+    const loader = contexts()
+    const parent = await loader.open({ schemaVersion: 1, target: { sourceId: 'local:casc', path: 'mods/liberty.sc2mod' } })
+    const child = await loader.open({ schemaVersion: 1, target: { sourceId: 'local:casc', path: 'mods/void.sc2mod' } })
+    try {
+      const primary = parent.layers.at(-1)!
+      const inherited = child.layers.find(layer => layer.sourcePath.toLowerCase() === 'mods/liberty.sc2mod')!
+      expect(primary.sourcePath).toBe(inherited.sourcePath)
+      expect(primary.sourcePath).toBe('Mods/Liberty.SC2Mod')
+      const placed = await loader.locateModPackage({ sourceId: 'local:casc', path: 'mods/liberty.sc2mod/base.sc2data/gamedata/unitdata.xml' })
+      expect(placed).toMatchObject({ kind: 'package', path: primary.sourcePath, displayName: primary.displayName })
+    } finally { await parent.dispose(); await child.dispose(); await loader.dispose() }
+  })
+
   it('serves one effective resource tree over dependencies, with overridden strings', async () => {
     const loader = contexts()
     const context = await loader.open({ schemaVersion: 1, target: { sourceId: 'local:casc', path: 'Mods/Liberty.SC2Mod' } })

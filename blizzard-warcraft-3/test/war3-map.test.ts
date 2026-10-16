@@ -32,6 +32,9 @@ describe('Warcraft III map', () => {
       'cliff-level': [15, 0, 1, 2, 3, 4],
       water: [0, 1, 0x3fff, 100, 200, 300],
       'ground-texture': [9, 8, 7, 6, 5, 4],
+      'ground-variation': [31, 0, 3, 9, 17, 24],
+      'cliff-variation': [7, 0, 1, 2, 3, 4],
+      'cliff-texture': [15, 0, 4, 3, 2, 1],
       'corner-flags': [31, 0, 16, 1, 2, 12],
       pathing: Array.from({ length: 32 }, (_, index) => (index * 37) & 0xff),
     }
@@ -75,6 +78,9 @@ describe('Warcraft III map', () => {
         ['cliff-level', 3, 2],
         ['water', 3, 2],
         ['ground-texture', 3, 2],
+        ['ground-variation', 3, 2],
+        ['cliff-variation', 3, 2],
+        ['cliff-texture', 3, 2],
         ['corner-flags', 3, 2],
         ['pathing', 8, 4],
       ])

@@ -43,6 +43,7 @@ import type { TreeDataSource, TreeNodeRef } from '@modkit/sdk'
 import type { LanguageWorkspaceSemanticInput } from '@modkit/sdk'
 import {
   HOST_SOURCE_ID,
+  canonicalSourcePackageRoot,
   ModContextManager,
   type LayerFiles,
   type PresetLayers,
@@ -668,6 +669,14 @@ export function createSc2ModContexts(options: Sc2ModContextsOptions) {
     if (chain.data === undefined) chain.data = createChainData('sc2-mod-context', {
       layers: chainLayers, reader: savedReader, incomplete: resolved.unresolved.length > 0,
       ...(options.dataCache === undefined ? {} : { cache: options.dataCache }),
+      // Native holders only: inspect known parses without starting a cold chain or borrowing drafts.
+      reusableParses: function* () {
+        for (const candidate of chains.values()) {
+          if (candidate === chain) continue
+          const kept = candidate.data?.cachedParses()
+          if (kept !== undefined && kept.size > 0) yield kept
+        }
+      },
     })
     else chain.data.rebind(chainLayers, savedReader, resolved.unresolved.length > 0)
     if (server.data === undefined) {
@@ -1849,12 +1858,12 @@ export function createSc2ModContexts(options: Sc2ModContextsOptions) {
       ? -1
       : segments.findIndex(segment => PACKAGE.test(segment))
     if (packageAt < 0) return looseOrForeign(target.path)
-    const root = segments.slice(0, packageAt + 1).join('/')
+    const root = canonicalSourcePackageRoot(segments.slice(0, packageAt + 1).join('/'))
     return Object.freeze({
       kind: 'package' as const,
       sourceId: target.sourceId,
       path: root,
-      displayName: segments[packageAt] as string,
+      displayName: path.posix.basename(root),
     })
   }
 

@@ -8,6 +8,8 @@
  * content source (a packed package reads as a folder there), and a loose root that declares only
  * its base mods. Merged data is the chain's Data session over these files, held by the chain's
  * server (see `chain-data.ts` and `mod-contexts.ts`).
+ * Built-in source package names use the existing engine dependency table's spelling, whether
+ * opened directly or inherited. Custom source prefixes and host filesystem paths are preserved.
  * The Mod owner's recoverable metadata policy retains 128 chains/1MiB and 256 layer tables/16MiB
  * of accounted UTF-16 names/slots. Eviction never cancels a caller or truncates its table; a later
  * lookup reconstructs it. Invalidation/failed reads remain retryable. Point reads use native
@@ -25,6 +27,7 @@ import * as fs from 'node:fs/promises'
 import { ModResolver, type ResolverSource } from './resolver.js'
 import { FsReader, VirtualFileSystem, type BaseReader, type Protocol } from './vfs.js'
 import { LoaderMetadataCache } from './loader-metadata-cache.js'
+import { canonicalSc2PackagePath } from './implicit-dependencies.js'
 import {
   ContentSourceReader,
   createSourceListingCache,
@@ -92,6 +95,11 @@ export interface PresetLayers {
 }
 
 const MOD_ROOT_RE = /\.(sc2mod|sc2map|sc2campaign)$/i
+/** Give built-in source packages their game spelling without stripping a custom path prefix. */
+export function canonicalSourcePackageRoot(value: string): string {
+  const known = canonicalSc2PackagePath(value)
+  return known !== undefined && known.toLowerCase() === value.toLowerCase() ? known : value
+}
 /** Protocol prefix of a root opened outside any package (see {@link ModContextManager.resolveLoose}). */
 const LOOSE_ROOT = /^loose\d+:/iu
 
@@ -336,7 +344,7 @@ export class ModContextManager {
     const protocol = layer.slice(0, layer.indexOf(':') + 1).toLowerCase()
     const rest = trim(layer.slice(protocol.length))
     const source = env.sources.find(item => item.protocol === protocol)
-    if (source !== undefined) return { id: source.id, path: rest, ...(source.addOn ? { addOn: true } : {}) }
+    if (source !== undefined) return { id: source.id, path: canonicalSourcePackageRoot(rest), ...(source.addOn ? { addOn: true } : {}) }
     const root = env.roots.get(protocol) ?? env.looseRoots.get(protocol)?.deref()
     if (root === undefined) throw new Error(`${layer} is not a layer this loader resolved`)
     return { id: root.id, path: root.exact || rest === '' ? root.path : `${root.path}/${rest}` }

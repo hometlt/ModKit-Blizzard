@@ -5,12 +5,14 @@
  * document.
  */
 import { describe, expect, it, vi } from 'vitest'
-import { isCancellation } from '@modkit/core'
+import { deserialize, serialize } from 'node:v8'
+import { isCancellation, OperationCancelledError } from '@modkit/core'
 import { dataAuthoringSource, type ResolvedDataAuthoringIndex } from '@modkit/sdk/data'
 import { analyzeStarcraft2DataAuthoringIndex, analyzeStarcraft2ResolvedData } from '../services/catalog/provider.js'
 import { openStarcraft2DataSession } from '../services/catalog/data-session.js'
 import * as catalogAnalysis from '../services/catalog/catalog-analysis.js'
 import * as compiledCatalogAnalysis from '@modkit/blizzard-starcraft2/data/catalog-analysis'
+import { TypedCatalog } from '../shared/catalog-engine/sc2-catalog/index.js'
 
 const document = (rootId: string, path: string, text: string) => ({ rootId, path, text })
 const coreUnits = document('core', 'mods/core.sc2mod/base.sc2data/gamedata/unitdata.xml', `<Catalog>
@@ -71,6 +73,175 @@ const preparationDocuments = () => Array.from({ length: 48 }, (_, index) => docu
   `<Catalog><CUnit id="Unit${index}"><LifeMax value="${index + 1}"/></CUnit></Catalog>`))
 
 describe('SC2 Data session', () => {
+  it.each(['documents', 'incomplete', 'refresh'] as const)('refuses a snapshot superseded while its projector loads: %s', async change => {
+    const session = openStarcraft2DataSession(chain, { workspaceId: 'workspace:session', maxEntities: 2048 })
+    const { documents: _documents, ...projection } = request(chain)
+    const pending = session.projectSnapshot(projection).catch(error => error)
+    const changed = change === 'documents'
+      ? chain.map(item => item === modUnits ? { ...item, text: item.text.replace('value="50"', 'value="91"') } : item)
+      : chain
+    session.update(changed, { incomplete: change === 'incomplete' })
+    expect(isCancellation(await pending)).toBe(true)
+    if (change === 'incomplete') session.update(changed, { incomplete: false })
+    expect(await session.projectSnapshot(projection)).toEqual(await analyzeStarcraft2ResolvedData(request(changed)))
+  })
+
+  it('cancels a waiting projection without cancelling another projection of the same model', async () => {
+    const session = openStarcraft2DataSession(chain, { workspaceId: 'workspace:session', maxEntities: 2048 })
+    const { documents: _documents, ...projection } = request(chain)
+    const controller = new AbortController()
+    const reason = new Error('cancel only this projection')
+    const cancelled = session.projectSnapshot({ ...projection, signal: controller.signal }).catch(error => error)
+    const continuing = session.projectSnapshot(projection)
+    controller.abort(reason)
+    expect((await cancelled) === reason).toBe(true)
+    expect(await continuing).toEqual(await analyzeStarcraft2ResolvedData(request(chain)))
+  })
+
+  it('retries failed engine preparation cooperatively without reusing its closed iterator', async () => {
+    const documents = preparationDocuments()
+    const options = { workspaceId: 'workspace:engine-retry' }
+    const warmed = openStarcraft2DataSession(documents, options)
+    const session = openStarcraft2DataSession(documents, { ...options, parses: warmed.parsedDocuments() })
+    const original = TypedCatalog.prototype.loadFromFiles
+    let fail = true
+    let beforeRetry = 0
+    let countAtTurn = 0
+    let announce = () => undefined as void
+    const turn = new Promise<void>(resolve => { announce = resolve })
+    const load = vi.spyOn(TypedCatalog.prototype, 'loadFromFiles').mockImplementation(function(this: TypedCatalog, ...args) {
+      if (fail) { fail = false; throw new Error('transient engine failure') }
+      if (load.mock.calls.length === beforeRetry + 1) setTimeout(() => { countAtTurn = load.mock.calls.length - beforeRetry; announce() }, 0)
+      return original.apply(this, args)
+    })
+    try {
+      await expect(session.prepare()).rejects.toThrow('transient engine failure')
+      beforeRetry = load.mock.calls.length
+      const retry = session.prepare()
+      await turn
+      expect(countAtTurn).toBeLessThan(documents.length)
+      await retry
+      expect(load.mock.calls.length - beforeRetry).toBe(documents.length)
+      expect(session.ids('Unit')).toHaveLength(documents.length)
+    } finally { load.mockRestore() }
+  })
+
+  it.each(['foreground', 'foreground-cancel', 'cancel', 'replace'] as const)(
+    'admits a neighbouring task during engine preparation: %s', async action => {
+      const documents = preparationDocuments()
+      const controller = new AbortController()
+      const options = { workspaceId: 'workspace:engine-turns', ...(action === 'foreground-cancel' ? { signal: controller.signal } : {}) }
+      const warmed = openStarcraft2DataSession(documents, options)
+      const session = openStarcraft2DataSession(documents, { ...options, parses: warmed.parsedDocuments() })
+      const reason = new Error('cancel this engine preparer')
+      let countAtTurn = 0
+      let announce = () => undefined as void
+      const turn = new Promise<void>(resolve => { announce = resolve })
+      const original = TypedCatalog.prototype.loadFromFiles
+      const load = vi.spyOn(TypedCatalog.prototype, 'loadFromFiles').mockImplementation(function(this: TypedCatalog, ...args) {
+        const result = original.apply(this, args)
+        if (load.mock.calls.length === 1) setTimeout(() => {
+          countAtTurn = load.mock.calls.length
+          if (action === 'cancel' || action === 'foreground-cancel') controller.abort(reason)
+          announce()
+        }, 0)
+        return result
+      })
+      try {
+        const pending = session.prepare(action === 'foreground-cancel' ? new AbortController().signal : controller.signal).catch(error => error)
+        const neighbour = action === 'cancel' ? session.prepare() : undefined
+        await turn
+        expect(countAtTurn).toBeGreaterThan(0)
+        expect(countAtTurn).toBeLessThan(documents.length)
+        if (action === 'foreground') {
+          // Finishing synchronously must continue this catalog, not load its prefix a second time.
+          expect(session.ids('Unit')).toHaveLength(documents.length)
+          await pending
+          expect(load).toHaveBeenCalledTimes(documents.length)
+        } else if (action === 'foreground-cancel') {
+          expect(() => session.ids('Unit')).toThrow(reason)
+          await pending
+          expect(load).toHaveBeenCalledTimes(documents.length)
+        } else if (action === 'cancel') {
+          await neighbour
+          expect(await pending).toBe(reason)
+          expect(load).toHaveBeenCalledTimes(documents.length)
+        } else {
+          const next = documents.map(doc => ({ ...doc, text: doc.text.replace('value="1"', 'value="101"') }))
+          session.update(next)
+          expect(await pending).toBeInstanceOf(OperationCancelledError)
+          const alreadyLoaded = load.mock.calls.length
+          await session.prepare()
+          expect(load.mock.calls.length - alreadyLoaded).toBe(documents.length)
+          const expected = openStarcraft2DataSession(documents, options)
+          expected.update(next)
+          expect(session.authoring([{ namespace: 'Unit', entityId: 'Unit0' }])).toEqual(
+            expected.authoring([{ namespace: 'Unit', entityId: 'Unit0' }]),
+          )
+        }
+        expect(session.complete()).toBe(true)
+      } finally { load.mockRestore() }
+    },
+  )
+
+  it('defers own typed values while retaining schema facts and memoizes both value projections', () => {
+    let reads = 0
+    const schema = { typeId: 'CUnit', fields: [] }
+    const native: catalogAnalysis.CatalogElement = { name: 'CUnit', attributes: { id: 'Lazy' }, children: [
+      { name: 'LifeMax', attributes: { get value() { reads++; return '45.00' } } },
+    ] }
+    const patch = catalogAnalysis.parseCatalogEntity(native, schema, 'Unit', { rootId: 'mod', path: 'UnitData.xml', documentIndex: 0 }, '', new Set(), 64)
+    expect(reads).toBe(0)
+    expect(patch.typeId).toBe('CUnit')
+    const empty = catalogAnalysis.parseCatalogDocument(document('mod', 'UnitData.xml', '<Catalog/>'), 0, undefined, 64)
+    const stored = catalogAnalysis.storeCatalogDocument({ ...empty, patches: [patch as unknown as catalogAnalysis.CatalogPatch] })
+    expect(reads).toBe(0)
+    expect(stored.patches[0]?.facts).not.toHaveProperty('fields')
+    expect(stored.patches[0]?.facts).not.toHaveProperty('fieldLexemes')
+    const decoded = deserialize(serialize(stored)) as catalogAnalysis.StoredCatalogDocument
+    // Structured clone reads the native attribute once, never the derived value/lexeme projections.
+    expect(reads).toBe(1)
+    const restored = catalogAnalysis.restoreCatalogDocument(decoded)
+    expect(restored.patches[0]?.fields).toEqual({ LifeMax: 45 })
+    expect(restored.patches[0]?.fieldLexemes).toEqual({ LifeMax: '45.00' })
+    expect(reads).toBe(1)
+    expect(patch.fields).toEqual({ LifeMax: 45 })
+    const materializedReads = reads
+    expect(materializedReads).toBeGreaterThan(0)
+    expect(patch.fieldLexemes).toEqual({ LifeMax: '45.00' })
+    expect(patch.fields).toBe(patch.fields)
+    expect(reads).toBe(materializedReads)
+  })
+
+  it('round trips native parse facts without losing defaults, duplicate diagnostics or typed projections', () => {
+    const input = document('mod', 'mods/test.sc2mod/Base.SC2Data/GameData/UnitData.xml', `<Catalog>
+      <const id="Scale" value="2"/>
+      <CUnit default="1"><LifeMax value="1.00"/></CUnit>
+      <CUnit id="Marine"><LifeMax value="45.00"/><FlagArray index="Turnable" value="1"/>
+        <Unknown label="x" value="outer"><value value="inner"/><List index="A" value="3"/></Unknown>
+      </CUnit>
+      <CUnit id="Marine" parent="Base"><LifeMax value="50"/></CUnit>
+      <CUnverified id="Extra"><Nested><Leaf value="2"/></Nested></CUnverified>
+    </Catalog>`)
+    const parsed = catalogAnalysis.parseCatalogDocument(input, 3, undefined, 64)
+    const restored = catalogAnalysis.restoreCatalogDocument(deserialize(serialize(catalogAnalysis.storeCatalogDocument(parsed))))
+    expect(restored).toEqual(parsed)
+    expect(restored.diagnostics.some(item => item.code === 'blizzard.starcraft2/catalog-id-duplicate')).toBe(true)
+    expect(restored.patches[0]?.entityId).toBe('@default:CUnit:3:1')
+    expect(restored.patches[1]?.fieldLexemes).toMatchObject({ LifeMax: '45.00' })
+    expect(() => catalogAnalysis.parseCatalogDocument(input, 3, undefined, 0)).toThrow(/depth/)
+    const values = restored.patches[1]?.fields
+    expect(restored.patches[1]?.fields).toBe(values)
+  })
+
+  it('can inspect already cached parses without building an unrequested model', async () => {
+    const session = openStarcraft2DataSession(chain, { workspaceId: 'passive-parses' })
+    expect(session.parsedDocuments(false).size).toBe(0)
+    await session.prepare()
+    expect(session.parsedDocuments(false).size).toBe(chain.length)
+    expect(session.parsedDocuments()).toBe(session.parsedDocuments(false))
+  })
+
   it('lets another task run during preparation without exposing an incomplete model', async () => {
     const documents = preparationDocuments()
     const session = openStarcraft2DataSession(documents, { workspaceId: 'workspace:cooperative' })

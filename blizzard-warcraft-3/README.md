@@ -262,10 +262,54 @@ roll and field of view, and lighting, are not published. Pathing cells (`war3map
 summary, sampled up to the request's limit.
 
 `blizzard/war3-map-encoder` (`common.map/native-encoder`, format `war3-map`) writes a world back as a
-`.w3x`: terrain corners (height, cliff level, tiles named `tile-XXXX`, at most 16), doodads, units and
-start locations, an information file with one player per start. A world in other units is rescaled
-to 128 per cell. A `tile-blight` corner is blighted over the default tile. Water, ramps, regions, cameras, sounds, object data and the map script are
-not written; each loss is a `blizzard.war3/map-*` diagnostic. The map opens again as `blizzard/war3-map`.
+`.w3x`: terrain corners (height, cliff level, at most 16 ground tilesets), doodads, units,
+start locations, an information file with one player per start, and a qualified WPM navigation grid.
+A world in other units is explicitly reported as rescaled to 128 per cell. Native Warcraft III
+terrain requires 128-unit spacing and the same horizontal grid for ground, cliff levels and material
+samples. NoData, unrepresentable height/level values and destructive float32 conversions are refused;
+ordinary rounding is reported. Authored placement tilt is refused by this yaw-only profile.
+
+The optional `materialMappings` encoder option maps canonical UVW material IDs to case-sensitive native
+four-character tileset IDs, for example `{ materialMappings: { "material-tile-ldrt": "Ldrt" } }`.
+The target token `"blight"` selects the native blight flag over `defaultTile`. Without an explicit
+mapping, literal `tile-xxxx` IDs keep their four-character suffix; `tile-blight` selects blight.
+Labels and source indices never imply a target tileset. Canonical IDs do not preserve native case,
+so a native source roundtrip must supply the exact mapping. These mappings do not upgrade a partial
+native material publisher to exact, resolve textures, or establish visual parity.
+
+This writer uses the dominant sample weight. Reduced weights, unmapped material defaults, ordered
+tile layers, UVs, texture/normal/specular metadata, weight rasters, ground annotations and cliff
+authorship that it does not write are explicit `blizzard.war3/map-*` diagnostics. Sample omissions
+are counted per field, rather than allocating one diagnostic per corner. Portable water materials/surfaces, regions, cameras, sounds, object data and the map script are
+not fully written. Without qualified native W3E rasters, native water heights, corner/ramp flags
+and ground/cliff variation fields are not written either. Native gameplay and visual
+acceptance remain separate qualifications. The map opens again as `blizzard/war3-map`.
+
+
+The native world publisher separately retains six authored W3E fields through `game-raster`:
+ground tileset index, ground variation, cliff tileset index, cliff variation, and corner flags
+(ramp, blight, water, boundary and map edge), and the 14-bit native water-height field. The existing `map.layer-read`/`map.layer-write`
+owner reads and writes their bits; no second terrain decoder is involved. Their versioned
+`blizzard/war3-w3e-<field>@1` vocabularies are opaque native facts, not portable materials or
+navigation. For ground/cliff texture vocabularies, categories retain the source's exact native
+tileset spellings and index order, including unused declared entries. Unknown indices stay
+numbers with no invented category. These categories have explicit native vocabulary semantics;
+arbitrary portable material labels still do not establish a target identity.
+
+The native encoder restores these qualified rasters through the same map-layer writer. It requires
+the native unit frame, the complete ground footprint, exact declared vertex metadata and one raster
+per vocabulary. Known numeric values do not authorize another publisher or vocabulary major.
+Conflicting portable material samples are explicitly reported as superseded by native ground indices.
+The shared registry declares each field's storage type. Water height is `u16` in `[0,16383]`,
+with the existing map-layer interpretation `0.25 * value - 2048` in `war3-world-unit`.
+The encoder checks the exact declared unit, scale and offset; it never writes a physical height
+back as though it were a raw word. The existing map-layer writer preserves the other bits of
+the water word. This retains native water-height facts and known edge flags; it does not
+resolve Water.slk offsets, water materials, portable water geometry or the unmodelled word bit15.
+Complete arrays and zero unretained byte tails are required for exact source publication; bounded
+windows remain partial and are not padded. The visual terrain-material publisher remains partial
+until its atlas/UV projection is qualified. Retaining these authored fields does not make its
+approximate visual projection exact or restore every native terrain/header field.
 
 ## Object data
 

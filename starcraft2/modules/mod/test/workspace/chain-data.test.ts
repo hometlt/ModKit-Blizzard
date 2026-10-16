@@ -332,6 +332,87 @@ describe('chain Data on the mod server', () => {
       return { cache, saves, records }
     }
 
+    it.each(['extend', 'shrink'] as const)('reuses native parses from an active %s chain without a disk cache or warming cold chains', async direction => {
+      const sourceLayers = direction === 'extend' ? layers.slice(0, 1) : layers
+      const targetLayers = direction === 'extend' ? layers : layers.slice(0, 1)
+      const source = createChainData('active-native', { layers: sourceLayers, reader: chainReader([]), incomplete: false })
+      const native = await source.session()
+      const nativeAnswers = answers(native)
+      const coldReads: string[] = []
+      const cold = createChainData('unused', { layers, reader: chainReader(coldReads), incomplete: false })
+      const expected = answers(await createChainData('plain-target', { layers: targetLayers, reader: chainReader([]), incomplete: false }).session())
+      parses.paths.length = 0
+      const target = createChainData('reuse-target', { layers: targetLayers, reader: chainReader([]), incomplete: false,
+        reusableParses: function* () {
+          for (const holder of [cold, source]) {
+            const kept = holder.cachedParses()
+            if (kept !== undefined) yield kept
+          }
+        },
+      })
+      const reused = await target.session()
+      expect(answers(reused)).toEqual(expected)
+      expect(parses.paths).toEqual(direction === 'shrink' ? [] : [
+        'mods/void.sc2mod/Base.SC2Data/GameData/UnitData.xml', 'C:/Mods/Mine.SC2Mod/Base.SC2Data/GameData/UnitData.xml',
+      ])
+      expect(coldReads).toEqual([])
+      expect(answers(native)).toEqual(nativeAnswers)
+      reused.update(reused.documents.map(document => ({ ...document, text: document.text.replace('id="Probe"', 'id="Changed"') })))
+      expect(reused.ids('Unit')).toContain('Changed')
+      expect(answers(native)).toEqual(nativeAnswers)
+    })
+
+    it.each([false, true])('extends a shorter kept prefix without reloading it unless its fingerprint changed (%s)', async changed => {
+      const files = Object.fromEntries(Object.entries(layerFiles).map(([id, entries]) => [id, { ...entries }]))
+      files['core']!['Base.SC2Data/GameData.xml'] = '<Includes><Catalog path="GameData/Missing.xml"/></Includes>'
+      files['core']!['Base.SC2Data/EditorData/EditorCategories.xml'] = '<EditorCategories/>'
+      const { cache } = memoryCache()
+      cache.prefixOf = chain => {
+        const last = chain.findLastIndex(layer => ['mods/core.sc2mod', 'mods/void.sc2mod'].includes(layer.sourcePath))
+        return last < 0 || chain.slice(0, last + 1).some(layer => layer.fingerprint === undefined) ? undefined
+          : { count: last + 1, key: JSON.stringify(chain.slice(0, last + 1).map(layer => [layer.sourcePath, layer.fingerprint])) }
+      }
+      const parent = await createChainData('parent', { layers: layers.slice(0, 1), reader: chainReader([], files), incomplete: false, cache }).session()
+      const parentAnswers = answers(parent)
+      const extendedLayers = changed ? [{ ...layers[0]!, fingerprint: 'build:2' }, ...layers.slice(1)] : layers
+      if (changed) files['core']!['Base.SC2Data/GameData/UnitData.xml'] = files['core']!['Base.SC2Data/GameData/UnitData.xml']!.replace('Probe', 'Ghost')
+      const expected = answers(await createChainData('plain-extended', { layers: extendedLayers, reader: chainReader([], files), incomplete: false }).session())
+      const reads: string[] = []
+      parses.paths.length = 0
+      const holder = createChainData('extended', { layers: extendedLayers, reader: chainReader(reads, files), incomplete: false, cache })
+      const extended = await holder.session()
+      expect(answers(extended)).toEqual(expected)
+      expect(reads.some(path => path.startsWith('core:'))).toBe(changed)
+      expect(parses.paths.includes('mods/core.sc2mod/Base.SC2Data/GameData/UnitData.xml')).toBe(changed)
+      expect(holder.dependsOn('core', 'Base.SC2Data/GameData/Missing.xml')).toBe(true)
+      expect(answers(parent)).toEqual(parentAnswers)
+      files['core']!['Base.SC2Data/GameData/Missing.xml'] = unit('NowPresent')
+      holder.refresh([{ layerId: 'core', path: 'Base.SC2Data/GameData/Missing.xml' }])
+      expect((await holder.session()).ids('Unit')).toContain('NowPresent')
+      expect(answers(parent)).toEqual(parentAnswers)
+    })
+
+    it.each(['documents', 'bytes'] as const)('accounts the retained shorter prefix against the %s limit before extending it', async limit => {
+      const { cache, records } = memoryCache()
+      cache.prefixOf = chain => {
+        const last = chain.findLastIndex(layer => ['mods/core.sc2mod', 'mods/void.sc2mod'].includes(layer.sourcePath))
+        return last < 0 ? undefined : { count: last + 1, key: String(last) }
+      }
+      await createChainData('bounded-parent', { layers: layers.slice(0, 1), reader: chainReader([]), incomplete: false, cache }).session()
+      const saved = records.get('0') as { catalogs: readonly { rootId: string; path: string; text: string }[]; bytes: number }
+      // A cache port reports admitted raw bytes/documents; extending it must charge those first.
+      records.set('0', limit === 'bytes' ? { ...saved, bytes: 256 * 1024 * 1024 } : {
+        ...saved, catalogs: Array.from({ length: 4096 }, (_, at) => ({ rootId: 'root:core', path: `mods/core.sc2mod/Base.SC2Data/GameData/Cached${at}.xml`, text: '<Catalog/>' })),
+      })
+      const reads: string[] = []
+      const holder = createChainData('bounded-extension', { layers, reader: chainReader(reads), incomplete: false, cache })
+      await expect(holder.session()).rejects.toThrow(limit === 'documents' ? '4096 catalog documents' : 'catalog bytes')
+      expect(reads.filter(path => path.startsWith('core:'))).toEqual([])
+      expect(reads).toHaveLength(limit === 'documents' ? 0 : 1)
+      records.set('0', saved)
+      expect((await holder.session()).ids('Unit')).toEqual(['Base', 'Hero', 'Marine', 'Probe'])
+    })
+
     it('reads and parses only the layers after a kept prefix, with the same answers', async () => {
       const plain = answers(await createChainData('plain', { layers, reader: chainReader([]), incomplete: false }).session())
       const { cache, saves, records } = memoryCache()
@@ -364,7 +445,7 @@ describe('chain Data on the mod server', () => {
 
     it('refreshes a missing include restored from prefix metadata when its non-XML target appears', async () => {
       const files = structuredClone(layerFiles)
-      files.core!['Base.SC2Data/GameData.xml'] = '<Includes><Catalog path="GameData/Later.txt"/></Includes>'
+      files['core']!['Base.SC2Data/GameData.xml'] = '<Includes><Catalog path="GameData/Later.txt"/></Includes>'
       const { cache, saves } = memoryCache()
       await createChainData('seed', { layers, reader: chainReader([], files), incomplete: false, cache }).session()
       await vi.waitFor(() => expect(saves).toHaveBeenCalled())
@@ -372,7 +453,7 @@ describe('chain Data on the mod server', () => {
       const data = createChainData('restored', { layers, reader: chainReader(reads, files), incomplete: false, cache })
       expect((await data.session()).ids('Unit')).not.toContain('Ghost')
       expect(reads.some(file => file.startsWith('core:'))).toBe(false)
-      files.core!['Base.SC2Data/GameData/Later.txt'] = unit('Ghost')
+      files['core']!['Base.SC2Data/GameData/Later.txt'] = unit('Ghost')
       data.refresh([{ layerId: 'core', path: 'base.sc2data/gamedata/later.txt' }])
       expect((await data.session()).ids('Unit')).toContain('Ghost')
       expect(reads).toContain('core:Base.SC2Data/GameData/Later.txt')
@@ -442,10 +523,13 @@ describe('chain Data on the mod server', () => {
         const prefixKey = cache.prefixOf(layers)!.key
         const [firstRead, concurrentRead] = await Promise.all([cache.load(prefixKey), cache.load(prefixKey)])
         expect(firstRead).toBeDefined()
+        serializations.count = 0
         await cache.save(prefixKey, firstRead!)
+        const oneWrite = serializations.count
+        expect(oneWrite).toBeGreaterThan(0)
         serializations.count = 0
         await expect(Promise.all([cache.save(prefixKey, firstRead!), cache.save(prefixKey, firstRead!)])).resolves.toHaveLength(2)
-        expect(serializations.count).toBe(1)
+        expect(serializations.count).toBe(oneWrite)
         const otherCache = createSc2DataCache({ directory, mods: ['Void'] })!
         await expect(Promise.all([cache.save(prefixKey, firstRead!), otherCache.save(prefixKey, firstRead!)])).resolves.toHaveLength(2)
         const retryKey = `${prefixKey}:producer-retry`
@@ -458,6 +542,7 @@ describe('chain Data on the mod server', () => {
         expect(replacement).toHaveBeenCalledTimes(1)
         serializations.failNext = true
         await expect(cache.save(prefixKey, firstRead!)).rejects.toThrow('test serialization failed')
+        expect(await cache.load(prefixKey)).toEqual(firstRead)
         await expect(cache.save(prefixKey, firstRead!)).resolves.toBeUndefined()
         expect((await readdir(join(directory, 'sc2-data'))).filter(name => name.endsWith('.tmp'))).toEqual([])
         expect(firstRead).toBeDefined()

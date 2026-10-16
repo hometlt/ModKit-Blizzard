@@ -71,6 +71,20 @@ describe('CascPathIndex', () => {
     expect(walked).toEqual(keys.slice(5, 45))
   })
 
+  it('orders long shared prefixes, short keys and UTF-8 names with the last duplicate winning', () => {
+    const prefix = 'mods/core.sc2mod/' + 'shared/'.repeat(48)
+    const endings = ['a', 'A', 'é', 'Ω', 'İ', 'K', '😀', 'a-b', 'a.b']
+    const paths = [prefix.slice(0, -1), prefix, ...Array.from({ length: 384 }, (_, row) =>
+      prefix + 'a'.repeat(row % 33) + endings[row % endings.length])]
+    const files = paths.map((path, row) => file(path, row.toString(16).padStart(32, '0'), row))
+    const expected = new Map<string, number>()
+    for (const item of files) expected.set(item.path.toLowerCase(), item.contentSize)
+    const keys = [...expected.keys()].sort((left, right) => Buffer.compare(Buffer.from(left), Buffer.from(right)))
+    const index = CascPathIndex.fromFiles(files)
+    expect(Array.from({ length: index.size }, (_, row) => index.keyAt(row))).toEqual(keys)
+    expect(keys.map((_, row) => index.contentSizeAt(row))).toEqual(keys.map(key => expected.get(key)))
+  })
+
   it('answers prefix questions across keys that sort between a folder and its files', () => {
     const index = CascPathIndex.fromFiles([
       file('mods/core', '0'.repeat(32)),

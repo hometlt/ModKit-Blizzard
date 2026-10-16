@@ -22,9 +22,13 @@
  * Kept parses (owner decision 10.10): with a `cache` the saved chain takes the documents and typed
  * parses of its leading stock layers (Core up to the last mod the user keeps, every one of them with a
  * content fingerprint - the installation's build for CASC) from the cache instead of reading and
- * parsing them, and reads only the layers after them. A miss reads everything and, once the session
- * has parsed, keeps that prefix. The kept documents sit at the same positions they would be read at,
+ * parsing them, and reads only the layers after them. A missing full prefix extends the longest
+ * compatible cached stock prefix when available, reading/parsing only its new layers. Otherwise
+ * it reads everything and keeps that prefix once parsed. Includes evidence and byte/document bounds
+ * follow the retained prefix. Its documents sit at the same positions they would be read at,
  * so the session uses their parses exactly as a parse kept across updates; answers are unchanged.
+ * Native holders also borrow known parses of other saved chains, in either direction and without
+ * a disk cache. Inputs are still read/bounded; the Data owner proves reuse before accepting a parse.
  */
 import type { Starcraft2DataSession, Starcraft2ParsedDocument } from '../../../data/services/catalog/data-session.js'
 import type { CatalogDocument } from '../../../data/services/catalog/catalog-analysis.js'
@@ -86,6 +90,8 @@ interface LayerCatalogInputs {
   readonly fallback: boolean
 }
 type CatalogInputs = Map<string, LayerCatalogInputs>
+/** Borrow existing immutable parses; calling the supplier must not open another chain. */
+type ReusableCatalogParses = () => Iterable<ReadonlyMap<string, Starcraft2ParsedDocument>>
 
 const slash = (value: string) => value.split(String.fromCharCode(92)).join('/')
 
@@ -209,28 +215,74 @@ async function savedChainSession(
   layers: readonly ChainLayer[],
   reader: ChainReader,
   cache: ChainDataCache | undefined,
-  options: { readonly workspaceId: string; readonly incomplete: boolean },
+  options: { readonly workspaceId: string; readonly incomplete: boolean; readonly reusableParses?: ReusableCatalogParses },
   signal?: AbortSignal,
   dependencies?: CatalogInputs,
 ): Promise<Starcraft2DataSession> {
-  const { openStarcraft2DataSession } = await import('../../../data/services/catalog/data-session.js')
+  const { openStarcraft2DataSession, canReuseStarcraft2ParsedDocument } = await import('../../../data/services/catalog/data-session.js')
   /** Construct through the Data owner, retaining its parse-position and budget validation. */
   const open = (documents: CatalogDocument[], parses?: ReadonlyMap<string, Starcraft2ParsedDocument>) => {
     signal?.throwIfAborted()
-    return openStarcraft2DataSession(documents, { ...options, ...(parses === undefined ? {} : { parses }) })
+    let reused: Map<string, Starcraft2ParsedDocument> | undefined
+    for (const candidates of options.reusableParses?.() ?? []) {
+      for (const [index, document] of documents.entries()) {
+        const identity = `${document.rootId}\u0000${document.path}`
+        const candidate = candidates.get(identity)
+        if (canReuseStarcraft2ParsedDocument(document, index, candidate) &&
+            !canReuseStarcraft2ParsedDocument(document, index, reused?.get(identity) ?? parses?.get(identity))) {
+          (reused ??= new Map(parses)).set(identity, candidate)
+        }
+      }
+    }
+    const kept = reused ?? parses
+    return openStarcraft2DataSession(documents, { workspaceId: options.workspaceId, incomplete: options.incomplete,
+      ...(kept === undefined ? {} : { parses: kept }) })
   }
   const prefix = cache?.prefixOf(layers)
   if (cache === undefined || prefix === undefined) return open(await chainCatalogDocuments(layers, reader, signal, dependencies))
+  /** Restore the collector's Includes evidence under this chain's current layer identities. */
+  const restoreInputs = async (kept: ChainPrefixRecord, count: number): Promise<void> => {
+    if (dependencies === undefined || !Array.isArray(kept.inputs) || kept.inputs.length > count) return
+    const standard = await standardCatalogInputs()
+    for (const layer of layers.slice(0, count)) {
+      const rows = kept.inputs.filter(input => input?.rootId === layer.rootId && input.sourcePath === layer.sourcePath)
+      if (rows.length !== 1) continue
+      const input = rows[0]!
+      if (typeof input.fallback !== 'boolean' || !Array.isArray(input.includes) || input.includes.length > MAXIMUM_CATALOG_DOCUMENTS ||
+          !input.includes.every((path: unknown) => typeof path === 'string' && path === slash(path).toLowerCase()) ||
+          !input.includes.includes(GAME_DATA_INCLUDES) || !input.includes.includes(EDITOR_CATEGORIES)) continue
+      dependencies.set(layer.id, { standard, includes: new Set(input.includes), fallback: input.fallback })
+    }
+  }
   let created: Starcraft2DataSession | undefined
   let attempted = false
   /** Publish only prefix parses from this producer's existing full canonical session. */
   const create = async (): Promise<ChainPrefixRecord | undefined> => {
     attempted = true
-    const head = await collectCatalogDocuments(layers.slice(0, prefix.count), reader, { documents: 0, bytes: 0 }, signal, dependencies)
+    let base: { readonly count: number; readonly record: ChainPrefixRecord } | undefined
+    for (let count = prefix.count - 1; count > 0;) {
+      const candidate = cache.prefixOf(layers.slice(0, count))
+      if (candidate === undefined || candidate.count < 1 || candidate.count > count) break
+      const record = await cache.load(candidate.key).catch(() => undefined)
+      signal?.throwIfAborted()
+      if (record !== undefined) { base = { count: candidate.count, record }; break }
+      count = candidate.count - 1
+    }
+    if (base !== undefined) await restoreInputs(base.record, base.count)
+    const added = await collectCatalogDocuments(layers.slice(base?.count ?? 0, prefix.count), reader, {
+      documents: (base?.record.catalogs.length ?? 0) + (base?.record.editorCategories.length ?? 0),
+      bytes: base?.record.bytes ?? 0,
+    }, signal, dependencies)
+    const head = {
+      catalogs: [...(base?.record.catalogs ?? []), ...added.catalogs],
+      editorCategories: [...(base?.record.editorCategories ?? []), ...added.editorCategories],
+      bytes: (base?.record.bytes ?? 0) + added.bytes,
+    }
     const rest = await collectCatalogDocuments(layers.slice(prefix.count), reader, {
       documents: head.catalogs.length + head.editorCategories.length, bytes: head.bytes,
     }, signal, dependencies)
-    created = open([...head.catalogs, ...rest.catalogs, ...head.editorCategories, ...rest.editorCategories])
+    created = open([...head.catalogs, ...rest.catalogs, ...head.editorCategories, ...rest.editorCategories],
+      base === undefined ? undefined : new Map(base.record.parses))
     await created.prepare(signal)
     const separator = String.fromCharCode(0)
     const identities = new Set(head.catalogs.map(document => `${document.rootId}${separator}${document.path}`))
@@ -252,18 +304,7 @@ async function savedChainSession(
   signal?.throwIfAborted()
   if (created !== undefined) return created
   if (kept === undefined) { await create(); return created! }
-  if (dependencies !== undefined && Array.isArray(kept.inputs) && kept.inputs.length <= prefix.count) {
-    const standard = await standardCatalogInputs()
-    for (const layer of layers.slice(0, prefix.count)) {
-      const rows = kept.inputs.filter(input => input?.rootId === layer.rootId && input.sourcePath === layer.sourcePath)
-      if (rows.length !== 1) continue
-      const input = rows[0]!
-      if (typeof input.fallback !== 'boolean' || !Array.isArray(input.includes) || input.includes.length > MAXIMUM_CATALOG_DOCUMENTS ||
-          !input.includes.every((path: unknown) => typeof path === 'string' && path === slash(path).toLowerCase()) ||
-          !input.includes.includes(GAME_DATA_INCLUDES) || !input.includes.includes(EDITOR_CATEGORIES)) continue
-      dependencies.set(layer.id, { standard, includes: new Set(input.includes), fallback: input.fallback })
-    }
-  }
+  await restoreInputs(kept, prefix.count)
   const rest = await collectCatalogDocuments(layers.slice(prefix.count), reader, {
     documents: kept.catalogs.length + kept.editorCategories.length,
     bytes: kept.bytes,
@@ -275,6 +316,8 @@ async function savedChainSession(
 export interface ChainData {
   /** The session over the chain's current documents. */
   session(signal?: AbortSignal): Promise<Starcraft2DataSession>
+  /** Known pure parses only: never opens or prepares an unused chain; entries are revalidated on use. */
+  cachedParses(): ReadonlyMap<string, Starcraft2ParsedDocument> | undefined
   /** Refresh affected canonical inputs; an omitted change list invalidates the whole chain. */
   refresh(changes?: readonly { readonly layerId: string; readonly path: string }[]): void
   /** Unknown inputs conservatively affect Data, including cached prefixes without include evidence. */
@@ -294,12 +337,15 @@ export function createChainData(
     readonly hasOverlays?: (saved: readonly CatalogDocument[]) => boolean | Promise<boolean>
     /** Kept parses of the leading layers; only a saved chain (no `base`) uses it. */
     readonly cache?: ChainDataCache
+    /** Other native chains' existing parses; draft views must never supply this shared input. */
+    readonly reusableParses?: ReusableCatalogParses
   },
 ): ChainData {
   let layers = initial.layers
   let reader = initial.reader
   let incomplete = initial.incomplete
   let opened: Promise<Starcraft2DataSession> | undefined
+  let currentSession: Starcraft2DataSession | undefined
   let stale = false
   /** Refreshes may arrive while the saved generation/equality proof is awaited. */
   let generation = 0
@@ -323,7 +369,8 @@ export function createChainData(
         const savedChain = initial.base
         const nextInputs: CatalogInputs = new Map()
         opened = savedChain === undefined
-          ? savedChainSession(layers, reader, initial.cache, { workspaceId, incomplete }, signal, nextInputs).then(session => {
+          ? savedChainSession(layers, reader, initial.cache, { workspaceId, incomplete,
+            ...(initial.reusableParses === undefined ? {} : { reusableParses: initial.reusableParses }) }, signal, nextInputs).then(session => {
             dependencies = nextInputs
             return session
           })
@@ -350,6 +397,7 @@ export function createChainData(
               return view
             }
           })()
+        void opened.then(session => { currentSession = session }, () => {})
         opened.catch(() => {
           opened = undefined
         })
@@ -403,6 +451,7 @@ export function createChainData(
       return next
     },
     dependsOn,
+    cachedParses: () => currentSession?.parsedDocuments(false),
     refresh(changes) {
       if (changes === undefined || changes.some(change => dependsOn(change.layerId, change.path))) {
         stale = true

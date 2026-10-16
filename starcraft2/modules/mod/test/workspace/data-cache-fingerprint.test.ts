@@ -1,6 +1,7 @@
 /** Transient code-read failures must not disable the saved Data cache for the process lifetime. */
-import { describe, expect, it, vi } from 'vitest'
-import { mkdtemp, rm } from 'node:fs/promises'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { mkdtemp, rm, readdir, writeFile } from 'node:fs/promises'
+import { serialize } from 'node:v8'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
@@ -18,6 +19,31 @@ vi.mock('node:fs/promises', async original => {
 })
 
 describe('saved Data code fingerprint', () => {
+  beforeEach(() => {
+    // Each scenario starts with a cold module-owned code digest, independent of test ordering.
+    vi.resetModules()
+    reads.failNext = false
+    reads.failures = 0
+  })
+
+  it('treats an old eager envelope as a miss and retries with the Data-owned stored format', async () => {
+    const { createSc2DataCache } = await import('../../shared/workspace/data-cache-node.js')
+    const directory = await mkdtemp(join(tmpdir(), 'modkit-data-envelope-'))
+    try {
+      const cache = createSc2DataCache({ directory })!
+      const record = { catalogs: [], editorCategories: [], parses: [], bytes: 0 }
+      await cache.save('envelope', record)
+      const folder = join(directory, 'sc2-data')
+      const name = (await readdir(folder)).find(file => file.endsWith('.v8'))!
+      const file = join(folder, name)
+      expect(await cache.load('envelope')).toEqual(record)
+      await writeFile(file, serialize({ key: 'envelope', parseFormat: 1, record }))
+      expect(await cache.load('envelope')).toBeUndefined()
+      await cache.save('envelope', record)
+      expect(await cache.load('envelope')).toEqual(record)
+    } finally { await rm(directory, { recursive: true, force: true }) }
+  })
+
   it('retries after a failed fingerprint and then reuses a saved record', async () => {
     const { createSc2DataCache } = await import('../../shared/workspace/data-cache-node.js')
     const directory = await mkdtemp(join(tmpdir(), 'modkit-data-fingerprint-'))

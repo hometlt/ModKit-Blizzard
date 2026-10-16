@@ -10,7 +10,7 @@
  * - A sample is the number the file stores: a height is the 16-bit corner height, 512 per cliff
  *   level of 128 world units around 8192, so world = (sample − 8192) / 4.
  */
-import type { MapLayerDescriptor, MapLayerGrid, MapLayerReadRequest } from '@modkit/sdk/maps'
+import type { GameRasterValueMetadata, MapLayerDescriptor, MapLayerGrid, MapLayerReadRequest } from '@modkit/sdk/maps'
 import { mapLayerWindow } from '@modkit/sdk/maps'
 import War3MapDoo from '../lib/mdx-m3-viewer/parsers/w3x/doo/file.js'
 import War3MapImp from '../lib/mdx-m3-viewer/parsers/w3x/imp/file.js'
@@ -41,6 +41,19 @@ export interface War3Map {
   /** Documents present but not readable, with why. */
   readonly failures: readonly { readonly path: string; readonly message: string }[]
 }
+
+/** Vocabulary major 1 is the byte flags in native WPM version 0; it is not portable traversal. */
+export const WAR3_PATHING_FLAG_ENCODING = 'blizzard/war3-wpm@1' as const
+
+/** Opaque authored W3E scalar vocabularies; these do not imply portable material or movement policy. */
+export const WAR3_TERRAIN_RASTERS: Readonly<Record<string, Readonly<Pick<GameRasterValueMetadata, 'valueMeaning' | 'valueType'>>>> = Object.freeze({
+  'ground-texture': Object.freeze({ valueMeaning: 'blizzard/war3-w3e-ground-texture@1', valueType: 'u8' }),
+  'ground-variation': Object.freeze({ valueMeaning: 'blizzard/war3-w3e-ground-variation@1', valueType: 'u8' }),
+  'cliff-texture': Object.freeze({ valueMeaning: 'blizzard/war3-w3e-cliff-texture@1', valueType: 'u8' }),
+  'cliff-variation': Object.freeze({ valueMeaning: 'blizzard/war3-w3e-cliff-variation@1', valueType: 'u8' }),
+  'corner-flags': Object.freeze({ valueMeaning: 'blizzard/war3-w3e-corner-flags@1', valueType: 'u8' }),
+  'water': Object.freeze({ valueMeaning: 'blizzard/war3-w3e-water@1', valueType: 'u16' }),
+})
 
 export const WAR3_MAP_INFO = 'war3map.w3i'
 
@@ -146,9 +159,29 @@ export function war3MapLayers(map: War3Map): ReadonlyMap<string, Layer> {
     add('war3map.w3e', { id: 'water', label: 'Water level (w3e)', meaning: 'water', ...grid, maximum: 0x3fff, ...WORLD_HEIGHT },
       (column, row) => corner(column, row).waterHeight * 512 + 8192,
       (bytes, column, row, value) => setU16(bytes, at(column, row) + 2, (u16(bytes, at(column, row) + 2) & 0xc000) | value))
-    add('war3map.w3e', { id: 'ground-texture', label: 'Ground tileset index (w3e)', meaning: 'other', ...grid, maximum: 15 },
+    add('war3map.w3e', { id: 'ground-texture', label: 'Ground tileset index (w3e)', meaning: 'other', ...grid, maximum: 15,
+      categories: terrain.groundTilesets.map((label, value) => ({ value, label })) },
       (column, row) => corner(column, row).groundTexture,
       (bytes, column, row, value) => lowNibble(bytes, at(column, row) + 4, value))
+    add('war3map.w3e', { id: 'ground-variation', label: 'Ground variation (w3e)', meaning: 'other', ...grid, maximum: 31 },
+      (column, row) => corner(column, row).groundVariation,
+      (bytes, column, row, value) => {
+        const offset = at(column, row) + 5
+        bytes[offset] = (bytes[offset]! & 0xe0) | value
+      })
+    add('war3map.w3e', { id: 'cliff-variation', label: 'Cliff variation (w3e)', meaning: 'other', ...grid, maximum: 7 },
+      (column, row) => corner(column, row).cliffVariation,
+      (bytes, column, row, value) => {
+        const offset = at(column, row) + 5
+        bytes[offset] = (bytes[offset]! & 0x1f) | (value << 5)
+      })
+    add('war3map.w3e', { id: 'cliff-texture', label: 'Cliff tileset index (w3e)', meaning: 'other', ...grid, maximum: 15,
+      categories: terrain.cliffTilesets.map((label, value) => ({ value, label })) },
+      (column, row) => corner(column, row).cliffTexture,
+      (bytes, column, row, value) => {
+        const offset = at(column, row) + 6
+        bytes[offset] = (bytes[offset]! & 0x0f) | (value << 4)
+      })
     // Bits: 1 ramp, 2 blight, 4 water, 8 boundary (the flags nibble), 16 map edge (the water word).
     add('war3map.w3e', { id: 'corner-flags', label: 'Corner flags: ramp, blight, water, boundary, map edge (w3e)', meaning: 'flags', ...grid, maximum: 31 },
       (column, row) => {
