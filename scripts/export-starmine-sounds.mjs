@@ -12,7 +12,7 @@ import { execFileSync } from 'node:child_process'
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { voiceLocaleFrom } from '../starcraft2/modules/mod/shared/core/voice-locale.ts'
-import { planUnitSounds, readUnitSound, soundKindId, soundsJson } from '../starcraft2/modules/mod/shared/export/unit-sounds.ts'
+import { CAMPAIGN_MOD, planUnitSounds, readUnitSound, soundKindId, soundsJson } from '../starcraft2/modules/mod/shared/export/unit-sounds.ts'
 import { Sc2DesktopContentSources } from '../starcraft2/modules/game/battlenet/content-sources/local-content-sources.ts'
 
 const option = name => {
@@ -34,11 +34,29 @@ const abilities = [...readFileSync(join(java, 'ability/Ability.java'), 'utf8').m
 const scratch = mkdtempSync(join(process.env.MODKIT_TEMP ?? 'C:/MKTEMP', 'starmine-sounds-'))
 const sources = new Sc2DesktopContentSources({ installationDirectory: sc2,
   documentsDirectory: scratch, battleNetCacheDirectory: scratch, sc2MapsCacheDirectory: scratch })
-const context = await sources.openModContext({ schemaVersion: 1,
-  target: { sourceId: 'local:casc', path: 'Mods/VoidMulti.SC2Mod' }, locales: [voiceLocale] })
+const open = path => sources.openModContext({ schemaVersion: 1, target: { sourceId: 'local:casc', path }, locales: [voiceLocale] })
+const contexts = []
 try {
   console.log(`voice locale ${voiceLocale}; ${kinds.length} kinds, ${abilities.length} abilities`)
-  const plan = await planUnitSounds(context, { kinds, abilities })
+  // The multiplayer Data first; what it lacks (the heroes and their abilities) from the campaign.
+  const context = await open('Mods/VoidMulti.SC2Mod')
+  contexts.push(context)
+  const first = await planUnitSounds(context, { kinds, abilities })
+  const owner = new Map(Object.keys(first.events).map(event => [event, context]))
+  const events = { ...first.events }
+  let missing = first.missing
+  const { kinds: heroKinds, abilities: heroAbilities } = first.unresolved
+  if (heroKinds.length || heroAbilities.length) {
+    const campaign = await open(CAMPAIGN_MOD)
+    contexts.push(campaign)
+    const second = await planUnitSounds(campaign, { kinds: heroKinds, abilities: heroAbilities })
+    for (const [event, sounds] of Object.entries(second.events)) { events[event] = sounds; owner.set(event, campaign) }
+    // Missing is what neither context gives (a campaign miss keeps a multiplayer fallback).
+    const seen = new Set()
+    missing = [...first.missing, ...second.missing].filter(item => events[item.event] === undefined && !seen.has(item.event) && seen.add(item.event))
+    console.log(`campaign ${CAMPAIGN_MOD}: ${heroKinds.join(', ') || '-'} | ${heroAbilities.join(', ') || '-'}`)
+  }
+  const plan = { events, missing }
   const root = join(out, 'assets/starmine')
   rmSync(join(root, 'sounds/sc2'), { recursive: true, force: true })
   const raw = join(scratch, 'raw')
@@ -46,9 +64,9 @@ try {
   const warnings = new Set()
   const locales = new Map()
   let files = 0
-  for (const sounds of Object.values(plan.events)) {
+  for (const [event, sounds] of Object.entries(plan.events)) {
     for (const sound of sounds) {
-      const { bytes, locale } = await readUnitSound(context, sound, voiceLocale, message => warnings.add(message))
+      const { bytes, locale } = await readUnitSound(owner.get(event), sound, voiceLocale, message => warnings.add(message))
       if (locale) locales.set(locale, (locales.get(locale) ?? 0) + 1)
       const source = join(raw, `${files}${sound.path.slice(sound.path.lastIndexOf('.'))}`)
       writeFileSync(source, bytes)
@@ -65,7 +83,7 @@ try {
   console.log(`${plan.missing.length} events SC2 has no sound for:`)
   for (const { event, reason } of plan.missing) console.log(`  ${event}: ${reason}`)
 } finally {
-  await context.dispose?.()
+  for (const context of contexts) await context.dispose?.()
   rmSync(scratch, { recursive: true, force: true })
 }
 process.exit(0)

@@ -102,6 +102,11 @@ describe('StarMine unit sounds', () => {
     })
   })
 
+  it('names the kinds and abilities this context lacks, for a second (campaign) context', async () => {
+    const plan = await planUnitSounds(fixtureContext(['enus']), { kinds: ['siegetank', 'kerrigan'], abilities: ['psionic_storm', 'stimpack'] })
+    expect(plan.unresolved).toEqual({ kinds: ['kerrigan'], abilities: ['stimpack'] })
+  })
+
   it('reads voices in the chosen locale even when locate names another', async () => {
     const context = fixtureContext(['enus', 'ruru'])
     const plan = await planUnitSounds(context, { kinds: ['siegetank'], abilities: [] })

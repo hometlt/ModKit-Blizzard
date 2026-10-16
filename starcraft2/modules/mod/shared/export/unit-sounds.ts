@@ -44,7 +44,12 @@ export const abilityEventName = (id: string): string => `ability.${id}`
 export const STARMINE_UNIT_IDS: Readonly<Record<string, string>> = Object.freeze({
   lurker: 'LurkerMP', swarmhost: 'SwarmHostMP', locust: 'LocustMP', viking: 'VikingFighter',
   templararchives: 'TemplarArchive',
+  // Heroes: not in the multiplayer Data, found in the campaign context (CAMPAIGN_MOD).
+  kerrigan: 'KerriganVoid', raynor: 'RaynorCommando', artanis: 'ArtanisVoid',
 })
+
+/** The mod context for kinds and abilities the multiplayer Data lacks (the heroes): the Void campaign. */
+export const CAMPAIGN_MOD = 'Campaigns/VoidStory.SC2Campaign'
 
 /**
  * StarMine ability ids → the SC2 abilities that cast them (Data decides the sound) and CSounds tried
@@ -111,11 +116,11 @@ export const STARMINE_ABILITIES: Readonly<Record<string, { readonly abil: readon
   chrono_boost: { abil: ['ChronoBoostEnergyCost'] },
   battery_overcharge: { abil: ['BatteryOvercharge'], sounds: ['Nexus_BatteryOverchargeActivate'] },
   warp_gate: { abil: ['UpgradeToWarpGate', 'MorphBuildingGatewayWarpGateFree'], sounds: ['Gateway_MorphToWarpgate'] },
-  // Hero abilities: the multiplayer Data has no heroes, the closest multiplayer casts are used.
-  leaping_strike: { abil: ['KerriganLeapingStrike', 'LeapingStrike'], sounds: ['Zealot_Charge'] },
-  psionic_shift: { abil: ['KerriganPsionicShift', 'PsionicShift'], sounds: ['DarkTemplar_Blink'] },
-  hyperion_strike: { abil: ['Yamato'] },
-  lightning_dash: { abil: ['ArtanisLightningDash', 'LightningDash'], sounds: ['Stalker_Blink'] },
+  // Hero abilities: their campaign ids (CAMPAIGN_MOD); in the multiplayer context the closest casts.
+  leaping_strike: { abil: ['PrimalSlash'], sounds: ['Zealot_Charge'] },
+  psionic_shift: { abil: ['PsiStrikeWalk', 'K5KerriganPsiStrikeMorph'], sounds: ['DarkTemplar_Blink'] },
+  hyperion_strike: { abil: ['HyperionKorhalYamato', 'Yamato'] },
+  lightning_dash: { abil: ['ArtanisLightningDash'], sounds: ['Stalker_Blink'] },
   load: { abil: ['MedivacTransport', 'BunkerTransport'], sounds: ['Shuttle_Load', 'Overlord_Load'] },
   unload: { abil: ['MedivacTransport', 'BunkerTransport'], sounds: ['Shuttle_Unload', 'Overlord_Unload'] },
 })
@@ -321,6 +326,11 @@ export interface SoundExportPlan {
   readonly events: Readonly<Record<string, readonly PlannedSound[]>>
   /** Events SC2 has no sound for (or whose files no layer holds), with the reason. */
   readonly missing: readonly { readonly event: string; readonly reason: string }[]
+  /**
+   * Kinds whose SC2 unit and abilities none of whose SC2 abilities this context's Data has (the heroes in
+   * the multiplayer Data): plan them again in another context ({@link CAMPAIGN_MOD}) and prefer that.
+   */
+  readonly unresolved: { readonly kinds: readonly string[]; readonly abilities: readonly string[] }
 }
 
 export interface SoundExportRequest {
@@ -354,7 +364,8 @@ export async function planUnitSounds(context: SoundExportContext, request: Sound
     const answer = await context.query({ kind: 'data.ids', namespace })
     return isRecord(answer) && Array.isArray(answer['ids']) ? answer['ids'] as string[] : []
   }
-  const [unitIds, actorIds, effectIds, soundIds] = await Promise.all(['Unit', 'Actor', 'Effect', 'Sound'].map(idsOf)) as [string[], string[], string[], string[]]
+  const [unitIds, actorIds, effectIds, soundIds, abilIds] = await Promise.all(['Unit', 'Actor', 'Effect', 'Sound', 'Abil'].map(idsOf)) as [string[], string[], string[], string[], string[]]
+  const abilSet = new Set(abilIds)
   const effects = new Set(effectIds), soundSet = new Set(soundIds)
   const index = actorSoundIndex((await lookup('Actor', actorIds)).values())
   const unitByName = new Map(unitIds.map(id => [id.toLowerCase(), id]))
@@ -404,7 +415,10 @@ export async function planUnitSounds(context: SoundExportContext, request: Sound
       missing.push({ event, reason: links.length ? `no CSound with files among ${links.slice(0, 4).join(', ')}` : 'SC2 names no sound for it' })
     }
   }
-  return { events, missing }
+  return { events, missing, unresolved: {
+    kinds: [...units].filter(([, unitId]) => unitId === undefined || !unitRows.has(unitId)).map(([kind]) => kind),
+    abilities: request.abilities.filter(id => STARMINE_ABILITIES[id]?.abil.every(abil => !abilSet.has(abil)) ?? false),
+  } }
 }
 
 /**
